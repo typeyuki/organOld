@@ -15,9 +15,13 @@ $(document).ready(function(){
             "columns":[{
                 data:"id"
             },{
-                data:"districtName"
+                data:"dName"
             },{
-                data:"jwName"
+                data:"jName"
+            },{
+                data:"xName"
+            },{
+                data:"louNum"
             },{
                 data:"name"
             },{
@@ -54,14 +58,14 @@ $(document).ready(function(){
                 // },
                 // 增加一列，包括删除和修改，同时将我们需要传递的数据传递到链接中
                 {
-                    "targets": [12], // 目标列位置，下标从0开始
+                    "targets": [14], // 目标列位置，下标从0开始
                     "data": "id", // 数据列名
                     "render": function(data, type, full) { // 返回自定义内容
                         return "<span class='look' id='"+data+"'>查看</span><span class='mod' id='"+data+"'>修改</span><span class='del' onclick='del("+data+")'>删除</a>";
                     }
                 },
                 //不进行排序的列
-                { "bSortable": false, "aTargets": [ 0,1,2 ,3, 4, 6,7,8,9,10,12] }
+                { "bSortable": false, "aTargets": [ 0,1,2 ,3, 4,5, 6,8,9,10,11,12,14] }
             ],
             "sAjaxSource": "/oldman/baseData",//这个是请求的地址
             "fnServerData": retrieveData

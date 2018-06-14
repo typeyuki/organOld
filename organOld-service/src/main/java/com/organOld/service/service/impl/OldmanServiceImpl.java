@@ -23,15 +23,15 @@ public class OldmanServiceImpl implements OldmanService {
 
     @Autowired
     OldmanDao oldmanBaseDao;
-@Autowired
+    @Autowired
     OldmanHealthDao oldmanHealthDao;
-@Autowired
+    @Autowired
     LinkmanDao linkmanDao;
-@Autowired
+    @Autowired
     OldmanEconomicDao economicDao;
-@Autowired
+    @Autowired
     OldmanFamilyDao familyDao;
-@Autowired
+    @Autowired
     OrganOldmanDao organOldmanDao;
     @Autowired
     CommonService commonService;

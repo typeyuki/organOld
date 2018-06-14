@@ -26,9 +26,9 @@ import java.util.List;
 @Service
 public class SystemServiceImpl implements SystemService {
 
-@Autowired
+    @Autowired
     MenuDao menuDao;
-@Autowired
+    @Autowired
     SystemDao systemDao;
 
     @Override

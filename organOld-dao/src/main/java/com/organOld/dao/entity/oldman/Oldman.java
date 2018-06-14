@@ -1,9 +1,6 @@
 package com.organOld.dao.entity.oldman;
 
 
-
-import com.organOld.dao.entity.Juwei;
-
 import java.util.Date;
 
 /**
@@ -15,12 +12,9 @@ public class Oldman extends Man{
     private Date birthday;//出生年月
     private String pid;//身份证号
     private String address;//户籍住址
-    private Integer census;//户籍 1非 2户籍
-    private Integer districtId;//片区索引
-    private Linkman linkman;//应急联系人
-    private Integer jwId;//居委索引
-    private Integer politicalStatus;//政治面貌 1群众 2党员
-
+    private String census;//户籍
+    private String politicalStatus;//政治面貌
+    private Integer louNum;//楼号
     private int goal;//得分用于 重点老人
 
     /**
@@ -29,10 +23,13 @@ public class Oldman extends Man{
     private Date birthdayStart;//出生年月-起
     private Date birthdayEnd;//出生年月-止
     private String search;//模糊搜索
+
     /**
      * 关联对象
+     * @return
      */
-    private Juwei jw;//所属居委会
+    private Xq xq;//小区
+
 
     public int getGoal() {
         return goal;
@@ -40,14 +37,6 @@ public class Oldman extends Man{
 
     public void setGoal(int goal) {
         this.goal = goal;
-    }
-
-    public Integer getJwId() {
-        return jwId;
-    }
-
-    public void setJwId(Integer jwId) {
-        this.jwId = jwId;
     }
 
     public Integer getSex() {
@@ -74,37 +63,6 @@ public class Oldman extends Man{
         this.address = address;
     }
 
-    public Integer getCensus() {
-        return census;
-    }
-
-    public void setCensus(Integer census) {
-        this.census = census;
-    }
-
-    public Integer getDistrictId() {
-        return districtId;
-    }
-
-    public void setDistrictId(Integer districtId) {
-        this.districtId = districtId;
-    }
-
-    public Linkman getLinkman() {
-        return linkman;
-    }
-
-    public void setLinkman(Linkman linkman) {
-        this.linkman = linkman;
-    }
-
-    public Juwei getJw() {
-        return jw;
-    }
-
-    public void setJw(Juwei jw) {
-        this.jw = jw;
-    }
 
     public Date getBirthday() {
         return birthday;
@@ -114,13 +72,6 @@ public class Oldman extends Man{
         this.birthday = birthday;
     }
 
-    public Integer getPoliticalStatus() {
-        return politicalStatus;
-    }
-
-    public void setPoliticalStatus(Integer politicalStatus) {
-        this.politicalStatus = politicalStatus;
-    }
 
     public Date getBirthdayStart() {
         return birthdayStart;
@@ -141,8 +92,39 @@ public class Oldman extends Man{
     public String getSearch() {
         return search;
     }
-
     public void setSearch(String search) {
         this.search = search;
+    }
+
+    public String getCensus() {
+        return census;
+    }
+
+    public void setCensus(String census) {
+        this.census = census;
+    }
+
+    public Xq getXq() {
+        return xq;
+    }
+
+    public void setXq(Xq xq) {
+        this.xq = xq;
+    }
+
+    public String getPoliticalStatus() {
+        return politicalStatus;
+    }
+
+    public void setPoliticalStatus(String politicalStatus) {
+        this.politicalStatus = politicalStatus;
+    }
+
+    public Integer getLouNum() {
+        return louNum;
+    }
+
+    public void setLouNum(Integer louNum) {
+        this.louNum = louNum;
     }
 }

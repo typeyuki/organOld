@@ -56,6 +56,8 @@
                             <th>序号</th>
                             <th>片区</th>
                             <th>居委</th>
+                            <th>小区</th>
+                            <th>楼号</th>
                             <th>姓名</th>
                             <th>性别</th>
                             <th>年龄</th>

@@ -1,15 +1,22 @@
 package com.organOld.service.model;
 
 
+import com.organOld.dao.entity.oldman.Xq;
+
 public class OldmanModel extends ManModel{
     private String sex;
     private String census;//户籍
-    private String districtName;//片区名称
-    private String  jwName;//居委名称
     private Integer age;//年龄
     private String politicalStatus;//政治面貌
     private String address;//地址
     private String pid;//身份证号码
+    private int louNum;//楼号
+    private String xName;//小区名称
+    private String jName;//居委名称
+    private String dName;//片区名称
+
+
+
 
 
     public String getPid() {
@@ -44,22 +51,6 @@ public class OldmanModel extends ManModel{
         this.census = census;
     }
 
-    public String getDistrictName() {
-        return districtName;
-    }
-
-    public void setDistrictName(String districtName) {
-        this.districtName = districtName;
-    }
-
-    public String getJwName() {
-        return jwName;
-    }
-
-    public void setJwName(String jwName) {
-        this.jwName = jwName;
-    }
-
     public String getPoliticalStatus() {
         return politicalStatus;
     }
@@ -74,5 +65,37 @@ public class OldmanModel extends ManModel{
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public int getLouNum() {
+        return louNum;
+    }
+
+    public void setLouNum(int louNum) {
+        this.louNum = louNum;
+    }
+
+    public String getxName() {
+        return xName;
+    }
+
+    public void setxName(String xName) {
+        this.xName = xName;
+    }
+
+    public String getjName() {
+        return jName;
+    }
+
+    public void setjName(String jName) {
+        this.jName = jName;
+    }
+
+    public String getdName() {
+        return dName;
+    }
+
+    public void setdName(String dName) {
+        this.dName = dName;
     }
 }

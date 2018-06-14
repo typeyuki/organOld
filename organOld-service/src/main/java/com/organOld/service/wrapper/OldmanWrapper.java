@@ -19,21 +19,21 @@ public class OldmanWrapper implements Wrapper<Oldman,OldmanModel,OldmanRequest> 
         OldmanModel oldmanModel=new OldmanModel();
         oldmanModel.setId(oldman.getId());
         oldmanModel.setName(oldman.getName());
-//        if(oldman.getDistrictId()!=null && oldman.getDistrictId()!=0)
-//            oldmanModel.setDistrictName(DistrictEnum.getValue(oldman.getDistrictId()));
+        oldmanModel.setLouNum(oldman.getLouNum());
         if(oldman.getBirthday()!=null)
             oldmanModel.setAge(CommonService.birthdayToAge(oldman.getBirthday()));
         oldmanModel.setSex(SexEnum.getValue(oldman.getSex()));
-        if(oldman.getCensus()!=null && oldman.getCensus()!=0)
-            oldmanModel.setCensus(CensusEnum.getValue(oldman.getCensus()));
-//        oldmanModel.setJwName(oldman.getJw().getName());
-        if(oldman.getPoliticalStatus()!=null && oldman.getPoliticalStatus()!=0)
-            oldmanModel.setPoliticalStatus(PoliticalStatusEnum.getValue(oldman.getPoliticalStatus()));
+        oldmanModel.setCensus(oldman.getCensus());
+        oldmanModel.setPoliticalStatus(oldman.getPoliticalStatus());
         if(oldman.getTime()!=null)
             oldmanModel.setTime(Tool.dateToString(oldman.getTime(), TimeConstant.DATA_FORMAT_YMD));
         oldmanModel.setPid(oldman.getPid());
         oldmanModel.setAddress(oldman.getAddress());
         oldmanModel.setPhone(oldman.getPhone());
+        oldmanModel.setjName(oldman.getXq().getJwName());
+        oldmanModel.setdName(oldman.getXq().getDistrictName());
+        oldmanModel.setxName(oldman.getXq().getName());
+        oldmanModel.setPoliticalStatus(oldman.getPoliticalStatus());
         return oldmanModel;
     }
 

@@ -27,12 +27,14 @@
         <result property="address" column="address" />
         <result property="phone" column="phone" />
         <result property="census" column="census" />
-        <result property="districtId" column="district_id" />
+        <result property="louNum" column="lou_num" />
         <result property="politicalStatus" column="political_status" />
         <result property="time" column="time" />
-        <association property="jw" javaType="com.organOld.dao.entity.Juwei">
-            <id property="id" column="jid"/>
-            <result property="name" column="jname"/>
+        <association property="xq" javaType="com.organOld.dao.entity.oldman.Xq">
+            <id property="id" column="xid"/>
+            <result property="name" column="xname"/>
+            <result property="jwName" column="jname"/>
+            <result property="districtName" column="dname"/>
         </association>
     </resultMap>
 
