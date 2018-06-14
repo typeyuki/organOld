@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.organOld.dao.repository.OldmanHealthDao">
+
+
+    <!--collection 一定要取到id 比如hsid haid  不然数据会重复 mybatis 无法识别是同一对象-->
+    <resultMap id="oldmanHealth" type="com.organOld.dao.entity.oldman.OldmanHealth">
+        <id property="id" column="id" />
+        <result property="oldmanId" column="oldman_id"/>
+        <result property="bloodType" column="blood_type"/>
+        <result property="intelligence" column="intelligence" />
+        <result property="eyesight" column="eyesight" />
+        <result property="time" column="time" />
+        <association property="oldman" javaType="com.organOld.dao.entity.oldman.Oldman">
+            <id property="id" column="oid" />
+            <result property="name" column="name"/>
+        </association>
+        <collection property="healthAdd" ofType="com.organOld.dao.entity.oldman.HealthAdd">
+            <id property="id" column="haid" />
+            <result property="type" column="type"/>
+            <result property="desc" column="desc" />
+        </collection>
+        <collection property="healthSelect" ofType="com.organOld.dao.entity.oldman.HealthSelect">
+            <id property="id" column="hsid" />
+            <result property="firType" column="fir_type"/>
+            <result property="secTypeName" column="sec_type_name" />
+        </collection>
+    </resultMap>
+
+    <select id="getByPage" parameterType="com.organOld.dao.util.Page" resultMap="oldmanHealth">
+        SELECT o.id,o.oldman_id,old.name,o.blood_type,o.eyesight,o.intelligence,ha.type,ha.desc,hs.fir_type,hs.sec_type_name,ha.id haid,hs.id hsid
+        FROM oldman_base old,oldman_health_base o LEFT JOIN health_add ha ON ha.oldman_id=o.oldman_id
+        LEFT JOIN health_select_oldman hso on hso.oldman_id=o.oldman_id left join health_select hs on hso.health_select_id=hs.id
+        WHERE old.id=o.oldman_id
+        <if test="entity!=null and entity.oldmanId!=null and entity.oldmanId!=0">
+            and o.oldman_id=#{entity.oldmanId}
+        </if>
+        <if test="entity!=null and entity.search!=null and entity.search!=''">
+            and old.id in
+            (
+                SELECT DISTINCT(old.id) FROM oldman_base old,oldman_health_base o LEFT JOIN health_add ha ON ha.oldman_id=o.oldman_id
+                LEFT JOIN health_select_oldman hso on hso.oldman_id=o.oldman_id left join health_select hs on hso.health_select_id=hs.id
+                WHERE old.id=o.oldman_id
+                and (o.blood_type LIKE  concat('%',#{entity.search},'%') OR o.eyesight LIKE  concat('%',#{entity.search},'%') OR old.name LIKE  concat('%',#{entity.search},'%')
+                OR o.intelligence LIKE  concat('%',#{entity.search},'%') OR ha.desc LIKE  concat('%',#{entity.search},'%') OR hs.sec_type_name LIKE  concat('%',#{entity.search},'%'))
+            )
+        </if>
+
+    </select>
+
+    <select id="getSizeByPage" parameterType="com.organOld.dao.util.Page" resultType="java.lang.Long">
+        SELECT count(1)
+        FROM oldman_health_base
+        WHERE 1=1
+        <if test="entity!=null and entity.oldmanId!=null and entity.oldmanId!=0">
+            and oldman_id=#{entity.oldmanId}
+        </if>
+
+    </select>
+
+    <delete id="delById">
+        DELETE FROM oldman_base WHERE id=#{id}
+    </delete>
+
+    <insert id="save" parameterType="com.organOld.dao.entity.oldman.Oldman">
+        INSERT INTO oldman_base(name,sex,birthday,pid,address,jw_id,census,political_status,district_id,phone)
+        VALUE (#{name},#{sex},#{birthday},#{pid},#{address},#{jwId},#{census},#{politicalStatus},#{districtId},#{phone})
+    </insert>
+
+    <update id="updateById" parameterType="com.organOld.dao.entity.oldman.Oldman">
+        UPDATE oldman_base
+        SET name=#{name},sex=#{sex},birthday=#{birthday},pid=#{pid},address=#{address},jw_id=#{jwId},census=#{census},political_status#{politicalStatus},
+        district_id=#{districtId},phone=#{phone}
+        WHERE id=#{id}
+    </update>
+</mapper>

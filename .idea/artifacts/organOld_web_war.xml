@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="organOld-web:war">
+    <output-path>$PROJECT_DIR$/organOld-web/target</output-path>
+    <root id="archive" name="organOld-web.war">
+      <element id="artifact" artifact-name="organOld-web:war exploded" />
+    </root>
+  </artifact>
+</component>

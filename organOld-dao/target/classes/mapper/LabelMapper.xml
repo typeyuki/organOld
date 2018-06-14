@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.organOld.dao.repository.LabelDao">
+
+
+    <resultMap id="label" type="com.organOld.dao.entity.label.Label">
+        <id property="id" column="id" />
+        <result property="name" column="name"/>
+        <result property="content" column="content"/>
+        <result property="rule" column="rule" />
+        <result property="type" column="type" />
+        <result property="time" column="time" />
+        <association property="labelSec" javaType="com.organOld.dao.entity.label.LabelSec">
+            <id property="id" column="sid" />
+            <result property="name" column="sname"/>
+            <result property="fir" column="fir"/>
+        </association>
+    </resultMap>
+
+
+    <resultMap id="bindOldman" type="com.organOld.dao.entity.oldman.Oldman">
+        <id property="id" column="id" />
+        <result property="name" column="name"/>
+        <result property="sex" column="sex" />
+        <result property="birthday" column="birthday" />
+        <result property="pid" column="pid" />
+        <result property="address" column="address" />
+        <result property="phone" column="phone" />
+        <result property="census" column="census" />
+        <result property="districtId" column="district_id" />
+        <result property="politicalStatus" column="political_status" />
+        <result property="time" column="time" />
+        <association property="jw" javaType="com.organOld.dao.entity.Juwei">
+            <id property="id" column="jid"/>
+            <result property="name" column="jname"/>
+        </association>
+    </resultMap>
+
+    <select id="getByPage" parameterType="com.organOld.dao.util.Page" resultMap="label">
+        SELECT l.id,l.name,l.content,l.rule,l.time,ls.name sname,ls.fir
+        FROM label_three l,label_sec ls
+        WHERE type=#{entity.type} AND l.secId=ls.id
+        <if test="entity!=null and entity.id!=null and entity.id!=0">
+            and l.id=#{entity.id}
+        </if>
+        ORDER BY ${sortType} ${sort}
+        limit #{start},#{length}
+
+    </select>
+
+    <select id="getSizeByPage" parameterType="com.organOld.dao.util.Page" resultType="java.lang.Long">
+        SELECT count(1)
+        FROM label_three l
+        WHERE type=#{entity.type}
+        <if test="entity!=null and entity.id!=null and entity.id!=0">
+            and id=#{entity.id}
+        </if>
+    </select>
+
+
+    <select id="getBindManByPage" parameterType="com.organOld.dao.util.Page" resultMap="bindOldman">
+        SELECT o.id,o.name,o.sex,o.birthday,o.district_id,o.census,o.political_status,o.time,o.phone,o.address,o.pid,
+        org.name jname
+        FROM oldman_base o LEFT JOIN organ org ON o.jw_id=org.id,label_oldman lo
+        WHERE lo.label_three_id=#{labelId} AND o.id=lo.oldman_id
+        ORDER BY ${page.sortType} ${page.sort}
+        limit #{page.start},#{page.length}
+    </select>
+
+
+    <select id="getBindManSizeByPage" parameterType="com.organOld.dao.util.Page" resultType="java.lang.Long">
+        SELECT count(1)
+        FROM oldman_base o,label_oldman lo
+        WHERE lo.label_three_id=#{labelId} AND o.id=lo.oldman_id
+    </select>
+
+
+    <select id="getRuleManByPage" parameterType="com.organOld.dao.util.Page" resultMap="bindOldman">
+        SELECT o.id,o.name,o.sex,o.birthday,o.district_id,o.census,o.political_status,o.time,o.phone,o.address,o.pid,
+        org.name jname
+        FROM oldman_base o LEFT JOIN organ org ON o.jw_id=org.id,oldman_family oldf
+        WHERE oldf.oldman_id=o.id
+        <if test="rule.birStart!=null">
+            <![CDATA[
+            and DATE_FORMAT(o.birthday,'%Y') &gt;= DATE_FORMAT(#{rule.birStart},'%Y')
+            ]]>
+        </if>
+        <if test="rule.birEnd!=null">
+            <![CDATA[
+            and DATE_FORMAT(o.birthday,'%Y') <= DATE_FORMAT(#{rule.birEnd},'%Y')
+            ]]>
+        </if>
+        <if test="rule.sex!=null and rule.sex!=0">
+            and o.sex=#{rule.sex}
+        </if>
+        <if test="rule.isKey!=null and rule.isKey!=0">
+
+        </if>
+        <if test="rule.censuses!=null and rule.censuses.size() > 0">
+            and o.census IN
+            <foreach collection="rule.censuses" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="rule.familyIndexs!=null and rule.familyIndexs.size() > 0">
+            and oldf.family_index IN
+            <foreach collection="rule.familyIndexs" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        ORDER BY ${page.sortType} ${page.sort}
+        limit #{page.start},#{page.length}
+    </select>
+
+
+    <select id="getRuleManSizeByPage" parameterType="com.organOld.dao.util.Page" resultType="java.lang.Long">
+        SELECT count(1)
+        FROM oldman_base o,oldman_family oldf
+        WHERE oldf.oldman_id=o.id
+        <if test="rule.birStart!=null">
+            <![CDATA[
+            and DATE_FORMAT(o.birthday,'%Y') &gt;= DATE_FORMAT(#{rule.birStart},'%Y')
+            ]]>
+        </if>
+        <if test="rule.birEnd!=null">
+            <![CDATA[
+            and DATE_FORMAT(o.birthday,'%Y') <= DATE_FORMAT(#{rule.birEnd},'%Y')
+            ]]>
+        </if>
+        <if test="rule.sex!=null and rule.sex!=0">
+            and o.sex=#{rule.sex}
+        </if>
+        <if test="rule.isKey!=null and rule.isKey!=0">
+
+        </if>
+        <if test="rule.censuses!=null and rule.censuses.size() > 0">
+            and o.census IN
+            <foreach collection="rule.censuses" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="rule.familyIndexs!=null and rule.familyIndexs.size() > 0">
+            and oldf.family_index IN
+            <foreach collection="rule.familyIndexs" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+    </select>
+
+
+    <select id="getNoSelectManDataByPage" parameterType="com.organOld.dao.util.Page" resultMap="bindOldman">
+        SELECT o.id,o.name,o.sex,o.birthday,o.district_id,o.census,o.political_status,org.name jname
+        FROM oldman_base o LEFT JOIN organ org ON o.jw_id=org.id
+        WHERE o.id NOT IN (SELECT oldman_id FROM label_oldman WHERE label_three_id=#{labelId})
+        ORDER BY ${page.sortType} ${page.sort}
+        limit #{page.start},#{page.length}
+    </select>
+
+
+    <select id="getNoSelectManDataSizeByPage" parameterType="com.organOld.dao.util.Page" resultType="java.lang.Long">
+        SELECT count(1)
+        FROM oldman_base o,label_oldman lo
+        WHERE lo.label_three_id=#{labelId} AND o.id=lo.oldman_id
+    </select>
+
+
+    <select id="getLabelRuleByLid" resultType="com.organOld.dao.entity.label.LabelRule">
+        SELECT * FROM label_rule WHERE label_three_id=#{labelId}
+    </select>
+</mapper>

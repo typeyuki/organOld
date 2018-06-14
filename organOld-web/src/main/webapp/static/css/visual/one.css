@@ -1,0 +1,68 @@
+
+
+@media only screen and (min-width: 1900px){
+    #ditu{
+        width:75%;
+    }
+
+    .tu,.tu_big{
+        padding-top: 5%;
+        padding-bottom: 2%;
+    }
+    .map_title{
+        font-size: 50px;
+        color: white;
+    }
+
+    .title{
+        font-size: 40px;
+        color: white;
+        line-height: 60px;
+    }
+    .number{
+        font-size: 45px;
+        color: orange;
+        font-weight: bold;
+        padding: 20px 10px;
+    }
+    #Date{
+        font-size: 28px;
+    }
+    #ttt{
+        margin-top: 25%
+    }
+
+}
+
+@media only screen and (min-width: 1300px) and ( max-width: 1400px){
+    #ditu{
+        width:66%;
+    }
+
+    .tu,.tu_big{
+        padding-top: 5%;
+        padding-bottom: 2%;
+    }
+    .map_title{
+        font-size: 29px;
+        color: white;
+    }
+
+    .title{
+        font-size: 24px;
+        color: white;
+        line-height: 35px;
+    }
+    .number{
+        font-size: 28px;
+        color: orange;
+        font-weight: bold;
+        padding: 12px 6px;
+    }
+    #Date{
+        font-size: 18px;
+    }
+    #ttt{
+        margin-top: 10%;
+    }
+}

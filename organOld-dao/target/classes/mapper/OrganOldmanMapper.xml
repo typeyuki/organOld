@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.organOld.dao.repository.OrganOldmanDao">
+
+    <resultMap id="organOldman" type="com.organOld.dao.entity.oldman.OrganOldman">
+    <id property="id" column="id" />
+    <result property="organId" column="organ_id"/>
+    <result property="oldmanId" column="oldman_id" />
+    <result property="time_in" column="time_in" />
+    <result property="time_out" column="time_out"/>
+    <result property="num" column="num"/>
+    <result property="time" column="time"/>
+    </resultMap>
+
+
+    <select id="getByPage" parameterType="com.organOld.dao.util.Page" resultMap="organOldman">
+        SELECT o.id,o.organ_id,o.oldman_id,o.time_in,o.time_out,o.num,o.time
+        FROM organ_oldman o
+    </select>
+
+    <select id="getSizeByPage" parameterType="com.organOld.dao.util.Page" resultType="java.lang.Long">
+        SELECT count(1)
+        FROM organ_oldman
+        WHERE 1=1
+        <if test="entity!=null and entity.id!=null and entity.id!=0">
+            and id=#{entity.id}
+        </if>
+
+    </select>
+    <update id="updateById" parameterType="com.organOld.dao.entity.oldman.OrganOldman">
+        UPDATE organ_oldman
+        SET organ_id=#{organ_id},oldman_id=#{oldman_id},id=#{id},time_in=#{time_in},time_out=#{time_out},time=#{time},num=#{num}
+        WHERE id=#{id}
+    </update>
+</mapper>

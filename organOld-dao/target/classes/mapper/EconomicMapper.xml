@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.organOld.dao.repository.OldmanEconomicDao">
+
+    <resultMap id="economic" type="com.organOld.dao.entity.oldman.Economic">
+    <id property="id" column="id" />
+    <result property="oldmanId" column="oldman_id"/>
+    <result property="econmic_index" column="econmic_index" />
+    <result property="time" column="time" />
+    </resultMap>
+
+
+    <select id="getByPage" parameterType="com.organOld.dao.util.Page" resultMap="economic">
+        SELECT o.id,o.oldman_id,o.econmic_index,o.time
+        FROM oldman_econmic o
+    </select>
+
+    <select id="getSizeByPage" parameterType="com.organOld.dao.util.Page" resultType="java.lang.Long">
+        SELECT count(1)
+        FROM oldman_econmic
+        WHERE 1=1
+        <if test="entity!=null and entity.id!=null and entity.id!=0">
+            and id=#{entity.id}
+        </if>
+
+    </select>
+    <update id="updateById" parameterType="com.organOld.dao.entity.oldman.Economic">
+        UPDATE oldman_econmic
+        SET econmic_index=#{econmic_index},oldman_id=#{oldman_id},id=#{id},time=#{time}
+        WHERE id=#{id}
+    </update>
+</mapper>

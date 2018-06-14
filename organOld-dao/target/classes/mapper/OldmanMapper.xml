@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.organOld.dao.repository.OldmanDao">
+
+    <resultMap id="oldman" type="com.organOld.dao.entity.oldman.Oldman">
+        <id property="id" column="id" />
+        <result property="name" column="name"/>
+        <result property="sex" column="sex" />
+        <result property="birthday" column="birthday" />
+        <result property="pid" column="pid" />
+        <result property="address" column="address" />
+        <result property="phone" column="phone" />
+        <result property="census" column="census" />
+        <result property="politicalStatus" column="political_status" />
+        <result property="time" column="time" />
+    </resultMap>
+
+    <select id="getByPage" parameterType="com.organOld.dao.util.Page" resultMap="oldman">
+        SELECT o.id,o.name,o.sex,o.birthday,o.census,o.political_status,o.time,o.phone,o.address,o.pid
+        FROM oldman_base o
+        WHERE 1=1
+        <if test="entity!=null and entity.id!=null and entity.id!=0">
+            and o.id=#{entity.id}
+        </if>
+        <if test="entity!=null and entity.sex!=null and entity.sex!=0">
+            and o.sex=#{entity.sex}
+        </if>
+        <if test="entity!=null and entity.districtId!=null and entity.districtId!=0">
+            and o.district_id=#{entity.districtId}
+        </if>
+        <if test="entity!=null and entity.jwId!=null and entity.jwId!=0">
+            and o.jw_id=#{entity.jwId}
+        </if>
+        <if test="entity!=null and entity.census!=null and entity.census!=0">
+            and o.census=#{entity.census}
+        </if>
+        <if test="entity!=null and entity.politicalStatus!=null and entity.politicalStatuss!=''">
+            and o.political_status=#{entity.politicalStatus}
+        </if>
+        <if test="entity!=null and entity.search!=null and entity.search!=''">
+            and (o.pid LIKE  concat('%',#{entity.search},'%') OR o.address LIKE  concat('%',#{entity.search},'%') OR o.name LIKE  concat('%',#{entity.search},'%')
+            OR o.phone LIKE  concat('%',#{entity.search},'%'))
+        </if>
+        ORDER BY ${sortType} ${sort}
+        limit #{start},#{length}
+    </select>
+
+    <select id="getSizeByPage" parameterType="com.organOld.dao.util.Page" resultType="java.lang.Long">
+        SELECT count(1)
+        FROM oldman_base
+        WHERE 1=1
+        <if test="entity!=null and entity.id!=null and entity.id!=0">
+            and id=#{entity.id}
+        </if>
+        <if test="entity!=null and entity.sex!=null and entity.sex!=0">
+            and sex=#{entity.sex}
+        </if>
+        <if test="entity!=null and entity.districtId!=null and entity.districtId!=0">
+            and district_id=#{entity.districtId}
+        </if>
+        <if test="entity!=null and entity.jwId!=null and entity.jwId!=0">
+            and jw_id=#{entity.jwId}
+        </if>
+        <if test="entity!=null and entity.census!=null and entity.census!=0">
+            and census=#{entity.census}
+        </if>
+        <if test="entity!=null and entity.politicalStatus!=null and entity.politicalStatuss!=''">
+            and political_status=#{entity.politicalStatus}
+        </if>
+        <if test="entity!=null and entity.search!=null and entity.search!=''">
+            and (pid LIKE  concat('%',#{entity.search},'%') OR address LIKE  concat('%',#{entity.search},'%') OR name LIKE  concat('%',#{entity.search},'%')
+            OR phone LIKE  concat('%',#{entity.search},'%'))
+        </if>
+        <!--<if test="oldman!=null and oldman.birthday!=null and oldman.birthday!=''">-->
+        <!--and birthday=#{oldman.birthday}-->
+        <!--</if>-->
+
+    </select>
+
+    <delete id="delById">
+        DELETE FROM oldman_base WHERE id=#{id}
+    </delete>
+
+    <insert id="save" parameterType="com.organOld.dao.entity.oldman.Oldman">
+        INSERT INTO oldman_base(name,sex,birthday,pid,address,jw_id,census,political_status,district_id,phone)
+        VALUE (#{name},#{sex},#{birthday},#{pid},#{address},#{jwId},#{census},#{politicalStatus},#{districtId},#{phone})
+    </insert>
+
+    <update id="updateById" parameterType="com.organOld.dao.entity.oldman.Oldman">
+        UPDATE oldman_base
+        SET name=#{name},sex=#{sex},birthday=#{birthday},pid=#{pid},address=#{address},jw_id=#{jwId},census=#{census},political_status#{politicalStatus},
+        district_id=#{districtId},phone=#{phone}
+        WHERE id=#{id}
+    </update>
+</mapper>

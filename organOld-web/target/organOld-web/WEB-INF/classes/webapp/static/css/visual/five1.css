@@ -1,0 +1,134 @@
+h2,p,td,h3,h1,span{
+    color: white!important;
+}
+#label1{
+    position: relative;left: 15%;
+}
+.block{
+    margin-top:30%;
+}
+.diturela{
+    position: relative;left: 5px;
+}
+
+@media only screen and (min-width: 1900px){
+    .map_title{
+        font-size: 28px;
+        color: white;
+    }
+    .qk{
+        font-size: 24px;
+        background-color:#6cbdfc ;
+        padding:10px 30px;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        margin-bottom: 10px;
+        position: fixed;
+        bottom: 5%;
+        left:3%
+    }
+
+    .daohang{
+        /*width:120px;*/
+        /*height:45px;*/
+        padding: 10px 20px;
+        font-size:30px;
+        font-weight: bold;
+        margin-bottom: 3%;
+    }
+    .title{
+        font-size: 22px;
+        color: white;
+    }
+    .number{
+        font-size: 30px;
+        color: orange;
+        font-weight: bold;
+        /*padding: 20px 10px;*/
+    }
+
+    .diturow{
+        height: 700px;
+    }
+    #ditu{
+        width:80%;
+    }
+    .ditumess{
+        height: 350px;
+    }
+    .ditulabel{
+        width: 20px;height: 20px;
+    }
+    .dituspan{
+        font-size: 22px;margin-left:10px;line-height: 15px;
+    }
+    #messimg{
+        width:80%;margin-top:35%;
+    }
+    .mt{
+        margin-top:23%
+    }
+}
+
+@media only screen and (min-width: 1300px) and ( max-width: 1400px){
+
+    .map_title{
+        font-size: 28px;
+        color: white;
+    }
+
+
+    .qk{
+        font-size: 16px;
+        background-color:#6cbdfc ;
+        padding:6px 18px;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        margin-bottom: 10px;
+        position: fixed;
+        bottom: 5%;
+        left:3%
+    }
+
+    .daohang{
+        /*width:120px;*/
+        /*height:45px;*/
+        padding: 5px 10px;
+        font-size:18px;
+        font-weight: bold;
+        margin-bottom: 3%;
+    }
+    .title{
+        font-size: 16px;
+        color: white;
+    }
+    .number{
+        font-size: 18px;
+        color: orange;
+        font-weight: bold;
+        /*padding: 20px 10px;*/
+    }
+    .diturow{
+        height: 450px;
+    }
+    #ditu{
+        width:70%;
+    }
+    .ditumess{
+        height: 180px;
+    }
+    .ditulabel{
+        width: 15px;height: 15px;
+    }
+    .dituspan{
+        font-size: 16px;margin-left:10px;line-height: 15px;
+    }
+    #messimg{
+        width:80%;margin-top:25%;
+    }
+    .mt{
+        margin-top:17%
+    }
+}
