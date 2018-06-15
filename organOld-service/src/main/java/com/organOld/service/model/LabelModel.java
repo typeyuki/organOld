@@ -3,22 +3,12 @@ package com.organOld.service.model;
 /**
  * Created by netlab606 on 2018/6/7.
  */
-public class LabelModel {
-    private int id;
+public class LabelModel extends Model{
     private String fir;
     private String sec;
     private String name;
     private String rule;
     private String content;
-    private String time;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getFir() {
         return fir;
@@ -58,13 +48,5 @@ public class LabelModel {
 
     public void setContent(String content) {
         this.content = content;
-    }
-
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
     }
 }

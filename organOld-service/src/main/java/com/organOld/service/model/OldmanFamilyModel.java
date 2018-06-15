@@ -1,18 +1,9 @@
-package com.organOld.dao.entity.oldman;
+package com.organOld.service.model;
 
 
-import com.organOld.dao.entity.DBEntity;
-
-/**
- * 应急联系人
- * Created by netlab606 on 2018/4/2.
- */
-public class Family extends DBEntity {
+public class OldmanFamilyModel extends Model{
     private int oldmanId;
-    private int familyIndex;
-
-
-
+    private String family;
     private String oldmanName;
 
     public int getOldmanId() {
@@ -24,13 +15,14 @@ public class Family extends DBEntity {
     }
 
 
-    public int getFamilyIndex() {
-        return familyIndex;
+    public String getFamily() {
+        return family;
     }
 
-    public void setFamilyIndex(int familyIndex) {
-        this.familyIndex = familyIndex;
+    public void setFamily(String family) {
+        this.family = family;
     }
+
 
     public String getOldmanName() {
         return oldmanName;

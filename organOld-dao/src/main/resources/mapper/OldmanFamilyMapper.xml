@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.organOld.dao.repository.OldmanFamilyDao">
+
+    <resultMap id="oldmanFamily" type="com.organOld.dao.entity.oldman.OldmanFamily">
+        <id property="id" column="id" />
+        <result property="family" column="family"/>
+        <result property="time" column="time" />
+        <association property="oldman" javaType="com.organOld.dao.entity.oldman.Oldman">
+            <id property="id" column="oid" />
+            <result property="name" column="name"/>
+        </association>
+    </resultMap>
+
+    <select id="getByPage" parameterType="com.organOld.dao.util.Page" resultMap="oldmanFamily">
+        SELECT ofa.id,ob.id oid,f.value family,ofa.time,ob.name
+        FROM oldman_family ofa,oldman_base ob,auto_value f
+        WHERE ob.id=ofa.oldman_id AND f.id=ofa.family_index
+    </select>
+
+    <select id="getSizeByPage" parameterType="com.organOld.dao.util.Page" resultType="java.lang.Long">
+        SELECT count(1)
+        FROM oldman_family
+        WHERE 1=1
+    </select>
+    <update id="updateById" parameterType="com.organOld.dao.entity.oldman.OldmanFamily">
+        UPDATE oldman_family
+        SET family_index=#{family_index},oldman_id=#{oldman_id},id=#{id},time=#{time}
+        WHERE id=#{id}
+    </update>
+</mapper>

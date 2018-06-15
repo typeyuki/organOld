@@ -10,10 +10,9 @@ import java.util.List;
  */
 public class OldmanHealth extends DBEntity {
 
-    private int oldmanId;
     private String bloodType;
-    private Integer intelligence;//失智
-    private Integer eyesight;//视力
+    private String intelligence;//失智
+    private String eyesight;//视力
     private List<HealthAdd> healthAdd;
     private List<HealthSelect> healthSelect;
     //TODO 选取所有表格中最新的一个时间  暂时还没实现
@@ -46,19 +45,19 @@ public class OldmanHealth extends DBEntity {
         this.bloodType = bloodType;
     }
 
-    public Integer getIntelligence() {
+    public String getIntelligence() {
         return intelligence;
     }
 
-    public void setIntelligence(Integer intelligence) {
+    public void setIntelligence(String intelligence) {
         this.intelligence = intelligence;
     }
 
-    public Integer getEyesight() {
+    public String getEyesight() {
         return eyesight;
     }
 
-    public void setEyesight(Integer eyesight) {
+    public void setEyesight(String eyesight) {
         this.eyesight = eyesight;
     }
 
@@ -76,13 +75,5 @@ public class OldmanHealth extends DBEntity {
 
     public void setHealthSelect(List<HealthSelect> healthSelect) {
         this.healthSelect = healthSelect;
-    }
-
-    public int getOldmanId() {
-        return oldmanId;
-    }
-
-    public void setOldmanId(int oldmanId) {
-        this.oldmanId = oldmanId;
     }
 }

@@ -33,14 +33,21 @@ public class SystemServiceImpl implements SystemService {
 
     @Override
     public List<MenuTree> getMenu(HttpSession session) {
-        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext()
-                .getAuthentication()
-                .getPrincipal();
+        UserDetails userDetails;
         List<String> authNameList=new ArrayList<>();
-        for (GrantedAuthority authority:userDetails.getAuthorities()) {
-            authNameList.add(authority.toString());
+        if(SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getPrincipal()!=null) {
+            userDetails = (UserDetails) SecurityContextHolder.getContext()
+                    .getAuthentication()
+                    .getPrincipal();
+            for (GrantedAuthority authority:userDetails.getAuthorities()) {
+                authNameList.add(authority.toString());
+            }
+            return menuDao.getMenuTreeByAuthentications(authNameList);
         }
-        return menuDao.getMenuTreeByAuthentications(authNameList);
+        return new ArrayList<>();
+
     }
 
     @Override

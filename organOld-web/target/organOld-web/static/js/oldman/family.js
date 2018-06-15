@@ -17,7 +17,7 @@ $(document).ready(function(){
             },{
                 data:"oldmanName"
             },{
-                data:"familyIndex"
+                data:"family"
             },{
                 data:"time"
             }

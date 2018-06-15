@@ -2,7 +2,6 @@ package com.organOld.service.wrapper;
 
 import com.organOld.dao.entity.label.Label;
 import com.organOld.service.constant.TimeConstant;
-import com.organOld.service.enumModel.LabelEnum;
 import com.organOld.service.model.LabelModel;
 import com.organOld.service.util.Tool;
 import com.organOld.service.contract.*;
@@ -14,7 +13,7 @@ public class LabelWrapper implements Wrapper<Label,LabelModel,LabelRequest> {
     public LabelModel wrap(Label label) {
         LabelModel labelModel=new LabelModel();
         labelModel.setContent(label.getContent());
-        labelModel.setFir(LabelEnum.getValue(label.getLabelSec().getFir()));
+//        labelModel.setFir(LabelEnum.getValue(label.getLabelSec().getFir()));
         labelModel.setSec(label.getLabelSec().getName());
         labelModel.setId(label.getId());
         labelModel.setName(label.getName());

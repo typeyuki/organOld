@@ -4,10 +4,8 @@ package com.organOld.service.wrapper;
 import com.organOld.dao.entity.oldman.HealthAdd;
 import com.organOld.dao.entity.oldman.HealthSelect;
 import com.organOld.dao.entity.oldman.OldmanHealth;
-import com.organOld.service.enumModel.EyesightEnum;
 import com.organOld.service.enumModel.HealthAddEnum;
 import com.organOld.service.enumModel.HealthSelectEnum;
-import com.organOld.service.enumModel.IntelligenceEnum;
 import com.organOld.service.model.OldmanHealthModel;
 import com.organOld.service.contract.*;
 import org.springframework.beans.BeanUtils;
@@ -19,11 +17,12 @@ public class OldmanHealthWrapper implements Wrapper<OldmanHealth,OldmanHealthMod
 
         OldmanHealthModel oldmanHealthModel=new OldmanHealthModel();
         oldmanHealthModel.setId(oldmanHealth.getId());
-        oldmanHealthModel.setOldmanId(oldmanHealth.getOldmanId());
+        oldmanHealthModel.setOldmanId(oldmanHealth.getOldman().getId());
         oldmanHealthModel.setName(oldmanHealth.getOldman().getName());
         oldmanHealthModel.setBloodType(oldmanHealth.getBloodType());
-        oldmanHealthModel.setIntelligence(IntelligenceEnum.getValue(oldmanHealth.getIntelligence()));
-        oldmanHealthModel.setEyesight(EyesightEnum.getValue(oldmanHealth.getEyesight()));
+        oldmanHealthModel.setIntelligence(oldmanHealth.getIntelligence());
+        oldmanHealthModel.setEyesight(oldmanHealth.getEyesight());
+        //TODO  选取所有表格中最新的一个时间  暂时还没实现
         oldmanHealthModel.setTime("2018-05-25");
 
         if(oldmanHealth.getHealthAdd()!=null && oldmanHealth.getHealthAdd().size()>0){

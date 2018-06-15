@@ -1,12 +1,10 @@
 package com.organOld.service.model;
 
-public class OrganOldmanModel extends ManModel {
+public class OrganOldmanModel extends Model {
     private int oldmanId;
-    private int id;
     private int organId;
     private String timeIn;
     private String timeOut;
-    private String time;
     private int num;
 
     public int getOldmanId() {
@@ -15,16 +13,6 @@ public class OrganOldmanModel extends ManModel {
 
     public void setOldmanId(int oldmanId) {
         this.oldmanId = oldmanId;
-    }
-
-    @Override
-    public int getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(int id) {
-        this.id = id;
     }
 
     public int getOrganId() {
@@ -49,16 +37,6 @@ public class OrganOldmanModel extends ManModel {
 
     public void setTimeOut(String timeOut) {
         this.timeOut = timeOut;
-    }
-
-    @Override
-    public String getTime() {
-        return time;
-    }
-
-    @Override
-    public void setTime(String time) {
-        this.time = time;
     }
 
     public int getNum() {

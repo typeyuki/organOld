@@ -2,9 +2,6 @@ package com.organOld.service.wrapper;
 
 import com.organOld.dao.entity.oldman.Oldman;
 import com.organOld.service.constant.TimeConstant;
-import com.organOld.service.enumModel.CensusEnum;
-import com.organOld.service.enumModel.DistrictEnum;
-import com.organOld.service.enumModel.PoliticalStatusEnum;
 import com.organOld.service.enumModel.SexEnum;
 import com.organOld.service.model.OldmanModel;
 import com.organOld.service.service.CommonService;

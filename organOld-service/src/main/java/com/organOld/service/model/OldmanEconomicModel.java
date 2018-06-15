@@ -1,11 +1,11 @@
 package com.organOld.service.model;
 
 
-public class FamilyModel{
+public class OldmanEconomicModel extends Model{
     private int oldmanId;
-    private String familyIndex;
-    private String time;
+    private String econimic;
     private String oldmanName;
+
 
     public int getOldmanId() {
         return oldmanId;
@@ -15,20 +15,12 @@ public class FamilyModel{
         this.oldmanId = oldmanId;
     }
 
-    public String getFamilyIndex() {
-        return familyIndex;
+    public String getEconimic() {
+        return econimic;
     }
 
-    public void setFamilyIndex(String familyIndex) {
-        this.familyIndex = familyIndex;
-    }
-
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
+    public void setEconimic(String econimic) {
+        this.econimic = econimic;
     }
 
     public String getOldmanName() {

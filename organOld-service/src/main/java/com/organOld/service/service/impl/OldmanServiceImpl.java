@@ -52,7 +52,6 @@ public class OldmanServiceImpl implements OldmanService {
         Page<OldmanHealth> page=commonService.getPage(bTableRequest,"oldman_health");
         OldmanHealth oldmanHealth=Wrappers.oldmanHealthWrapper.unwrap(oldmanHealthRequest);
         page.setEntity(oldmanHealth);
-        //mybatis 不支持一个对象里有多个list  也就是不能用多个collection 会有大量重复 只能分开查询，但是分开查询 又有很大的 传输延迟  当前解决办法就是 查一次 然后去重
         List<OldmanHealthModel> oldmanHealthModelList=oldmanHealthDao.getByPage(page).stream().map(Wrappers.oldmanHealthWrapper::wrap).collect(Collectors.toList());
         Long size=oldmanHealthDao.getSizeByPage(page);
         return commonService.tableReturn(bTableRequest.getsEcho(),size,oldmanHealthModelList);
@@ -60,20 +59,20 @@ public class OldmanServiceImpl implements OldmanService {
 
     @Override
     public String getEconomyByPage(OldmanEconomicRequest economicRequest, BTableRequest bTableRequest) {
-        Page<Economic> page=commonService.getPage(bTableRequest,"oldman_economy");
-        Economic economic=Wrappers.economicWrapper.unwrap(economicRequest);
+        Page<OldmanEconomic> page=commonService.getPage(bTableRequest,"oldman_economy");
+        OldmanEconomic economic=Wrappers.economicWrapper.unwrap(economicRequest);
         page.setEntity(economic);
-        List<EconomicModel> economicModelList=economicDao.getByPage(page).stream().map(Wrappers.economicWrapper::wrap).collect(Collectors.toList());
+        List<OldmanEconomicModel> economicModelList=economicDao.getByPage(page).stream().map(Wrappers.economicWrapper::wrap).collect(Collectors.toList());
         Long size=economicDao.getSizeByPage(page);
         return commonService.tableReturn(bTableRequest.getsEcho(),size,economicModelList);
     }
 
     @Override
     public String getFamilyByPage(OldmanFamilyRequest familyRequest, BTableRequest bTableRequest) {
-        Page<Family> page=commonService.getPage(bTableRequest,"oldman_family");
-        Family family=Wrappers.familyWrapper.unwrap(familyRequest);
+        Page<OldmanFamily> page=commonService.getPage(bTableRequest,"oldman_family");
+        OldmanFamily family=Wrappers.familyWrapper.unwrap(familyRequest);
         page.setEntity(family);
-        List<FamilyModel> familyModelList=familyDao.getByPage(page).stream().map(Wrappers.familyWrapper::wrap).collect(Collectors.toList());
+        List<OldmanFamilyModel> familyModelList=familyDao.getByPage(page).stream().map(Wrappers.familyWrapper::wrap).collect(Collectors.toList());
         Long size=familyDao.getSizeByPage(page);
         return commonService.tableReturn(bTableRequest.getsEcho(),size,familyModelList);
     }
@@ -138,13 +137,13 @@ public class OldmanServiceImpl implements OldmanService {
 
     @Override
     public void updateFamily(OldmanFamilyRequest familyRequest) {
-        Family family= Wrappers.familyWrapper.unwrap(familyRequest);
+        OldmanFamily family= Wrappers.familyWrapper.unwrap(familyRequest);
         familyDao.updateById(family);
     }
 
     @Override
     public void updateEconomy(OldmanEconomicRequest economicRequest) {
-        Economic economic= Wrappers.economicWrapper.unwrap(economicRequest);
+        OldmanEconomic economic= Wrappers.economicWrapper.unwrap(economicRequest);
         economicDao.updateById(economic);
     }
 

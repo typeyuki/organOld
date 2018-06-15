@@ -12,8 +12,7 @@ import java.util.List;
 /**
  * Created by netlab606 on 2018/5/28.
  */
-public class OldmanHealthModel {
-    private int id;
+public class OldmanHealthModel extends Model{
     private int oldmanId;
     private String bloodType;
     private String intelligence;//失智
@@ -25,23 +24,6 @@ public class OldmanHealthModel {
     private List<HealthSelect> selectSn=new ArrayList<>();//失能
     private List<HealthSelect> selectYwfy=new ArrayList<>();//药物反应
     private String name;
-    private String time;//更新日期
-
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public int getOldmanId() {
         return oldmanId;

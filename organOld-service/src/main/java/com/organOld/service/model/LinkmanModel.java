@@ -1,13 +1,10 @@
 package com.organOld.service.model;
 
 
-public class LinkmanModel extends ManModel {
+public class LinkmanModel extends ManModel{
     private Integer oldmanId;
-    private int id;
-    private String name;
-    private String phone;
     private String relation;
-    private String time;
+    private String oldName;
 
     public Integer getOldmanId() {
         return oldmanId;
@@ -15,36 +12,6 @@ public class LinkmanModel extends ManModel {
 
     public void setOldmanId(Integer oldmanId) {
         this.oldmanId = oldmanId;
-    }
-
-    @Override
-    public int getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @Override
-    public String getPhone() {
-        return phone;
-    }
-
-    @Override
-    public void setPhone(String phone) {
-        this.phone = phone;
     }
 
     public String getRelation() {
@@ -55,13 +22,11 @@ public class LinkmanModel extends ManModel {
         this.relation = relation;
     }
 
-    @Override
-    public String getTime() {
-        return time;
+    public String getOldName() {
+        return oldName;
     }
 
-    @Override
-    public void setTime(String time) {
-        this.time = time;
+    public void setOldName(String oldName) {
+        this.oldName = oldName;
     }
 }
