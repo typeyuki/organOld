@@ -1,51 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4081ac0b-b270-4959-8d2c-da645f7dc709" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/organOld-dao/src/main/java/com/organOld/dao/entity/organ/Organ.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/organOld-dao/target/classes/com/organOld/dao/entity/oldman/Economic.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/organOld-dao/target/classes/mapper/EconomicMapper.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/organOld-service/target/classes/com/organOld/service/model/EconomicModel.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/organOld-service/target/classes/com/organOld/service/model/FamilyModel.class" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-dao/target/classes/com/organOld/dao/entity/oldman/Linkman.class" afterPath="$PROJECT_DIR$/organOld-dao/target/classes/com/organOld/dao/entity/oldman/Linkman.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-dao/target/classes/com/organOld/dao/repository/OldmanEconomicDao.class" afterPath="$PROJECT_DIR$/organOld-dao/target/classes/com/organOld/dao/repository/OldmanEconomicDao.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-service/target/classes/com/organOld/service/model/LabelModel.class" afterPath="$PROJECT_DIR$/organOld-service/target/classes/com/organOld/service/model/LabelModel.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-service/target/classes/com/organOld/service/model/LinkmanModel.class" afterPath="$PROJECT_DIR$/organOld-service/target/classes/com/organOld/service/model/LinkmanModel.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-service/target/classes/com/organOld/service/model/ManModel.class" afterPath="$PROJECT_DIR$/organOld-service/target/classes/com/organOld/service/model/ManModel.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-service/target/classes/com/organOld/service/model/OldmanHealthModel.class" afterPath="$PROJECT_DIR$/organOld-service/target/classes/com/organOld/service/model/OldmanHealthModel.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-service/target/classes/com/organOld/service/model/OrganOldmanModel.class" afterPath="$PROJECT_DIR$/organOld-service/target/classes/com/organOld/service/model/OrganOldmanModel.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-service/target/classes/com/organOld/service/service/impl/OldmanServiceImpl.class" afterPath="$PROJECT_DIR$/organOld-service/target/classes/com/organOld/service/service/impl/OldmanServiceImpl.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-service/target/classes/com/organOld/service/wrapper/LinkmanWrapper.class" afterPath="$PROJECT_DIR$/organOld-service/target/classes/com/organOld/service/wrapper/LinkmanWrapper.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-service/target/classes/com/organOld/service/wrapper/OldmanEconomicWrapper.class" afterPath="$PROJECT_DIR$/organOld-service/target/classes/com/organOld/service/wrapper/OldmanEconomicWrapper.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-service/target/classes/com/organOld/service/wrapper/OldmanFamilyWrapper.class" afterPath="$PROJECT_DIR$/organOld-service/target/classes/com/organOld/service/wrapper/OldmanFamilyWrapper.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-web/target/organOld-web/WEB-INF/lib/organOld-dao-1.0-SNAPSHOT.jar" afterPath="$PROJECT_DIR$/organOld-web/target/organOld-web/WEB-INF/lib/organOld-dao-1.0-SNAPSHOT.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-web/target/organOld-web/WEB-INF/lib/organOld-service-1.0-SNAPSHOT.jar" afterPath="$PROJECT_DIR$/organOld-web/target/organOld-web/WEB-INF/lib/organOld-service-1.0-SNAPSHOT.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-dao/src/main/java/com/organOld/dao/entity/label/Label.java" afterPath="$PROJECT_DIR$/organOld-dao/src/main/java/com/organOld/dao/entity/label/Label.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-dao/src/main/java/com/organOld/dao/entity/label/LabelSec.java" afterPath="$PROJECT_DIR$/organOld-dao/src/main/java/com/organOld/dao/entity/label/LabelSec.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-dao/src/main/java/com/organOld/dao/entity/oldman/Linkman.java" afterPath="$PROJECT_DIR$/organOld-dao/src/main/java/com/organOld/dao/entity/oldman/Linkman.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-dao/src/main/java/com/organOld/dao/entity/oldman/OldmanEconomic.java" afterPath="$PROJECT_DIR$/organOld-dao/src/main/java/com/organOld/dao/entity/oldman/OldmanEconomic.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-dao/src/main/java/com/organOld/dao/entity/oldman/OldmanFamily.java" afterPath="$PROJECT_DIR$/organOld-dao/src/main/java/com/organOld/dao/entity/oldman/OldmanFamily.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-dao/src/main/resources/mapper/LabelMapper.xml" afterPath="$PROJECT_DIR$/organOld-dao/src/main/resources/mapper/LabelMapper.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-dao/src/main/resources/mapper/LinkmanMapper.xml" afterPath="$PROJECT_DIR$/organOld-dao/src/main/resources/mapper/LinkmanMapper.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-dao/src/main/resources/mapper/OldmanEconomicMapper.xml" afterPath="$PROJECT_DIR$/organOld-dao/src/main/resources/mapper/OldmanEconomicMapper.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-dao/target/classes/mapper/LinkmanMapper.xml" afterPath="$PROJECT_DIR$/organOld-dao/target/classes/mapper/LinkmanMapper.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-dao/target/classes/mapper/OldmanFamilyMapper.xml" afterPath="$PROJECT_DIR$/organOld-dao/target/classes/mapper/OldmanFamilyMapper.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-service/src/main/java/com/organOld/service/model/LabelModel.java" afterPath="$PROJECT_DIR$/organOld-service/src/main/java/com/organOld/service/model/LabelModel.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-service/src/main/java/com/organOld/service/model/LinkmanModel.java" afterPath="$PROJECT_DIR$/organOld-service/src/main/java/com/organOld/service/model/LinkmanModel.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-service/src/main/java/com/organOld/service/model/OldmanEconomicModel.java" afterPath="$PROJECT_DIR$/organOld-service/src/main/java/com/organOld/service/model/OldmanEconomicModel.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-service/src/main/java/com/organOld/service/wrapper/LabelWrapper.java" afterPath="$PROJECT_DIR$/organOld-service/src/main/java/com/organOld/service/wrapper/LabelWrapper.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-service/src/main/java/com/organOld/service/wrapper/LinkmanWrapper.java" afterPath="$PROJECT_DIR$/organOld-service/src/main/java/com/organOld/service/wrapper/LinkmanWrapper.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-service/src/main/java/com/organOld/service/wrapper/OldmanEconomicWrapper.java" afterPath="$PROJECT_DIR$/organOld-service/src/main/java/com/organOld/service/wrapper/OldmanEconomicWrapper.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-web/src/main/webapp/WEB-INF/pages/oldman/economic.ftl" afterPath="$PROJECT_DIR$/organOld-web/src/main/webapp/WEB-INF/pages/oldman/economic.ftl" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-web/src/main/webapp/WEB-INF/pages/oldman/linkman.ftl" afterPath="$PROJECT_DIR$/organOld-web/src/main/webapp/WEB-INF/pages/oldman/linkman.ftl" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-web/src/main/webapp/static/js/oldman/economic.js" afterPath="$PROJECT_DIR$/organOld-web/src/main/webapp/static/js/oldman/economic.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-web/src/main/webapp/static/js/oldman/linkman.js" afterPath="$PROJECT_DIR$/organOld-web/src/main/webapp/static/js/oldman/linkman.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-web/target/organOld-web/WEB-INF/pages/oldman/economic.ftl" afterPath="$PROJECT_DIR$/organOld-web/target/organOld-web/WEB-INF/pages/oldman/economic.ftl" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-web/target/organOld-web/WEB-INF/pages/oldman/linkman.ftl" afterPath="$PROJECT_DIR$/organOld-web/target/organOld-web/WEB-INF/pages/oldman/linkman.ftl" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-web/target/organOld-web/static/js/oldman/economic.js" afterPath="$PROJECT_DIR$/organOld-web/target/organOld-web/static/js/oldman/economic.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-web/target/organOld-web/static/js/oldman/linkman.js" afterPath="$PROJECT_DIR$/organOld-web/target/organOld-web/static/js/oldman/linkman.js" />
-    </list>
+    <list default="true" id="4081ac0b-b270-4959-8d2c-da645f7dc709" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
     <ignored path="$PROJECT_DIR$/organOld-web/target/" />
@@ -1653,12 +1609,12 @@
       <workItem from="1528903444014" duration="1685000" />
       <workItem from="1528905170898" duration="4423000" />
       <workItem from="1528952249564" duration="14936000" />
-      <workItem from="1528980924510" duration="13505000" />
+      <workItem from="1528980924510" duration="13550000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="39977000" />
+    <option name="totallyTimeSpent" value="40022000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="2576" height="1416" extended-state="6" />
