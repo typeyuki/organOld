@@ -13,7 +13,7 @@
     </resultMap>
 
     <select id="getByPage" parameterType="com.organOld.dao.util.Page" resultMap="oldmanFamily">
-        SELECT ofa.id,ob.id oid,f.value family,ofa.time,ob.name name
+        SELECT ofa.id,ob.id oid,f.value family,ofa.time,ob.name
         FROM oldman_family ofa,oldman_base ob,auto_value f
         WHERE ob.id=ofa.oldman_id AND f.id=ofa.family_index
     </select>

@@ -1,29 +1,28 @@
 package com.organOld.dao.entity.label;
 
-
 import com.organOld.dao.entity.DBEntity;
 
 /**
- * 二级标签
- * Created by netlab606 on 2018/6/7.
+ * 一级 二级 标签
+ * Created by netlab606 on 2018/6/16.
  */
-public class LabelSec extends DBEntity {
-    private int fir;//一级索引
-    private String name;//二级
+public class LabelSec extends DBEntity{
+    private String firName;
+    private String secName;
 
-    public int getFir() {
-        return fir;
+    public String getFirName() {
+        return firName;
     }
 
-    public void setFir(int fir) {
-        this.fir = fir;
+    public void setFirName(String firName) {
+        this.firName = firName;
     }
 
-    public String getName() {
-        return name;
+    public String getSecName() {
+        return secName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setSecName(String secName) {
+        this.secName = secName;
     }
 }

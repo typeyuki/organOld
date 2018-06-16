@@ -9,6 +9,15 @@ public class LabelModel extends Model{
     private String name;
     private String rule;
     private String content;
+    private String organName;
+
+    public String getOrganName() {
+        return organName;
+    }
+
+    public void setOrganName(String organName) {
+        this.organName = organName;
+    }
 
     public String getFir() {
         return fir;

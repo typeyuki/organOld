@@ -4,7 +4,7 @@ package com.organOld.dao.entity.oldman;
 import com.organOld.dao.entity.DBEntity;
 
 /**
- * 应急联系人
+ * 家庭结构
  * Created by netlab606 on 2018/4/2.
  */
 public class OldmanFamily extends DBEntity {

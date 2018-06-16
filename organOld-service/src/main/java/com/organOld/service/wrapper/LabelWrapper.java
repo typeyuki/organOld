@@ -13,11 +13,13 @@ public class LabelWrapper implements Wrapper<Label,LabelModel,LabelRequest> {
     public LabelModel wrap(Label label) {
         LabelModel labelModel=new LabelModel();
         labelModel.setContent(label.getContent());
-//        labelModel.setFir(LabelEnum.getValue(label.getLabelSec().getFir()));
-        labelModel.setSec(label.getLabelSec().getName());
+        labelModel.setFir(label.getLabelSec().getFirName());
+        labelModel.setSec(label.getLabelSec().getSecName());
         labelModel.setId(label.getId());
         labelModel.setName(label.getName());
         labelModel.setRule(label.getRule());
+        if(label.getOrgan()!=null)
+        labelModel.setOrganName(label.getOrgan().getName());
         labelModel.setTime(Tool.dateToString(label.getTime(), TimeConstant.DATA_FORMAT_YMD));
         return labelModel;
     }

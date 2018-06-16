@@ -3,7 +3,7 @@ package com.organOld.service.model;
 
 public class OldmanEconomicModel extends Model{
     private int oldmanId;
-    private String econimic;
+    private String economic;
     private String oldmanName;
 
 
@@ -15,12 +15,12 @@ public class OldmanEconomicModel extends Model{
         this.oldmanId = oldmanId;
     }
 
-    public String getEconimic() {
-        return econimic;
+    public String getEconomic() {
+        return economic;
     }
 
-    public void setEconimic(String econimic) {
-        this.econimic = econimic;
+    public void setEconomic(String economic) {
+        this.economic = economic;
     }
 
     public String getOldmanName() {

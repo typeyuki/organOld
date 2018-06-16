@@ -11,9 +11,13 @@
         <result property="type" column="type" />
         <result property="time" column="time" />
         <association property="labelSec" javaType="com.organOld.dao.entity.label.LabelSec">
-            <id property="id" column="sid" />
-            <result property="name" column="sname"/>
-            <result property="fir" column="fir"/>
+            <id property="id" column="lid" />
+            <result property="secName" column="sname"/>
+            <result property="firName" column="fname"/>
+        </association>
+        <association property="organ" javaType="com.organOld.dao.entity.organ.Organ">
+            <id property="id" column="oid" />
+            <result property="name" column="oname"/>
         </association>
     </resultMap>
 
@@ -39,9 +43,9 @@
     </resultMap>
 
     <select id="getByPage" parameterType="com.organOld.dao.util.Page" resultMap="label">
-        SELECT l.id,l.name,l.content,l.rule,l.time,ls.name sname,ls.fir
-        FROM label_three l,label_sec ls
-        WHERE type=#{entity.type} AND l.secId=ls.id
+        SELECT l.id,l.name,l.content,l.rule,l.time,ls.name sname,f.value fname,o.name oname
+        FROM label_three l LEFT JOIN organ o on o.id=l.organ_id,label_sec ls,auto_value f
+        WHERE l.type=#{entity.type} AND l.secId=ls.id AND ls.fir_index=f.id
         <if test="entity!=null and entity.id!=null and entity.id!=0">
             and l.id=#{entity.id}
         </if>

@@ -17,9 +17,9 @@ $(document).ready(function(){
             },{
                 data:"name"
             },{
-                data:"oldmanId"
-            },{
                 data:"phone"
+            },{
+                data:"oldman"
             },{
                 data:"relation"
             },{
@@ -28,18 +28,6 @@ $(document).ready(function(){
             ],
             "order":[[0,"asc"]],
             "columnDefs": [
-                // 列样式
-                // {
-                //     "targets": [9], // 目标列位置，下标从0开始
-                //     "data": "linkman.name", // 数据列名
-                //     "render": function(data, type, full) { // 返回自定义内容
-                //         if(data!=undefined){
-                //             return "<span class='linkman'>" + data + "</span>";
-                //         }else{
-                //             return "";
-                //         }
-                //     }
-                // },
                 // 增加一列，包括删除和修改，同时将我们需要传递的数据传递到链接中
                 {
                     "targets": [6], // 目标列位置，下标从0开始

@@ -2,16 +2,15 @@ package com.organOld.service.model;
 
 
 public class LinkmanModel extends ManModel{
-    private Integer oldmanId;
     private String relation;
-    private String oldName;
+    private String oldman;
 
-    public Integer getOldmanId() {
-        return oldmanId;
+    public String getOldman() {
+        return oldman;
     }
 
-    public void setOldmanId(Integer oldmanId) {
-        this.oldmanId = oldmanId;
+    public void setOldman(String oldman) {
+        this.oldman = oldman;
     }
 
     public String getRelation() {
@@ -20,13 +19,5 @@ public class LinkmanModel extends ManModel{
 
     public void setRelation(String relation) {
         this.relation = relation;
-    }
-
-    public String getOldName() {
-        return oldName;
-    }
-
-    public void setOldName(String oldName) {
-        this.oldName = oldName;
     }
 }

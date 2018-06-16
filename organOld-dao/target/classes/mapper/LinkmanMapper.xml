@@ -3,18 +3,22 @@
 <mapper namespace="com.organOld.dao.repository.LinkmanDao">
 
     <resultMap id="linkman" type="com.organOld.dao.entity.oldman.Linkman">
-    <id property="id" column="id" />
-    <result property="name" column="name" />
-    <result property="oldmanId" column="oldman_id"/>
-    <result property="phone" column="phone" />
-    <result property="relation" column="relation" />
-    <result property="time" column="time" />
+        <id property="id" column="id" />
+        <result property="name" column="name" />
+        <result property="phone" column="phone" />
+        <result property="relation" column="relation" />
+        <result property="time" column="time" />
+        <association property="oldman" javaType="com.organOld.dao.entity.oldman.Oldman">
+            <id property="id" column="oid" />
+            <result property="name" column="oname"/>
+        </association>
     </resultMap>
 
 
     <select id="getByPage" parameterType="com.organOld.dao.util.Page" resultMap="linkman">
-        SELECT o.id,o.name,o.oldman_id,o.phone,o.relation,o.time
-        FROM linkman o
+        SELECT l.id,l.name,l.phone,l.relation,l.time,o.id oid,o.name oname
+        FROM linkman l,oldman_base o
+        WHERE l.oldman_id=o.id
     </select>
 
     <select id="getSizeByPage" parameterType="com.organOld.dao.util.Page" resultType="java.lang.Long">

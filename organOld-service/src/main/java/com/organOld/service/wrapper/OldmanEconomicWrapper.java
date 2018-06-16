@@ -12,7 +12,10 @@ public class OldmanEconomicWrapper implements Wrapper<OldmanEconomic,OldmanEcono
     @Override
     public OldmanEconomicModel wrap(OldmanEconomic economic) {
         OldmanEconomicModel economicModel=new OldmanEconomicModel();
+        economicModel.setId(economic.getId());
         economicModel.setOldmanId(economic.getOldman().getId());
+        economicModel.setEconomic(economic.getEconomic());
+        economicModel.setOldmanName(economic.getOldman().getName());
         economicModel.setTime(Tool.dateToString(economic.getTime(),"yyyy-MM-dd"));
 
         return economicModel;

@@ -13,11 +13,11 @@ $(document).ready(function(){
             "bProcessing": true, //加载数据时显示正在加载信息
             "bServerSide": true, //指定从服务器端获取数据
             "columns":[{
-                data:"id"
-            },{
                 data:"oldmanId"
             },{
-                data:"econmic_index"
+                data:"oldmanName"
+            },{
+                data:"economic"
             },{
                 data:"time"
             }

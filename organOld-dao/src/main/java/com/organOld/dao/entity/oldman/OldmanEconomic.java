@@ -4,19 +4,19 @@ import com.organOld.dao.entity.DBEntity;
 import java.util.Date;
 
 /**
- * 应急联系人
+ * 经济条件
  * Created by netlab606 on 2018/4/2.
  */
 public class OldmanEconomic extends DBEntity {
-    private String econmic;
+    private String economic;
     private Oldman oldman;
 
-    public String getEconmic() {
-        return econmic;
+    public String getEconomic() {
+        return economic;
     }
 
-    public void setEconmic(String econmic) {
-        this.econmic = econmic;
+    public void setEconomic(String economic) {
+        this.economic = economic;
     }
 
     public Oldman getOldman() {
