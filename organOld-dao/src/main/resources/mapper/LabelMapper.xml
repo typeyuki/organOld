@@ -43,9 +43,9 @@
     </resultMap>
 
     <select id="getByPage" parameterType="com.organOld.dao.util.Page" resultMap="label">
-        SELECT l.id,l.name,l.content,l.rule,l.time,ls.name sname,f.value fname,o.name oname
-        FROM label_three l LEFT JOIN organ o on o.id=l.organ_id,label_sec ls,auto_value f
-        WHERE l.type=#{entity.type} AND l.secId=ls.id AND ls.fir_index=f.id
+        SELECT l.id,l.name,l.content,l.rule,l.time,lt.sec_name sname,f.value fname,o.name oname
+        FROM label l LEFT JOIN organ o on o.id=l.organ_id,label_type lt,auto_value f
+        WHERE l.type=#{entity.type} AND l.secId=lt.id AND lt.fir_index=f.id
         <if test="entity!=null and entity.id!=null and entity.id!=0">
             and l.id=#{entity.id}
         </if>
@@ -56,7 +56,7 @@
 
     <select id="getSizeByPage" parameterType="com.organOld.dao.util.Page" resultType="java.lang.Long">
         SELECT count(1)
-        FROM label_three l
+        FROM label l
         WHERE type=#{entity.type}
         <if test="entity!=null and entity.id!=null and entity.id!=0">
             and id=#{entity.id}
@@ -65,10 +65,10 @@
 
 
     <select id="getBindManByPage" parameterType="com.organOld.dao.util.Page" resultMap="bindOldman">
-        SELECT o.id,o.name,o.sex,o.birthday,o.district_id,o.census,o.political_status,o.time,o.phone,o.address,o.pid,
-        org.name jname
-        FROM oldman_base o LEFT JOIN organ org ON o.jw_id=org.id,label_oldman lo
-        WHERE lo.label_three_id=#{labelId} AND o.id=lo.oldman_id
+       SELECT o.id,o.name,o.sex,o.birthday,c.value census,p.value political_status,o.time,o.phone,o.address,o.pid,o.lou_num,x.value xname,org.name jname,d.value dname
+        FROM oldman_base o,auto_value c,auto_value p,auto_value x,auto_value d,organ org,label_oldman lo
+        WHERE o.census=c.id AND o.political_status=p.id AND x.id=o.xq_id AND org.id=x.parent_index AND d.id=org.district_id
+              AND lo.label_id=#{labelId} AND o.id=lo.oldman_id
         ORDER BY ${page.sortType} ${page.sort}
         limit #{page.start},#{page.length}
     </select>
@@ -77,15 +77,15 @@
     <select id="getBindManSizeByPage" parameterType="com.organOld.dao.util.Page" resultType="java.lang.Long">
         SELECT count(1)
         FROM oldman_base o,label_oldman lo
-        WHERE lo.label_three_id=#{labelId} AND o.id=lo.oldman_id
+        WHERE lo.label_id=#{labelId} AND o.id=lo.oldman_id
     </select>
 
 
     <select id="getRuleManByPage" parameterType="com.organOld.dao.util.Page" resultMap="bindOldman">
-        SELECT o.id,o.name,o.sex,o.birthday,o.district_id,o.census,o.political_status,o.time,o.phone,o.address,o.pid,
-        org.name jname
-        FROM oldman_base o LEFT JOIN organ org ON o.jw_id=org.id,oldman_family oldf
-        WHERE oldf.oldman_id=o.id
+        SELECT o.id,o.name,o.sex,o.birthday,c.value census,p.value political_status,o.time,o.phone,o.address,o.pid,o.lou_num,x.value xname,org.name jname,d.value dname
+        FROM oldman_base o,auto_value c,auto_value p,auto_value x,auto_value d,organ org,label_oldman lo,oldman_family oldf
+        WHERE o.census=c.id AND o.political_status=p.id AND x.id=o.xq_id AND org.id=x.parent_index AND d.id=org.district_id
+        AND oldf.oldman_id=o.id
         <if test="rule.birStart!=null">
             <![CDATA[
             and DATE_FORMAT(o.birthday,'%Y') &gt;= DATE_FORMAT(#{rule.birStart},'%Y')
@@ -155,9 +155,10 @@
 
 
     <select id="getNoSelectManDataByPage" parameterType="com.organOld.dao.util.Page" resultMap="bindOldman">
-        SELECT o.id,o.name,o.sex,o.birthday,o.district_id,o.census,o.political_status,org.name jname
-        FROM oldman_base o LEFT JOIN organ org ON o.jw_id=org.id
-        WHERE o.id NOT IN (SELECT oldman_id FROM label_oldman WHERE label_three_id=#{labelId})
+        SELECT o.id,o.name,o.sex,o.birthday,c.value census,p.value political_status,o.lou_num,x.value xname,org.name jname,d.value dname
+        FROM oldman_base o,auto_value c,auto_value p,auto_value x,auto_value d,organ org
+        WHERE o.census=c.id AND o.political_status=p.id AND x.id=o.xq_id AND org.id=x.parent_index AND d.id=org.district_id
+              AND o.id NOT IN (SELECT oldman_id FROM label_oldman WHERE label_id=#{labelId})
         ORDER BY ${page.sortType} ${page.sort}
         limit #{page.start},#{page.length}
     </select>
@@ -165,12 +166,12 @@
 
     <select id="getNoSelectManDataSizeByPage" parameterType="com.organOld.dao.util.Page" resultType="java.lang.Long">
         SELECT count(1)
-        FROM oldman_base o,label_oldman lo
-        WHERE lo.label_three_id=#{labelId} AND o.id=lo.oldman_id
+        FROM oldman_base o
+        WHERE o.id NOT IN (SELECT oldman_id FROM label_oldman WHERE label_id=#{labelId})
     </select>
 
 
     <select id="getLabelRuleByLid" resultType="com.organOld.dao.entity.label.LabelRule">
-        SELECT * FROM label_rule WHERE label_three_id=#{labelId}
+        SELECT * FROM label_rule WHERE label_id=#{labelId}
     </select>
 </mapper>

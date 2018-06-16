@@ -22,14 +22,17 @@
                                         <thead>
                                         <tr>
                                             <th><div class="icheckbox_square-green checked" style="position: relative;"><input type="checkbox" checked="" class="i-checks" name="input[]" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div></th>
-                                            <th>序号</th>
+                                             <th>序号</th>
                                             <th>片区</th>
                                             <th>居委</th>
+                                            <th>小区</th>
+                                            <th>楼号</th>
                                             <th>姓名</th>
                                             <th>性别</th>
                                             <th>年龄</th>
                                             <th>政治面貌</th>
                                             <th>户籍</th>
+                                            <th>更新时间</th>
                                         </tr>
                                         </thead>
                                         <tbody>

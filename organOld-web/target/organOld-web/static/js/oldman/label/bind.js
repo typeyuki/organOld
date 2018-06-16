@@ -15,9 +15,13 @@ $(document).ready(function(){
             "columns":[{},{
                 data:"id"
             },{
-                data:"districtName"
+                data:"dName"
             },{
-                data:"jwName"
+                data:"jName"
+            },{
+                data:"xName"
+            },{
+                data:"louNum"
             },{
                 data:"name"
             },{
@@ -58,14 +62,14 @@ $(document).ready(function(){
                 },
                 // 增加一列，包括删除和修改，同时将我们需要传递的数据传递到链接中
                 {
-                    "targets": [13], // 目标列位置，下标从0开始
+                    "targets": [15], // 目标列位置，下标从0开始
                     "data": "id", // 数据列名
                     "render": function(data, type, full) { // 返回自定义内容
                         return "<span class='look' id='"+data+"'>查看</span>";
                     }
                 },
                 //不进行排序的列
-                { "bSortable": false, "aTargets": [ 0,2 ,3, 4, 5,7,8,9,10,11] }
+                { "bSortable": false, "aTargets": [ 0,2 ,3, 4, 5,6,7,9,10,11,12,13] }
             ],
             "sAjaxSource": "/oldman/label/"+type+"/"+labelId+"/manData",//这个是请求的地址
             "fnServerData": retrieveData
@@ -110,9 +114,13 @@ $(document).ready(function(){
             "columns":[{},{
                 data:"id"
             },{
-                data:"districtName"
+                data:"dName"
             },{
-                data:"jwName"
+                data:"jName"
+            },{
+                data:"xName"
+            },{
+                data:"louNum"
             },{
                 data:"name"
             },{
@@ -143,7 +151,7 @@ $(document).ready(function(){
                     }
                 },
                 //不进行排序的列
-                { "bSortable": false, "aTargets": [ 0,2,3,4,5,6,7,8] }
+                { "bSortable": false, "aTargets": [ 0,2,3,4,5,6,7,8,9,10] }
             ],
             "sAjaxSource": "/oldman/label/bind/"+labelId+"/getNoSelectManData",//这个是请求的地址
             "fnServerData": retrieveData1

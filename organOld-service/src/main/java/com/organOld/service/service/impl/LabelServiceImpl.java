@@ -1,12 +1,19 @@
 package com.organOld.service.service.impl;
 
+import com.organOld.dao.entity.AutoValue;
+import com.organOld.dao.entity.Chx;
 import com.organOld.dao.entity.label.Label;
 import com.organOld.dao.entity.label.LabelRule;
 import com.organOld.dao.entity.label.LabelRuleToDB;
 import com.organOld.dao.entity.oldman.Oldman;
+import com.organOld.dao.entity.organ.Organ;
+import com.organOld.dao.repository.AutoValueDao;
+import com.organOld.dao.repository.ChxDao;
 import com.organOld.dao.repository.LabelDao;
+import com.organOld.dao.repository.OrganDao;
 import com.organOld.dao.util.Page;
 import com.organOld.service.model.LabelModel;
+import com.organOld.service.model.LabelRuleModel;
 import com.organOld.service.model.OldmanModel;
 import com.organOld.service.service.CommonService;
 import com.organOld.service.service.LabelService;
@@ -16,8 +23,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.stream.Collectors;
 
 /**
@@ -30,6 +39,12 @@ public class LabelServiceImpl implements LabelService {
     CommonService commonService;
     @Autowired
     LabelDao labelDao;
+    @Autowired
+    AutoValueDao autoValueDao;
+    @Autowired
+    OrganDao organDao;
+    @Autowired
+    ChxDao chxDao;
 
     @Override
     public String getByPage(LabelRequest labelRequest, BTableRequest bTableRequest) {
@@ -93,5 +108,19 @@ public class LabelServiceImpl implements LabelService {
         List<OldmanModel> oldmanModelList=labelDao.getNoSelectManDataByPage(page,labelId).stream().map(Wrappers.oldmanWrapper::wrap).collect(Collectors.toList());
         Long size=labelDao.getNoSelectManDataSizeByPage(page,labelId);
         return commonService.tableReturn(bTableRequest.getsEcho(),size,oldmanModelList);
+    }
+
+    @Override
+    public LabelRuleModel getLabelRule() {
+        List<Integer> typeList=commonService.getAutoValueTypes("label");
+        List<AutoValue> autoValueList=autoValueDao.getByTypeList(typeList);
+
+        List<Organ> jwList=organDao.getSimpleByType(2);
+
+        List<Chx> chxList=chxDao.getSimple();
+
+        LabelRuleModel labelRuleModel=Wrappers.labelWrapper.wrapLabelRule(autoValueList,jwList,chxList);
+
+        return labelRuleModel;
     }
 }

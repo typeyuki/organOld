@@ -3,6 +3,7 @@ package com.organOld.web.controller;
 import com.organOld.service.contract.BTableRequest;
 import com.organOld.service.contract.LabelRequest;
 import com.organOld.service.contract.OldmanRequest;
+import com.organOld.service.model.LabelRuleModel;
 import com.organOld.service.service.LabelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -68,6 +69,8 @@ public class LabelController {
     @RequestMapping(value = "/rule/{labelId}",method = RequestMethod.GET)
     public ModelAndView rule(@PathVariable int labelId){
         ModelAndView mv=new ModelAndView("oldman/label/rule");
+        mv.addObject("labelId",labelId);
+        mv.addObject("rule",labelService.getLabelRule());
         return mv;
     }
 

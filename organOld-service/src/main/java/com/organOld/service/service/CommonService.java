@@ -2,11 +2,15 @@ package com.organOld.service.service;
 
 import com.alibaba.fastjson.JSONObject;
 
+import com.organOld.dao.entity.AutoValue;
+import com.organOld.dao.entity.label.LabelRule;
 import com.organOld.dao.util.Page;
 import com.organOld.service.contract.*;
+import com.organOld.service.enumModel.AutoValueEnum;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -95,5 +99,22 @@ public class CommonService {
         page.setSort(sort);
         page.setSortType(sortType);
         return page;
+    }
+
+    public List<Integer> getAutoValueTypes(String type){
+        List<Integer> typeList=new ArrayList<>();
+        switch (type){
+            case "label":
+                typeList.add(AutoValueEnum.PQ.getIndex());
+                typeList.add(AutoValueEnum.ZZMM.getIndex());
+                typeList.add(AutoValueEnum.HJ.getIndex());
+                typeList.add(AutoValueEnum.JJJG.getIndex());
+                typeList.add(AutoValueEnum.JJTJ.getIndex());
+                typeList.add(AutoValueEnum.SL.getIndex());
+                typeList.add(AutoValueEnum.SZ.getIndex());
+                break;
+            default:
+        }
+        return typeList;
     }
 }

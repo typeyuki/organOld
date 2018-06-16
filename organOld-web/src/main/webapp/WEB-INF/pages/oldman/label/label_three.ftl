@@ -45,6 +45,7 @@
                         <thead>
                         <tr>
                             <th>序号</th>
+                            <th>所属居委</th>
                             <th>一级菜单</th>
                             <th>二级菜单</th>
                             <th>名称</th>

@@ -16,6 +16,7 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
     <!-- 配置不过滤的资源（静态资源及登录相关） -->
     <sec:http pattern="/css/bootstrap.min.css" security="none"></sec:http>
     <sec:http pattern="/img/profile_big.jpg" security="none"></sec:http>
+    <sec:http pattern="/fonts/fontawesome-webfont.woff" security="none"></sec:http>
     <sec:http pattern="/**/*.jpeg" security="none"></sec:http>
     <sec:http pattern="/js/plugins/fancybox/fancybox_loading@2x.gif" security="none"></sec:http>
     <sec:http pattern="/css/plugins/jsTree/32px.png" security="none"></sec:http>

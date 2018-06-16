@@ -33,9 +33,8 @@
                     <form method="get" class="form-horizontal">
                         <div class="form-group">
                             <label class="col-sm-2 control-label">年龄段</label>
-
                             <div class="col-sm-1">
-                                <input type="text" class="form-control" value="60"disabled="" />
+                                <input type="text" class="form-control" value="" disabled="" />
                             </div>
                             <div class="col-sm-1" align="center">
                                 <span class="">至</span>
@@ -51,21 +50,17 @@
                             <div class="col-sm-1">
                                 <div class="radio i-checks">
                                     <label>
-                                        <input type="radio"  value="option2" name="a" checked=""> <i></i> 不限</label>
+                                        <input type="radio"  value="option2" name="sex" disabled=""> <i></i> 不限</label>
                                 </div>
                             </div>
-                            <div class="col-sm-1">
-                                <div class="radio i-checks">
-                                    <label>
-                                        <input type="radio" value="option1" name="a"> <i></i> 男</label>
+                            <#list (rule.sex)?keys as key>
+                                <div class="col-sm-1">
+                                    <div class="radio i-checks">
+                                        <label>
+                                            <input type="radio" value="${key}" name="sex" disabled=""> <i></i> ${(rule.sex)?values[key_index]!}</label>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-sm-1">
-                                <div class="radio i-checks">
-                                    <label>
-                                        <input type="radio"  value="option2" name="a"> <i></i> 女</label>
-                                </div>
-                            </div>
+                            </#list>
                         </div>
                         <div class="hr-line-dashed"></div>
                         <div class="form-group">
@@ -74,74 +69,57 @@
                             <div class="col-sm-1">
                                 <div class="checkbox i-checks">
                                     <label>
-                                        <input type="checkbox" value="" checked> <i></i> 不限</label>
+                                        <input type="checkbox" value="" disabled=""> <i></i> 不限</label>
                                 </div>
                             </div>
-                            <div class="col-sm-1">
-                                <div class="checkbox i-checks">
-                                    <label>
-                                        <input type="checkbox" value=""> <i></i> 东兰</label>
+                            <#list rule.district as district>
+                                <div class="col-sm-1">
+                                    <div class="radio i-checks">
+                                        <label>
+                                            <input type="radio" value="${district.id}" name="district" disabled=""> <i></i> ${district.value}</label>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-sm-1">
-                                <div class="checkbox i-checks">
-                                    <label>
-                                        <input type="checkbox" value=""> <i></i> 古美</label>
-                                </div>
-                            </div>
-                            <div class="col-sm-1">
-                                <div class="checkbox i-checks">
-                                    <label>
-                                        <input type="checkbox" value=""> <i></i> 古龙</label>
-                                </div>
-                            </div>
-                            <div class="col-sm-1">
-                                <div class="checkbox i-checks">
-                                    <label>
-                                        <input type="checkbox" value=""> <i></i> 平阳</label>
-                                </div>
-                            </div>
-                            <div class="col-sm-1">
-                                <div class="checkbox i-checks">
-                                    <label>
-                                        <input type="checkbox" value=""> <i></i> 平南</label>
-                                </div>
-                            </div>
-                            <div class="col-sm-1">
-                                <div class="checkbox i-checks">
-                                    <label>
-                                        <input type="checkbox" value=""> <i></i> 平吉</label>
-                                </div>
-                            </div>
+                            </#list>
                         </div>
                         <div class="hr-line-dashed"></div>
+                        <#if (rule.organ)?? && (rule.organ)?size &gt;0 >
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">所属居委
+                                </label>
+                                <div class="col-sm-1">
+                                    <div class="checkbox i-checks">
+                                        <label>
+                                            <input type="checkbox" value="" disabled=""> <i></i> 不限</label>
+                                    </div>
+                                </div>
+                                <#list rule.organ as organ>
+                                    <div class="col-sm-1">
+                                        <div class="radio i-checks">
+                                            <label>
+                                                <input type="radio" value="${organ.id}" name="organ" disabled=""> <i></i> ${organ.name}</label>
+                                        </div>
+                                    </div>
+                                </#list>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                        </#if>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">户籍
                             </label>
                             <div class="col-sm-1">
                                 <div class="checkbox i-checks">
                                     <label>
-                                        <input type="checkbox" value="" > <i></i> 不限</label>
+                                        <input type="checkbox" value="" name="census" disabled=""> <i></i> 不限</label>
                                 </div>
                             </div>
-                            <div class="col-sm-1">
-                                <div class="checkbox i-checks">
-                                    <label>
-                                        <input type="checkbox" value="" checked> <i></i> 户籍</label>
+                            <#list rule.census as census>
+                                <div class="col-sm-1">
+                                    <div class="radio i-checks">
+                                        <label>
+                                            <input type="radio" value="${census.id}" name="census" disabled=""> <i></i> ${census.value}</label>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-sm-1">
-                                <div class="checkbox i-checks">
-                                    <label>
-                                        <input type="checkbox" value=""> <i></i> 非户籍</label>
-                                </div>
-                            </div>
-                            <div class="col-sm-1">
-                                <div class="checkbox i-checks">
-                                    <label>
-                                        <input type="checkbox" value=""> <i></i> 人户分离</label>
-                                </div>
-                            </div>
+                            </#list>
                         </div>
                         <div class="hr-line-dashed"></div>
                         <div class="form-group">
@@ -150,21 +128,17 @@
                             <div class="col-sm-1">
                                 <div class="checkbox i-checks">
                                     <label>
-                                        <input type="checkbox" value="" checked> <i></i> 不限</label>
+                                        <input type="checkbox" value="" name="politicalStatuses" disabled=""> <i></i> 不限</label>
                                 </div>
                             </div>
-                            <div class="col-sm-1">
-                                <div class="checkbox i-checks">
-                                    <label>
-                                        <input type="checkbox" value=""> <i></i> 群众</label>
+                            <#list rule.politicalStatuses as politicalStatuses>
+                                <div class="col-sm-1">
+                                    <div class="radio i-checks">
+                                        <label>
+                                            <input type="radio" value="${politicalStatuses.id}" name="politicalStatuses" disabled=""> <i></i> ${politicalStatuses.value}</label>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-sm-1">
-                                <div class="checkbox i-checks">
-                                    <label>
-                                        <input type="checkbox" value=""> <i></i> 党员</label>
-                                </div>
-                            </div>
+                            </#list>
                         </div>
                         <div class="hr-line-dashed"></div>
                         <div class="form-group">
@@ -391,6 +365,64 @@
                                 <div class="checkbox i-checks">
                                     <label>
                                         <input type="checkbox" value=""> <i></i> 药物反应</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">长护险评级
+                            </label>
+                            <div class="col-sm-1">
+                                <div class="checkbox i-checks">
+                                    <label>
+                                        <input type="checkbox" value="" checked> <i></i> 不限</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-1">
+                                <div class="checkbox i-checks">
+                                    <label>
+                                        <input type="checkbox" value=""> <i></i> 2级</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-1">
+                                <div class="checkbox i-checks">
+                                    <label>
+                                        <input type="checkbox" value=""> <i></i> 3级</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-1">
+                                <div class="checkbox i-checks">
+                                    <label>
+                                        <input type="checkbox" value=""> <i></i> 4级</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">养老状态
+                            </label>
+                            <div class="col-sm-1">
+                                <div class="checkbox i-checks">
+                                    <label>
+                                        <input type="checkbox" value="" checked> <i></i> 不限</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-1">
+                                <div class="checkbox i-checks">
+                                    <label>
+                                        <input type="checkbox" value=""> <i></i> 居家养老</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-1">
+                                <div class="checkbox i-checks">
+                                    <label>
+                                        <input type="checkbox" value=""> <i></i> 社区养老</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-1">
+                                <div class="checkbox i-checks">
+                                    <label>
+                                        <input type="checkbox" value=""> <i></i> 机构养老</label>
                                 </div>
                             </div>
                         </div>
