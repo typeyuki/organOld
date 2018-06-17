@@ -9,7 +9,7 @@ $(function () {
         success: function (result) {
             if(result.success==true){
                 $("input[name='ageStart']").val(result.data.ageStart==0?"":result.data.ageStart);
-                $("input[name='ageEnd']").val(result.data.ageEnd==0?"":result.data.endStart);
+                $("input[name='ageEnd']").val(result.data.ageEnd==0?"":result.data.ageEnd);
 
                 if(result.data.sex!=null && result.data.sex!=0){
                     $("input[name='sex']:checkbox").prop("checked",false);
@@ -84,6 +84,44 @@ $(function () {
                         }
                     });
                 }
+
+                if(result.data.chxs!=null && result.data.chxs.length>0){
+                    $("input[name='chx']:checkbox").prop("checked",false);
+                    $("input[name='chx']").each(function () {
+                        if(result.data.chxs.indexOf($(this).val())!=-1){
+                            $(this).prop("checked",true);
+                        }
+                    });
+                }
+
+                if(result.data.oldStatuses!=null && result.data.oldStatuses.length>0){
+                    $("input[name='oldStatus']:checkbox").prop("checked",false);
+                    $("input[name='oldStatus']").each(function () {
+                        if(result.data.oldStatuses.indexOf($(this).val())!=-1){
+                            $(this).prop("checked",true);
+                        }
+                    });
+                }
+
+                if(result.data.districtIds!=null && result.data.districtIds.length>0){
+                    $("input[name='district']:checkbox").prop("checked",false);
+                    $("input[name='district']").each(function () {
+                        if(result.data.districtIds.indexOf($(this).val())!=-1){
+                            $(this).prop("checked",true);
+                        }
+                    });
+                }
+
+                if(result.data.jwIds!=null && result.data.jwIds.length>0){
+                    $("input[name='organ']:checkbox").prop("checked",false);
+                    $("input[name='organ']").each(function () {
+                        if(result.data.jwIds.indexOf($(this).val())!=-1){
+                            $(this).prop("checked",true);
+                        }
+                    });
+                }
+
+
             }
         }
     });

@@ -88,7 +88,7 @@
         AND oldf.oldman_id=o.id
         <if test="rule.birStart!=null">
             <![CDATA[
-            and DATE_FORMAT(o.birthday,'%Y') &gt;= DATE_FORMAT(#{rule.birStart},'%Y')
+            and DATE_FORMAT(o.birthday,'%Y') >= DATE_FORMAT(#{rule.birStart},'%Y')
             ]]>
         </if>
         <if test="rule.birEnd!=null">
@@ -125,7 +125,7 @@
         WHERE oldf.oldman_id=o.id
         <if test="rule.birStart!=null">
             <![CDATA[
-            and DATE_FORMAT(o.birthday,'%Y') &gt;= DATE_FORMAT(#{rule.birStart},'%Y')
+            and DATE_FORMAT(o.birthday,'%Y') >= DATE_FORMAT(#{rule.birStart},'%Y')
             ]]>
         </if>
         <if test="rule.birEnd!=null">
@@ -145,9 +145,9 @@
                 #{item}
             </foreach>
         </if>
-        <if test="rule.familyIndexs!=null and rule.familyIndexs.size() > 0">
+        <if test="rule.families!=null and rule.families.size() > 0">
             and oldf.family_index IN
-            <foreach collection="rule.familyIndexs" index="index" item="item" open="(" separator="," close=")">
+            <foreach collection="rule.families" index="index" item="item" open="(" separator="," close=")">
                 #{item}
             </foreach>
         </if>
@@ -174,4 +174,24 @@
     <select id="getLabelRuleByLid" resultType="com.organOld.dao.entity.label.LabelRule">
         SELECT * FROM label_rule WHERE label_id=#{labelId}
     </select>
+
+    <update id="saveLabelRule" parameterType="com.organOld.dao.entity.label.LabelRule">
+        UPDATE  label_rule
+        SET age_start=#{ageStart},
+        age_end=#{ageEnd},
+        district_ids=#{districtIds},
+        jw_ids=#{jwIds},
+        sex=#{sex},
+        censuses=#{censuses},
+        political_statuses=#{politicalStatuses},
+        is_key=#{isKey},
+        economics=#{economics},
+        families=#{families},
+        intelligences=#{intelligences},
+        eyesights=#{eyesights},
+        is_healths=#{isHealths},
+        chxs=#{chxs},
+        old_statuses=#{oldStatuses}
+        WHERE label_id=#{id}
+    </update>
 </mapper>

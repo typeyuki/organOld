@@ -8,15 +8,42 @@ public class LabelRuleToDBSelectMan {
     private Date birStart;
     private Date birEnd;
     private List<String> districtIds;
+    private List<String> jwIds;
     private int sex;
     private List<String> censuses;
     private List<String> politicalStatuses;
     private int isKey;
-    private List<String> econmics;
+    private List<String> economics;
     private List<String> families;
     private List<String> intelligences;
     private List<String> eyesights;
     private List<String> isHealths;
+    private List<String> chxs;
+    private List<String> oldStatuses;
+
+    public List<String> getChxs() {
+        return chxs;
+    }
+
+    public void setChxs(List<String> chxs) {
+        this.chxs = chxs;
+    }
+
+    public List<String> getOldStatuses() {
+        return oldStatuses;
+    }
+
+    public void setOldStatuses(List<String> oldStatuses) {
+        this.oldStatuses = oldStatuses;
+    }
+
+    public List<String> getJwIds() {
+        return jwIds;
+    }
+
+    public void setJwIds(List<String> jwIds) {
+        this.jwIds = jwIds;
+    }
 
     public Date getBirStart() {
         return birStart;
@@ -66,12 +93,12 @@ public class LabelRuleToDBSelectMan {
         this.politicalStatuses = politicalStatuses;
     }
 
-    public List<String> getEconmics() {
-        return econmics;
+    public List<String> getEconomics() {
+        return economics;
     }
 
-    public void setEconmics(List<String> econmics) {
-        this.econmics = econmics;
+    public void setEconomics(List<String> economics) {
+        this.economics = economics;
     }
 
     public List<String> getFamilies() {

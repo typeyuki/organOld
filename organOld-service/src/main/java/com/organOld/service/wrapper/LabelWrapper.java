@@ -117,8 +117,8 @@ public class LabelWrapper implements Wrapper<Label,LabelModel,LabelRequest> {
             labelRuleModel.setEyesights(Arrays.asList(labelRule.getEyesights().split("#")));
         if(labelRule.getIsHealths()!=null && !labelRule.getIsHealths().equals(""))
             labelRuleModel.setIsHealths(Arrays.asList(labelRule.getIsHealths().split("#")));
-        if(labelRule.getEconmics()!=null && !labelRule.getEconmics().equals(""))
-            labelRuleModel.setEconmics(Arrays.asList(labelRule.getEconmics().split("#")));
+        if(labelRule.getEconomics()!=null && !labelRule.getEconomics().equals(""))
+            labelRuleModel.setEconomics(Arrays.asList(labelRule.getEconomics().split("#")));
         if(labelRule.getFamilies()!=null && !labelRule.getFamilies().equals(""))
             labelRuleModel.setFamilies(Arrays.asList(labelRule.getFamilies().split("#")));
         if(labelRule.getChxs()!=null && !labelRule.getChxs().equals(""))
@@ -134,13 +134,17 @@ public class LabelWrapper implements Wrapper<Label,LabelModel,LabelRequest> {
     public LabelRule unwrapLabelRule(LabelRuleRequest labelRuleRequest) {
         LabelRule labelRule=new LabelRule();
         labelRule.setId(labelRuleRequest.getLabelId());
-        labelRule.setAgeEnd(labelRuleRequest.getAgeEnd());
-        labelRule.setAgeStart(labelRuleRequest.getAgeStart());
-        labelRule.setSex(labelRuleRequest.getSex());
-        labelRule.setIsKey(labelRuleRequest.getIsKey());
+        if(labelRuleRequest.getAgeEnd()!=null && !labelRuleRequest.getAgeEnd().equals(""))
+            labelRule.setAgeEnd(Integer.parseInt(labelRuleRequest.getAgeEnd()));
+        if(labelRuleRequest.getAgeStart()!=null && !labelRuleRequest.getAgeStart().equals(""))
+            labelRule.setAgeStart(Integer.parseInt(labelRuleRequest.getAgeStart()));
+        if(labelRuleRequest.getSex()!=null && !labelRuleRequest.getSex().equals(""))
+            labelRule.setSex(Integer.parseInt(labelRuleRequest.getSex()));
+        if(labelRuleRequest.getIsKey()!=null && !labelRuleRequest.getIsKey().equals(""))
+            labelRule.setIsKey(Integer.parseInt(labelRuleRequest.getIsKey()));
 
-        if(labelRuleRequest.getCensuse()!=null && labelRuleRequest.getCensuse().length>0)
-            labelRule.setCensuses(String.join("#", labelRuleRequest.getCensuse()));
+        if(labelRuleRequest.getCensus()!=null && labelRuleRequest.getCensus().length>0)
+            labelRule.setCensuses(String.join("#", labelRuleRequest.getCensus()));
         if(labelRuleRequest.getPoliticalStatus()!=null && labelRuleRequest.getPoliticalStatus().length>0)
             labelRule.setPoliticalStatuses(String.join("#", labelRuleRequest.getPoliticalStatus()));
         if(labelRuleRequest.getDistrict()!=null && labelRuleRequest.getDistrict().length>0)
@@ -151,8 +155,8 @@ public class LabelWrapper implements Wrapper<Label,LabelModel,LabelRequest> {
             labelRule.setEyesights(String.join("#", labelRuleRequest.getEyesight()));
         if(labelRuleRequest.getIsHealth()!=null && labelRuleRequest.getIsHealth().length>0)
             labelRule.setIsHealths(String.join("#", labelRuleRequest.getIsHealth()));
-        if(labelRuleRequest.getEconmic()!=null && labelRuleRequest.getEconmic().length>0)
-            labelRule.setEconmics(String.join("#", labelRuleRequest.getEconmic()));
+        if(labelRuleRequest.getEconomic()!=null && labelRuleRequest.getEconomic().length>0)
+            labelRule.setEconomics(String.join("#", labelRuleRequest.getEconomic()));
         if(labelRuleRequest.getFamily()!=null && labelRuleRequest.getFamily().length>0)
             labelRule.setFamilies(String.join("#", labelRuleRequest.getFamily()));
         if(labelRuleRequest.getChx()!=null && labelRuleRequest.getChx().length>0)

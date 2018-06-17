@@ -82,18 +82,24 @@ public class LabelServiceImpl implements LabelService {
             labelRuleToDB.setCensuses(Arrays.asList(labelRule.getCensuses().split("#")));
         if(!StringUtils.isEmpty(labelRule.getDistrictIds()))
             labelRuleToDB.setDistrictIds(Arrays.asList(labelRule.getDistrictIds().split("#")));
+        if(!StringUtils.isEmpty(labelRule.getJwIds()))
+            labelRuleToDB.setJwIds(Arrays.asList(labelRule.getJwIds().split("#")));
         if(!StringUtils.isEmpty(labelRule.getEyesights()))
             labelRuleToDB.setEyesights(Arrays.asList(labelRule.getEyesights().split("#")));
         if(!StringUtils.isEmpty(labelRule.getIntelligences()))
             labelRuleToDB.setIntelligences(Arrays.asList(labelRule.getIntelligences().split("#")));
         if(!StringUtils.isEmpty(labelRule.getPoliticalStatuses()))
             labelRuleToDB.setPoliticalStatuses(Arrays.asList(labelRule.getPoliticalStatuses().split("#")));
-        if(!StringUtils.isEmpty(labelRule.getEconmics()))
-            labelRuleToDB.setEconmics(Arrays.asList(labelRule.getEconmics().split("#")));
+        if(!StringUtils.isEmpty(labelRule.getEconomics()))
+            labelRuleToDB.setEconmics(Arrays.asList(labelRule.getEconomics().split("#")));
         if(!StringUtils.isEmpty(labelRule.getFamilies()))
             labelRuleToDB.setFamilies(Arrays.asList(labelRule.getFamilies().split("#")));
         if(!StringUtils.isEmpty(labelRule.getIsHealths()))
             labelRuleToDB.setIsHealths(Arrays.asList(labelRule.getIsHealths().split("#")));
+        if(!StringUtils.isEmpty(labelRule.getOldStatuses()))
+            labelRuleToDB.setOldStatuses(Arrays.asList(labelRule.getOldStatuses().split("#")));
+        if(!StringUtils.isEmpty(labelRule.getChxs()))
+            labelRuleToDB.setChxs(Arrays.asList(labelRule.getChxs().split("#")));
         labelRuleToDB.setSex(labelRule.getSex());
         labelRuleToDB.setIsKey(labelRule.getIsKey());
         return labelRuleToDB;
