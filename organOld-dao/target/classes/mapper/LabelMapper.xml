@@ -108,9 +108,9 @@
                 #{item}
             </foreach>
         </if>
-        <if test="rule.familyIndexs!=null and rule.familyIndexs.size() > 0">
+        <if test="rule.families!=null and rule.families.size() > 0">
             and oldf.family_index IN
-            <foreach collection="rule.familyIndexs" index="index" item="item" open="(" separator="," close=")">
+            <foreach collection="rule.families" index="index" item="item" open="(" separator="," close=")">
                 #{item}
             </foreach>
         </if>

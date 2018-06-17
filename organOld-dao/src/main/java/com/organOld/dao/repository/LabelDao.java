@@ -3,7 +3,7 @@ package com.organOld.dao.repository;
 
 import com.organOld.dao.entity.label.Label;
 import com.organOld.dao.entity.label.LabelRule;
-import com.organOld.dao.entity.label.LabelRuleToDB;
+import com.organOld.dao.entity.label.LabelRuleToDBSelectMan;
 import com.organOld.dao.entity.oldman.Oldman;
 import com.organOld.dao.util.Page;
 import org.apache.ibatis.annotations.Param;
@@ -25,7 +25,9 @@ public interface LabelDao extends BaseDao<Label,Integer> {
 
     LabelRule getLabelRuleByLid(int labelId);
 
-    List<Oldman> getRuleManByPage(@Param("page") Page<Oldman> page, @Param("rule") LabelRuleToDB labelRuleToDB);
+    List<Oldman> getRuleManByPage(@Param("page") Page<Oldman> page, @Param("rule") LabelRuleToDBSelectMan labelRuleToDB);
 
-    Long getRuleManSizeByPage(@Param("page") Page<Oldman> page, @Param("rule") LabelRuleToDB labelRuleToDB);
+    Long getRuleManSizeByPage(@Param("page") Page<Oldman> page, @Param("rule") LabelRuleToDBSelectMan labelRuleToDB);
+
+    void saveLabelRule(LabelRule labelRule);
 }

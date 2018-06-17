@@ -4,7 +4,7 @@ import com.organOld.dao.entity.AutoValue;
 import com.organOld.dao.entity.Chx;
 import com.organOld.dao.entity.label.Label;
 import com.organOld.dao.entity.label.LabelRule;
-import com.organOld.dao.entity.label.LabelRuleToDB;
+import com.organOld.dao.entity.label.LabelRuleToDBSelectMan;
 import com.organOld.dao.entity.oldman.Oldman;
 import com.organOld.dao.entity.organ.Organ;
 import com.organOld.dao.repository.AutoValueDao;
@@ -13,6 +13,7 @@ import com.organOld.dao.repository.LabelDao;
 import com.organOld.dao.repository.OrganDao;
 import com.organOld.dao.util.Page;
 import com.organOld.service.model.LabelModel;
+import com.organOld.service.model.LabelAllRuleModel;
 import com.organOld.service.model.LabelRuleModel;
 import com.organOld.service.model.OldmanModel;
 import com.organOld.service.service.CommonService;
@@ -23,10 +24,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.stream.Collectors;
 
 /**
@@ -68,15 +67,15 @@ public class LabelServiceImpl implements LabelService {
             size=labelDao.getBindManSizeByPage(page,labelId);
         }else{
             LabelRule labelRule=labelDao.getLabelRuleByLid(labelId);
-            LabelRuleToDB labelRuleToDB=getLabelRuleToDB(labelRule);
+            LabelRuleToDBSelectMan labelRuleToDB=getLabelRuleToDB(labelRule);
             oldmanModelList = labelDao.getRuleManByPage(page, labelRuleToDB).stream().map(Wrappers.oldmanWrapper::wrap).collect(Collectors.toList());
             size=labelDao.getRuleManSizeByPage(page,labelRuleToDB);
         }
         return commonService.tableReturn(bTableRequest.getsEcho(),size,oldmanModelList);
     }
 
-    private LabelRuleToDB getLabelRuleToDB(LabelRule labelRule) {
-        LabelRuleToDB labelRuleToDB=new LabelRuleToDB();
+    private LabelRuleToDBSelectMan getLabelRuleToDB(LabelRule labelRule) {
+        LabelRuleToDBSelectMan labelRuleToDB=new LabelRuleToDBSelectMan();
         labelRuleToDB.setBirStart(commonService.AgeTobirthday(labelRule.getAgeEnd()));
         labelRuleToDB.setBirEnd(commonService.AgeTobirthday(labelRule.getAgeStart()));
         if(!StringUtils.isEmpty(labelRule.getCensuses()))
@@ -89,10 +88,10 @@ public class LabelServiceImpl implements LabelService {
             labelRuleToDB.setIntelligences(Arrays.asList(labelRule.getIntelligences().split("#")));
         if(!StringUtils.isEmpty(labelRule.getPoliticalStatuses()))
             labelRuleToDB.setPoliticalStatuses(Arrays.asList(labelRule.getPoliticalStatuses().split("#")));
-        if(!StringUtils.isEmpty(labelRule.getEconmicIndexs()))
-            labelRuleToDB.setEconmicIndexs(Arrays.asList(labelRule.getEconmicIndexs().split("#")));
-        if(!StringUtils.isEmpty(labelRule.getFamilyIndexs()))
-            labelRuleToDB.setFamilyIndexs(Arrays.asList(labelRule.getFamilyIndexs().split("#")));
+        if(!StringUtils.isEmpty(labelRule.getEconmics()))
+            labelRuleToDB.setEconmics(Arrays.asList(labelRule.getEconmics().split("#")));
+        if(!StringUtils.isEmpty(labelRule.getFamilies()))
+            labelRuleToDB.setFamilies(Arrays.asList(labelRule.getFamilies().split("#")));
         if(!StringUtils.isEmpty(labelRule.getIsHealths()))
             labelRuleToDB.setIsHealths(Arrays.asList(labelRule.getIsHealths().split("#")));
         labelRuleToDB.setSex(labelRule.getSex());
@@ -111,7 +110,7 @@ public class LabelServiceImpl implements LabelService {
     }
 
     @Override
-    public LabelRuleModel getLabelRule() {
+    public LabelAllRuleModel getLabelRule() {
         List<Integer> typeList=commonService.getAutoValueTypes("label");
         List<AutoValue> autoValueList=autoValueDao.getByTypeList(typeList);
 
@@ -119,8 +118,19 @@ public class LabelServiceImpl implements LabelService {
 
         List<Chx> chxList=chxDao.getSimple();
 
-        LabelRuleModel labelRuleModel=Wrappers.labelWrapper.wrapLabelRule(autoValueList,jwList,chxList);
+        LabelAllRuleModel labelRuleModel=Wrappers.labelWrapper.wrapLabelRule(autoValueList,jwList,chxList);
 
         return labelRuleModel;
+    }
+
+    @Override
+    public LabelRuleModel getLabelRuleById(int labelId) {
+        return Wrappers.labelWrapper.wrapSingleRule(labelDao.getLabelRuleByLid(labelId));
+    }
+
+    @Override
+    public void save(LabelRuleRequest labelRuleRequest) {
+        LabelRule labelRule=Wrappers.labelWrapper.unwrapLabelRule(labelRuleRequest);
+        labelDao.saveLabelRule(labelRule);
     }
 }

@@ -8,17 +8,42 @@ public class LabelRule extends DBEntity {
     private int ageStart;
     private int ageEnd;
     private String districtIds;
+    private String jwIds;
     private int sex;
     private String censuses;
     private String politicalStatuses;
     private int isKey;
-    private String econmicIndexs;
-    private String familyIndexs;
+    private String econmics;
+    private String families;
     private String intelligences;
     private String eyesights;
     private String isHealths;
+    private String chxs;
+    private String oldStatuses;
 
+    public String getJwIds() {
+        return jwIds;
+    }
 
+    public void setJwIds(String jwIds) {
+        this.jwIds = jwIds;
+    }
+
+    public String getChxs() {
+        return chxs;
+    }
+
+    public void setChxs(String chxs) {
+        this.chxs = chxs;
+    }
+
+    public String getOldStatuses() {
+        return oldStatuses;
+    }
+
+    public void setOldStatuses(String oldStatuses) {
+        this.oldStatuses = oldStatuses;
+    }
 
     public int getAgeStart() {
         return ageStart;
@@ -76,20 +101,20 @@ public class LabelRule extends DBEntity {
         this.isKey = isKey;
     }
 
-    public String getEconmicIndexs() {
-        return econmicIndexs;
+    public String getEconmics() {
+        return econmics;
     }
 
-    public void setEconmicIndexs(String econmicIndexs) {
-        this.econmicIndexs = econmicIndexs;
+    public void setEconmics(String econmics) {
+        this.econmics = econmics;
     }
 
-    public String getFamilyIndexs() {
-        return familyIndexs;
+    public String getFamilies() {
+        return families;
     }
 
-    public void setFamilyIndexs(String familyIndexs) {
-        this.familyIndexs = familyIndexs;
+    public void setFamilies(String families) {
+        this.families = families;
     }
 
     public String getIntelligences() {

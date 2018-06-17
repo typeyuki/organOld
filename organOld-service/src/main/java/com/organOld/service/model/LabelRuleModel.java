@@ -1,133 +1,147 @@
 package com.organOld.service.model;
 
-import com.organOld.dao.entity.AutoValue;
-import com.organOld.dao.entity.Chx;
-import com.organOld.dao.entity.organ.Organ;
 
-import java.util.ArrayList;
+import com.organOld.dao.entity.DBEntity;
+
 import java.util.List;
-import java.util.Map;
 
-/**
- * 规则标签  所有可选规则
- * Created by netlab606 on 2018/6/16.
- */
-public class LabelRuleModel {
-    private Map<Integer,String> sex;
-    private List<AutoValue> district=new ArrayList<>();
-    private List<Organ> organ;//居委
-    private List<AutoValue> census=new ArrayList<>();
-    private List<AutoValue> politicalStatuses=new ArrayList<>();
-    private Map<Integer,String> isKey;
-    private List<AutoValue> economic=new ArrayList<>();
-    private List<AutoValue> family=new ArrayList<>();
-    private List<AutoValue> intelligence=new ArrayList<>();
-    private List<AutoValue> eyesight=new ArrayList<>();
-    private Map<Integer,String> isHealth;
-    private List<Chx> chx;
-    private Map<Integer,String> oldStatus;
+//规则绑定标签
+public class LabelRuleModel{
+    private int ageStart;
+    private int ageEnd;
+    private List<String> districtIds;
+    private List<String> jwIds;//居委
+    private int sex;
+    private List<String> censuses;
+    private List<String> politicalStatuses;
+    private int isKey;
+    private List<String> econmics;
+    private List<String> families;
+    private List<String> intelligences;
+    private List<String> eyesights;
+    private List<String> isHealths;
+    private List<String> chxs;
+    private List<String> oldStatuses;
 
-    public Map<Integer, String> getSex() {
+
+    public List<String> getJwIds() {
+        return jwIds;
+    }
+
+    public void setJwIds(List<String> jwIds) {
+        this.jwIds = jwIds;
+    }
+
+    public List<String> getChxs() {
+        return chxs;
+    }
+
+    public void setChxs(List<String> chxs) {
+        this.chxs = chxs;
+    }
+
+    public List<String> getOldStatuses() {
+        return oldStatuses;
+    }
+
+    public void setOldStatuses(List<String> oldStatuses) {
+        this.oldStatuses = oldStatuses;
+    }
+
+    public int getAgeStart() {
+        return ageStart;
+    }
+
+    public void setAgeStart(int ageStart) {
+        this.ageStart = ageStart;
+    }
+
+    public int getAgeEnd() {
+        return ageEnd;
+    }
+
+    public void setAgeEnd(int ageEnd) {
+        this.ageEnd = ageEnd;
+    }
+
+    public List<String> getDistrictIds() {
+        return districtIds;
+    }
+
+    public void setDistrictIds(List<String> districtIds) {
+        this.districtIds = districtIds;
+    }
+
+    public int getSex() {
         return sex;
     }
 
-    public void setSex(Map<Integer, String> sex) {
+    public void setSex(int sex) {
         this.sex = sex;
     }
 
-    public List<AutoValue> getDistrict() {
-        return district;
+    public List<String> getCensuses() {
+        return censuses;
     }
 
-    public void setDistrict(List<AutoValue> district) {
-        this.district = district;
+    public void setCensuses(List<String> censuses) {
+        this.censuses = censuses;
     }
 
-    public List<Organ> getOrgan() {
-        return organ;
-    }
-
-    public void setOrgan(List<Organ> organ) {
-        this.organ = organ;
-    }
-
-    public List<AutoValue> getCensus() {
-        return census;
-    }
-
-    public void setCensus(List<AutoValue> census) {
-        this.census = census;
-    }
-
-    public List<AutoValue> getPoliticalStatuses() {
+    public List<String> getPoliticalStatuses() {
         return politicalStatuses;
     }
 
-    public void setPoliticalStatuses(List<AutoValue> politicalStatuses) {
+    public void setPoliticalStatuses(List<String> politicalStatuses) {
         this.politicalStatuses = politicalStatuses;
     }
 
-    public Map<Integer, String> getIsKey() {
+    public int getIsKey() {
         return isKey;
     }
 
-    public void setIsKey(Map<Integer, String> isKey) {
+    public void setIsKey(int isKey) {
         this.isKey = isKey;
     }
 
-    public List<AutoValue> getEconomic() {
-        return economic;
+
+    public List<String> getEconmics() {
+        return econmics;
     }
 
-    public void setEconomic(List<AutoValue> economic) {
-        this.economic = economic;
+    public void setEconmics(List<String> econmics) {
+        this.econmics = econmics;
     }
 
-    public List<AutoValue> getFamily() {
-        return family;
+    public List<String> getFamilies() {
+        return families;
     }
 
-    public void setFamily(List<AutoValue> family) {
-        this.family = family;
+    public void setFamilies(List<String> families) {
+        this.families = families;
     }
 
-    public List<AutoValue> getIntelligence() {
-        return intelligence;
+    public List<String> getIntelligences() {
+        return intelligences;
     }
 
-    public void setIntelligence(List<AutoValue> intelligence) {
-        this.intelligence = intelligence;
+    public void setIntelligences(List<String> intelligences) {
+        this.intelligences = intelligences;
     }
 
-    public List<AutoValue> getEyesight() {
-        return eyesight;
+    public List<String> getEyesights() {
+        return eyesights;
     }
 
-    public void setEyesight(List<AutoValue> eyesight) {
-        this.eyesight = eyesight;
+    public void setEyesights(List<String> eyesights) {
+        this.eyesights = eyesights;
     }
 
-    public Map<Integer, String> getIsHealth() {
-        return isHealth;
+    public List<String> getIsHealths() {
+        return isHealths;
     }
 
-    public void setIsHealth(Map<Integer, String> isHealth) {
-        this.isHealth = isHealth;
-    }
-
-    public List<Chx> getChx() {
-        return chx;
-    }
-
-    public void setChx(List<Chx> chx) {
-        this.chx = chx;
-    }
-
-    public Map<Integer, String> getOldStatus() {
-        return oldStatus;
-    }
-
-    public void setOldStatus(Map<Integer, String> oldStatus) {
-        this.oldStatus = oldStatus;
+    public void setIsHealths(List<String> isHealths) {
+        this.isHealths = isHealths;
     }
 }

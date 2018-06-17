@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 //用于数据库 人员 筛选
-public class LabelRuleToDB {
+public class LabelRuleToDBSelectMan {
     private Date birStart;
     private Date birEnd;
     private List<String> districtIds;
@@ -12,8 +12,8 @@ public class LabelRuleToDB {
     private List<String> censuses;
     private List<String> politicalStatuses;
     private int isKey;
-    private List<String> econmicIndexs;
-    private List<String> familyIndexs;
+    private List<String> econmics;
+    private List<String> families;
     private List<String> intelligences;
     private List<String> eyesights;
     private List<String> isHealths;
@@ -66,21 +66,20 @@ public class LabelRuleToDB {
         this.politicalStatuses = politicalStatuses;
     }
 
-
-    public List<String> getEconmicIndexs() {
-        return econmicIndexs;
+    public List<String> getEconmics() {
+        return econmics;
     }
 
-    public void setEconmicIndexs(List<String> econmicIndexs) {
-        this.econmicIndexs = econmicIndexs;
+    public void setEconmics(List<String> econmics) {
+        this.econmics = econmics;
     }
 
-    public List<String> getFamilyIndexs() {
-        return familyIndexs;
+    public List<String> getFamilies() {
+        return families;
     }
 
-    public void setFamilyIndexs(List<String> familyIndexs) {
-        this.familyIndexs = familyIndexs;
+    public void setFamilies(List<String> families) {
+        this.families = families;
     }
 
     public List<String> getIntelligences() {

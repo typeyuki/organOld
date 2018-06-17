@@ -6,7 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/organOld-dao/organOld-dao.iml" filepath="$PROJECT_DIR$/organOld-dao/organOld-dao.iml" />
       <module fileurl="file://$PROJECT_DIR$/organOld-service/organOld-service.iml" filepath="$PROJECT_DIR$/organOld-service/organOld-service.iml" />
       <module fileurl="file://$PROJECT_DIR$/organOld-web/organOld-web.iml" filepath="$PROJECT_DIR$/organOld-web/organOld-web.iml" />
-      <module fileurl="file://C:\sp\gitRepository\organOld\organOld-dao\organOlddao.iml" filepath="C:\sp\gitRepository\organOld\organOld-dao\organOlddao.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../gitRepository/organOld/organOld-dao/organOlddao.iml" filepath="$PROJECT_DIR$/../../gitRepository/organOld/organOld-dao/organOlddao.iml" />
     </modules>
   </component>
 </project>

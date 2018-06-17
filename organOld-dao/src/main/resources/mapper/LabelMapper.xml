@@ -108,9 +108,9 @@
                 #{item}
             </foreach>
         </if>
-        <if test="rule.familyIndexs!=null and rule.familyIndexs.size() > 0">
+        <if test="rule.families!=null and rule.families.size() > 0">
             and oldf.family_index IN
-            <foreach collection="rule.familyIndexs" index="index" item="item" open="(" separator="," close=")">
+            <foreach collection="rule.families" index="index" item="item" open="(" separator="," close=")">
                 #{item}
             </foreach>
         </if>
@@ -174,4 +174,24 @@
     <select id="getLabelRuleByLid" resultType="com.organOld.dao.entity.label.LabelRule">
         SELECT * FROM label_rule WHERE label_id=#{labelId}
     </select>
+
+    <update id="saveLabelRule" parameterType="com.organOld.dao.entity.label.LabelRule">
+        UPDATE  labrl_rule
+        SET age_start=#{ageStart},
+        age_end=#{age_end},
+        district_ids=#{districtIds},
+        jw_ids=#{jwIds},
+        sex=#{sex},
+        censuses=#{censuses},
+        political_statuses=#{politicalSatuses},
+        is_key=#{isKey},
+        econmics=#{econmics},
+        families=#{families},
+        intelligences=#{intelligences},
+        eyesights=#{eyesights},
+        is_healths=#{isHealths},
+        chx=#{chxs},
+        old_status=#{oldStatuses},
+        WHERE label_id=#{id}
+    </update>
 </mapper>

@@ -3,18 +3,18 @@ package com.organOld.service.wrapper;
 import com.organOld.dao.entity.AutoValue;
 import com.organOld.dao.entity.Chx;
 import com.organOld.dao.entity.label.Label;
+import com.organOld.dao.entity.label.LabelRule;
 import com.organOld.dao.entity.organ.Organ;
 import com.organOld.service.constant.TimeConstant;
 import com.organOld.service.enumModel.*;
 import com.organOld.service.model.LabelModel;
+import com.organOld.service.model.LabelAllRuleModel;
 import com.organOld.service.model.LabelRuleModel;
 import com.organOld.service.util.Tool;
 import com.organOld.service.contract.*;
 import org.springframework.beans.BeanUtils;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class LabelWrapper implements Wrapper<Label,LabelModel,LabelRequest> {
 
@@ -40,8 +40,8 @@ public class LabelWrapper implements Wrapper<Label,LabelModel,LabelRequest> {
         return label;
     }
 
-    public LabelRuleModel wrapLabelRule(List<AutoValue> autoValueList, List<Organ> organList, List<Chx> chxList){
-        LabelRuleModel labelRuleModel=new LabelRuleModel();
+    public LabelAllRuleModel wrapLabelRule(List<AutoValue> autoValueList, List<Organ> organList, List<Chx> chxList){
+        LabelAllRuleModel labelRuleModel=new LabelAllRuleModel();
         labelRuleModel.setOrgan(organList);
         labelRuleModel.setChx(chxList);
 
@@ -95,8 +95,75 @@ public class LabelWrapper implements Wrapper<Label,LabelModel,LabelRequest> {
         }
 
         return labelRuleModel;
-
-
     }
 
+
+    public LabelRuleModel wrapSingleRule(LabelRule labelRule){
+        LabelRuleModel labelRuleModel=new LabelRuleModel();
+        labelRuleModel.setSex(labelRule.getSex());
+        labelRuleModel.setAgeEnd(labelRule.getAgeEnd());
+        labelRuleModel.setAgeStart(labelRule.getAgeStart());
+        labelRuleModel.setIsKey(labelRule.getIsKey());
+
+        if(labelRule.getCensuses()!=null && !labelRule.getCensuses().equals(""))
+            labelRuleModel.setCensuses(Arrays.asList(labelRule.getCensuses().split("#")));
+        if(labelRule.getPoliticalStatuses()!=null && !labelRule.getPoliticalStatuses().equals(""))
+            labelRuleModel.setPoliticalStatuses(Arrays.asList(labelRule.getPoliticalStatuses().split("#")));
+        if(labelRule.getDistrictIds()!=null && !labelRule.getDistrictIds().equals(""))
+            labelRuleModel.setDistrictIds(Arrays.asList(labelRule.getDistrictIds().split("#")));
+        if(labelRule.getIntelligences()!=null && !labelRule.getIntelligences().equals(""))
+            labelRuleModel.setIntelligences(Arrays.asList(labelRule.getIntelligences().split("#")));
+        if(labelRule.getEyesights()!=null && !labelRule.getEyesights().equals(""))
+            labelRuleModel.setEyesights(Arrays.asList(labelRule.getEyesights().split("#")));
+        if(labelRule.getIsHealths()!=null && !labelRule.getIsHealths().equals(""))
+            labelRuleModel.setIsHealths(Arrays.asList(labelRule.getIsHealths().split("#")));
+        if(labelRule.getEconmics()!=null && !labelRule.getEconmics().equals(""))
+            labelRuleModel.setEconmics(Arrays.asList(labelRule.getEconmics().split("#")));
+        if(labelRule.getFamilies()!=null && !labelRule.getFamilies().equals(""))
+            labelRuleModel.setFamilies(Arrays.asList(labelRule.getFamilies().split("#")));
+        if(labelRule.getChxs()!=null && !labelRule.getChxs().equals(""))
+            labelRuleModel.setChxs(Arrays.asList(labelRule.getChxs().split("#")));
+        if(labelRule.getOldStatuses()!=null && !labelRule.getOldStatuses().equals(""))
+            labelRuleModel.setOldStatuses(Arrays.asList(labelRule.getOldStatuses().split("#")));
+        if(labelRule.getJwIds()!=null && !labelRule.getJwIds().equals(""))
+            labelRuleModel.setJwIds(Arrays.asList(labelRule.getJwIds().split("#")));
+
+        return labelRuleModel;
+    }
+
+    public LabelRule unwrapLabelRule(LabelRuleRequest labelRuleRequest) {
+        LabelRule labelRule=new LabelRule();
+        labelRule.setId(labelRuleRequest.getLabelId());
+        labelRule.setAgeEnd(labelRuleRequest.getAgeEnd());
+        labelRule.setAgeStart(labelRuleRequest.getAgeStart());
+        labelRule.setSex(labelRuleRequest.getSex());
+        labelRule.setIsKey(labelRuleRequest.getIsKey());
+
+        if(labelRuleRequest.getCensuse()!=null && labelRuleRequest.getCensuse().length>0)
+            labelRule.setCensuses(String.join("#", labelRuleRequest.getCensuse()));
+        if(labelRuleRequest.getPoliticalStatus()!=null && labelRuleRequest.getPoliticalStatus().length>0)
+            labelRule.setPoliticalStatuses(String.join("#", labelRuleRequest.getPoliticalStatus()));
+        if(labelRuleRequest.getDistrict()!=null && labelRuleRequest.getDistrict().length>0)
+            labelRule.setDistrictIds(String.join("#", labelRuleRequest.getDistrict()));
+        if(labelRuleRequest.getIntelligence()!=null && labelRuleRequest.getIntelligence().length>0)
+            labelRule.setIntelligences(String.join("#", labelRuleRequest.getIntelligence()));
+        if(labelRuleRequest.getEyesight()!=null && labelRuleRequest.getEyesight().length>0)
+            labelRule.setEyesights(String.join("#", labelRuleRequest.getEyesight()));
+        if(labelRuleRequest.getIsHealth()!=null && labelRuleRequest.getIsHealth().length>0)
+            labelRule.setIsHealths(String.join("#", labelRuleRequest.getIsHealth()));
+        if(labelRuleRequest.getEconmic()!=null && labelRuleRequest.getEconmic().length>0)
+            labelRule.setEconmics(String.join("#", labelRuleRequest.getEconmic()));
+        if(labelRuleRequest.getFamily()!=null && labelRuleRequest.getFamily().length>0)
+            labelRule.setFamilies(String.join("#", labelRuleRequest.getFamily()));
+        if(labelRuleRequest.getChx()!=null && labelRuleRequest.getChx().length>0)
+            labelRule.setChxs(String.join("#", labelRuleRequest.getChx()));
+        if(labelRuleRequest.getOldStatus()!=null && labelRuleRequest.getOldStatus().length>0)
+            labelRule.setOldStatuses(String.join("#", labelRuleRequest.getOldStatus()));
+        if(labelRuleRequest.getOldStatus()!=null && labelRuleRequest.getOldStatus().length>0)
+            labelRule.setOldStatuses(String.join("#", labelRuleRequest.getOldStatus()));
+        if(labelRuleRequest.getOrgan()!=null && labelRuleRequest.getOrgan().length>0)
+            labelRule.setJwIds(String.join("#", labelRuleRequest.getOrgan()));
+
+        return labelRule;
+    }
 }

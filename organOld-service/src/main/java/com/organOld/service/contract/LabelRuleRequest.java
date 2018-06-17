@@ -1,20 +1,56 @@
 package com.organOld.service.contract;
 
-import java.util.List;
 
 public class LabelRuleRequest {
+    private int labelId;
     private int ageStart;
     private int ageEnd;
-    private List<String> districtIds;
+    private String[] district;
+    private String[] organ;
     private int sex;
-    private List<String> censuses;
-    private List<String> politicalStatuses;
-    private int is_key;
-    private List<String> econmic_indexs;
-    private List<String> family_indexs;
-    private List<String> intelligences;
-    private List<String> eyesights;
-    private List<String> is_healths;
+    private String[] censuse;
+    private String[] politicalStatus;
+    private int isKey;
+    private String[] econmic;
+    private String[] family;
+    private String[] intelligence;
+    private String[] eyesight;
+    private String[] isHealth;
+    private String[] chx;
+    private String[] oldStatus;
+
+
+    public String[] getOrgan() {
+        return organ;
+    }
+
+    public void setOrgan(String[] organ) {
+        this.organ = organ;
+    }
+
+    public String[] getChx() {
+        return chx;
+    }
+
+    public void setChx(String[] chx) {
+        this.chx = chx;
+    }
+
+    public String[] getOldStatus() {
+        return oldStatus;
+    }
+
+    public void setOldStatus(String[] oldStatus) {
+        this.oldStatus = oldStatus;
+    }
+
+    public int getLabelId() {
+        return labelId;
+    }
+
+    public void setLabelId(int labelId) {
+        this.labelId = labelId;
+    }
 
     public int getAgeStart() {
         return ageStart;
@@ -32,13 +68,12 @@ public class LabelRuleRequest {
         this.ageEnd = ageEnd;
     }
 
-
-    public List<String> getDistrictIds() {
-        return districtIds;
+    public String[] getDistrict() {
+        return district;
     }
 
-    public void setDistrictIds(List<String> districtIds) {
-        this.districtIds = districtIds;
+    public void setDistrict(String[] district) {
+        this.district = district;
     }
 
     public int getSex() {
@@ -49,67 +84,67 @@ public class LabelRuleRequest {
         this.sex = sex;
     }
 
-    public List<String> getCensuses() {
-        return censuses;
+    public String[] getCensuse() {
+        return censuse;
     }
 
-    public void setCensuses(List<String> censuses) {
-        this.censuses = censuses;
+    public void setCensuse(String[] censuse) {
+        this.censuse = censuse;
     }
 
-    public List<String> getPoliticalStatuses() {
-        return politicalStatuses;
+    public String[] getPoliticalStatus() {
+        return politicalStatus;
     }
 
-    public void setPoliticalStatuses(List<String> politicalStatuses) {
-        this.politicalStatuses = politicalStatuses;
+    public void setPoliticalStatus(String[] politicalStatus) {
+        this.politicalStatus = politicalStatus;
     }
 
-    public int getIs_key() {
-        return is_key;
+    public int getIsKey() {
+        return isKey;
     }
 
-    public void setIs_key(int is_key) {
-        this.is_key = is_key;
+    public void setIsKey(int isKey) {
+        this.isKey = isKey;
     }
 
-    public List<String> getEconmic_indexs() {
-        return econmic_indexs;
+    public String[] getEconmic() {
+        return econmic;
     }
 
-    public void setEconmic_indexs(List<String> econmic_indexs) {
-        this.econmic_indexs = econmic_indexs;
+    public void setEconmic(String[] econmic) {
+        this.econmic = econmic;
     }
 
-    public List<String> getFamily_indexs() {
-        return family_indexs;
+    public String[] getFamily() {
+        return family;
     }
 
-    public void setFamily_indexs(List<String> family_indexs) {
-        this.family_indexs = family_indexs;
+    public void setFamily(String[] family) {
+        this.family = family;
     }
 
-    public List<String> getIntelligences() {
-        return intelligences;
+    public String[] getIntelligence() {
+        return intelligence;
     }
 
-    public void setIntelligences(List<String> intelligences) {
-        this.intelligences = intelligences;
+    public void setIntelligence(String[] intelligence) {
+        this.intelligence = intelligence;
     }
 
-    public List<String> getEyesights() {
-        return eyesights;
+    public String[] getEyesight() {
+        return eyesight;
     }
 
-    public void setEyesights(List<String> eyesights) {
-        this.eyesights = eyesights;
+    public void setEyesight(String[] eyesight) {
+        this.eyesight = eyesight;
     }
 
-    public List<String> getIs_healths() {
-        return is_healths;
+    public String[] getIsHealth() {
+        return isHealth;
     }
 
-    public void setIs_healths(List<String> is_healths) {
-        this.is_healths = is_healths;
+    public void setIsHealth(String[] isHealth) {
+        this.isHealth = isHealth;
     }
 }

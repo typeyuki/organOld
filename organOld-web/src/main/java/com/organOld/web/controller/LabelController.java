@@ -1,9 +1,6 @@
 package com.organOld.web.controller;
 
-import com.organOld.service.contract.BTableRequest;
-import com.organOld.service.contract.LabelRequest;
-import com.organOld.service.contract.OldmanRequest;
-import com.organOld.service.model.LabelRuleModel;
+import com.organOld.service.contract.*;
 import com.organOld.service.service.LabelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -74,6 +71,23 @@ public class LabelController {
         return mv;
     }
 
+    /**
+     * 规则制定标签  获得某一ID的规则
+     * @param labelId
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/rule/{labelId}/getRule",method = RequestMethod.GET)
+    public Result get_rule(@PathVariable int labelId){
+        return new Result(true,labelService.getLabelRuleById(labelId));
+    }
+
+    @RequestMapping(value = "/rule/save",method = RequestMethod.POST)
+    public ModelAndView rule_save(LabelRuleRequest labelRuleRequest){
+        ModelAndView mv=new ModelAndView("redirect:/rule/"+labelRuleRequest.getLabelId());
+        labelService.save(labelRuleRequest);
+        return mv;
+    }
 
     /**
      * 标签 绑定的人员 页面

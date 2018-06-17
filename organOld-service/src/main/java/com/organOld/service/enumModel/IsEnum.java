@@ -2,7 +2,7 @@ package com.organOld.service.enumModel;
 
 //通用 是否
 public enum IsEnum {
-    YES("是",1),NO("否",0);
+    YES("是",1),NO("否",2);
 
     private String name ;
     private int index ;
