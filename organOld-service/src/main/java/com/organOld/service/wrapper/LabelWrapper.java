@@ -56,12 +56,12 @@ public class LabelWrapper implements Wrapper<Label,LabelModel,LabelRequest> {
         labelRuleModel.setIsKey(isKey);
 
         Map<Integer,String> isHealth=new HashMap<>();
-        isHealth.put(LabelRuleIsHealthsEnum.CJQK.getIndex(),LabelRuleIsHealthsEnum.CJQK.getName());
-        isHealth.put(LabelRuleIsHealthsEnum.GZ.getIndex(),LabelRuleIsHealthsEnum.GZ.getName());
-        isHealth.put(LabelRuleIsHealthsEnum.EXZL.getIndex(),LabelRuleIsHealthsEnum.EXZL.getName());
-        isHealth.put(LabelRuleIsHealthsEnum.SN.getIndex(),LabelRuleIsHealthsEnum.SN.getName());
-        isHealth.put(LabelRuleIsHealthsEnum.YW.getIndex(),LabelRuleIsHealthsEnum.YW.getName());
-        isHealth.put(LabelRuleIsHealthsEnum.MB.getIndex(),LabelRuleIsHealthsEnum.MB.getName());
+        isHealth.put(HealthEnum.CJQK.getIndex(),HealthEnum.CJQK.getName());
+        isHealth.put(HealthEnum.GZ.getIndex(),HealthEnum.GZ.getName());
+        isHealth.put(HealthEnum.EXZL.getIndex(),HealthEnum.EXZL.getName());
+        isHealth.put(HealthEnum.SN.getIndex(),HealthEnum.SN.getName());
+        isHealth.put(HealthEnum.YW.getIndex(),HealthEnum.YW.getName());
+        isHealth.put(HealthEnum.MB.getIndex(),HealthEnum.MB.getName());
         labelRuleModel.setIsHealth(isHealth);
 
         Map<Integer,String> oldStatus=new HashMap<>();

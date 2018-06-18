@@ -84,6 +84,44 @@ $(function () {
                         }
                     });
                 }
+
+                if(result.data.chxs!=null && result.data.chxs.length>0){
+                    $("input[name='chx']:checkbox").prop("checked",false);
+                    $("input[name='chx']").each(function () {
+                        if(result.data.chxs.indexOf($(this).val())!=-1){
+                            $(this).prop("checked",true);
+                        }
+                    });
+                }
+
+                if(result.data.oldStatuses!=null && result.data.oldStatuses.length>0){
+                    $("input[name='oldStatus']:checkbox").prop("checked",false);
+                    $("input[name='oldStatus']").each(function () {
+                        if(result.data.oldStatuses.indexOf($(this).val())!=-1){
+                            $(this).prop("checked",true);
+                        }
+                    });
+                }
+
+                if(result.data.districtIds!=null && result.data.districtIds.length>0){
+                    $("input[name='district']:checkbox").prop("checked",false);
+                    $("input[name='district']").each(function () {
+                        if(result.data.districtIds.indexOf($(this).val())!=-1){
+                            $(this).prop("checked",true);
+                        }
+                    });
+                }
+
+                if(result.data.jwIds!=null && result.data.jwIds.length>0){
+                    $("input[name='organ']:checkbox").prop("checked",false);
+                    $("input[name='orgah']").each(function () {
+                        if(result.data.jwIds.indexOf($(this).val())!=-1){
+                            $(this).prop("checked",true);
+                        }
+                    });
+                }
+
+
             }
         }
     });

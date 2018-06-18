@@ -1,23 +1,24 @@
 package com.organOld.service.enumModel;
 
 
-public enum LabelRuleIsHealthsEnum {
-    EXZL("恶性肿瘤史",1),//恶性肿瘤史
-    GZ("骨折史",2),//骨折史
-    CJQK("残疾情况",3),//残疾情况
-    MB("慢病",4),//慢病
-    SN("失能",5),//失能
-    YW("药物反应",6);//药物反应
+public enum HealthEnum {
+
+    MB("慢病",1),//慢病
+    SN("失能",2),//失能
+    YW("药物反应",3),//药物反应
+    EXZL("恶性肿瘤史",4),//恶性肿瘤史
+    GZ("骨折史",5),//骨折史
+    CJQK("残疾情况",6);//残疾情况
     private String name ;
     private int index ;
 
-    LabelRuleIsHealthsEnum(String name , int index ){
+    HealthEnum(String name , int index ){
         this.name = name ;
         this.index = index ;
     }
 
     public static String getValue(int index) {
-        for (LabelRuleIsHealthsEnum d : LabelRuleIsHealthsEnum.values()) {
+        for (HealthEnum d : HealthEnum.values()) {
             if (d.getIndex() == index) {
                 return d.name;
             }

@@ -4,8 +4,7 @@ package com.organOld.service.wrapper;
 import com.organOld.dao.entity.oldman.HealthAdd;
 import com.organOld.dao.entity.oldman.HealthSelect;
 import com.organOld.dao.entity.oldman.OldmanHealth;
-import com.organOld.service.enumModel.HealthAddEnum;
-import com.organOld.service.enumModel.HealthSelectEnum;
+import com.organOld.service.enumModel.HealthEnum;
 import com.organOld.service.model.OldmanHealthModel;
 import com.organOld.service.contract.*;
 import org.springframework.beans.BeanUtils;
@@ -30,9 +29,9 @@ public class OldmanHealthWrapper implements Wrapper<OldmanHealth,OldmanHealthMod
                 HealthAdd add=new HealthAdd();
                 add.setId(healthAdd.getId());
                 add.setDesc(healthAdd.getDesc());
-                if(healthAdd.getType()== HealthAddEnum.EXZL.getIndex()) {
+                if(healthAdd.getType()== HealthEnum.EXZL.getIndex()) {
                     oldmanHealthModel.getAddExzl().add(add);
-                }else if(healthAdd.getType()==HealthAddEnum.GZ.getIndex()){
+                }else if(healthAdd.getType()==HealthEnum.GZ.getIndex()){
                     oldmanHealthModel.getAddGz().add(add);
                 }else{
                     oldmanHealthModel.getAddCj().add(add);
@@ -44,9 +43,9 @@ public class OldmanHealthWrapper implements Wrapper<OldmanHealth,OldmanHealthMod
                 HealthSelect select=new HealthSelect();
                 select.setId(healthSelect.getId());
                 select.setSecTypeName(healthSelect.getSecTypeName());
-                if(healthSelect.getFirType()== HealthSelectEnum.MB.getIndex()) {
+                if(healthSelect.getFirType()== HealthEnum.MB.getIndex()) {
                     oldmanHealthModel.getSelectMb().add(select);
-                }else if(healthSelect.getFirType()==HealthSelectEnum.SN.getIndex()){
+                }else if(healthSelect.getFirType()==HealthEnum.SN.getIndex()){
                     oldmanHealthModel.getSelectSn().add(select);
                 }else{
                     oldmanHealthModel.getSelectYwfy().add(select);
