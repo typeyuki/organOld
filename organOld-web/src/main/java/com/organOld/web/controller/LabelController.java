@@ -82,9 +82,14 @@ public class LabelController {
         return new Result(true,labelService.getLabelRuleById(labelId));
     }
 
+    /**
+     * 规则保存
+     * @param labelRuleRequest
+     * @return
+     */
     @RequestMapping(value = "/rule/save",method = RequestMethod.POST)
     public ModelAndView rule_save(LabelRuleRequest labelRuleRequest){
-        ModelAndView mv=new ModelAndView("redirect:/rule/"+labelRuleRequest.getLabelId());
+        ModelAndView mv=new ModelAndView("redirect:/oldman/label/rule/"+labelRuleRequest.getLabelId());
         labelService.save(labelRuleRequest);
         return mv;
     }

@@ -30,7 +30,8 @@
                     </div>
                 </div>
                 <div class="ibox-content">
-                    <form method="get" class="form-horizontal">
+                    <form method="post" action="/oldman/label/rule/save" class="form-horizontal">
+                        <input type="hidden" name="labelId" value="${labelId}">
                         <div class="form-group">
                             <label class="col-sm-2 control-label">年龄段</label>
                             <div class="col-sm-1">

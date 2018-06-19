@@ -13,17 +13,17 @@ $(document).ready(function(){
             "bProcessing": true, //加载数据时显示正在加载信息
             "bServerSide": true, //指定从服务器端获取数据
             "columns":[{
-                data:"id"
-            },{
-                data:"organId"
-            },{
                 data:"oldmanId"
+            },{
+                data:"oldmanName"
+            },{
+                data:"organName"
+            },{
+                data:"num"
             },{
                 data:"timeIn"
             },{
                 data:"timeOut"
-            },{
-                data:"num"
             },{
                 data:"time"
             }
@@ -31,38 +31,19 @@ $(document).ready(function(){
             "order":[[0,"asc"]],
             "columnDefs": [
                 // 列样式
-                // {
-                //     "targets": [9], // 目标列位置，下标从0开始
-                //     "data": "linkman.name", // 数据列名
-                //     "render": function(data, type, full) { // 返回自定义内容
-                //         if(data!=undefined){
-                //             return "<span class='linkman'>" + data + "</span>";
-                //         }else{
-                //             return "";
-                //         }
-                //     }
-                // },
                 // 增加一列，包括删除和修改，同时将我们需要传递的数据传递到链接中
                 {
                     "targets": [7], // 目标列位置，下标从0开始
-                    "data": "id", // 数据列名
+                    "data": "oldmanId", // 数据列名
                     "render": function(data, type, full) { // 返回自定义内容
-                        return "<span class='mod' id='"+data+"'>修改</span>";
+                        return "<span class='look' id='"+data+"'>查看</span>";
                     }
                 },
                 //不进行排序的列
-                { "bSortable": false, "aTargets": [ 1,2,3,4,5] }
+                { "bSortable": false, "aTargets": [ 1,2 ,3, 4,5,6] }
             ],
             "sAjaxSource": "/oldman/organOldmanData",//这个是请求的地址
             "fnServerData": retrieveData
-            // "fnServerParams": function (aoData) {  //查询条件
-            //     aoData.push(
-            //         { "name": "id", "value": $('.id').val() },
-            //         { "name": "sex", "value": $('.sex').val() },
-            //         { "name": "age", "value": $('.age').val() },
-            //         { "name": "time", "value": $('.time').val() }
-            //     );
-            // }
         });
     function retrieveData(url, aoData, fnCallback) {
         $.ajax({
@@ -73,7 +54,7 @@ $(document).ready(function(){
                 "iSortCol_0" : aoData.iSortCol_0,
                 "sEcho" : aoData.sEcho,
                 "sSortDir_0" : aoData.sSortDir_0,
-                "id" : ($('.id').val()==""?"0":aoData.id)//参数不能是空 400
+                "firType" : firType
             },
             type: 'POST',
             dataType: 'json',
@@ -82,7 +63,7 @@ $(document).ready(function(){
                 fnCallback(result);//把返回的数据传给这个方法就可以了,datatable会自动绑定数据的
             },
             error:function(XMLHttpRequest, textStatus, errorThrown) {
-                alert("status:"+XMLHttpRequest.status+",readyState:"+XMLHttpRequest.readyState+",textStatus:"+textStatus);
+                // alert("status:"+XMLHttpRequest.status+",readyState:"+XMLHttpRequest.readyState+",textStatus:"+textStatus);
             }
         });
     }
@@ -98,29 +79,3 @@ $(document).ready(function(){
             "column":oTable.fnGetPosition(this)[2]}},"width":"90%","height":"100%"});
 
 });
-
-function del(id) {
-    $.ajax({
-        url : "/organOldman/del",
-        type : "post",
-        dataType : 'json',
-        data:{
-            id:id
-        },
-        success : function(data) {
-            if (data.success==true) {
-                start = $(".dataTables-example").dataTable().fnSettings()._iDisplayStart;
-                total = $(".dataTables-example").dataTable().fnSettings().fnRecordsDisplay();
-                window.location.reload();
-                if(total-start==1){
-                    if(start>0){
-                        $(".dataTables-example").dataTable().fnPageChange('previous',true);
-                    }
-                }
-
-            } else {
-                alert('删除失败！');
-            }
-        }
-    });
-}

@@ -15,7 +15,7 @@ public class LabelRuleModel{
     private List<String> censuses;
     private List<String> politicalStatuses;
     private int isKey;
-    private List<String> econmics;
+    private List<String> economics;
     private List<String> families;
     private List<String> intelligences;
     private List<String> eyesights;
@@ -104,13 +104,12 @@ public class LabelRuleModel{
         this.isKey = isKey;
     }
 
-
-    public List<String> getEconmics() {
-        return econmics;
+    public List<String> getEconomics() {
+        return economics;
     }
 
-    public void setEconmics(List<String> econmics) {
-        this.econmics = econmics;
+    public void setEconomics(List<String> economics) {
+        this.economics = economics;
     }
 
     public List<String> getFamilies() {

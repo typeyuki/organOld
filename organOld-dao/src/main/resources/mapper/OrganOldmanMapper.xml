@@ -2,32 +2,49 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.organOld.dao.repository.OrganOldmanDao">
 
-    <resultMap id="organOldman" type="com.organOld.dao.entity.oldman.OrganOldman">
-    <id property="id" column="id" />
-    <result property="organId" column="organ_id"/>
-    <result property="oldmanId" column="oldman_id" />
-    <result property="time_in" column="time_in" />
-    <result property="time_out" column="time_out"/>
-    <result property="num" column="num"/>
-    <result property="time" column="time"/>
+    <resultMap id="organOldman" type="com.organOld.dao.entity.organ.OrganOldman">
+        <id property="id" column="id" />
+        <result property="timeIn" column="time_in" />
+        <result property="timeOut" column="time_out"/>
+        <result property="num" column="num"/>
+        <result property="time" column="time"/>
+        <association property="oldman" javaType="com.organOld.dao.entity.oldman.Oldman">
+            <id property="id" column="oid" />
+            <result property="name" column="name"/>
+        </association>
+        <association property="organ" javaType="com.organOld.dao.entity.organ.Organ">
+            <id property="id" column="orgid" />
+            <result property="name" column="orgname"/>
+        </association>
     </resultMap>
 
 
     <select id="getByPage" parameterType="com.organOld.dao.util.Page" resultMap="organOldman">
-        SELECT o.id,o.organ_id,o.oldman_id,o.time_in,o.time_out,o.num,o.time
-        FROM organ_oldman o
+        SELECT oo.id,org.id orgid,o.id oid,oo.time_in,oo.time_out,oo.num,oo.time,o.name,org.name orgname
+        FROM organ_oldman oo,oldman_base o,organ org,organ_type ot
+        WHERE oo.oldman_id=o.id AND org.id=oo.organ_id AND org.organ_type_id=ot.id
+        <if test="entity.organ!=null and entity.organ.id!=0">
+            AND oo.organ_id=#{entity.organ.id}
+        </if>
+        <if test="entity.firType!=null and entity.firType!=''">
+            AND ot.fir_type=#{entity.firType}
+        </if>
     </select>
 
     <select id="getSizeByPage" parameterType="com.organOld.dao.util.Page" resultType="java.lang.Long">
         SELECT count(1)
-        FROM organ_oldman
-        WHERE 1=1
-        <if test="entity!=null and entity.id!=null and entity.id!=0">
-            and id=#{entity.id}
+        FROM organ_oldman oo,oldman_base o,organ org,organ_type ot
+        WHERE oo.oldman_id=o.id AND org.id=oo.organ_id AND org.organ_type_id=ot.id
+        <if test="entity.organ!=null and entity.organ.id!=0">
+            AND oo.organ_id=#{entity.organ.id}
+        </if>
+        <if test="entity.firType!=null and entity.firType!=''">
+            AND ot.fir_type=#{entity.firType}
         </if>
 
     </select>
-    <update id="updateById" parameterType="com.organOld.dao.entity.oldman.OrganOldman">
+
+    <update id="updateById" parameterType="com.organOld.dao.entity.organ.OrganOldman">
         UPDATE organ_oldman
         SET organ_id=#{organ_id},oldman_id=#{oldman_id},id=#{id},time_in=#{time_in},time_out=#{time_out},time=#{time},num=#{num}
         WHERE id=#{id}

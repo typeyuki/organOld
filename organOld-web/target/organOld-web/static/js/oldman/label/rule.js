@@ -9,7 +9,7 @@ $(function () {
         success: function (result) {
             if(result.success==true){
                 $("input[name='ageStart']").val(result.data.ageStart==0?"":result.data.ageStart);
-                $("input[name='ageEnd']").val(result.data.ageEnd==0?"":result.data.endStart);
+                $("input[name='ageEnd']").val(result.data.ageEnd==0?"":result.data.ageEnd);
 
                 if(result.data.sex!=null && result.data.sex!=0){
                     $("input[name='sex']:checkbox").prop("checked",false);
@@ -77,7 +77,7 @@ $(function () {
                     });
                 }
                 if(result.data.isHealths!=null && result.data.isHealths.length>0){
-                    $("input[name='isHealthy']:checkbox").prop("checked",false);
+                    $("input[name='isHealth']:checkbox").prop("checked",false);
                     $("input[name='isHealth']").each(function () {
                         if(result.data.isHealths.indexOf($(this).val())!=-1){
                             $(this).prop("checked",true);
@@ -114,7 +114,7 @@ $(function () {
 
                 if(result.data.jwIds!=null && result.data.jwIds.length>0){
                     $("input[name='organ']:checkbox").prop("checked",false);
-                    $("input[name='orgah']").each(function () {
+                    $("input[name='organ']").each(function () {
                         if(result.data.jwIds.indexOf($(this).val())!=-1){
                             $(this).prop("checked",true);
                         }

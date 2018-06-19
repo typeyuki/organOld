@@ -34,7 +34,9 @@
                     <#if type=="bind">
                         <div>
                             <a onclick="$('#selectModal').modal()" href="javascript:void(0);" class="btn btn-primary ">添加</a>
-                            <a onclick="" href="javascript:void(0);" class="btn btn-primary ">删除</a>
+                            <#if type=="bind">
+                                <a onclick="" href="javascript:void(0);" class="btn btn-primary ">删除</a>
+                            </#if>
                         </div>
                     </#if>
                     <div>
@@ -51,8 +53,10 @@
                     <table class="table table-striped table-bordered table-hover dataTables-example">
                         <thead>
                         <tr>
-                            <th><div class="icheckbox_square-green checked" style="position: relative;"><input type="checkbox" checked="" class="i-checks" name="input[]" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div></th>
-                            <th>序号</th>
+                            <#if type=="bind">
+                                <th><div class="icheckbox_square-green checked" style="position: relative;"><input type="checkbox" checked="" class="i-checks" name="input[]" style="position: absolute; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div></th>
+                            </#if>
+                             <th>序号</th>
                             <th>片区</th>
                             <th>居委</th>
                             <th>小区</th>

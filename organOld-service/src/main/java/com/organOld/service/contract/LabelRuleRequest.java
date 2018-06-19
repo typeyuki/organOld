@@ -3,15 +3,15 @@ package com.organOld.service.contract;
 
 public class LabelRuleRequest {
     private int labelId;
-    private int ageStart;
-    private int ageEnd;
+    private String ageStart;  //要用string 去接受前端数据  不然int的话 传空值会400
+    private String ageEnd;
     private String[] district;
     private String[] organ;
-    private int sex;
-    private String[] censuse;
+    private String sex;
+    private String[] census;
     private String[] politicalStatus;
-    private int isKey;
-    private String[] econmic;
+    private String isKey;
+    private String[] economic;
     private String[] family;
     private String[] intelligence;
     private String[] eyesight;
@@ -36,60 +36,13 @@ public class LabelRuleRequest {
         this.chx = chx;
     }
 
-    public String[] getOldStatus() {
-        return oldStatus;
+
+    public String[] getCensus() {
+        return census;
     }
 
-    public void setOldStatus(String[] oldStatus) {
-        this.oldStatus = oldStatus;
-    }
-
-    public int getLabelId() {
-        return labelId;
-    }
-
-    public void setLabelId(int labelId) {
-        this.labelId = labelId;
-    }
-
-    public int getAgeStart() {
-        return ageStart;
-    }
-
-    public void setAgeStart(int ageStart) {
-        this.ageStart = ageStart;
-    }
-
-    public int getAgeEnd() {
-        return ageEnd;
-    }
-
-    public void setAgeEnd(int ageEnd) {
-        this.ageEnd = ageEnd;
-    }
-
-    public String[] getDistrict() {
-        return district;
-    }
-
-    public void setDistrict(String[] district) {
-        this.district = district;
-    }
-
-    public int getSex() {
-        return sex;
-    }
-
-    public void setSex(int sex) {
-        this.sex = sex;
-    }
-
-    public String[] getCensuse() {
-        return censuse;
-    }
-
-    public void setCensuse(String[] censuse) {
-        this.censuse = censuse;
+    public void setCensus(String[] census) {
+        this.census = census;
     }
 
     public String[] getPoliticalStatus() {
@@ -100,20 +53,14 @@ public class LabelRuleRequest {
         this.politicalStatus = politicalStatus;
     }
 
-    public int getIsKey() {
-        return isKey;
+
+
+    public String[] getEconomic() {
+        return economic;
     }
 
-    public void setIsKey(int isKey) {
-        this.isKey = isKey;
-    }
-
-    public String[] getEconmic() {
-        return econmic;
-    }
-
-    public void setEconmic(String[] econmic) {
-        this.econmic = econmic;
+    public void setEconomic(String[] economic) {
+        this.economic = economic;
     }
 
     public String[] getFamily() {
@@ -146,5 +93,61 @@ public class LabelRuleRequest {
 
     public void setIsHealth(String[] isHealth) {
         this.isHealth = isHealth;
+    }
+
+    public int getLabelId() {
+        return labelId;
+    }
+
+    public void setLabelId(int labelId) {
+        this.labelId = labelId;
+    }
+
+    public String getAgeStart() {
+        return ageStart;
+    }
+
+    public void setAgeStart(String ageStart) {
+        this.ageStart = ageStart;
+    }
+
+    public String getAgeEnd() {
+        return ageEnd;
+    }
+
+    public void setAgeEnd(String ageEnd) {
+        this.ageEnd = ageEnd;
+    }
+
+    public String[] getDistrict() {
+        return district;
+    }
+
+    public void setDistrict(String[] district) {
+        this.district = district;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
+    public String getIsKey() {
+        return isKey;
+    }
+
+    public void setIsKey(String isKey) {
+        this.isKey = isKey;
+    }
+
+    public String[] getOldStatus() {
+        return oldStatus;
+    }
+
+    public void setOldStatus(String[] oldStatus) {
+        this.oldStatus = oldStatus;
     }
 }

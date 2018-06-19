@@ -13,7 +13,7 @@ public class LabelRule extends DBEntity {
     private String censuses;
     private String politicalStatuses;
     private int isKey;
-    private String econmics;
+    private String economics;
     private String families;
     private String intelligences;
     private String eyesights;
@@ -101,12 +101,12 @@ public class LabelRule extends DBEntity {
         this.isKey = isKey;
     }
 
-    public String getEconmics() {
-        return econmics;
+    public String getEconomics() {
+        return economics;
     }
 
-    public void setEconmics(String econmics) {
-        this.econmics = econmics;
+    public void setEconomics(String economics) {
+        this.economics = economics;
     }
 
     public String getFamilies() {
