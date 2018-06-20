@@ -2,13 +2,14 @@ package com.organOld.dao.entity.oldman;
 
 
 import com.organOld.dao.entity.DBEntity;
+import com.organOld.dao.entity.DBInterface;
 
 import java.util.List;
 
 /**
  * 老人健康档案
  */
-public class OldmanHealth extends DBEntity {
+public class OldmanHealth extends DBEntity implements DBInterface{
 
     private String bloodType;
     private String intelligence;//失智
@@ -20,6 +21,17 @@ public class OldmanHealth extends DBEntity {
 
     private String search;//模糊搜索
 
+    private Integer jwId;//居委Id
+
+
+    public Integer getJwId() {
+        return jwId;
+    }
+
+    @Override
+    public void setJwId(Integer jwId) {
+        this.jwId = jwId;
+    }
 
     public String getSearch() {
         return search;

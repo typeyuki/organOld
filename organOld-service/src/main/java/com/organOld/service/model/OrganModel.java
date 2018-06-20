@@ -2,6 +2,7 @@ package com.organOld.service.model;
 
 public class OrganModel {
     private Integer id;
+    private Integer organTypeId;
     private String organType;
     private String name;
     private String intro;
@@ -19,6 +20,14 @@ public class OrganModel {
     private String districtName;//所属片区名称 如果有的话
     private String time;
 
+
+    public Integer getOrganTypeId() {
+        return organTypeId;
+    }
+
+    public void setOrganTypeId(Integer organTypeId) {
+        this.organTypeId = organTypeId;
+    }
 
     public Integer getId() {
         return id;

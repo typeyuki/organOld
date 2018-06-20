@@ -2,13 +2,14 @@ package com.organOld.dao.entity.label;
 
 
 import com.organOld.dao.entity.DBEntity;
+import com.organOld.dao.entity.DBInterface;
 import com.organOld.dao.entity.organ.Organ;
 
 /**
  * 三级标签实体
  * Created by netlab606 on 2018/6/7.
  */
-public class Label extends DBEntity {
+public class Label extends DBEntity implements DBInterface{
 
     private LabelSec labelSec;//二级标签
     private String name;
@@ -17,6 +18,17 @@ public class Label extends DBEntity {
     private int type;//类型  1 人员绑定标签 2规则指定标签
     private Organ organ;//发布的组织ID 主要是居委 0的话 表示针对所有
 
+
+    private Integer jwId;
+
+    public Integer getJwId() {
+        return jwId;
+    }
+
+    @Override
+    public void setJwId(Integer jwId) {
+        this.jwId = jwId;
+    }
 
     public Organ getOrgan() {
         return organ;

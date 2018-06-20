@@ -1,9 +1,11 @@
 package com.organOld.service.service.impl;
 
+import com.organOld.dao.entity.SysUser;
 import com.organOld.dao.entity.organ.Organ;
 import com.organOld.dao.entity.organ.OrganOldman;
 import com.organOld.dao.repository.OrganDao;
 import com.organOld.dao.repository.OrganOldmanDao;
+import com.organOld.dao.repository.UserDao;
 import com.organOld.dao.util.Page;
 import com.organOld.service.contract.BTableRequest;
 import com.organOld.service.contract.OrganOldmanRequest;
@@ -12,10 +14,14 @@ import com.organOld.service.model.OrganModel;
 import com.organOld.service.model.OrganOldmanModel;
 import com.organOld.service.service.CommonService;
 import com.organOld.service.service.OrganService;
+import com.organOld.service.service.UserService;
 import com.organOld.service.wrapper.Wrappers;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,6 +34,9 @@ public class OrganServiceImpl implements OrganService{
     CommonService commonService;
     @Autowired
     OrganOldmanDao organOldmanDao;
+    @Autowired
+    UserService userService;
+
 
     @Override
     public String getByPage(OrganRequest organRequest, BTableRequest bTableRequest) {
@@ -48,4 +57,21 @@ public class OrganServiceImpl implements OrganService{
         Long size=organOldmanDao.getSizeByPage(page);
         return commonService.tableReturn(bTableRequest.getsEcho(),size,organOldmanModelList);
     }
+
+    @Override
+    public OrganModel getBySession(HttpSession httpSession) {
+        UserDetails userDetails=(UserDetails) SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getPrincipal();
+        String username=userDetails.getUsername();
+        OrganModel organModel=Wrappers.organWrapper.wrap(organDao.getByUsername(username));
+        return organModel;
+    }
+
+    @Override
+    public OrganModel getById(int organId) {
+        return null;
+    }
+
+
 }

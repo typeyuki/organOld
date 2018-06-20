@@ -7,7 +7,6 @@ import com.organOld.service.enumModel.OrganFirEnum;
 import com.organOld.service.model.OrganOldmanModel;
 import com.organOld.service.util.Tool;
 import com.organOld.service.contract.*;
-import org.springframework.beans.BeanUtils;
 import org.springframework.util.StringUtils;
 
 

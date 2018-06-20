@@ -1,8 +1,13 @@
 package com.organOld.web.controller;
 
+import com.organOld.dao.entity.AutoValue;
 import com.organOld.service.contract.BTableRequest;
 import com.organOld.service.contract.OrganOldmanRequest;
 import com.organOld.service.contract.OrganRequest;
+import com.organOld.service.enumModel.AutoValueEnum;
+import com.organOld.service.model.OrganModel;
+import com.organOld.service.service.AutoValueService;
+import com.organOld.service.service.CommonService;
 import com.organOld.service.service.OrganService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  * Created by netlab606 on 2018/6/11.
@@ -21,6 +27,10 @@ public class OrganController {
 
     @Autowired
     OrganService organService;
+    @Autowired
+    AutoValueService autoValueService;
+    @Autowired
+    CommonService commonService;
 
     /**
      *
@@ -64,6 +74,7 @@ public class OrganController {
     public ModelAndView man(@PathVariable String organId){
         ModelAndView mv=new ModelAndView("organ/oldman_man");
         mv.addObject("organId",organId);
+        mv.addObject("dataUrl","/organ/oldman/man/data");
         return mv;
     }
 
@@ -78,11 +89,37 @@ public class OrganController {
     }
 
     /**
-     *
+     * 机构账号登陆  管理
      * @return
      */
     @RequestMapping(value = "/oldman/single",method = RequestMethod.GET)
     public ModelAndView oldman(HttpSession httpSession){
-        return new ModelAndView("organ/oldman_single");
+        ModelAndView mv=new ModelAndView("organ/oldman_single");
+        OrganModel organModel=organService.getBySession(httpSession);
+        mv.addObject("organ",organModel);
+        List<AutoValue> districtList=autoValueService.getByType(AutoValueEnum.PQ.getIndex());
+        mv.addObject("districts",districtList);
+        return mv;
+    }
+
+    /**
+     * 机构账号登陆  人员
+     * @return
+     */
+    @RequestMapping(value = "/oldman/single/man",method = RequestMethod.GET)
+    public ModelAndView single_man(){
+        ModelAndView mv=new ModelAndView("organ/oldman_man");
+        mv.addObject("single","single");
+        mv.addObject("dataUrl","/organ/oldman/single/man/data");
+        return mv;
+    }
+
+
+    @ResponseBody
+    @RequestMapping(value = "/oldman/single/man/data",method = RequestMethod.POST)
+    public String single(BTableRequest bTableRequest, OrganOldmanRequest organOldmanManRequest,HttpSession session){
+        int organId=commonService.getIdBySession(session);
+        organOldmanManRequest.setOrganId(organId);
+        return organService.getManByPage(bTableRequest,organOldmanManRequest);
     }
 }

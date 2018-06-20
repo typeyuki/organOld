@@ -16,14 +16,20 @@
 
     <select id="getByPage" parameterType="com.organOld.dao.util.Page" resultMap="oldmanEconomic">
         SELECT oe.id,ob.id oid,e.value economic,oe.time,ob.name
-        FROM oldman_economic oe,oldman_base ob,auto_value e
-        WHERE ob.id=oe.oldman_id AND e.id=oe.economic_index
+        FROM oldman_economic oe,oldman_base ob,auto_value e,organ org,auto_value x
+        WHERE ob.id=oe.oldman_id AND e.id=oe.economic_index AND x.id=ob.xq_id AND org.id=x.parent_index
+        <if test="entity!=null and entity.jwId!=null and entity.jwId!=0">
+            and org.id=#{entity.jwId}
+        </if>
     </select>
 
     <select id="getSizeByPage" parameterType="com.organOld.dao.util.Page" resultType="java.lang.Long">
         SELECT count(1)
-        FROM oldman_economic
-        WHERE 1=1
+        FROM oldman_economic oe,oldman_base ob,organ org,auto_value x
+        WHERE oe.oldman_id=ob.id AND x.id=ob.xq_id AND org.id=x.parent_index
+        <if test="entity!=null and entity.jwId!=null and entity.jwId!=0">
+            and org.id=#{entity.jwId}
+        </if>
     </select>
 
     <update id="updateById" parameterType="com.organOld.dao.entity.oldman.OldmanEconomic">

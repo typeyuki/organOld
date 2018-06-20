@@ -12,4 +12,5 @@ import java.util.List;
 public interface OrganDao extends BaseDao<Organ,Integer>{
     List<Organ> getSimpleByType(Integer type);
 
+    Organ getByUsername(String username);
 }

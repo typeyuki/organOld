@@ -15,11 +15,21 @@
         <if test="entity.status!=null and entity.status!=''">
             AND o.status=#{entity.status}
         </if>
+        ORDER BY ${sortType} ${sort}
+        limit #{start},#{length}
     </select>
 
     <select id="getSizeByPage" parameterType="com.organOld.dao.util.Page" resultType="java.lang.Long">
         SELECT count(1)
         FROM organ o,organ_type ot
         WHERE o.organ_type_id=ot.id AND ot.fir_type=#{entity.organFirTypeId}
+    </select>
+
+
+    <select id="getByUsername" parameterType="com.organOld.dao.util.Page" resultType="com.organOld.dao.entity.organ.Organ">
+        SELECT o.id,o.name,o.intro,o.address,o.phone,o.num,o.num_in,o.num_remain,
+        ot.sec_type organType,ot.fir_type organTypeId,d.value districtName,o.work,o.service_time,o.web_url,o.img_url,o.require,o.institution
+        FROM organ o LEFT JOIN auto_value d on d.id=o.district_id,organ_type ot,sysuser u,user_organ uo
+        WHERE o.organ_type_id=ot.id AND o.id=uo.organ_id AND uo.user_id=u.id AND u.username=#{username}
     </select>
 </mapper>

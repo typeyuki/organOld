@@ -29,6 +29,9 @@
         <if test="entity!=null and entity.id!=null and entity.id!=0">
             and o.id=#{entity.id}
         </if>
+        <if test="entity!=null and entity.jwId!=null and entity.jwId!=0">
+            and org.id=#{entity.jwId}
+        </if>
         <if test="entity!=null and entity.sex!=null and entity.sex!=0">
             and o.sex=#{entity.sex}
         </if>
@@ -48,10 +51,13 @@
 
     <select id="getSizeByPage" parameterType="com.organOld.dao.util.Page" resultType="java.lang.Long">
         SELECT count(1)
-        FROM oldman_base
-        WHERE 1=1
+        FROM oldman_base o,auto_value x,organ org
+        WHERE x.id=o.xq_id AND org.id=x.parent_index
         <if test="entity!=null and entity.id!=null and entity.id!=0">
             and id=#{entity.id}
+        </if>
+        <if test="entity!=null and entity.jwId!=null and entity.jwId!=0">
+            and org.id=#{entity.jwId}
         </if>
         <if test="entity!=null and entity.sex!=null and entity.sex!=0">
             and sex=#{entity.sex}

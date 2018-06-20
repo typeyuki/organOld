@@ -9,4 +9,6 @@ import java.util.List;
  */
 public interface AutoValueDao extends BaseDao<AutoValue,Integer>{
     List<AutoValue> getByTypeList(List<Integer> typeList);
+
+    List<AutoValue> getByType(int type);
 }

@@ -14,4 +14,6 @@ public interface UserDao {
     SysUser getByUsername(String username);
 
     List<SysAuthority> getSysAuthoritiesByUsername(String username);
+
+    Integer getOrganIdByUsername(String username);
 }

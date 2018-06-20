@@ -86,7 +86,7 @@
 </div>
 <script>
     var firType="${type}";
-    var status="${status!}"
+    var status="${status!}";
 </script>
 <script src="/js/content.min.js?v=1.0.0"></script>
 <script src="/static/js/organ/organ.js" ></script>
