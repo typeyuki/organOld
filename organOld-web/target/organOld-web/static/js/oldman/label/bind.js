@@ -2,17 +2,13 @@
  * Created by netlab606 on 2018/4/2.
  */
 $(document).ready(function(){
-    var table =$(".dataTables-example").dataTable(
-        {
-            "sPaginationType": "full_numbers",
-            "bPaginite": true,
-            "bInfo": true,
-            "bSort": true,
-            "bFilter": false, //搜索栏
-            "bStateSave": true,
-            "bProcessing": true, //加载数据时显示正在加载信息
-            "bServerSide": true, //指定从服务器端获取数据
-            "columns":[{},{
+    var columns=[];
+    var order=[];
+    var columnDefs=[];
+    if(type=="bind"){
+        columns=[
+            {},
+            {
                 data:"id"
             },{
                 data:"dName"
@@ -41,36 +37,94 @@ $(document).ready(function(){
             },{
                 data:"time"
             }
-            ],
-            "order":[[1,"asc"]],
-            "columnDefs": [
-                // 列样式
-                {
-                    "targets": [0], // 目标列位置，下标从0开始
-                    "data": "id", // 数据列名
-                    "render": function(data, type, full) { // 返回自定义内容
-                        if(data!=undefined){
-                            return '<div class="icheckbox_square-green checked" style="position: relative;">' +
-                                '<input type="checkbox" checked="" class="i-checks" name="input[]" style="position: absolute; opacity: 0;">' +
-                                '<ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;">' +
-                                '</ins>' +
-                                '</div>';
-                        }else{
-                            return "";
-                        }
+        ];
+        order=[[1,"asc"]];
+        columnDefs= [
+            // 列样式
+            {
+                "targets": [0], // 目标列位置，下标从0开始
+                "data": "id", // 数据列名
+                "render": function(data, type, full) { // 返回自定义内容
+                    if(data!=undefined){
+                        return '<div class="icheckbox_square-green checked" style="position: relative;">' +
+                            '<input type="checkbox" checked="" class="i-checks" name="input[]" style="position: absolute; opacity: 0;">' +
+                            '<ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;">' +
+                            '</ins>' +
+                            '</div>';
+                    }else{
+                        return "";
                     }
-                },
-                // 增加一列，包括删除和修改，同时将我们需要传递的数据传递到链接中
-                {
-                    "targets": [15], // 目标列位置，下标从0开始
-                    "data": "id", // 数据列名
-                    "render": function(data, type, full) { // 返回自定义内容
-                        return "<span class='look' id='"+data+"'>查看</span>";
-                    }
-                },
-                //不进行排序的列
-                { "bSortable": false, "aTargets": [ 0,2 ,3, 4, 5,6,7,9,10,11,12,13] }
-            ],
+                }
+            },
+            // 增加一列，包括删除和修改，同时将我们需要传递的数据传递到链接中
+            {
+                "targets": [15], // 目标列位置，下标从0开始
+                "data": "id", // 数据列名
+                "render": function(data, type, full) { // 返回自定义内容
+                    return "<span class='look' id='"+data+"'>查看</span>";
+                }
+            },
+            //不进行排序的列
+            { "bSortable": false, "aTargets": [ 0,2 ,3, 4, 5,6,7,9,10,11,12,13] }
+        ]
+    }else{
+        columns=[{
+                data:"id"
+            },{
+                data:"dName"
+            },{
+                data:"jName"
+            },{
+                data:"xName"
+            },{
+                data:"louNum"
+            },{
+                data:"name"
+            },{
+                data:"sex"
+            },{
+                data:"age"
+            },{
+                data:"politicalStatus"
+            },{
+                data:"census"
+            },{
+                data:"phone"
+            },{
+                data:"address"
+            },{
+                data:"pid"
+            },{
+                data:"time"
+            }
+        ];
+        order=[[0,"asc"]];
+        columnDefs= [
+            // 增加一列，包括删除和修改，同时将我们需要传递的数据传递到链接中
+            {
+                "targets": [14], // 目标列位置，下标从0开始
+                "data": "id", // 数据列名
+                "render": function(data, type, full) { // 返回自定义内容
+                    return "<span class='look' id='"+data+"'>查看</span>";
+                }
+            },
+            //不进行排序的列
+            { "bSortable": false, "aTargets": [ 1 ,2, 3,4,5,6,8,9,10,11,12,14] }
+        ]
+    }
+    var table =$(".dataTables-example").dataTable(
+        {
+            "sPaginationType": "full_numbers",
+            "bPaginite": true,
+            "bInfo": true,
+            "bSort": true,
+            "bFilter": false, //搜索栏
+            "bStateSave": true,
+            "bProcessing": true, //加载数据时显示正在加载信息
+            "bServerSide": true, //指定从服务器端获取数据
+            "columns":columns,
+            "order":order,
+            "columnDefs":columnDefs,
             "sAjaxSource": "/oldman/label/"+type+"/"+labelId+"/manData",//这个是请求的地址
             "fnServerData": retrieveData
         });

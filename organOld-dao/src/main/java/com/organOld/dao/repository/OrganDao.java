@@ -1,6 +1,8 @@
 package com.organOld.dao.repository;
 
 import com.organOld.dao.entity.organ.Organ;
+import com.organOld.dao.entity.organ.OrganOldman;
+import com.organOld.dao.util.Page;
 
 import java.util.List;
 
@@ -9,4 +11,5 @@ import java.util.List;
  */
 public interface OrganDao extends BaseDao<Organ,Integer>{
     List<Organ> getSimpleByType(Integer type);
+
 }

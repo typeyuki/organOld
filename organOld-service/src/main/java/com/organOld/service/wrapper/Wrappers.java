@@ -8,4 +8,5 @@ public class Wrappers {
     public static OldmanFamilyWrapper familyWrapper=new OldmanFamilyWrapper();
     public static OldmanEconomicWrapper economicWrapper=new OldmanEconomicWrapper();
     public static OrganOldmanWrapper organOldmanWrapper=new OrganOldmanWrapper();
+    public static OrganWrapper organWrapper=new OrganWrapper();
 }

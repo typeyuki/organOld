@@ -12,7 +12,7 @@ $(document).ready(function(){
             "bStateSave": true,
             "bProcessing": true, //加载数据时显示正在加载信息
             "bServerSide": true, //指定从服务器端获取数据
-            "columns":[{
+            "columns":[{},{
                 data:"id"
             },{
                 data:"organName"
@@ -26,17 +26,24 @@ $(document).ready(function(){
                 data:"rule"
             },{},{},{}
             ],
-            "order":[[0,"asc"]],
+            "order":[[1,"asc"]],
             "columnDefs": [
                 {
-                    "targets": [6], // 目标列位置，下标从0开始
+                    "targets": [0], // 目标列位置，下标从0开始
+                    "data": "content", // 数据列名
+                    "render": function(data, type, full) { // 返回自定义内容
+                        return "<input type='checkbox' />";
+                    }
+                },
+                {
+                    "targets": [7], // 目标列位置，下标从0开始
                     "data": "content", // 数据列名
                     "render": function(data, type, full) { // 返回自定义内容
                         return data;
                     }
                 },
                 {
-                    "targets": [7], // 目标列位置，下标从0开始
+                    "targets": [8], // 目标列位置，下标从0开始
                     "data": "time", // 数据列名
                     "render": function(data, type, full) { // 返回自定义内容
                         return data;
@@ -44,20 +51,20 @@ $(document).ready(function(){
                 },
                 // 增加一列，包括删除和修改，同时将我们需要传递的数据传递到链接中
                 {
-                    "targets": [8], // 目标列位置，下标从0开始
+                    "targets": [9], // 目标列位置，下标从0开始
                     "data": "id", // 数据列名
                     "render": function(data, type, full) { // 返回自定义内容
                         if(typeLabel=="1"){
                             //人员绑定
-                            return "<span onclick=look("+data+",this,'/oldman/label/bind/"+typeLabel+"/man') id='"+data+"'>人员</span><span class='edit' id='"+data+"'>修改</span><span class='del' id='"+data+"'>删除</span>";
+                            return "<span onclick=look("+data+",this,'/oldman/label/bind/"+typeLabel+"/man') id='"+data+"'>人员</span><span class='edit' id='"+data+"'>修改</span>";
                         }else{
                             //规则指定
-                            return "<span onclick=look("+data+",this,'/oldman/label/rule/"+typeLabel+"/man')>人员</span><span onclick=look("+data+",this,'/oldman/label/rule/"+typeLabel+"')>规则</span><span class='edit' id='"+data+"'>修改</span><span class='del' id='"+data+"'>删除</span>";
+                            return "<span onclick=look("+data+",this,'/oldman/label/rule/"+typeLabel+"/man')>人员</span><span onclick=look("+data+",this,'/oldman/label/rule/"+typeLabel+"')>规则</span><span class='edit' id='"+data+"'>修改</span>";
                         }
                     }
                 },
                 //不进行排序的列
-                { "bSortable": false, "aTargets": [1,2,3,4,5,6,7,8] }
+                { "bSortable": false, "aTargets": [0,2,3,4,5,6,7,8,9] }
             ],
             "sAjaxSource": "/oldman/label/data",//这个是请求的地址
             "fnServerData": retrieveData

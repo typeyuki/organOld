@@ -32,6 +32,7 @@
                 <div class="ibox-content">
                     <div>
                         <a onclick="" href="javascript:void(0);" class="btn btn-primary ">添加</a>
+                        <a onclick="" href="javascript:void(0);" class="btn btn-primary ">删除</a>
                     </div>
                     <div>
                         <input class="id" type="text" placeholder="序号">
@@ -44,6 +45,7 @@
                     <table class="table table-striped table-bordered table-hover dataTables-example">
                         <thead>
                         <tr>
+                            <th><input type='checkbox' /></th>
                             <th>序号</th>
                             <th>所属居委</th>
                             <th>一级菜单</th>

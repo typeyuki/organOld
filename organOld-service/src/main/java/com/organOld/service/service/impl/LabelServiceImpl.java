@@ -91,7 +91,7 @@ public class LabelServiceImpl implements LabelService {
         if(!StringUtils.isEmpty(labelRule.getPoliticalStatuses()))
             labelRuleToDB.setPoliticalStatuses(Arrays.asList(labelRule.getPoliticalStatuses().split("#")));
         if(!StringUtils.isEmpty(labelRule.getEconomics()))
-            labelRuleToDB.setEconmics(Arrays.asList(labelRule.getEconomics().split("#")));
+            labelRuleToDB.setEconomics(Arrays.asList(labelRule.getEconomics().split("#")));
         if(!StringUtils.isEmpty(labelRule.getFamilies()))
             labelRuleToDB.setFamilies(Arrays.asList(labelRule.getFamilies().split("#")));
         if(!StringUtils.isEmpty(labelRule.getIsHealths()))

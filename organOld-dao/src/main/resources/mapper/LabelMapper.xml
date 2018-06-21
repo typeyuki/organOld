@@ -89,7 +89,6 @@
         WHERE o.census=c.id AND o.political_status=p.id AND x.id=o.xq_id AND org.id=x.parent_index AND d.id=org.district_id
         AND e.id=oe.economic_index AND oe.oldman_id=o.id AND oldf.oldman_id=o.id
         AND ohb.oldman_id=o.id AND hbi.id=ohb.intelligence AND hbe.id=ohb.eyesight
-        AND ha.oldman_id=o.id
         <if test="rule.birStart!=null">
             <![CDATA[
             and DATE_FORMAT(o.birthday,'%Y') >= DATE_FORMAT(#{rule.birStart},'%Y')
@@ -155,10 +154,31 @@
             </foreach>
         </if>
         <if test="rule.isHealths!=null and rule.isHealths.size() > 0">
-
+            and (ohb.is_mb in
             <foreach collection="rule.isHealths" index="index" item="item" open="(" separator="," close=")">
                 #{item}
             </foreach>
+            OR ohb.is_sn in
+            <foreach collection="rule.isHealths" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+            OR ohb.is_ywfy in
+            <foreach collection="rule.isHealths" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+            OR ohb.is_exzl in
+            <foreach collection="rule.isHealths" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+            OR ohb.is_gz in
+            <foreach collection="rule.isHealths" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+            OR ohb.is_cj in
+            <foreach collection="rule.isHealths" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+            )
         </if>
         <if test="rule.chxs!=null and rule.chxs.size() > 0">
 

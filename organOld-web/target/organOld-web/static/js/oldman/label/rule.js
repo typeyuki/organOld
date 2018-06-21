@@ -77,7 +77,7 @@ $(function () {
                     });
                 }
                 if(result.data.isHealths!=null && result.data.isHealths.length>0){
-                    $("input[name='isHealthy']:checkbox").prop("checked",false);
+                    $("input[name='isHealth']:checkbox").prop("checked",false);
                     $("input[name='isHealth']").each(function () {
                         if(result.data.isHealths.indexOf($(this).val())!=-1){
                             $(this).prop("checked",true);

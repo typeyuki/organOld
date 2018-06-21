@@ -217,12 +217,14 @@ public class OldmanController {
 
 
     /**
-     * 机构养老信息
+     * 养老信息  organ 机构养老  community社区养老
      * @return
      */
-    @RequestMapping(value = "/organOldman",method = RequestMethod.GET)
-    public ModelAndView organOldman(){
-        return new ModelAndView("oldman/organOldman");
+    @RequestMapping(value = "/organ/{type}",method = RequestMethod.GET)
+    public ModelAndView organOldman(@PathVariable String type){
+        ModelAndView mv=new ModelAndView("oldman/organOldman");
+        mv.addObject("type",type);
+        return mv;
     }
 
     /**
@@ -235,16 +237,7 @@ public class OldmanController {
     public String data(OrganOldmanRequest organOldmanRequest, BTableRequest bTableRequest){
         return oldmanService.getOrganOldmanByPage(organOldmanRequest,bTableRequest);
     }
-    /**
-     * 信息更新
-     * @param organOldmanRequest
-     * @return
-     */
-    @RequestMapping(value = "/organOldman/update",method = RequestMethod.POST)
-    public String organOldman_update(OrganOldmanRequest organOldmanRequest){
-        oldmanService.updateOrganOldman(organOldmanRequest);
-        return "redirect:/organOldman";
-    }
+
 
 
 

@@ -1,6 +1,7 @@
 package com.organOld.service.service.impl;
 
 import com.organOld.dao.entity.oldman.*;
+import com.organOld.dao.entity.organ.OrganOldman;
 import com.organOld.dao.repository.*;
 import com.organOld.dao.util.Page;
 import com.organOld.service.model.*;

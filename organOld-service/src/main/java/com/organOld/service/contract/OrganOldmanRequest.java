@@ -1,40 +1,31 @@
 package com.organOld.service.contract;
 
 public class OrganOldmanRequest {
-    private int id;
-    private int oldman_id;
-    private int organ_id;
-    private String search;//模糊全文 匹配搜索
+    private int organId;
+    private int oldmanId;
+    private String firType;//用于养老状态  organ机构养老 community 社区养老
 
-    public int getId() {
-        return id;
+    public String getFirType() {
+        return firType;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setFirType(String firType) {
+        this.firType = firType;
     }
 
-    public int getOldman_id() {
-        return oldman_id;
+    public int getOrganId() {
+        return organId;
     }
 
-    public void setOldman_id(int oldman_id) {
-        this.oldman_id = oldman_id;
+    public void setOrganId(int organId) {
+        this.organId = organId;
     }
 
-    public int getOrgan_id() {
-        return organ_id;
+    public int getOldmanId() {
+        return oldmanId;
     }
 
-    public void setOrgan_id(int organ_id) {
-        this.organ_id = organ_id;
-    }
-
-    public String getSearch() {
-        return search;
-    }
-
-    public void setSearch(String search) {
-        this.search = search;
+    public void setOldmanId(int oldmanId) {
+        this.oldmanId = oldmanId;
     }
 }
