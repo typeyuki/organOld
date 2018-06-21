@@ -13,6 +13,7 @@ public class OldmanRequest {
     private Integer sex;//1女 2男
     private Integer politicalStatus;//政治面貌 1群众 2党员
 
+
     private String name;
     private String phone;
     private String address;

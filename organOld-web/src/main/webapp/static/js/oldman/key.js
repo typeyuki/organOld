@@ -15,25 +15,23 @@ $(document).ready(function(){
             "columns":[{
                 data:"oldmanId"
             },{
-                data:"name"
+                data:"oldmanName"
             },{
                 data:"goal"
-            },{
-                data:"time"
             },{}
             ],
             "order":[[0,"asc"]],
             "columnDefs": [
                 // 增加一列，包括删除和修改，同时将我们需要传递的数据传递到链接中
                 {
-                    "targets": [4], // 目标列位置，下标从0开始
+                    "targets": [3], // 目标列位置，下标从0开始
                     "data": "oldmanId", // 数据列名
                     "render": function(data, type, full) { // 返回自定义内容
                         return "<span class='look' id='"+data+"'>查看</span>";
                     }
                 },
                 //不进行排序的列
-                { "bSortable": false, "aTargets": [0,1,4] }
+                { "bSortable": false, "aTargets": [0,1,2,3] }
             ],
             "sAjaxSource": "/oldman/key/data",//这个是请求的地址
             "fnServerData": retrieveData
@@ -46,8 +44,7 @@ $(document).ready(function(){
                 "iDisplayLength" : aoData.iDisplayLength,
                 "iSortCol_0" : aoData.iSortCol_0,
                 "sEcho" : aoData.sEcho,
-                "sSortDir_0" : aoData.sSortDir_0,
-                "oldmanId" : ($('.oldmanId').val()==""?"0":$('.oldmanId').val())//参数不能是空 400
+                "sSortDir_0" : aoData.sSortDir_0
             },
             type: 'POST',
             dataType: 'json',

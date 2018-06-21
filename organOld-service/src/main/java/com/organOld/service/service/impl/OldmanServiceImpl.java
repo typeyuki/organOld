@@ -110,7 +110,6 @@ public class OldmanServiceImpl implements OldmanService {
         Linkman linkman=Wrappers.linkmanWrapper.unwrap(linkmanRequest);
         commonService.checkIsJw(session,linkman);
         page.setEntity(linkman);
-        //mybatis 不支持一个对象里有多个list  也就是不能用多个collection 会有大量重复 只能分开查询，但是分开查询 又有很大的 传输延迟  当前解决办法就是 查一次 然后去重
         List<LinkmanModel> linkmanModelList=linkmanDao.getByPage(page).stream().map(Wrappers.linkmanWrapper::wrap).collect(Collectors.toList());
         Long size=linkmanDao.getSizeByPage(page);
         return commonService.tableReturn(bTableRequest.getsEcho(),size,linkmanModelList);

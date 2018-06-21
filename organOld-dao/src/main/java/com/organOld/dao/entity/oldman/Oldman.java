@@ -27,12 +27,21 @@ public class Oldman extends Man implements DBInterface{
     private String search;//模糊搜索
     private Integer jwId;//居委ID
 
+    private Integer keyGoalBase;//重点老人分数基线
     /**
      * 关联对象
      * @return
      */
     private Xq xq;//小区
 
+
+    public Integer getKeyGoalBase() {
+        return keyGoalBase;
+    }
+
+    public void setKeyGoalBase(Integer keyGoalBase) {
+        this.keyGoalBase = keyGoalBase;
+    }
 
     public Integer getJwId() {
         return jwId;

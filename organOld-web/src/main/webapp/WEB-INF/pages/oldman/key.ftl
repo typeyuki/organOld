@@ -47,7 +47,6 @@
                             <th>老人序号</th>
                             <th>姓名</th>
                             <th>分数</th>
-                            <th>更新时间</th>
                             <th></th>
                         </tr>
                         </thead>
