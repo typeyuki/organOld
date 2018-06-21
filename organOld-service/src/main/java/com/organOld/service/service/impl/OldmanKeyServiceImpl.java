@@ -1,14 +1,17 @@
 package com.organOld.service.service.impl;
 
+import com.organOld.dao.entity.AutoValue;
 import com.organOld.dao.entity.oldman.KeyRule;
 import com.organOld.dao.entity.oldman.Oldman;
 import com.organOld.dao.entity.oldman.OldmanKey;
+import com.organOld.dao.repository.AutoValueDao;
 import com.organOld.dao.repository.OldmanKeyDao;
 import com.organOld.dao.util.Page;
 import com.organOld.service.contract.BTableRequest;
 import com.organOld.service.contract.OldmanKeyRequest;
 import com.organOld.service.contract.OldmanRequest;
 import com.organOld.service.contract.Result;
+import com.organOld.service.enumModel.AutoValueEnum;
 import com.organOld.service.enumModel.KeyRuleTypeEnum;
 import com.organOld.service.model.LinkmanModel;
 import com.organOld.service.model.OldmanKeyModel;
@@ -32,6 +35,8 @@ public class OldmanKeyServiceImpl implements OldmanKeyService {
     CommonService commonService;
     @Autowired
     OldmanKeyDao oldmanKeyDao;
+    @Autowired
+    AutoValueDao autoValueDao;
 
     @Override
     public String getByPage(BTableRequest bTableRequest, HttpSession session, OldmanKeyRequest oldmanKeyRequest) {
@@ -52,24 +57,27 @@ public class OldmanKeyServiceImpl implements OldmanKeyService {
     }
 
     public void calculateKeyGoal(OldmanKey oldmanKey, List<KeyRule> keyRuleList){
-        int goal;//总分
-//        List<KeyRule> ageRule=new ArrayList<>();
-//        List<KeyRule> familyRule=new ArrayList<>();
-//        List<KeyRule> chxRule=new ArrayList<>();
-//        List<KeyRule> snRule=new ArrayList<>();
-//        List<KeyRule> intelligenceageRule=new ArrayList<>();
-//        List<KeyRule> eyesightRule=new ArrayList<>();
-//        List<KeyRule> mbRule=new ArrayList<>();
-//        List<KeyRule> economicRule=new ArrayList<>();
-//        List<KeyRule> otherRule=new ArrayList<>();
+        int goal=0;//总分
+
+        int flagAge=0;
+
         for (KeyRule keyRule:keyRuleList){
             if(keyRule.getType()== KeyRuleTypeEnum.NL.getIndex()){
-//                ageRule.add(keyRule);
                 //年龄
-                int start;
+                if(flagAge==0){
+                    int start=Integer.parseInt(keyRule.getValueName().split("-")[0]);
+                    int end=keyRule.getValueName().split("-")[1].equals("")? Integer.MAX_VALUE+"":Integer.parseInt(keyRule.getValueName().split("-")[1]);
+                    int age=commonService.birthdayToAge(oldmanKey.getBirthday());
+                    if(age>=start && age<end){
+                        flagAge=1;
+                        goal+=keyRule.getGoal();
+                    }
+                }else{
+                    continue;
+                }
             }
             if(keyRule.getType()== KeyRuleTypeEnum.JTJG.getIndex()){
-//                familyRule.add(keyRule);
+                
             }
             if(keyRule.getType()== KeyRuleTypeEnum.CHX.getIndex()){
 //                chxRule.add(keyRule);
