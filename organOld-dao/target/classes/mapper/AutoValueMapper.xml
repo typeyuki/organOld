@@ -13,4 +13,10 @@
         </foreach>
     </select>
 
+
+    <select id="getByType" resultType="com.organOld.dao.entity.AutoValue">
+        SELECT id,type,value,time
+        FROM auto_value
+        WHERE type=#{type}
+    </select>
 </mapper>

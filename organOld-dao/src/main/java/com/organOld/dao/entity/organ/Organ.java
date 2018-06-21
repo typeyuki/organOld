@@ -8,6 +8,7 @@ import java.util.List;
  * Created by netlab606 on 2018/6/16.
  */
 public class Organ extends DBEntity {
+    private Integer organTypeId;
     private String organType;
     private String name;
     private String intro;
@@ -32,6 +33,14 @@ public class Organ extends DBEntity {
      */
     private Integer organFirTypeId;//一级类型ID
     private String search;//模糊搜索
+
+    public Integer getOrganTypeId() {
+        return organTypeId;
+    }
+
+    public void setOrganTypeId(Integer organTypeId) {
+        this.organTypeId = organTypeId;
+    }
 
     public String getStatus() {
         return status;

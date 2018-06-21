@@ -49,6 +49,9 @@
         <if test="entity!=null and entity.id!=null and entity.id!=0">
             and l.id=#{entity.id}
         </if>
+        <if test="entity!=null and entity.jwId!=null and entity.jwId!=0">
+            and l.organ_id=#{entity.jwId}
+        </if>
         ORDER BY ${sortType} ${sort}
         limit #{start},#{length}
 
@@ -60,6 +63,9 @@
         WHERE type=#{entity.type}
         <if test="entity!=null and entity.id!=null and entity.id!=0">
             and id=#{entity.id}
+        </if>
+        <if test="entity!=null and entity.jwId!=null and entity.jwId!=0">
+            and l.organ_id=#{entity.jwId}
         </if>
     </select>
 

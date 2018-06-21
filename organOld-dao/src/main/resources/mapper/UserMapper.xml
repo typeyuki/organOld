@@ -10,4 +10,10 @@
         SELECT sa.au_name FROM sysauthority sa,sysuser su,user_role ur,role_authority ra
         WHERE su.username=#{username} AND su.id=ur.user_id AND ur.role_id=ra.role_id AND ra.authority_id=sa.id
     </select>
+
+    <select id="getOrganIdByUsername" resultType="java.lang.Integer">
+        SELECT uo.organ_id
+        FROM user_organ uo,sysuser u
+        WHERE uo.user_id=u.id AND u.username=#{username}
+    </select>
 </mapper>

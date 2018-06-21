@@ -2,6 +2,9 @@ package com.organOld.service.service;
 
 
 import com.organOld.service.contract.*;
+import com.organOld.service.model.OldmanAddInfoModel;
+
+import javax.servlet.http.HttpSession;
 
 /**
  * Created by netlab606 on 2018/4/1.
@@ -22,15 +25,17 @@ public interface OldmanService {
 
     void updateOrganOldman(OrganOldmanRequest organoldmanRequest);
 
-    String getOldmanByPage(OldmanRequest oldmanBaseRequest, BTableRequest bTableRequest);
+    String getOldmanByPage(OldmanRequest oldmanBaseRequest, BTableRequest bTableRequest, HttpSession session);
 
-    String getHealthByPage(OldmanHealthRequest oldmanHealthRequest, BTableRequest bTableRequest);
+    String getHealthByPage(OldmanHealthRequest oldmanHealthRequest, BTableRequest bTableRequest, HttpSession session);
 
-    String getLinkmanByPage(LinkmanRequest linkmanRequest, BTableRequest bTableRequest);
+    String getLinkmanByPage(LinkmanRequest linkmanRequest, BTableRequest bTableRequest, HttpSession session);
 
-    String getEconomyByPage(OldmanEconomicRequest economicRequest, BTableRequest bTableRequest);
+    String getEconomyByPage(OldmanEconomicRequest economicRequest, BTableRequest bTableRequest, HttpSession session);
 
-    String getFamilyByPage(OldmanFamilyRequest familyRequest, BTableRequest bTableRequest);
+    String getFamilyByPage(OldmanFamilyRequest familyRequest, BTableRequest bTableRequest, HttpSession session);
 
-    String getOrganOldmanByPage(OrganOldmanRequest organOldmanRequest, BTableRequest bTableRequest);
+    String getOrganOldmanByPage(OrganOldmanRequest organOldmanRequest, BTableRequest bTableRequest, HttpSession session);
+
+    OldmanAddInfoModel getAddInfo();
 }

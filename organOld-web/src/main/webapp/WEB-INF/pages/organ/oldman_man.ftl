@@ -28,6 +28,13 @@
                 </div>
                 <div class="ibox-content">
                     <div>
+                    <#if single??>
+                        <div>
+                            <a onclick="" href="javascript:void(0);" class="btn btn-primary ">添加</a>
+                            <a onclick="" href="javascript:void(0);" class="btn btn-primary ">删除</a>
+                        </div>
+                    </#if>
+                    <div>
                         <input class="id" type="text" placeholder="老人序号">
                         <input class="time" type="text" placeholder="模糊匹配">
                         <button id="search">搜索</button>
@@ -35,6 +42,9 @@
                     <table class="table table-striped table-bordered table-hover dataTables-example">
                         <thead>
                         <tr>
+                            <#if single??>
+                                <th><input type="checkbox"></th>
+                            </#if>
                             <th>老人编号</th>
                             <th>老人姓名</th>
                             <th>床位号</th>
@@ -55,7 +65,9 @@
 
 </div>
 <script>
-    var organId="${organId!}";
+    var organId="${organId!'0'}";
+    var dataUrl="${dataUrl!}";
+    var single="${single!}";
 </script>
 <script src="/js/content.min.js?v=1.0.0"></script>
 <script src="/static/js/organ/organOldman.js" ></script>

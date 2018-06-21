@@ -1,13 +1,15 @@
 package com.organOld.dao.entity.oldman;
 
 
+import com.organOld.dao.entity.DBInterface;
+
 import java.util.Date;
 
 /**
  * 老人
  * Created by netlab606 on 2018/4/2.
  */
-public class Oldman extends Man{
+public class Oldman extends Man implements DBInterface{
     private Integer sex;//1女 2男
     private Date birthday;//出生年月
     private String pid;//身份证号
@@ -23,13 +25,31 @@ public class Oldman extends Man{
     private Date birthdayStart;//出生年月-起
     private Date birthdayEnd;//出生年月-止
     private String search;//模糊搜索
+    private Integer jwId;//居委ID
 
+    private Integer keyGoalBase;//重点老人分数基线
     /**
      * 关联对象
      * @return
      */
     private Xq xq;//小区
 
+
+    public Integer getKeyGoalBase() {
+        return keyGoalBase;
+    }
+
+    public void setKeyGoalBase(Integer keyGoalBase) {
+        this.keyGoalBase = keyGoalBase;
+    }
+
+    public Integer getJwId() {
+        return jwId;
+    }
+
+    public void setJwId(Integer jwId) {
+        this.jwId = jwId;
+    }
 
     public int getGoal() {
         return goal;

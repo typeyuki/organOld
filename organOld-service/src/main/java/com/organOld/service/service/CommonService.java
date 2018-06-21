@@ -3,13 +3,19 @@ package com.organOld.service.service;
 import com.alibaba.fastjson.JSONObject;
 
 import com.organOld.dao.entity.AutoValue;
+import com.organOld.dao.entity.DBInterface;
 import com.organOld.dao.entity.label.LabelRule;
+import com.organOld.dao.repository.UserDao;
 import com.organOld.dao.util.Page;
 import com.organOld.service.contract.*;
 import com.organOld.service.enumModel.AutoValueEnum;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -17,6 +23,9 @@ import java.util.List;
 
 @Service
 public class CommonService {
+
+    @Autowired
+    UserDao userDao;
 
     public static int birthdayToAge(Date birthday){
         Calendar cal = Calendar.getInstance();
@@ -113,8 +122,34 @@ public class CommonService {
                 typeList.add(AutoValueEnum.SL.getIndex());
                 typeList.add(AutoValueEnum.SZ.getIndex());
                 break;
+            case "oldman_add":
+                typeList.add(AutoValueEnum.PQ.getIndex());
+                typeList.add(AutoValueEnum.ZZMM.getIndex());
+                typeList.add(AutoValueEnum.HJ.getIndex());
+                typeList.add(AutoValueEnum.JJJG.getIndex());
+                typeList.add(AutoValueEnum.JJTJ.getIndex());
+                typeList.add(AutoValueEnum.SL.getIndex());
+                typeList.add(AutoValueEnum.SZ.getIndex());
+                typeList.add(AutoValueEnum.XQ.getIndex());
+                break;
             default:
         }
         return typeList;
+    }
+
+
+    public Integer getIdBySession(HttpSession session) {
+        UserDetails userDetails=(UserDetails) SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getPrincipal();
+        String username=userDetails.getUsername();
+        return userDao.getOrganIdByUsername(username);
+    }
+
+    public void checkIsJw(HttpSession session, DBInterface dbInterface) {
+        Integer jwId=getIdBySession(session);
+        if (jwId!=null && jwId!=0){
+            dbInterface.setJwId(jwId);
+        }
     }
 }

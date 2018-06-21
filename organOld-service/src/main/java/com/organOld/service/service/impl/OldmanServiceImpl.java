@@ -1,18 +1,25 @@
 package com.organOld.service.service.impl;
 
+import com.organOld.dao.entity.AutoValue;
+import com.organOld.dao.entity.Chx;
+import com.organOld.dao.entity.DBEntity;
+import com.organOld.dao.entity.DBInterface;
 import com.organOld.dao.entity.oldman.*;
+import com.organOld.dao.entity.organ.Organ;
 import com.organOld.dao.entity.organ.OrganOldman;
 import com.organOld.dao.repository.*;
 import com.organOld.dao.util.Page;
 import com.organOld.service.model.*;
 import com.organOld.service.service.CommonService;
 import com.organOld.service.service.OldmanService;
+import com.organOld.service.service.OrganService;
 import com.organOld.service.wrapper.Wrappers;
 import com.organOld.service.contract.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -36,22 +43,29 @@ public class OldmanServiceImpl implements OldmanService {
     OrganOldmanDao organOldmanDao;
     @Autowired
     CommonService commonService;
+    @Autowired
+    AutoValueDao autoValueDao;
+    @Autowired
+    OrganDao organDao;
 
 
     @Override
-    public String getOldmanByPage(OldmanRequest oldmanRequest, BTableRequest bTableRequest) {
+    public String getOldmanByPage(OldmanRequest oldmanRequest, BTableRequest bTableRequest, HttpSession session) {
         Page<Oldman> page=commonService.getPage(bTableRequest,"oldman_base");
         Oldman oldman= Wrappers.oldmanWrapper.unwrap(oldmanRequest);
+        commonService.checkIsJw(session,oldman);
         page.setEntity(oldman);
         List<OldmanModel> oldmanList=oldmanBaseDao.getByPage(page).stream().map(Wrappers.oldmanWrapper::wrap).collect(Collectors.toList());
         Long size=oldmanBaseDao.getSizeByPage(page);
         return commonService.tableReturn(bTableRequest.getsEcho(),size,oldmanList);
     }
 
+
     @Override
-    public String getHealthByPage(OldmanHealthRequest oldmanHealthRequest, BTableRequest bTableRequest) {
+    public String getHealthByPage(OldmanHealthRequest oldmanHealthRequest, BTableRequest bTableRequest, HttpSession session) {
         Page<OldmanHealth> page=commonService.getPage(bTableRequest,"oldman_health");
         OldmanHealth oldmanHealth=Wrappers.oldmanHealthWrapper.unwrap(oldmanHealthRequest);
+        commonService.checkIsJw(session,oldmanHealth);
         page.setEntity(oldmanHealth);
         List<OldmanHealthModel> oldmanHealthModelList=oldmanHealthDao.getByPage(page).stream().map(Wrappers.oldmanHealthWrapper::wrap).collect(Collectors.toList());
         Long size=oldmanHealthDao.getSizeByPage(page);
@@ -59,9 +73,10 @@ public class OldmanServiceImpl implements OldmanService {
     }
 
     @Override
-    public String getEconomyByPage(OldmanEconomicRequest economicRequest, BTableRequest bTableRequest) {
+    public String getEconomyByPage(OldmanEconomicRequest economicRequest, BTableRequest bTableRequest, HttpSession session) {
         Page<OldmanEconomic> page=commonService.getPage(bTableRequest,"oldman_economy");
         OldmanEconomic economic=Wrappers.economicWrapper.unwrap(economicRequest);
+        commonService.checkIsJw(session,economic);
         page.setEntity(economic);
         List<OldmanEconomicModel> economicModelList=economicDao.getByPage(page).stream().map(Wrappers.economicWrapper::wrap).collect(Collectors.toList());
         Long size=economicDao.getSizeByPage(page);
@@ -69,9 +84,10 @@ public class OldmanServiceImpl implements OldmanService {
     }
 
     @Override
-    public String getFamilyByPage(OldmanFamilyRequest familyRequest, BTableRequest bTableRequest) {
+    public String getFamilyByPage(OldmanFamilyRequest familyRequest, BTableRequest bTableRequest, HttpSession session) {
         Page<OldmanFamily> page=commonService.getPage(bTableRequest,"oldman_family");
         OldmanFamily family=Wrappers.familyWrapper.unwrap(familyRequest);
+        commonService.checkIsJw(session,family);
         page.setEntity(family);
         List<OldmanFamilyModel> familyModelList=familyDao.getByPage(page).stream().map(Wrappers.familyWrapper::wrap).collect(Collectors.toList());
         Long size=familyDao.getSizeByPage(page);
@@ -79,7 +95,7 @@ public class OldmanServiceImpl implements OldmanService {
     }
 
     @Override
-    public String getOrganOldmanByPage(OrganOldmanRequest organOldmanRequest, BTableRequest bTableRequest) {
+    public String getOrganOldmanByPage(OrganOldmanRequest organOldmanRequest, BTableRequest bTableRequest, HttpSession session) {
         Page<OrganOldman> page=commonService.getPage(bTableRequest,"oldman_organOldman");
         OrganOldman organOldman=Wrappers.organOldmanWrapper.unwrap(organOldmanRequest);
         page.setEntity(organOldman);
@@ -89,11 +105,11 @@ public class OldmanServiceImpl implements OldmanService {
     }
 
     @Override
-    public String getLinkmanByPage(LinkmanRequest linkmanRequest, BTableRequest bTableRequest) {
+    public String getLinkmanByPage(LinkmanRequest linkmanRequest, BTableRequest bTableRequest, HttpSession session) {
         Page<Linkman> page=commonService.getPage(bTableRequest,"oldman_linkman");
         Linkman linkman=Wrappers.linkmanWrapper.unwrap(linkmanRequest);
+        commonService.checkIsJw(session,linkman);
         page.setEntity(linkman);
-        //mybatis 不支持一个对象里有多个list  也就是不能用多个collection 会有大量重复 只能分开查询，但是分开查询 又有很大的 传输延迟  当前解决办法就是 查一次 然后去重
         List<LinkmanModel> linkmanModelList=linkmanDao.getByPage(page).stream().map(Wrappers.linkmanWrapper::wrap).collect(Collectors.toList());
         Long size=linkmanDao.getSizeByPage(page);
         return commonService.tableReturn(bTableRequest.getsEcho(),size,linkmanModelList);
@@ -154,4 +170,14 @@ public class OldmanServiceImpl implements OldmanService {
         organOldmanDao.updateById(organOldman);
     }
 
+
+    @Override
+    public OldmanAddInfoModel getAddInfo() {
+        List<Integer> typeList=commonService.getAutoValueTypes("oldman_add");
+        List<AutoValue> autoValueList=autoValueDao.getByTypeList(typeList);
+        List<Organ> jwList=organDao.getSimpleByType(2);
+        List<HealthSelect> healthSelectList=oldmanHealthDao.getAllHealthSelect();
+        OldmanAddInfoModel oldmanAddInfoModel=Wrappers.oldmanWrapper.wrapAddInfo(autoValueList,jwList,healthSelectList);
+        return oldmanAddInfoModel;
+    }
 }

@@ -1,13 +1,22 @@
 package com.organOld.service.wrapper;
 
+import com.organOld.dao.entity.AutoValue;
+import com.organOld.dao.entity.oldman.HealthSelect;
 import com.organOld.dao.entity.oldman.Oldman;
+import com.organOld.dao.entity.organ.Organ;
 import com.organOld.service.constant.TimeConstant;
-import com.organOld.service.enumModel.SexEnum;
+import com.organOld.service.enumModel.*;
+import com.organOld.service.model.LabelAllRuleModel;
+import com.organOld.service.model.OldmanAddInfoModel;
 import com.organOld.service.model.OldmanModel;
 import com.organOld.service.service.CommonService;
 import com.organOld.service.util.Tool;
 import com.organOld.service.contract.*;
 import org.springframework.beans.BeanUtils;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class OldmanWrapper implements Wrapper<Oldman,OldmanModel,OldmanRequest> {
 
@@ -55,4 +64,55 @@ public class OldmanWrapper implements Wrapper<Oldman,OldmanModel,OldmanRequest> 
     }
 
 
+    public OldmanAddInfoModel wrapAddInfo(List<AutoValue> autoValueList, List<Organ> jwList, List<HealthSelect> healthSelectList) {
+        OldmanAddInfoModel oldmanAddInfoModel=new OldmanAddInfoModel();
+        oldmanAddInfoModel.setOrgan(jwList);
+
+
+        Map<Integer,String> sexMap=new HashMap<>();
+        sexMap.put(SexEnum.MAN.getIndex(),SexEnum.MAN.getName());
+        sexMap.put(SexEnum.WOMAN.getIndex(),SexEnum.WOMAN.getName());
+        oldmanAddInfoModel.setSex(sexMap);
+
+        for(AutoValue autoValue:autoValueList){
+            if (autoValue.getType()== AutoValueEnum.HJ.getIndex()){
+                oldmanAddInfoModel.getCensus().add(autoValue);
+            }
+            if (autoValue.getType()== AutoValueEnum.ZZMM.getIndex()){
+                oldmanAddInfoModel.getPoliticalStatuses().add(autoValue);
+            }
+            if (autoValue.getType()== AutoValueEnum.SZ.getIndex()){
+                oldmanAddInfoModel.getIntelligence().add(autoValue);
+            }
+            if (autoValue.getType()== AutoValueEnum.SL.getIndex()){
+                oldmanAddInfoModel.getEyesight().add(autoValue);
+            }
+            if (autoValue.getType()== AutoValueEnum.JJJG.getIndex()){
+                oldmanAddInfoModel.getFamily().add(autoValue);
+            }
+            if (autoValue.getType()== AutoValueEnum.JJTJ.getIndex()){
+                oldmanAddInfoModel.getEconomic().add(autoValue);
+            }
+            if (autoValue.getType()== AutoValueEnum.PQ.getIndex()){
+                oldmanAddInfoModel.getDistrict().add(autoValue);
+            }
+            if (autoValue.getType()== AutoValueEnum.XQ.getIndex()){
+                oldmanAddInfoModel.getXq().add(autoValue);
+            }
+        }
+
+        for (HealthSelect healthSelect:healthSelectList){
+            if (healthSelect.getFirType()== HealthEnum.MB.getIndex()){
+                oldmanAddInfoModel.getMb().add(healthSelect);
+            }
+            if (healthSelect.getFirType()== HealthEnum.SN.getIndex()){
+                oldmanAddInfoModel.getSn().add(healthSelect);
+            }
+            if (healthSelect.getFirType()== HealthEnum.YW.getIndex()){
+                oldmanAddInfoModel.getYwfy().add(healthSelect);
+            }
+        }
+
+        return oldmanAddInfoModel;
+    }
 }

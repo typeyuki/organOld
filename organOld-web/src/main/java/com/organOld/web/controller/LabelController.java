@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpSession;
+
 /**
  * 标签管理
  * Created by netlab606 on 2018/6/1.
@@ -29,7 +31,7 @@ public class LabelController {
     @RequestMapping(value = "/bind",method = RequestMethod.GET)
     public ModelAndView index_bind(){
         ModelAndView mv=new ModelAndView("oldman/label/label_three");
-        mv.addObject("type","1");
+        mv.addObject("type","1");//标志 是人员绑定
         return mv;
     }
 
@@ -40,7 +42,7 @@ public class LabelController {
     @RequestMapping(value = "/rule",method = RequestMethod.GET)
     public ModelAndView index_rule(){
         ModelAndView mv=new ModelAndView("oldman/label/label_three");
-        mv.addObject("type","2");
+        mv.addObject("type","2");//标志 是规则制定
         return mv;
     }
 
@@ -54,8 +56,8 @@ public class LabelController {
      */
     @ResponseBody
     @RequestMapping(value = "/data",method = RequestMethod.POST)
-    public String data(BTableRequest bTableRequest, LabelRequest labelRequest){
-        return labelService.getByPage(labelRequest,bTableRequest);
+    public String data(BTableRequest bTableRequest, LabelRequest labelRequest, HttpSession session){
+        return labelService.getByPage(labelRequest,bTableRequest,session);
     }
 
     /**

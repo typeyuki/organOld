@@ -18,12 +18,14 @@ import com.organOld.service.model.LabelRuleModel;
 import com.organOld.service.model.OldmanModel;
 import com.organOld.service.service.CommonService;
 import com.organOld.service.service.LabelService;
+import com.organOld.service.service.OrganService;
 import com.organOld.service.wrapper.Wrappers;
 import com.organOld.service.contract.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import javax.servlet.http.HttpSession;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -45,10 +47,12 @@ public class LabelServiceImpl implements LabelService {
     @Autowired
     ChxDao chxDao;
 
+
     @Override
-    public String getByPage(LabelRequest labelRequest, BTableRequest bTableRequest) {
+    public String getByPage(LabelRequest labelRequest, BTableRequest bTableRequest, HttpSession session) {
         Page<Label> page=commonService.getPage(bTableRequest,"label");
         Label label= Wrappers.labelWrapper.unwrap(labelRequest);
+        commonService.checkIsJw(session,label);
         page.setEntity(label);
         List<LabelModel> labelList=labelDao.getByPage(page).stream().map(Wrappers.labelWrapper::wrap).collect(Collectors.toList());
         Long size=labelDao.getSizeByPage(page);

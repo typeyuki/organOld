@@ -14,6 +14,7 @@ public class OrganWrapper implements Wrapper<Organ,OrganModel,OrganRequest> {
     public OrganModel wrap(Organ organ) {
         OrganModel organModel=new OrganModel();
         BeanUtils.copyProperties(organ,organModel);
+        if(organ.getTime()!=null)
         organModel.setTime(Tool.dateToString(organ.getTime(), TimeConstant.DATA_FORMAT_YMD));
         return organModel;
     }

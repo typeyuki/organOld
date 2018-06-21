@@ -9,4 +9,5 @@ public class Wrappers {
     public static OldmanEconomicWrapper economicWrapper=new OldmanEconomicWrapper();
     public static OrganOldmanWrapper organOldmanWrapper=new OrganOldmanWrapper();
     public static OrganWrapper organWrapper=new OrganWrapper();
+    public static OldmanKeyWrapper oldmanKeyWrapper=new OldmanKeyWrapper();
 }

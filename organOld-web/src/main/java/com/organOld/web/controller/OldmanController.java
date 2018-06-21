@@ -7,6 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpSession;
+
 /**
  * Created by netlab606 on 2018/4/1.
  */
@@ -40,8 +42,8 @@ public class OldmanController {
      */
     @ResponseBody
     @RequestMapping(value = "/baseData",method = RequestMethod.POST)
-    public String data(OldmanRequest oldmanRequest, BTableRequest bTableRequest){
-        return oldmanService.getOldmanByPage(oldmanRequest,bTableRequest);
+    public String data(OldmanRequest oldmanRequest, BTableRequest bTableRequest, HttpSession session){
+        return oldmanService.getOldmanByPage(oldmanRequest,bTableRequest,session);
     }
 
     /**
@@ -57,12 +59,23 @@ public class OldmanController {
     }
 
     /**
+     * 添加  全部信息 页面
+     * @return
+     */
+    @RequestMapping(value = "/base/add",method = RequestMethod.GET)
+    public ModelAndView add_get(){
+        ModelAndView mv=new ModelAndView("oldman/add");
+        mv.addObject("info",oldmanService.getAddInfo());
+        return mv;
+    }
+
+    /**
      * 添加  全部信息
      * @param oldmanAddRequest
      * @return
      */
     @RequestMapping(value = "/base/add",method = RequestMethod.POST)
-    public String base_add(OldmanAddRequest oldmanAddRequest){
+    public String add_post(OldmanAddRequest oldmanAddRequest){
         oldmanService.save(oldmanAddRequest);
         return "redirect:/oldman/base";
     }
@@ -100,8 +113,8 @@ public class OldmanController {
      */
     @ResponseBody
     @RequestMapping(value = "/healthData",method = RequestMethod.POST)
-    public String health_data(OldmanHealthRequest oldmanHealthRequest, BTableRequest bTableRequest){
-        return oldmanService.getHealthByPage(oldmanHealthRequest,bTableRequest);
+    public String health_data(OldmanHealthRequest oldmanHealthRequest, BTableRequest bTableRequest,HttpSession session){
+        return oldmanService.getHealthByPage(oldmanHealthRequest,bTableRequest,session);
     }
 
 
@@ -127,8 +140,8 @@ public class OldmanController {
      */
     @ResponseBody
     @RequestMapping(value = "/familyData",method = RequestMethod.POST)
-    public String family_data(OldmanFamilyRequest familyRequest, BTableRequest bTableRequest){
-        return oldmanService.getFamilyByPage(familyRequest,bTableRequest);
+    public String family_data(OldmanFamilyRequest familyRequest, BTableRequest bTableRequest,HttpSession session){
+        return oldmanService.getFamilyByPage(familyRequest,bTableRequest,session);
     }
     /**
      * 信息更新
@@ -163,8 +176,8 @@ public class OldmanController {
      */
     @ResponseBody
     @RequestMapping(value = "/economicData",method = RequestMethod.POST)
-    public String economy_data(OldmanEconomicRequest economicRequest, BTableRequest bTableRequest){
-        return oldmanService.getEconomyByPage(economicRequest,bTableRequest);
+    public String economy_data(OldmanEconomicRequest economicRequest, BTableRequest bTableRequest,HttpSession session){
+        return oldmanService.getEconomyByPage(economicRequest,bTableRequest,session);
     }
     /**
      * 信息更新
@@ -194,8 +207,8 @@ public class OldmanController {
      */
     @ResponseBody
     @RequestMapping(value = "/linkman/data",method = RequestMethod.POST)
-    public String linkman_data(LinkmanRequest linkmanRequest, BTableRequest bTableRequest){
-        return oldmanService.getLinkmanByPage(linkmanRequest,bTableRequest);
+    public String linkman_data(LinkmanRequest linkmanRequest, BTableRequest bTableRequest,HttpSession session){
+        return oldmanService.getLinkmanByPage(linkmanRequest,bTableRequest,session);
     }
     /**
      * 信息更新
@@ -234,8 +247,8 @@ public class OldmanController {
      */
     @ResponseBody
     @RequestMapping(value = "/organOldmanData",method = RequestMethod.POST)
-    public String data(OrganOldmanRequest organOldmanRequest, BTableRequest bTableRequest){
-        return oldmanService.getOrganOldmanByPage(organOldmanRequest,bTableRequest);
+    public String data(OrganOldmanRequest organOldmanRequest, BTableRequest bTableRequest,HttpSession session){
+        return oldmanService.getOrganOldmanByPage(organOldmanRequest,bTableRequest,session);
     }
 
 

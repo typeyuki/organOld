@@ -21,4 +21,7 @@ public class DBEntity {
     public void setTime(Date time) {
         this.time = time;
     }
+
+
+
 }

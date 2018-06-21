@@ -2,6 +2,76 @@
  * Created by netlab606 on 2018/4/2.
  */
 $(document).ready(function(){
+    var columns=[];
+    var order=[];
+    var columnDefs=[];
+    if(single=="single"){
+        columns=[{},{
+            data:"oldmanId"
+        },{
+            data:"oldmanName"
+        },{
+            data:"num"
+        },{
+            data:"timeIn"
+        },{
+            data:"timeOut"
+        },{
+            data:"time"
+        }
+        ];
+        order=[[1,"asc"]];
+        columnDefs=[
+            // 列样式
+            {
+                "targets": [0], // 目标列位置，下标从0开始
+                "data": "id", // 数据列名
+                "render": function(data, type, full) { // 返回自定义内容
+                    return"<input type='checkbox' />"
+                }
+            },
+            // 增加一列，包括删除和修改，同时将我们需要传递的数据传递到链接中
+            {
+                "targets": [7], // 目标列位置，下标从0开始
+                "data": "oldmanId", // 数据列名
+                "render": function(data, type, full) { // 返回自定义内容
+                    return "<span class='look' id='"+data+"'>查看</span><span class='mod' id='"+data+"'>修改</span>";
+                }
+            },
+            //不进行排序的列
+            { "bSortable": false, "aTargets": [ 0,2 ,3, 4,5,6] }
+        ];
+    }else{
+        columns=[{
+            data:"oldmanId"
+        },{
+            data:"oldmanName"
+        },{
+            data:"num"
+        },{
+            data:"timeIn"
+        },{
+            data:"timeOut"
+        },{
+            data:"time"
+        }
+        ];
+        order=[[0,"asc"]];
+        columnDefs=[
+            // 列样式
+            // 增加一列，包括删除和修改，同时将我们需要传递的数据传递到链接中
+            {
+                "targets": [6], // 目标列位置，下标从0开始
+                "data": "oldmanId", // 数据列名
+                "render": function(data, type, full) { // 返回自定义内容
+                    return "<span class='look' id='"+data+"'>查看</span>";
+                }
+            },
+            //不进行排序的列
+            { "bSortable": false, "aTargets": [ 1,2 ,3, 4,5] }
+        ];
+    }
+
     var table =$(".dataTables-example").dataTable(
         {
             "sPaginationType": "full_numbers",
@@ -12,35 +82,10 @@ $(document).ready(function(){
             "bStateSave": true,
             "bProcessing": true, //加载数据时显示正在加载信息
             "bServerSide": true, //指定从服务器端获取数据
-            "columns":[{
-                data:"oldmanId"
-            },{
-                data:"oldmanName"
-            },{
-                data:"num"
-            },{
-                data:"timeIn"
-            },{
-                data:"timeOut"
-            },{
-                data:"time"
-            }
-            ],
-            "order":[[0,"asc"]],
-            "columnDefs": [
-                // 列样式
-                // 增加一列，包括删除和修改，同时将我们需要传递的数据传递到链接中
-                {
-                    "targets": [6], // 目标列位置，下标从0开始
-                    "data": "oldmanId", // 数据列名
-                    "render": function(data, type, full) { // 返回自定义内容
-                        return "<span class='look' id='"+data+"'>查看</span>";
-                    }
-                },
-                //不进行排序的列
-                { "bSortable": false, "aTargets": [ 1,2 ,3, 4,5] }
-            ],
-            "sAjaxSource": "/organ/oldman/man/data",//这个是请求的地址
+            "columns":columns,
+            "order":order,
+            "columnDefs": columnDefs,
+            "sAjaxSource": dataUrl,//这个是请求的地址
             "fnServerData": retrieveData
         });
     function retrieveData(url, aoData, fnCallback) {

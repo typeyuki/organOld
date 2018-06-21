@@ -14,7 +14,7 @@ public class OrganOldmanRequest {
     }
 
     public int getOrganId() {
-        return organId;
+        return this.organId;
     }
 
     public void setOrganId(int organId) {
