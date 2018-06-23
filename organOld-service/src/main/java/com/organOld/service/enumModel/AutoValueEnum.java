@@ -10,7 +10,8 @@ public enum AutoValueEnum {
     JJTJ(6),//经济条件
     SZ(7),//失智
     SL(8),//视力
-    YJBQ(9);//一级标签
+    YJBQ(9),//一级标签
+    NL(10);//年龄分布
     private int index;
 
     AutoValueEnum(int index) {

@@ -18,6 +18,7 @@ public class Oldman extends Man implements DBInterface{
     private String politicalStatus;//政治面貌
     private Integer louNum;//楼号
     private int goal;//得分用于 重点老人
+    private Integer keyStatus;
 
     /**
      * 搜索对象
@@ -34,6 +35,14 @@ public class Oldman extends Man implements DBInterface{
      */
     private Xq xq;//小区
 
+
+    public Integer getKeyStatus() {
+        return keyStatus;
+    }
+
+    public void setKeyStatus(Integer keyStatus) {
+        this.keyStatus = keyStatus;
+    }
 
     public Integer getKeyGoalBase() {
         return keyGoalBase;

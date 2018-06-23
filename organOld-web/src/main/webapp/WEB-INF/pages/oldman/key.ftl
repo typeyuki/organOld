@@ -31,7 +31,7 @@
                 </div>
                 <div class="ibox-content">
                     <div>
-                        <a onclick="" href="javascript:void(0);" class="btn btn-primary ">更新</a>
+                        <a onclick="" href="/oldman/key/update" class="btn btn-primary ">更新</a>
                         <a onclick="" href="javascript:void(0);" class="btn btn-primary ">规则</a>
                     </div>
                     <div>

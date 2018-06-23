@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.organOld.dao.repository.KeyRuleDao">
+
+    <select id="getAll" resultType="com.organOld.dao.entity.oldman.KeyRule">
+        SELECT k.id,k.value_index,k.goal,k.type,
+        case k.type
+        when 1 then value
+        else ""
+        end value_name
+        FROM key_rule k,auto_value a  where k.value_index=a.id
+    </select>
+</mapper>
