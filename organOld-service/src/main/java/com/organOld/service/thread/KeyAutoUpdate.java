@@ -1,16 +1,14 @@
-package com.organOld.service.service;
+package com.organOld.service.thread;
 
 import com.organOld.dao.entity.oldman.HealthSelect;
-import com.organOld.dao.entity.oldman.KeyRule;
 import com.organOld.dao.entity.oldman.Oldman;
 import com.organOld.dao.entity.oldman.OldmanKey;
 import com.organOld.dao.repository.OldmanDao;
 import com.organOld.dao.repository.OldmanKeyDao;
-import com.organOld.dao.util.Page;
 import com.organOld.service.enumModel.HealthEnum;
-import com.organOld.service.service.impl.OldmanKeyServiceImpl;
+import com.organOld.service.service.CommonService;
+import com.organOld.service.service.OldmanKeyService;
 import com.organOld.service.util.Cache;
-import org.apache.poi.ss.formula.functions.T;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +22,13 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * 分布式按周期更新重点老人
+ * 每个线程获取一定数量（ROUND）的实体 进行更新
+ * 以老人ID最大值为终止条件
+ */
 @Service
-public class KeyUpdate implements FullUpdater{
+public class KeyAutoUpdate implements FullUpdater{
 
     @Autowired
     OldmanKeyService oldmanKeyService;
@@ -33,10 +36,12 @@ public class KeyUpdate implements FullUpdater{
     OldmanDao oldmanDao;
     @Autowired
     OldmanKeyDao oldmanKeyDao;
+    @Autowired
+    CommonService commonService;
 
     Lock lock = new ReentrantLock();
 
-    private static final Logger log = LoggerFactory.getLogger(KeyUpdate.class);
+    private static final Logger log = LoggerFactory.getLogger(KeyAutoUpdate.class);
 
     private static final long LONG_POLLING_EXECUTOR_DELAY = 2 * 1000;
 
@@ -48,7 +53,7 @@ public class KeyUpdate implements FullUpdater{
     /**
      * The timeout for loading data once.
      */
-    private static final long ROUND = 1000;
+    private static final long ROUND = 1000L;
 
     /**
      * The timeout for loading data once.
@@ -58,7 +63,7 @@ public class KeyUpdate implements FullUpdater{
     /**
      * The null value of {@link Long} type in the redis.
      */
-    private static final long REDIS_NULL_VALUE = Long.MIN_VALUE;
+    public static final long REDIS_NULL_VALUE = Long.MIN_VALUE;
 
     /**
      * The timeout for getting the distributed lock.
@@ -69,6 +74,11 @@ public class KeyUpdate implements FullUpdater{
      * The timeout for getting the data from the redis.
      */
     private static final long REDIS_GET_VALUE_TIMEOUT = 1000;
+
+    /**
+     * 开关
+     */
+    public static Boolean OPEN_SWITCH= false;
 
 
     /**
@@ -81,6 +91,8 @@ public class KeyUpdate implements FullUpdater{
      * The count of the working threads.
      */
     private static final int WORKER_COUNT = 4;
+
+    public static final long EXPIRED_TIME = 30*24*60*60*1000L;//一个月
 
     /**
      * The long-polling executor will be scheduled with the given interval.
@@ -122,13 +134,15 @@ public class KeyUpdate implements FullUpdater{
         public void run() {
             try {
                 if (needToUpdate()) {
-                    log.info("uodate!!!");
+                    log.info("update!!!");
                     update();
                 }
             } catch (Exception ex) {
                 log.error("An exception occurred when long-polling-updater-{} was working", ex);
             }finally {
-                longPollingExecutor.schedule(updateRunner, LONG_POLLING_EXECUTOR_DELAY, TimeUnit.MILLISECONDS);
+                if(OPEN_SWITCH){
+                    longPollingExecutor.schedule(updateRunner, LONG_POLLING_EXECUTOR_DELAY, TimeUnit.MILLISECONDS);
+                }
             }
         }
     };
@@ -139,20 +153,18 @@ public class KeyUpdate implements FullUpdater{
         if (this.getExpiredTime() == REDIS_NULL_VALUE) {
             long max, current;
             if ((max = this.getMax()) == REDIS_NULL_VALUE) {
-                log.info(this.getMax()+"");
+                log.info(this.max()+"");
                 this.setMax(this.max());
-                log.info(this.getMax()+"");
                 return false;
             }
             if ((current = this.getCurrent()) == REDIS_NULL_VALUE) {
                 log.info(this.getCurrent()+"");
                 this.setCurrent(0L);
-                log.info(this.getCurrent()+"");
                 return false;
             }
-            log.info("current:"+current);
-            log.info("max:"+max);
             if (current >= max) {
+                log.info(this.max()+":max");
+                log.info(this.getCurrent()+":current");
                 this.reset();
                 return false;
             }
@@ -162,8 +174,6 @@ public class KeyUpdate implements FullUpdater{
     }
 
     public void update() {
-//        List<OldmanKey> oldmanKeys=oldmanKeyDao.getAllOldmanKey();
-//        updateKey(oldmanKeys,keyRuleList);
 
         try {
             Future<List<OldmanKey>> future = this.loaderExecutor.submit(() -> load());
@@ -183,6 +193,8 @@ public class KeyUpdate implements FullUpdater{
                                     oldmanKey.getSnIds().add(healthSelect.getId());
                                 }
                             }
+                            oldmanKey.setAge(commonService.birthdayToAge(oldmanKey.getBirthday()));
+
                             Oldman oldman=new Oldman();
                             oldman.setId(oldmanKey.getOldmanId());
                             oldman.setGoal(oldmanKeyService.calculateKeyGoal(oldmanKey));
@@ -229,6 +241,7 @@ public class KeyUpdate implements FullUpdater{
     }
 
     protected List<OldmanKey> load(long current) {
+        //
         return oldmanKeyDao.getOldmanKeyByRound(ROUND,current);
 
     }
@@ -249,9 +262,10 @@ public class KeyUpdate implements FullUpdater{
      * @param updatedData the updated data.
      */
     private void triggerAfterUpdateEvents(List<Oldman> updatedData) {
-        for(Oldman oldman:updatedData){
-            System.out.println(oldman.toString());
-        }
+//        for(Oldman oldman:updatedData){
+//            oldman.setGoal(50);
+//            System.out.println(oldman.toString());
+//        }
         oldmanDao.updateKeyOldman(updatedData);
     }
 
@@ -265,6 +279,7 @@ public class KeyUpdate implements FullUpdater{
                     this.setCurrent(REDIS_NULL_VALUE);
                     this.setMax(REDIS_NULL_VALUE);
                     this.setExpiredTime(this.expiredTime());
+                    //TODO 通知前端 更新完成 或者生成excel表格
                 }
             }
         } catch (Exception e) {
@@ -291,7 +306,7 @@ public class KeyUpdate implements FullUpdater{
             if (locked) {
                 String value = (String) Cache.get(key);
                 if (value != null && !value.equals(result+"")) {
-                    result = Integer.valueOf(value);
+                    result = Long.valueOf(value);
                 }
             }
         } catch (Exception e) {
@@ -332,34 +347,34 @@ public class KeyUpdate implements FullUpdater{
 
     @Override
     public long getExpiredTime() {
-        return this.getValue("expiredTime");
+        return this.getValue("auto_expiredTime");
     }
 
     @Override
     public void setExpiredTime(long expiredTime) {
         //设置map的超时时间
-        this.setValue("expiredTime", String.valueOf(expiredTime),expiredTime);
+        this.setValue("auto_expiredTime", String.valueOf(expiredTime),expiredTime);
 
     }
 
     @Override
     public long getMax() {
-        return this.getValue("max");
+        return this.getValue("auto_max");
     }
 
     @Override
     public void setMax(long max) {
-        this.setValue("max", String.valueOf(max),0L);
+        this.setValue("auto_max", String.valueOf(max),0L);
     }
 
     @Override
     public long getCurrent() {
-        return this.getValue("current");
+        return this.getValue("auto_current");
     }
 
     @Override
     public void setCurrent(long current) {
-        this.setValue("current", String.valueOf(current),0L);
+        this.setValue("auto_current", String.valueOf(current),0L);
     }
 
 
@@ -369,7 +384,7 @@ public class KeyUpdate implements FullUpdater{
 
 
     protected long expiredTime() {
-        return 30*24*60*60* 1000;//一个月
+        return EXPIRED_TIME;//一个月
     }
 
     protected long current(List<OldmanKey> data) {

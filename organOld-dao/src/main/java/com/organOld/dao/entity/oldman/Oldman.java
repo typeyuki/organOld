@@ -27,6 +27,7 @@ public class Oldman extends Man implements DBInterface{
     private Date birthdayEnd;//出生年月-止
     private String search;//模糊搜索
     private Integer jwId;//居委ID
+    private String future;//是否是查询未来的重点老人得分
 
     private Integer keyGoalBase;//重点老人分数基线
     /**
@@ -35,6 +36,16 @@ public class Oldman extends Man implements DBInterface{
      */
     private Xq xq;//小区
 
+
+
+
+    public String getFuture() {
+        return future;
+    }
+
+    public void setFuture(String future) {
+        this.future = future;
+    }
 
     public Integer getKeyStatus() {
         return keyStatus;

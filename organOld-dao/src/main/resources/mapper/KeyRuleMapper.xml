@@ -10,4 +10,10 @@
         end value_name
         FROM key_rule k,auto_value a  where k.value_index=a.id
     </select>
+
+
+    <select id="getAllRule" resultType="com.organOld.dao.entity.oldman.KeyRule">
+        SELECT k.id,k.value_index,k.goal,k.type,a.value value_name
+        FROM key_rule k,auto_value a  where k.value_index=a.id
+    </select>
 </mapper>

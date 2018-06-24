@@ -12,4 +12,6 @@ public interface OldmanDao extends BaseDao<Oldman,Integer>{
     void updateKeyOldman(List<Oldman> oldmanList);
 
     long getMaxId();
+
+    void updateKeyOldmanFuture(List<Oldman> updatedData);
 }

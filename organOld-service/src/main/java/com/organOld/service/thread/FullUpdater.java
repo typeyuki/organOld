@@ -1,4 +1,4 @@
-package com.organOld.service.service;
+package com.organOld.service.thread;
 
 /**
  * The full updater is to update the data with the full strategy.

@@ -1,8 +1,9 @@
 /**
  * Created by netlab606 on 2018/4/2.
  */
+var table;
 $(document).ready(function(){
-    var table =$(".dataTables-example").dataTable(
+    table =$(".dataTables-example").dataTable(
         {
             "sPaginationType": "full_numbers",
             "bPaginite": true,
@@ -44,7 +45,8 @@ $(document).ready(function(){
                 "iDisplayLength" : aoData.iDisplayLength,
                 "iSortCol_0" : aoData.iSortCol_0,
                 "sEcho" : aoData.sEcho,
-                "sSortDir_0" : aoData.sSortDir_0
+                "sSortDir_0" : aoData.sSortDir_0,
+                "future":$("input[name=future]").val()
             },
             type: 'POST',
             dataType: 'json',
@@ -69,3 +71,68 @@ $(document).ready(function(){
             "column":oTable.fnGetPosition(this)[2]}},"width":"90%","height":"100%"});
 
 });
+
+
+function autoUpdate(open,obj) {
+    if(open){
+        $.ajax({
+            url: "/oldman/key/autoUpdate",
+            data : {
+                open:true
+            },
+            type: 'POST',
+            dataType: 'json',
+            success: function (result) {
+               $(obj).attr("onclick","autoUpdate(false,this)").html("关闭自动更新");
+            },
+            error:function(XMLHttpRequest, textStatus, errorThrown) {
+
+            }
+        });
+    }else{
+        $.ajax({
+            url: "/oldman/key/autoUpdate",
+            data : {
+                open:false
+            },
+            type: 'POST',
+            dataType: 'json',
+            success: function (result) {
+                $(obj).attr("onclick","autoUpdate(true,this)").html("开启自动更新");
+            },
+            error:function(XMLHttpRequest, textStatus, errorThrown) {
+
+            }
+        });
+    }
+}
+
+function update(type) {
+    var data;
+    if(type=="future"){
+        data={
+            futureTime:$("#futureTime").val()
+        }
+    }else{
+        data={};
+    }
+    $.ajax({
+        url: "/oldman/key/update",
+        data : data,
+        type: 'POST',
+        dataType: 'json',
+        success: function (result) {
+            alert("更新完成");
+            if (result.data=="future"){
+                $("input[name=future]").val("1");
+            }else{
+                $("input[name=future]").val("");
+            }
+            // alert(1);
+            table.fnFilter();
+        },
+        error:function(XMLHttpRequest, textStatus, errorThrown) {
+
+        }
+    });
+}

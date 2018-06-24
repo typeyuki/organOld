@@ -114,6 +114,25 @@
             </foreach>
     </update>
 
+    <update id="updateKeyOldmanFuture">
+        UPDATE oldman_base
+        SET
+        future_goal= CASE id
+        <foreach collection="list" index="index" item="item" open="" separator=" " close="">
+            WHEN ${item.id} THEN #{item.goal}
+        </foreach>
+        END,
+        future_key_status= CASE id
+        <foreach collection="list" index="index" item="item" open="" separator=" " close="">
+            WHEN ${item.id} THEN #{item.keyStatus}
+        </foreach>
+        END
+        WHERE id in
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+            ${item.id}
+        </foreach>
+    </update>
+
     <select id="getMaxId" resultType="java.lang.Long">
         select MAX(id) FROM oldman_base
     </select>

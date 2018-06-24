@@ -16,6 +16,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpSession;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -28,30 +30,8 @@ public class CommonService {
     UserDao userDao;
 
     public static int birthdayToAge(Date birthday){
-        Calendar cal = Calendar.getInstance();
-        if (cal.before(birthday)) {
-            throw new IllegalArgumentException(
-                    "The birthDay is before Now.It's unbelievable!");
-        }
-        int yearNow = cal.get(Calendar.YEAR);
-        int monthNow = cal.get(Calendar.MONTH);
-        int dayOfMonthNow = cal.get(Calendar.DAY_OF_MONTH);
-        cal.setTime(birthday);
-
-        int yearBirth = cal.get(Calendar.YEAR);
-        int monthBirth = cal.get(Calendar.MONTH);
-        int dayOfMonthBirth = cal.get(Calendar.DAY_OF_MONTH);
-
-        int age = yearNow - yearBirth;
-
-        if (monthNow <= monthBirth) {
-            if (monthNow == monthBirth) {
-                if (dayOfMonthNow < dayOfMonthBirth) age--;
-            }else{
-                age--;
-            }
-        }
-        return age;
+        Date date=new Date();
+        return calculateTwoDateYears(date,birthday);
     }
     public static Date AgeTobirthday(int age){
         if(age==0){
@@ -152,4 +132,39 @@ public class CommonService {
             dbInterface.setJwId(jwId);
         }
     }
+
+    public static int calculateTwoDateYears(String futureTime, Date birthday) throws ParseException {
+        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd");
+        Date date=simpleDateFormat.parse(futureTime);
+        return calculateTwoDateYears(date,birthday);
+    }
+
+    public static int calculateTwoDateYears(Date time, Date birthday){
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(time);
+        if (cal.before(birthday)) {
+            throw new IllegalArgumentException(
+                    "The birthDay is before Now.It's unbelievable!");
+        }
+        int yearNow = cal.get(Calendar.YEAR);
+        int monthNow = cal.get(Calendar.MONTH);
+        int dayOfMonthNow = cal.get(Calendar.DAY_OF_MONTH);
+        cal.setTime(birthday);
+
+        int yearBirth = cal.get(Calendar.YEAR);
+        int monthBirth = cal.get(Calendar.MONTH);
+        int dayOfMonthBirth = cal.get(Calendar.DAY_OF_MONTH);
+
+        int age = yearNow - yearBirth;
+
+        if (monthNow <= monthBirth) {
+            if (monthNow == monthBirth) {
+                if (dayOfMonthNow < dayOfMonthBirth) age--;
+            }else{
+                age--;
+            }
+        }
+        return age;
+    }
 }
+

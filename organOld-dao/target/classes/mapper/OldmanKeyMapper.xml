@@ -13,6 +13,7 @@
         <result property="intelligence" column="intelligence" />
         <result property="eyesight" column="eyesight" />
         <result property="keyStatus" column="key_status" />
+        <result property="futureKeyStatus" column="future_key_status" />
         <collection property="healthSelectIdsList" ofType="com.organOld.dao.entity.oldman.HealthSelect">
             <id property="id" column="hsid" />
             <id property="firType" column="fir_type" />
@@ -20,7 +21,13 @@
     </resultMap>
 
     <select id="getByPage" parameterType="com.organOld.dao.util.Page" resultType="com.organOld.dao.entity.oldman.Oldman">
-        SELECT ob.id,ob.name,ob.goal
+        SELECT ob.id,ob.name,
+        <if test="entity!=null and entity.future!=null and entity.future!=''">
+            ob.future_goal goal
+        </if>
+        <if test="entity==null or entity.future==null or entity.future==''">
+            ob.goal
+        </if>
         FROM oldman_base ob,organ org,auto_value x
         WHERE x.id=ob.xq_id AND org.id=x.parent_index AND ob.goal > ${entity.keyGoalBase}
         <if test="entity!=null and entity.jwId!=null and entity.jwId!=0">
@@ -50,11 +57,15 @@
 
 
     <select id="getOldmanKeyByRound" resultMap="oldmanKey"  parameterType="com.organOld.dao.util.Page">
-        SELECT ob.id,ob.key_status,ob.birthday,ob.floor,oe.economic_index,oldf.family_index,ohb.intelligence,ohb.eyesight,ho.home_id,hs.id hsid,hs.fir_type
+        SELECT ob.id,ob.key_status,ob.future_key_status,ob.birthday,ob.floor,oe.economic_index,oldf.family_index,ohb.intelligence,ohb.eyesight,ho.home_id,hs.id hsid,hs.fir_type
         FROM oldman_base ob left join home_oldman ho on ob.id=ho.oldman_id left join home h on ho.home_id=h.id and h.fir_type=2
         left join health_select_oldman hso on hso.oldman_id=ob.id left join health_select hs on hs.id=hso.health_select_id and hs.fir_type in (1,2),
         oldman_economic oe,oldman_family oldf,oldman_health_base ohb
-        where ob.id=oe.oldman_id and ob.id=oldf.oldman_id and ob.id=ohb.oldman_id AND ob.id>${current}
-        limit 0,#{round}
+        where ob.id=oe.oldman_id and ob.id=oldf.oldman_id and ob.id=ohb.oldman_id
+        and ob.id in(
+        select a.id from
+        (select oo.id from oldman_base oo where oo.id>${current} limit 0,#{round} ) as a
+        )
+
     </select>
 </mapper>

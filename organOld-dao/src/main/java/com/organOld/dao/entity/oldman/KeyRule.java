@@ -11,8 +11,8 @@ public class KeyRule extends DBEntity{
     private Integer valueIndex;
     private Integer goal;
 
+    private String valueName;
 
-    private String valueName;//目前 年龄的用
 
     public String getValueName() {
         return valueName;

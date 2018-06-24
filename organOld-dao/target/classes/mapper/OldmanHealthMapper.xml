@@ -33,6 +33,10 @@
         LEFT JOIN health_select_oldman hso on hso.oldman_id=o.oldman_id left join health_select hs on hso.health_select_id=hs.id,
         auto_value e,auto_value i
         WHERE old.id=o.oldman_id AND e.id=o.eyesight AND i.id=o.intelligence AND x.id=old.xq_id AND org.id=x.parent_index
+        and old.id in(
+        select a.id from
+        (select oo.id from oldman_base oo where oo.id>0 order by oo.${sortType} ${sort} limit #{start},#{length} ) as a
+        )
         <if test="entity!=null and entity.oldman!=null and entity.oldman.id!=null and entity.oldman.id!=0">
             and o.oldman_id=#{entity.oldman.id}
         </if>
@@ -49,7 +53,6 @@
                 OR o.intelligence LIKE  concat('%',#{entity.search},'%') OR ha.desc LIKE  concat('%',#{entity.search},'%') OR hs.sec_type_name LIKE  concat('%',#{entity.search},'%'))
             )
         </if>
-
     </select>
 
     <select id="getSizeByPage" parameterType="com.organOld.dao.util.Page" resultType="java.lang.Long">

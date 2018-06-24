@@ -1,4 +1,4 @@
-package com.organOld.service.service;
+package com.organOld.service.thread;
 
 /**
  * This interface is to indicate the basic method to update data.

@@ -31,7 +31,11 @@
                 </div>
                 <div class="ibox-content">
                     <div>
-                        <a onclick="" href="/oldman/key/update" class="btn btn-primary ">更新</a>
+                        <input type="date" id="futureTime">
+                        <input type="hidden" name="future">
+                        <a onclick="update('future')" href="#" class="btn btn-primary ">查看</a>
+                        <a onclick="update('now')" href="#" class="btn btn-primary ">更新</a>
+                        <a onclick="autoUpdate(true,this)" href="#" class="btn btn-primary ">开启自动更新</a>
                         <a onclick="" href="javascript:void(0);" class="btn btn-primary ">规则</a>
                     </div>
                     <div>
@@ -39,7 +43,6 @@
                         <input class="search" type="text" placeholder="最低分">-
                         <input class="search" type="text" placeholder="最高分">
                         <button id="search">搜索</button>
-
                     </div>
                     <table class="table table-striped table-bordered table-hover dataTables-example">
                         <thead>
