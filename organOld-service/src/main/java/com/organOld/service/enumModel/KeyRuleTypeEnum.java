@@ -11,7 +11,8 @@ public enum KeyRuleTypeEnum {
     SL("视力",6),
     MB("慢病",7),
     JJTJ("经济条件",8),
-    QT("其他",9);
+    LOU("无电梯楼层",9),
+    JYLY("是否主动申请进养老院",10);
     private String name ;
     private int index ;
 

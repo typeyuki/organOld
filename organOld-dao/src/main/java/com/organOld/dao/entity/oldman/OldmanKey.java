@@ -1,5 +1,6 @@
 package com.organOld.dao.entity.oldman;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -11,13 +12,37 @@ public class OldmanKey {
     private Integer oldmanId;
     private Date birthday;
     private Integer familyIndex;
-    private Integer chxLevel;
-    private List<HealthSelect> healthSelectList;
+    private Integer chxIndex;
+    private List<HealthSelect> healthSelectIdsList;
+
     private Integer intelligence;
     private Integer eyesight;
     private Integer economicIndex;
     private Integer floor;
+    private Integer isActivityOrgan;//是否主动申请进养老院  即机构人员表有  但是床位号为0
 
+
+
+    private List<Integer> mbIds=new ArrayList<>();
+    private List<Integer> snIds=new ArrayList<>();
+
+    private Integer keyStatus;
+
+    public Integer getKeyStatus() {
+        return keyStatus;
+    }
+
+    public void setKeyStatus(Integer keyStatus) {
+        this.keyStatus = keyStatus;
+    }
+
+    public Integer getIsActivityOrgan() {
+        return isActivityOrgan;
+    }
+
+    public void setIsActivityOrgan(Integer isActivityOrgan) {
+        this.isActivityOrgan = isActivityOrgan;
+    }
 
     public Integer getOldmanId() {
         return oldmanId;
@@ -43,21 +68,39 @@ public class OldmanKey {
         this.familyIndex = familyIndex;
     }
 
-    public Integer getChxLevel() {
-        return chxLevel;
+    public Integer getChxIndex() {
+        return chxIndex;
     }
 
-    public void setChxLevel(Integer chxLevel) {
-        this.chxLevel = chxLevel;
+    public void setChxIndex(Integer chxIndex) {
+        this.chxIndex = chxIndex;
     }
 
-    public List<HealthSelect> getHealthSelectList() {
-        return healthSelectList;
+    public List<Integer> getMbIds() {
+        return mbIds;
     }
 
-    public void setHealthSelectList(List<HealthSelect> healthSelectList) {
-        this.healthSelectList = healthSelectList;
+    public void setMbIds(List<Integer> mbIds) {
+        this.mbIds = mbIds;
     }
+
+    public List<Integer> getSnIds() {
+        return snIds;
+    }
+
+    public void setSnIds(List<Integer> snIds) {
+        this.snIds = snIds;
+    }
+
+    public List<HealthSelect> getHealthSelectIdsList() {
+        return healthSelectIdsList;
+    }
+
+    public void setHealthSelectIdsList(List<HealthSelect> healthSelectIdsList) {
+        this.healthSelectIdsList = healthSelectIdsList;
+    }
+
+
 
     public Integer getIntelligence() {
         return intelligence;
