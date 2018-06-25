@@ -45,7 +45,7 @@ $(document).ready(function(){
                 "targets": [13], // 目标列位置，下标从0开始
                 "data": "id", // 数据列名
                 "render": function(data, type, full) { // 返回自定义内容
-                    return "<span onclick=look("+data+",this,'/organ/oldman/"+data+"/man') class='look' id='"+data+"'>人员</span><span class='look' id='"+data+"'>查看</span><span class='mod' id='"+data+"'>修改</span>";
+                    return "<span onclick=newPage("+data+",$(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().text(),'/organ/oldman/"+data+"/man') class='look' id='"+data+"'>人员</span><span class='look' id='"+data+"'>查看</span><span class='mod' id='"+data+"'>修改</span>";
                 }
             },
             //不进行排序的列
@@ -224,40 +224,3 @@ $(document).ready(function(){
             "column":oTable.fnGetPosition(this)[2]}},"width":"90%","height":"100%"});
 
 });
-
-function look(organId,obj,url) {
-    var t=url,
-        a="1"+organId,
-        i=$(obj).parent().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().text(),
-        n=!0;
-
-    var jq=top.jQuery;
-    if(void 0==t||0==$.trim(t).length)
-        return!1;
-    if(
-        jq(".J_menuTab").each(
-            function(){
-                return $(this).data("id")==t?(
-                        $(this).hasClass("active")||
-                        (
-                            $(this).addClass("active").siblings(".J_menuTab").removeClass("active"),
-                                jq(".J_mainContent .J_iframe").each(function(){
-                                    return $(this).data("id")==t?
-                                        ($(this).show().siblings(".J_iframe").hide(),!1)
-                                        :
-                                        void 0}))
-                            ,n=!1,!1)
-                    : void 0
-            })
-            ,n
-    ) {
-        var s='<a href="javascript:;" class="active J_menuTab" data-id="'+t+'">'+i+' <i class="fa fa-times-circle"></i></a>';
-        jq(".J_menuTab").removeClass("active");
-        var r='<iframe class="J_iframe" name="iframe'+a+'" width="100%" height="100%" src="'+t+'?v=4.0" frameborder="0" data-id="'+t+'" seamless></iframe>';
-        jq(".J_mainContent").find("iframe.J_iframe").hide().parents(".J_mainContent").append(r);
-        jq(".J_mainContent iframe:visible").load(function(){layer.close(o)});
-        jq(".J_menuTabs .page-tabs-content").append(s);
-        e(jq(".J_menuTab.active"));
-    }
-    return!1
-}

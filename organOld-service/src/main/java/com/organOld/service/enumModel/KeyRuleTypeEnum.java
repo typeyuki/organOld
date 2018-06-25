@@ -21,6 +21,8 @@ public enum KeyRuleTypeEnum {
         this.index = index ;
     }
 
+
+
     public static String getValue(int index) {
         for (KeyRuleTypeEnum d : KeyRuleTypeEnum.values()) {
             if (d.getIndex() == index) {

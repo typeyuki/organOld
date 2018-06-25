@@ -14,4 +14,5 @@ public interface BaseDao<T extends DBEntity,ID extends Number> {
     List<T> getByPage(Page page);
     Long getSizeByPage(Page page);
     void updateById(T entity);
+    void updateByIds(List<T> list);
 }

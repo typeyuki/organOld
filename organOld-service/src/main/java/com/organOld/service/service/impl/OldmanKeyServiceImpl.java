@@ -8,20 +8,25 @@ import com.organOld.dao.repository.OldmanKeyDao;
 import com.organOld.dao.util.Page;
 import com.organOld.service.constant.ValueConstant;
 import com.organOld.service.contract.BTableRequest;
+import com.organOld.service.contract.KeyRuleRequest;
 import com.organOld.service.contract.OldmanKeyRequest;
 import com.organOld.service.contract.Result;
 import com.organOld.service.enumModel.KeyRuleTypeEnum;
 import com.organOld.service.enumModel.KeyStatusEnum;
+import com.organOld.service.model.KeyRuleTypeModel;
+import com.organOld.service.model.KeyRulelModel;
 import com.organOld.service.model.OldmanKeyModel;
 import com.organOld.service.service.CommonService;
 import com.organOld.service.thread.KeyAutoUpdate;
 import com.organOld.service.service.OldmanKeyService;
 import com.organOld.service.thread.KeyUpdate;
 import com.organOld.service.wrapper.Wrappers;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -57,10 +62,20 @@ public class OldmanKeyServiceImpl implements OldmanKeyService {
     @Override
     public Result updateMan(String futureTime) {
         keyRuleList=keyRuleDao.getAll();
+
         KeyUpdate.DOING=true;
         KeyUpdate.futureTime=futureTime;
+        KeyUpdate.finish=false;
         keyUpdate.longPollingExecutor.execute(keyUpdate.updateRunner);
-        return null;
+
+        while (!KeyUpdate.finish){
+//            System.out.println(KeyUpdate.finish.toString());
+        }
+        if(futureTime!=null && !futureTime.equals("")){
+            return new Result(true,"future");
+        }else{
+            return new Result(true,"now");
+        }
     }
 
     @Override
@@ -81,30 +96,6 @@ public class OldmanKeyServiceImpl implements OldmanKeyService {
         return new Result(true);
     }
 
-
-//    @Override
-//    public void updateKey(List<OldmanKey> oldmanKeys) {
-//        List<Oldman> oldmanList=new ArrayList<>();
-//
-//        for (OldmanKey oldmanKey:oldmanKeys){
-//            for(HealthSelect healthSelect:oldmanKey.getHealthSelectIdsList()){
-//                if(healthSelect.getFirType()== HealthEnum.MB.getIndex()){
-//                    oldmanKey.getMbIds().add(healthSelect.getId());
-//                }
-//                if(healthSelect.getFirType()== HealthEnum.SN.getIndex()){
-//                    oldmanKey.getSnIds().add(healthSelect.getId());
-//                }
-//            }
-//            Oldman oldman=new Oldman();
-//            oldman.setId(oldmanKey.getOldmanId());
-//            oldman.setGoal(calculateKeyGoal(oldmanKey));
-//            oldman.setKeyStatus(oldmanKey.getKeyStatus());
-//            checkKeyStatus(oldman);
-//            oldmanList.add(oldman);
-//            System.out.println(oldman.toString());
-//        }
-////        oldmaDao.updateKeyOldman(oldmanList);
-//    }
 
     @Override
     public void checkKeyStatus(Oldman oldman) {
@@ -146,8 +137,7 @@ public class OldmanKeyServiceImpl implements OldmanKeyService {
                 if(flagAge==0){
                     int start=Integer.parseInt(keyRule.getValueName().split("-")[0]);
                     int end=keyRule.getValueName().split("-").length==1? Integer.MAX_VALUE:Integer.parseInt(keyRule.getValueName().split("-")[1]);
-                    int age=commonService.birthdayToAge(oldmanKey.getBirthday());
-                    if(age>=start && age<=end){
+                    if(oldmanKey.getAge()>=start && oldmanKey.getAge()<=end){
                         flagAge=1;
                         goal+=keyRule.getGoal();
                     }
@@ -253,5 +243,25 @@ public class OldmanKeyServiceImpl implements OldmanKeyService {
             goal-=goalHealth;
         }
         return goal;
+    }
+
+
+    @Override
+    public KeyRulelModel getRule() {
+        KeyRulelModel keyGoalModel=new KeyRulelModel();
+        List<KeyRule> keyRuleList=keyRuleDao.getAllRule();
+        List<KeyRuleTypeModel> keyRuleTypeModelList=Wrappers.oldmanKeyWrapper.wrapKeyRule(keyRuleList);
+//        keyRuleList.stream().forEach(r->r.setTypeDesc(KeyRuleTypeEnum.getValue(r.getType())));
+        keyGoalModel.setBaseGoal(ValueConstant.OLDMAN_KEY_GOAL_BASE);
+        keyGoalModel.setKeyRuleTypeList(keyRuleTypeModelList);
+        return keyGoalModel;
+    }
+
+
+    @Override
+    public void updateRule(KeyRuleRequest keyRuleRequest) {
+        ValueConstant.OLDMAN_KEY_GOAL_BASE=keyRuleRequest.getBaseGoal();
+        List<KeyRule> keyRuleList=Wrappers.oldmanKeyWrapper.unwrapKeyRule(keyRuleRequest);
+        keyRuleDao.updateByIds(keyRuleList);
     }
 }

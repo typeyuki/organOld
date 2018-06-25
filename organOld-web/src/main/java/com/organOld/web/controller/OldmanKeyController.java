@@ -1,6 +1,7 @@
 package com.organOld.web.controller;
 
 import com.organOld.service.contract.BTableRequest;
+import com.organOld.service.contract.KeyRuleRequest;
 import com.organOld.service.contract.OldmanKeyRequest;
 import com.organOld.service.contract.Result;
 import com.organOld.service.service.OldmanKeyService;
@@ -71,4 +72,26 @@ public class OldmanKeyController {
         return result;
     }
 
+
+    /**
+     * 规则页面
+     * @return
+     */
+    @RequestMapping("/rule")
+    public ModelAndView rule(){
+        ModelAndView mv=new ModelAndView("oldman/key_goal");
+        mv.addObject("rule",oldmanKeyService.getRule());
+        return mv;
+    }
+
+    /**
+     * 分数更新
+     * @return
+     */
+    @RequestMapping(value = "/rule/update",method = RequestMethod.POST)
+    public ModelAndView rule_update(KeyRuleRequest keyRuleRequest){
+        ModelAndView mv=new ModelAndView("redirect:/oldman/key/rule");
+        oldmanKeyService.updateRule(keyRuleRequest);
+        return mv;
+    }
 }

@@ -13,12 +13,14 @@ import com.organOld.service.service.CommonService;
 import com.organOld.service.util.Tool;
 import com.organOld.service.contract.*;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class OldmanWrapper implements Wrapper<Oldman,OldmanModel,OldmanRequest> {
+
 
     @Override
     public OldmanModel wrap(Oldman oldman) {

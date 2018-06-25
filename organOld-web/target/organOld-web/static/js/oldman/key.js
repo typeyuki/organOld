@@ -1,8 +1,9 @@
 /**
  * Created by netlab606 on 2018/4/2.
  */
+var table;
 $(document).ready(function(){
-    var table =$(".dataTables-example").dataTable(
+    table =$(".dataTables-example").dataTable(
         {
             "sPaginationType": "full_numbers",
             "bPaginite": true,
@@ -44,7 +45,8 @@ $(document).ready(function(){
                 "iDisplayLength" : aoData.iDisplayLength,
                 "iSortCol_0" : aoData.iSortCol_0,
                 "sEcho" : aoData.sEcho,
-                "sSortDir_0" : aoData.sSortDir_0
+                "sSortDir_0" : aoData.sSortDir_0,
+                "future":$("input[name=future]").val()
             },
             type: 'POST',
             dataType: 'json',
@@ -74,7 +76,7 @@ $(document).ready(function(){
 function autoUpdate(open,obj) {
     if(open){
         $.ajax({
-            url: "/oldman/key/update",
+            url: "/oldman/key/autoUpdate",
             data : {
                 open:true
             },
@@ -89,7 +91,7 @@ function autoUpdate(open,obj) {
         });
     }else{
         $.ajax({
-            url: "/oldman/key/update",
+            url: "/oldman/key/autoUpdate",
             data : {
                 open:false
             },
@@ -103,4 +105,36 @@ function autoUpdate(open,obj) {
             }
         });
     }
+}
+
+function update(type) {
+    var data;
+    if(type=="future"){
+        data={
+            futureTime:$("#futureTime").val()
+        };
+        $("#goal").html($("#futureTime").val()+" 分数");
+    }else{
+        data={};
+        $("#goal").html("分数");
+    }
+    $.ajax({
+        url: "/oldman/key/update",
+        data : data,
+        type: 'POST',
+        dataType: 'json',
+        success: function (result) {
+            alert("更新完成");
+            if (result.data=="future"){
+                $("input[name=future]").val("1");
+            }else{
+                $("input[name=future]").val("");
+            }
+            // alert(1);
+            table.fnFilter();
+        },
+        error:function(XMLHttpRequest, textStatus, errorThrown) {
+
+        }
+    });
 }

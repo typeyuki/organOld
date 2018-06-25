@@ -6,6 +6,7 @@ import com.organOld.dao.entity.oldman.OldmanKey;
 import com.organOld.dao.repository.OldmanDao;
 import com.organOld.dao.repository.OldmanKeyDao;
 import com.organOld.service.enumModel.HealthEnum;
+import com.organOld.service.service.CommonService;
 import com.organOld.service.service.OldmanKeyService;
 import com.organOld.service.util.Cache;
 import org.slf4j.Logger;
@@ -35,6 +36,8 @@ public class KeyAutoUpdate implements FullUpdater{
     OldmanDao oldmanDao;
     @Autowired
     OldmanKeyDao oldmanKeyDao;
+    @Autowired
+    CommonService commonService;
 
     Lock lock = new ReentrantLock();
 
@@ -190,6 +193,8 @@ public class KeyAutoUpdate implements FullUpdater{
                                     oldmanKey.getSnIds().add(healthSelect.getId());
                                 }
                             }
+                            oldmanKey.setAge(commonService.birthdayToAge(oldmanKey.getBirthday()));
+
                             Oldman oldman=new Oldman();
                             oldman.setId(oldmanKey.getOldmanId());
                             oldman.setGoal(oldmanKeyService.calculateKeyGoal(oldmanKey));

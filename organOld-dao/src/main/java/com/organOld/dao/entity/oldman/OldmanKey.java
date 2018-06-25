@@ -22,11 +22,29 @@ public class OldmanKey {
     private Integer isActivityOrgan;//是否主动申请进养老院  即机构人员表有  但是床位号为0
 
 
+    private Integer keyStatus;
+    private Integer futureKeyStatus;
 
     private List<Integer> mbIds=new ArrayList<>();
     private List<Integer> snIds=new ArrayList<>();
+    private Integer age;
 
-    private Integer keyStatus;
+
+    public Integer getFutureKeyStatus() {
+        return futureKeyStatus;
+    }
+
+    public void setFutureKeyStatus(Integer futureKeyStatus) {
+        this.futureKeyStatus = futureKeyStatus;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
+    }
 
     public Integer getKeyStatus() {
         return keyStatus;

@@ -37,6 +37,8 @@ public class KeyUpdate{
     OldmanDao oldmanDao;
     @Autowired
     OldmanKeyDao oldmanKeyDao;
+    @Autowired
+    CommonService commonService;
 
     Lock lock = new ReentrantLock();
 
@@ -94,7 +96,9 @@ public class KeyUpdate{
 
     private static int isInit=0;//是否初始化  0否 1是
 
-    public static String futureTime;
+    public static Boolean finish=false;//更新是否完成
+
+    public static String futureTime;//更新将来时间的 重点老人
 
     /**
      * The long-polling executor will be scheduled with the given interval.
@@ -165,6 +169,11 @@ public class KeyUpdate{
                 isInit=0;
                 DOING=false;
                 futureTime="";
+                if (futureTime!=null && !futureTime.equals("")){
+                    futureTime="";
+                }
+                finish=true;
+                log.info("finish!!!");
                 return false;
             }
             return true;
@@ -188,13 +197,23 @@ public class KeyUpdate{
                                     oldmanKey.getSnIds().add(healthSelect.getId());
                                 }
                             }
+                            int age;
                             if(futureTime!=null && !futureTime.equals("")){
-                                int value= CommonService
+                                age= commonService.calculateTwoDateYears(futureTime,oldmanKey.getBirthday());
+                            }else{
+                                age=commonService.birthdayToAge(oldmanKey.getBirthday());
                             }
+                            oldmanKey.setAge(age);
+
                             Oldman oldman=new Oldman();
                             oldman.setId(oldmanKey.getOldmanId());
                             oldman.setGoal(oldmanKeyService.calculateKeyGoal(oldmanKey));
-                            oldman.setKeyStatus(oldmanKey.getKeyStatus());
+                            if(futureTime!=null && !futureTime.equals("")){
+                                oldman.setKeyStatus(oldmanKey.getFutureKeyStatus());
+                            }else{
+                                oldman.setKeyStatus(oldmanKey.getKeyStatus());
+                            }
+
                             oldmanKeyService.checkKeyStatus(oldman);
                             oldmanList.add(oldman);
                         } catch (Exception ex) {
@@ -249,28 +268,13 @@ public class KeyUpdate{
      * @param updatedData the updated data.
      */
     private void triggerAfterUpdateEvents(List<Oldman> updatedData) {
-        oldmanDao.updateKeyOldman(updatedData);
-    }
-
-
-    private void reset() {
-        boolean locked = false;
-        try {
-            locked = lock.tryLock(LOCK_TIMEOUT, TimeUnit.MILLISECONDS);
-            if (locked) {
-                if (this.getExpiredTime() == REDIS_NULL_VALUE) {
-                    this.setCurrent(REDIS_NULL_VALUE);
-                    this.setMax(REDIS_NULL_VALUE);
-                    this.setExpiredTime(this.expiredTime());
-                    //TODO 通知前端 更新完成 或者生成excel表格
-                }
-            }
-        } catch (Exception e) {
-            log.warn("Failed to obtain lock when call reset method.");
-        } finally {
-            if (locked) {
-                lock.unlock();
-            }
+//        for (Oldman oldman:updatedData){
+//            oldman.setGoal(50);
+//        }
+        if(futureTime!=null && !futureTime.equals("")){
+            oldmanDao.updateKeyOldmanFuture(updatedData);
+        }else{
+            oldmanDao.updateKeyOldman(updatedData);
         }
     }
 

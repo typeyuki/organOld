@@ -6,4 +6,8 @@ import java.util.List;
 
 public interface KeyRuleDao {
     List<KeyRule> getAll();
+
+    List<KeyRule> getAllRule();
+
+    void updateByIds(List<KeyRule> keyRuleList);
 }

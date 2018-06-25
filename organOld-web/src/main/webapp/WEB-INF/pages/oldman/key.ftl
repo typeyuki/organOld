@@ -32,10 +32,11 @@
                 <div class="ibox-content">
                     <div>
                         <input type="date" id="futureTime">
-                        <a onclick="" href="#" class="btn btn-primary ">查看</a>
-                        <a onclick="" href="#" class="btn btn-primary ">更新</a>
+                        <input type="hidden" name="future">
+                        <a onclick="update('future')" href="#" class="btn btn-primary ">查看</a>
+                        <a onclick="update('now')" href="#" class="btn btn-primary ">更新</a>
                         <a onclick="autoUpdate(true,this)" href="#" class="btn btn-primary ">开启自动更新</a>
-                        <a onclick="" href="javascript:void(0);" class="btn btn-primary ">规则</a>
+                        <a onclick="newPage(999,'重点老人规则','/oldman/key/rule')" href="javascript:void(0);" class="btn btn-primary ">规则</a>
                     </div>
                     <div>
                         <input class="oldmanId" type="text" placeholder="老人序号">
@@ -48,7 +49,7 @@
                         <tr>
                             <th>老人序号</th>
                             <th>姓名</th>
-                            <th>分数</th>
+                            <th id="goal">分数</th>
                             <th></th>
                         </tr>
                         </thead>
@@ -64,6 +65,7 @@
 </div>
 
 <script src="/js/content.min.js?v=1.0.0"></script>
+<script src="/static/js/common.js"></script>
 <script src="/static/js/oldman/key.js" ></script>
 <script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
 
