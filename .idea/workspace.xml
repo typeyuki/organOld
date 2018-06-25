@@ -7,58 +7,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4081ac0b-b270-4959-8d2c-da645f7dc709" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/organOld-dao/target/classes/com/organOld/dao/entity/oldman/KeyRule.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/organOld-dao/target/classes/com/organOld/dao/entity/oldman/OldmanKey.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/organOld-dao/target/classes/com/organOld/dao/repository/KeyRuleDao.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/organOld-service/target/classes/com/organOld/service/enumModel/KeyRuleTypeEnum.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/organOld-service/target/classes/com/organOld/service/enumModel/KeyStatusEnum.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/organOld-service/target/classes/com/organOld/service/util/Cache.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/organOld-dao/src/main/java/com/organOld/dao/repository/KeyRuleDao.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/organOld-dao/src/main/resources/mapper/KeyRuleMapper.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/organOld-dao/target/classes/mapper/KeyRuleMapper.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/organOld-service/src/main/java/com/organOld/service/enumModel/KeyStatusEnum.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/organOld-service/src/main/java/com/organOld/service/thread/FullUpdater.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/organOld-service/src/main/java/com/organOld/service/thread/KeyAutoUpdate.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/organOld-service/src/main/java/com/organOld/service/thread/KeyUpdate.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/organOld-service/src/main/java/com/organOld/service/thread/Updater.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/organOld-service/src/main/java/com/organOld/service/util/Cache.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-dao/target/classes/com/organOld/dao/entity/oldman/Oldman.class" afterPath="$PROJECT_DIR$/organOld-dao/target/classes/com/organOld/dao/entity/oldman/Oldman.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-dao/target/classes/com/organOld/dao/repository/OldmanDao.class" afterPath="$PROJECT_DIR$/organOld-dao/target/classes/com/organOld/dao/repository/OldmanDao.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-dao/target/classes/com/organOld/dao/repository/OldmanKeyDao.class" afterPath="$PROJECT_DIR$/organOld-dao/target/classes/com/organOld/dao/repository/OldmanKeyDao.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-service/target/classes/com/organOld/service/enumModel/AutoValueEnum.class" afterPath="$PROJECT_DIR$/organOld-service/target/classes/com/organOld/service/enumModel/AutoValueEnum.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-service/target/classes/com/organOld/service/service/OldmanKeyService.class" afterPath="$PROJECT_DIR$/organOld-service/target/classes/com/organOld/service/service/OldmanKeyService.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-service/target/classes/com/organOld/service/service/impl/OldmanKeyServiceImpl.class" afterPath="$PROJECT_DIR$/organOld-service/target/classes/com/organOld/service/service/impl/OldmanKeyServiceImpl.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-web/target/classes/com/organOld/web/controller/OldmanKeyController.class" afterPath="$PROJECT_DIR$/organOld-web/target/classes/com/organOld/web/controller/OldmanKeyController.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-web/target/organOld-web/WEB-INF/classes/com/organOld/web/controller/OldmanKeyController.class" afterPath="$PROJECT_DIR$/organOld-web/target/organOld-web/WEB-INF/classes/com/organOld/web/controller/OldmanKeyController.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-web/target/organOld-web/WEB-INF/lib/organOld-dao-1.0-SNAPSHOT.jar" afterPath="$PROJECT_DIR$/organOld-web/target/organOld-web/WEB-INF/lib/organOld-dao-1.0-SNAPSHOT.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-web/target/organOld-web/WEB-INF/lib/organOld-service-1.0-SNAPSHOT.jar" afterPath="$PROJECT_DIR$/organOld-web/target/organOld-web/WEB-INF/lib/organOld-service-1.0-SNAPSHOT.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-web/target/organOld-web/WEB-INF/lib/organOld-web-1.0-SNAPSHOT.jar" afterPath="$PROJECT_DIR$/organOld-web/target/organOld-web/WEB-INF/lib/organOld-web-1.0-SNAPSHOT.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-dao/organOld-dao.iml" afterPath="$PROJECT_DIR$/organOld-dao/organOld-dao.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-dao/src/main/java/com/organOld/dao/entity/oldman/Oldman.java" afterPath="$PROJECT_DIR$/organOld-dao/src/main/java/com/organOld/dao/entity/oldman/Oldman.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-dao/src/main/java/com/organOld/dao/entity/oldman/OldmanKey.java" afterPath="$PROJECT_DIR$/organOld-dao/src/main/java/com/organOld/dao/entity/oldman/OldmanKey.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-dao/src/main/java/com/organOld/dao/repository/OldmanDao.java" afterPath="$PROJECT_DIR$/organOld-dao/src/main/java/com/organOld/dao/repository/OldmanDao.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-dao/src/main/java/com/organOld/dao/repository/OldmanKeyDao.java" afterPath="$PROJECT_DIR$/organOld-dao/src/main/java/com/organOld/dao/repository/OldmanKeyDao.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-dao/src/main/resources/mapper/OldmanHealthMapper.xml" afterPath="$PROJECT_DIR$/organOld-dao/src/main/resources/mapper/OldmanHealthMapper.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-dao/src/main/resources/mapper/OldmanKeyMapper.xml" afterPath="$PROJECT_DIR$/organOld-dao/src/main/resources/mapper/OldmanKeyMapper.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-dao/src/main/resources/mapper/OldmanMapper.xml" afterPath="$PROJECT_DIR$/organOld-dao/src/main/resources/mapper/OldmanMapper.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-dao/target/classes/mapper/OldmanHealthMapper.xml" afterPath="$PROJECT_DIR$/organOld-dao/target/classes/mapper/OldmanHealthMapper.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-dao/target/classes/mapper/OldmanKeyMapper.xml" afterPath="$PROJECT_DIR$/organOld-dao/target/classes/mapper/OldmanKeyMapper.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-dao/target/classes/mapper/OldmanMapper.xml" afterPath="$PROJECT_DIR$/organOld-dao/target/classes/mapper/OldmanMapper.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-service/organOld-service.iml" afterPath="$PROJECT_DIR$/organOld-service/organOld-service.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-service/src/main/java/com/organOld/service/enumModel/KeyRuleTypeEnum.java" afterPath="$PROJECT_DIR$/organOld-service/src/main/java/com/organOld/service/enumModel/KeyRuleTypeEnum.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-service/src/main/java/com/organOld/service/service/OldmanKeyService.java" afterPath="$PROJECT_DIR$/organOld-service/src/main/java/com/organOld/service/service/OldmanKeyService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-service/src/main/java/com/organOld/service/service/impl/OldmanKeyServiceImpl.java" afterPath="$PROJECT_DIR$/organOld-service/src/main/java/com/organOld/service/service/impl/OldmanKeyServiceImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-web/organOld-web.iml" afterPath="$PROJECT_DIR$/organOld-web/organOld-web.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-web/src/main/java/com/organOld/web/controller/OldmanKeyController.java" afterPath="$PROJECT_DIR$/organOld-web/src/main/java/com/organOld/web/controller/OldmanKeyController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-web/src/main/webapp/WEB-INF/pages/oldman/key.ftl" afterPath="$PROJECT_DIR$/organOld-web/src/main/webapp/WEB-INF/pages/oldman/key.ftl" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-web/src/main/webapp/static/js/oldman/key.js" afterPath="$PROJECT_DIR$/organOld-web/src/main/webapp/static/js/oldman/key.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-web/target/organOld-web/META-INF/MANIFEST.MF" afterPath="$PROJECT_DIR$/organOld-web/target/organOld-web/META-INF/MANIFEST.MF" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-web/target/organOld-web/WEB-INF/pages/oldman/key.ftl" afterPath="$PROJECT_DIR$/organOld-web/target/organOld-web/WEB-INF/pages/oldman/key.ftl" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-web/target/organOld-web/static/js/oldman/key.js" afterPath="$PROJECT_DIR$/organOld-web/target/organOld-web/static/js/oldman/key.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld.iml" afterPath="$PROJECT_DIR$/organOld.iml" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -89,6 +38,16 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="workspace.xml" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="330">
+              <caret line="10" column="37" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="2282" selection-end-column="10" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="OldmanKey.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/organOld-dao/src/main/java/com/organOld/dao/entity/oldman/OldmanKey.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -112,8 +71,8 @@
       <file leaf-file-name="KeyAutoUpdate.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/organOld-service/src/main/java/com/organOld/service/thread/KeyAutoUpdate.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="891">
-              <caret line="344" column="35" lean-forward="false" selection-start-line="344" selection-start-column="35" selection-end-line="344" selection-end-column="35" />
+            <state relative-caret-position="462">
+              <caret line="132" column="37" lean-forward="true" selection-start-line="132" selection-start-column="37" selection-end-line="132" selection-end-column="37" />
               <folding>
                 <element signature="e#12007#12008#0" expanded="true" />
                 <element signature="e#12050#12051#0" expanded="true" />
@@ -162,24 +121,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="OldmanKeyMapper.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/organOld-dao/src/main/resources/mapper/OldmanKeyMapper.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="429">
-              <caret line="56" column="32" lean-forward="false" selection-start-line="56" selection-start-column="32" selection-end-line="56" selection-end-column="32" />
-              <folding>
-                <marker date="1529757851541" expanded="true" signature="1265:1630" ph="SELECT ob.id... oldman_base" />
-                <marker date="1529757851541" expanded="true" signature="2120:2687" ph="SELECT ob.id... oldman_base" />
-                <marker date="1529757851541" expanded="true" signature="2816:3537" ph="SELECT ob.id... oldman_base" />
-                <marker date="1529757851541" expanded="true" signature="2816:3538" ph="SELECT ob.id... oldman_base" />
-                <marker date="1529757851541" expanded="true" signature="3422:3527" ph="select a.id id" />
-                <marker date="1529757851541" expanded="true" signature="3448:3520" ph="select oo.id... oldman_base" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="KeyUpdate.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="KeyUpdate.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/organOld-service/src/main/java/com/organOld/service/thread/KeyUpdate.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="451">
@@ -1709,12 +1651,12 @@
       <workItem from="1529408429708" duration="614000" />
       <workItem from="1529546934207" duration="8118000" />
       <workItem from="1529742606690" duration="19000" />
-      <workItem from="1529742781558" duration="21142000" />
+      <workItem from="1529742781558" duration="21820000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="117319000" />
+    <option name="totallyTimeSpent" value="117997000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="2576" height="1416" extended-state="6" />
@@ -1850,14 +1792,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="264">
           <caret line="8" column="0" lean-forward="true" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="297">
-          <caret line="9" column="27" lean-forward="false" selection-start-line="9" selection-start-column="27" selection-end-line="9" selection-end-column="27" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2188,17 +2122,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/organOld-service/src/main/java/com/organOld/service/thread/KeyAutoUpdate.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="891">
-          <caret line="344" column="35" lean-forward="false" selection-start-line="344" selection-start-column="35" selection-end-line="344" selection-end-column="35" />
-          <folding>
-            <element signature="e#12007#12008#0" expanded="true" />
-            <element signature="e#12050#12051#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/organOld-service/src/main/java/com/organOld/service/service/impl/OldmanKeyServiceImpl.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="633">
@@ -2239,6 +2162,25 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="451">
           <caret line="190" column="29" lean-forward="true" selection-start-line="190" selection-start-column="29" selection-end-line="190" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/organOld-service/src/main/java/com/organOld/service/thread/KeyAutoUpdate.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="462">
+          <caret line="132" column="37" lean-forward="true" selection-start-line="132" selection-start-column="37" selection-end-line="132" selection-end-column="37" />
+          <folding>
+            <element signature="e#12007#12008#0" expanded="true" />
+            <element signature="e#12050#12051#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="10" column="37" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="2282" selection-end-column="10" />
           <folding />
         </state>
       </provider>
