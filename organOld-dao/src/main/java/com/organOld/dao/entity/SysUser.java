@@ -11,8 +11,7 @@ import java.util.Collection;
  * 账号
  * Created by netlab606 on 2018/4/8.
  */
-public class SysUser implements UserDetails,Serializable{
-    private int id;
+public class SysUser extends DBEntity implements UserDetails,Serializable{
     private String username;
     private String password;
 
@@ -29,13 +28,6 @@ public class SysUser implements UserDetails,Serializable{
         return this.username.equals(((SysUser)obj).getUsername());
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     @Override
     public String getUsername() {

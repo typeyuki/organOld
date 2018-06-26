@@ -3,6 +3,7 @@ package com.organOld.dao.repository;
 
 import com.organOld.dao.entity.SysAuthority;
 import com.organOld.dao.entity.SysUser;
+import org.apache.ibatis.annotations.Param;
 
 
 import java.util.List;
@@ -10,10 +11,15 @@ import java.util.List;
 /**
  * Created by netlab606 on 2018/3/24.
  */
-public interface UserDao {
+public interface UserDao extends BaseDao<SysUser,Number>{
     SysUser getByUsername(String username);
 
     List<SysAuthority> getSysAuthoritiesByUsername(String username);
 
     Integer getOrganIdByUsername(String username);
+
+    void setUserRole(@Param("userId") int userId, @Param("roleId") int roleId);
+
+    void setUserOrgan(@Param("userId")int userId,@Param("organId") int organId);
+
 }

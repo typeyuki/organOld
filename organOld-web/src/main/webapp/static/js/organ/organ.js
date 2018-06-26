@@ -165,7 +165,7 @@ $(document).ready(function(){
                 "targets": [10], // 目标列位置，下标从0开始
                 "data": "id", // 数据列名
                 "render": function(data, type, full) { // 返回自定义内容
-                    return "<span class='look' id='"+data+"'>查看</span><span class='mod' id='"+data+"'>通过</span>";
+                    return "<span class='look' id='"+data+"'>查看</span><span class='mod' onclick='pass("+data+")' id='"+data+"'>通过</span><span class='mod' id='"+data+"'>不通过</span>";
                 }
             },
             //不进行排序的列
@@ -223,4 +223,23 @@ $(document).ready(function(){
         "submitdata":function(value,settings){return{"row_id":this.parentNode.getAttribute("id"),
             "column":oTable.fnGetPosition(this)[2]}},"width":"90%","height":"100%"});
 
+
+    function pass(id) {
+        $.ajax({
+            url: "/organ/pass",
+            data : {
+                id:id
+            },
+            type: 'POST',
+            dataType: 'json',
+            success: function (result) {
+                alert("更新完成");
+                // alert(1);
+                table.fnFilter();
+            },
+            error:function(XMLHttpRequest, textStatus, errorThrown) {
+
+            }
+        });
+    }
 });

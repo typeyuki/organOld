@@ -6,5 +6,21 @@ package com.organOld.service.contract;
  */
 public class CardConsumeRequest {
     private int oldmanId;
-    private int organId
+    private int organId;
+
+    public int getOldmanId() {
+        return oldmanId;
+    }
+
+    public void setOldmanId(int oldmanId) {
+        this.oldmanId = oldmanId;
+    }
+
+    public int getOrganId() {
+        return organId;
+    }
+
+    public void setOrganId(int organId) {
+        this.organId = organId;
+    }
 }

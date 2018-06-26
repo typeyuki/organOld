@@ -16,4 +16,15 @@
         FROM user_organ uo,sysuser u
         WHERE uo.user_id=u.id AND u.username=#{username}
     </select>
+
+    <insert id="saveAndReturn" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO sysuser(username,password) VALUE (#{entity.username},#{entity.password})
+    </insert>
+
+    <insert id="setUserRole">
+        INSERT INTO user_role(user_id,role_id) VALUE (#{userId},#{roleId})
+    </insert>
+    <insert id="setUserOrgan">
+        INSERT INTO user_organ(user_id,organ_id) VALUE (#{userId},#{organId})
+    </insert>
 </mapper>

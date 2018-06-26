@@ -3,13 +3,15 @@ package com.organOld.service.service.impl;
 import com.organOld.dao.entity.SysUser;
 import com.organOld.dao.entity.organ.Organ;
 import com.organOld.dao.entity.organ.OrganOldman;
+import com.organOld.dao.entity.organ.OrganReg;
 import com.organOld.dao.repository.OrganDao;
 import com.organOld.dao.repository.OrganOldmanDao;
-import com.organOld.dao.repository.UserDao;
+import com.organOld.dao.repository.OrganRegDao;
 import com.organOld.dao.util.Page;
 import com.organOld.service.contract.BTableRequest;
 import com.organOld.service.contract.OrganOldmanRequest;
 import com.organOld.service.contract.OrganRequest;
+import com.organOld.service.contract.Result;
 import com.organOld.service.model.OrganModel;
 import com.organOld.service.model.OrganOldmanModel;
 import com.organOld.service.service.CommonService;
@@ -20,9 +22,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
+
 import java.util.stream.Collectors;
 
 @Service
@@ -36,6 +40,8 @@ public class OrganServiceImpl implements OrganService{
     OrganOldmanDao organOldmanDao;
     @Autowired
     UserService userService;
+    @Autowired
+    OrganRegDao organRegDao;
 
 
     @Override
@@ -71,6 +77,36 @@ public class OrganServiceImpl implements OrganService{
     @Override
     public OrganModel getById(int organId) {
         return null;
+    }
+
+    @Override
+    public Result pass(int organId) {
+        OrganReg organReg=organRegDao.getByOrganId(organId);
+        SysUser user=newAccount(organId);
+
+        return new Result(true);
+    }
+
+    /**
+     * 为机构注册新账号
+     * @param organId
+     */
+    @Transactional
+    SysUser newAccount(int organId) {
+        SysUser user=createUser(organId);
+        userService.saveAndReturn(user);
+        userService.setUserRole(user.getId(),3);
+        userService.setUserOrgan(user.getId(),organId);
+        return user;
+    }
+
+    private SysUser createUser(int organId) {
+        SysUser sysUser=new SysUser();
+        String username="Organ"+organId;
+        String password="000000";
+        sysUser.setUsername(username);
+        sysUser.setPassword(password);
+        return sysUser;
     }
 
 
