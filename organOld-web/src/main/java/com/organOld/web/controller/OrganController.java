@@ -4,6 +4,7 @@ import com.organOld.dao.entity.AutoValue;
 import com.organOld.service.contract.BTableRequest;
 import com.organOld.service.contract.OrganOldmanRequest;
 import com.organOld.service.contract.OrganRequest;
+import com.organOld.service.contract.Result;
 import com.organOld.service.enumModel.AutoValueEnum;
 import com.organOld.service.model.OrganModel;
 import com.organOld.service.service.AutoValueService;
@@ -121,5 +122,17 @@ public class OrganController {
         int organId=commonService.getIdBySession(session);
         organOldmanManRequest.setOrganId(organId);
         return organService.getManByPage(bTableRequest,organOldmanManRequest);
+    }
+
+    /**
+     * 审核通过
+     * @param id
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/pass",method = RequestMethod.POST)
+    public Result pass(@RequestParam int id){
+        Result result=organService.pass(id);
+        return result;
     }
 }

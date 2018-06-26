@@ -47,4 +47,19 @@ public class UserServiceImpl implements UserService {
         return auths;
     }
 
+
+    @Override
+    public void saveAndReturn(SysUser user) {
+        userDao.saveAndReturn(user);
+    }
+
+    @Override
+    public void setUserRole(int id, int i) {
+        userDao.setUserRole(id,i);
+    }
+
+    @Override
+    public void setUserOrgan(int id, int organId) {
+        userDao.setUserOrgan(id,organId);
+    }
 }

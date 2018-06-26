@@ -12,16 +12,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * 一卡通
  * Created by netlab606 on 2018/6/25.
  */
-@Controller("/card")
+@Controller()
+@RequestMapping("/card")
 public class CardController {
 
     @Autowired
     CardService cardService;
 
     @ResponseBody
-    @RequestMapping(value = "/",method = RequestMethod.GET)
+    @RequestMapping(value = "",method = RequestMethod.GET)
     public Result consume(){
-        Result result=cardService.consume();
+        Result result=null;
         return result;
     }
 }
