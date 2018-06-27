@@ -119,11 +119,15 @@ public class CommonService {
 
 
     public Integer getIdBySession(HttpSession session) {
-        UserDetails userDetails=(UserDetails) SecurityContextHolder.getContext()
-                .getAuthentication()
-                .getPrincipal();
-        String username=userDetails.getUsername();
-        return userDao.getOrganIdByUsername(username);
+        try {
+            UserDetails userDetails=(UserDetails) SecurityContextHolder.getContext()
+                    .getAuthentication()
+                    .getPrincipal();
+            String username=userDetails.getUsername();
+            return userDao.getOrganIdByUsername(username);
+        }catch (Exception e){
+            return 0;
+        }
     }
 
     public void checkIsJw(HttpSession session, DBInterface dbInterface) {
