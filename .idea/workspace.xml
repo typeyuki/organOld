@@ -6,45 +6,7 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4081ac0b-b270-4959-8d2c-da645f7dc709" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/organOld-dao/src/main/java/com/organOld/dao/entity/home/Doctor.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/organOld-dao/src/main/java/com/organOld/dao/entity/home/Home.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/organOld-dao/src/main/java/com/organOld/dao/repository/HomeDao.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/organOld-dao/src/main/resources/mapper/HomeMapper.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/organOld-service/src/main/java/com/organOld/service/contract/HomeRequest.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/organOld-service/src/main/java/com/organOld/service/enumModel/HomeEnum.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/organOld-service/src/main/java/com/organOld/service/model/HomeModel.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/organOld-service/src/main/java/com/organOld/service/service/HomeService.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/organOld-service/src/main/java/com/organOld/service/service/impl/HomeServiceImpl.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/organOld-service/src/main/java/com/organOld/service/wrapper/HomeWrapper.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/organOld-web/src/main/java/com/organOld/web/controller/HomeController.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/organOld-web/src/main/webapp/WEB-INF/pages/organ/home.ftl" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/organOld-web/src/main/webapp/static/js/organ/home.js" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/organOld-dao/target/classes/com/organOld/dao/entity/Chx.class" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/organOld-dao/src/main/java/com/organOld/dao/entity/Chx.java" afterPath="$PROJECT_DIR$/organOld-dao/src/main/java/com/organOld/dao/entity/home/Chx.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-dao/target/classes/com/organOld/dao/repository/ChxDao.class" afterPath="$PROJECT_DIR$/organOld-dao/target/classes/com/organOld/dao/repository/ChxDao.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-service/target/classes/com/organOld/service/model/LabelAllRuleModel.class" afterPath="$PROJECT_DIR$/organOld-service/target/classes/com/organOld/service/model/LabelAllRuleModel.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-service/target/classes/com/organOld/service/model/OldmanAddInfoModel.class" afterPath="$PROJECT_DIR$/organOld-service/target/classes/com/organOld/service/model/OldmanAddInfoModel.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-service/target/classes/com/organOld/service/service/impl/LabelServiceImpl.class" afterPath="$PROJECT_DIR$/organOld-service/target/classes/com/organOld/service/service/impl/LabelServiceImpl.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-service/target/classes/com/organOld/service/service/impl/OldmanServiceImpl.class" afterPath="$PROJECT_DIR$/organOld-service/target/classes/com/organOld/service/service/impl/OldmanServiceImpl.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-service/target/classes/com/organOld/service/wrapper/LabelWrapper.class" afterPath="$PROJECT_DIR$/organOld-service/target/classes/com/organOld/service/wrapper/LabelWrapper.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-service/target/classes/com/organOld/service/wrapper/Wrappers.class" afterPath="$PROJECT_DIR$/organOld-service/target/classes/com/organOld/service/wrapper/Wrappers.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-web/target/classes/com/organOld/web/controller/OrganController.class" afterPath="$PROJECT_DIR$/organOld-web/target/classes/com/organOld/web/controller/OrganController.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-web/target/organOld-web/WEB-INF/lib/organOld-dao-1.0-SNAPSHOT.jar" afterPath="$PROJECT_DIR$/organOld-web/target/organOld-web/WEB-INF/lib/organOld-dao-1.0-SNAPSHOT.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-web/target/organOld-web/WEB-INF/lib/organOld-service-1.0-SNAPSHOT.jar" afterPath="$PROJECT_DIR$/organOld-web/target/organOld-web/WEB-INF/lib/organOld-service-1.0-SNAPSHOT.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-web/target/organOld-web/WEB-INF/lib/organOld-web-1.0-SNAPSHOT.jar" afterPath="$PROJECT_DIR$/organOld-web/target/organOld-web/WEB-INF/lib/organOld-web-1.0-SNAPSHOT.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-dao/src/main/java/com/organOld/dao/repository/ChxDao.java" afterPath="$PROJECT_DIR$/organOld-dao/src/main/java/com/organOld/dao/repository/ChxDao.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-dao/src/main/resources/mapper/ChxMapper.xml" afterPath="$PROJECT_DIR$/organOld-dao/src/main/resources/mapper/ChxMapper.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-dao/target/classes/mapper/ChxMapper.xml" afterPath="$PROJECT_DIR$/organOld-dao/target/classes/mapper/ChxMapper.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-service/src/main/java/com/organOld/service/model/LabelAllRuleModel.java" afterPath="$PROJECT_DIR$/organOld-service/src/main/java/com/organOld/service/model/LabelAllRuleModel.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-service/src/main/java/com/organOld/service/model/OldmanAddInfoModel.java" afterPath="$PROJECT_DIR$/organOld-service/src/main/java/com/organOld/service/model/OldmanAddInfoModel.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-service/src/main/java/com/organOld/service/service/impl/LabelServiceImpl.java" afterPath="$PROJECT_DIR$/organOld-service/src/main/java/com/organOld/service/service/impl/LabelServiceImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-service/src/main/java/com/organOld/service/service/impl/OldmanServiceImpl.java" afterPath="$PROJECT_DIR$/organOld-service/src/main/java/com/organOld/service/service/impl/OldmanServiceImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-service/src/main/java/com/organOld/service/wrapper/LabelWrapper.java" afterPath="$PROJECT_DIR$/organOld-service/src/main/java/com/organOld/service/wrapper/LabelWrapper.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-service/src/main/java/com/organOld/service/wrapper/Wrappers.java" afterPath="$PROJECT_DIR$/organOld-service/src/main/java/com/organOld/service/wrapper/Wrappers.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/organOld-web/src/main/java/com/organOld/web/controller/OrganController.java" afterPath="$PROJECT_DIR$/organOld-web/src/main/java/com/organOld/web/controller/OrganController.java" />
-    </list>
+    <list default="true" id="4081ac0b-b270-4959-8d2c-da645f7dc709" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
     <ignored path="$PROJECT_DIR$/organOld-web/target/" />
@@ -329,7 +291,7 @@
       </MavenImportingSettings>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="393" />
     <option name="y" value="201" />
     <option name="width" value="1940" />
@@ -1251,15 +1213,15 @@
       <workItem from="1529985255390" duration="5977000" />
       <workItem from="1529993826858" duration="34000" />
       <workItem from="1530007521757" duration="353000" />
-      <workItem from="1530069670833" duration="32892000" />
+      <workItem from="1530069670833" duration="32894000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="169361000" />
+    <option name="totallyTimeSpent" value="169363000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1186" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1186" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1305,14 +1267,6 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/organOld-service/src/main/java/com/organOld/service/wrapper/HomeWrapper.java</url>
-          <line>14</line>
-          <properties />
-          <option name="timeStamp" value="54" />
-        </line-breakpoint>
-      </breakpoints>
       <option name="time" value="55" />
     </breakpoint-manager>
     <watches-manager />
