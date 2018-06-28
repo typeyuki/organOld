@@ -1,7 +1,7 @@
 package com.organOld.service.model;
 
 import com.organOld.dao.entity.AutoValue;
-import com.organOld.dao.entity.Chx;
+import com.organOld.dao.entity.home.Chx;
 import com.organOld.dao.entity.organ.Organ;
 
 import java.util.ArrayList;

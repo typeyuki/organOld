@@ -1,7 +1,7 @@
 package com.organOld.service.wrapper;
 
 import com.organOld.dao.entity.AutoValue;
-import com.organOld.dao.entity.Chx;
+import com.organOld.dao.entity.home.Chx;
 import com.organOld.dao.entity.label.Label;
 import com.organOld.dao.entity.label.LabelRule;
 import com.organOld.dao.entity.organ.Organ;

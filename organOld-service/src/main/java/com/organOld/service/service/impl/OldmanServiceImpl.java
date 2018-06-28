@@ -1,9 +1,6 @@
 package com.organOld.service.service.impl;
 
 import com.organOld.dao.entity.AutoValue;
-import com.organOld.dao.entity.Chx;
-import com.organOld.dao.entity.DBEntity;
-import com.organOld.dao.entity.DBInterface;
 import com.organOld.dao.entity.oldman.*;
 import com.organOld.dao.entity.organ.Organ;
 import com.organOld.dao.entity.organ.OrganOldman;
@@ -12,7 +9,6 @@ import com.organOld.dao.util.Page;
 import com.organOld.service.model.*;
 import com.organOld.service.service.CommonService;
 import com.organOld.service.service.OldmanService;
-import com.organOld.service.service.OrganService;
 import com.organOld.service.wrapper.Wrappers;
 import com.organOld.service.contract.*;
 import org.springframework.beans.factory.annotation.Autowired;
