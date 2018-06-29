@@ -234,9 +234,9 @@ function pass(id) {
         type: 'POST',
         dataType: 'json',
         success: function (result) {
-            alert("更新完成");
+            alert("操作成功");
             // alert(1);
-            table.fnFilter();
+            // table.fnFilter();
         },
         error:function(XMLHttpRequest, textStatus, errorThrown) {
 

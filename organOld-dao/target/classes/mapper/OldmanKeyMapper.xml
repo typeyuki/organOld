@@ -26,7 +26,7 @@
             ob.future_goal goal
         </if>
         <if test="entity==null or entity.future==null or entity.future==''">
-            ob.goal
+            ob.goal,o.key_status
         </if>
         FROM oldman_base ob,organ org,auto_value x
         WHERE x.id=ob.xq_id AND org.id=x.parent_index AND ob.goal > ${entity.keyGoalBase}
