@@ -19,9 +19,9 @@ public class OldmanAllInfoModel {
     private String family;
     private String economic;
     private LinkmanModel linkman;
-    private OrganOldman organ;//机构养老
-    private List<OrganOldman> community;//社区养老
-    private List<HomeOldman> home;//居家养老
+    private OrganOldmanModel organ;//机构养老
+    private List<OrganOldmanModel> community;//社区养老
+    private List<HomeOldmanModel> home;//居家养老
     private List<Label> labels;//所属标签
     private Oldman key;//重点老人参数
 
@@ -73,27 +73,27 @@ public class OldmanAllInfoModel {
         this.linkman = linkman;
     }
 
-    public OrganOldman getOrgan() {
+    public OrganOldmanModel getOrgan() {
         return organ;
     }
 
-    public void setOrgan(OrganOldman organ) {
+    public void setOrgan(OrganOldmanModel organ) {
         this.organ = organ;
     }
 
-    public List<OrganOldman> getCommunity() {
+    public List<OrganOldmanModel> getCommunity() {
         return community;
     }
 
-    public void setCommunity(List<OrganOldman> community) {
+    public void setCommunity(List<OrganOldmanModel> community) {
         this.community = community;
     }
 
-    public List<HomeOldman> getHome() {
+    public List<HomeOldmanModel> getHome() {
         return home;
     }
 
-    public void setHome(List<HomeOldman> home) {
+    public void setHome(List<HomeOldmanModel> home) {
         this.home = home;
     }
 

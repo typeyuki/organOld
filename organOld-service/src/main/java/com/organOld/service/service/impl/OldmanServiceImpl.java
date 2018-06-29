@@ -240,10 +240,25 @@ public class OldmanServiceImpl implements OldmanService {
         oldmanAllInfoModel.setLinkman(linkmanModelList.get(0));
 
         OrganOldman organOldman=new OrganOldman();
-//        organ.setOrganFirTypeId(21);
-//        organ.setOldmanId(oldmanId);
+        organOldman.setFirType(21);
+        organOldman.setOldman(oldman);
+        page.setEntity(organOldman);
         List<OrganOldmanModel> organOldmanModelList=organOldmanDao.getByPage(page).stream().map(Wrappers.organOldmanWrapper::wrap).collect(Collectors.toList());
+        oldmanAllInfoModel.setOrgan(organOldmanModelList.get(0));
 
-        return null;
+        OrganOldman communityOldman=new OrganOldman();
+        organOldman.setFirType(22);
+        organOldman.setOldman(oldman);
+        page.setEntity(communityOldman);
+        List<OrganOldmanModel> communityOldmanModelList=organOldmanDao.getByPage(page).stream().map(Wrappers.organOldmanWrapper::wrap).collect(Collectors.toList());
+        oldmanAllInfoModel.setCommunity(communityOldmanModelList);
+
+        HomeOldman homeOldman=new HomeOldman();
+        homeOldman.setOldman(oldman);
+        page.setEntity(homeOldman);
+        List<HomeOldmanModel> homeOldmanModelList=homeOldmanDao.getByPage(page).stream().map(Wrappers.homeOldmanWrapper::wrap).collect(Collectors.toList());
+        oldmanAllInfoModel.setHome(homeOldmanModelList);
+
+        return oldmanAllInfoModel;
     }
 }
