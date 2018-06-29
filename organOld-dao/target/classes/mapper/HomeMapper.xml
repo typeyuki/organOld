@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.organOld.dao.repository.HomeDao">
+
+    <resultMap id="home" type="com.organOld.dao.entity.home.Home">
+        <id property="id" column="id" />
+        <result property="firType" column="fir_type"/>
+        <result property="secType" column="sec_type" />
+        <result property="time" column="time" />
+        <association property="chx" javaType="com.organOld.dao.entity.home.Chx">
+            <id property="id" column="cid"/>
+            <result property="level" column="level"/>
+            <result property="serviceTime" column="service_time"/>
+        </association>
+        <association property="doctor" javaType="com.organOld.dao.entity.home.Doctor">
+            <id property="id" column="did"/>
+            <result property="name" column="name"/>
+        </association>
+        <association property="organ" javaType="com.organOld.dao.entity.organ.Organ">
+            <id property="id" column="oid"/>
+            <result property="name" column="oname"/>
+        </association>
+    </resultMap>
+
+
+    <select id="getByPage" parameterType="com.organOld.dao.util.Page" resultMap="home">
+        SELECT
+        <if test="entity.firType!=null and (entity.firType==1 or entity.firType==3)">
+            *
+            FROM home
+            WHERE fir_type=#{entity.firType}
+        </if>
+        <if test="entity.firType!=null and entity.firType==2">
+            h.id,h.fir_type,h.sec_type,c.id cid,c.level,c.service_time,c.time
+            FROM home h,chx c
+            WHERE h.fir_type=#{entity.firType} AND h.sec_type=c.id
+        </if>
+        <if test="entity.firType!=null and entity.firType==4">
+            h.id,h.fir_type,h.sec_type,d.id did,d.name,o.id oid,o.name oname,d.time
+            FROM home h,home_doctor d,organ o
+            WHERE h.fir_type=#{entity.firType} AND h.sec_type=d.id AND d.organ_id=o.id
+        </if>
+        <if test="entity.firType!=null and entity.firType==5">
+            h.id,h.fir_type,h.sec_type,o.id oid,o.name oname,o.time
+            FROM home h,organ o
+            WHERE h.fir_type=#{entity.firType} AND h.sec_type=o.id
+        </if>
+        ORDER BY ${sortType} ${sort}
+        limit #{start},#{length}
+    </select>
+    <select id="getSizeByPage" parameterType="com.organOld.dao.util.Page" resultMap="home">
+        SELECT count(1)
+        <if test="entity.firType!=null and (entity.firType==1 or entity.firType==3)">
+            FROM home
+            WHERE fir_type=#{entity.firType}
+        </if>
+        <if test="entity.firType!=null and entity.firType==2">
+            FROM home h
+            WHERE h.fir_type=#{entity.firType}
+        </if>
+        <if test="entity.firType!=null and entity.firType==4">
+            FROM home h
+            WHERE h.fir_type=#{entity.firType}
+        </if>
+        <if test="entity.firType!=null and entity.firType==5">
+            FROM home h
+            WHERE h.fir_type=#{entity.firType}
+        </if>
+    </select>
+</mapper>

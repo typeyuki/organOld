@@ -231,6 +231,8 @@ public class OldmanKeyServiceImpl implements OldmanKeyService {
             if(keyRule.getType()== KeyRuleTypeEnum.JYLY.getIndex()){
                 //是否主动进养老院
                 if(flagJYLY==0){
+//                    System.out.println(oldmanKey.getOldmanId());
+//                    System.out.println(oldmanKey.getIsActivityOrgan());
                     if(keyRule.getValueIndex()==oldmanKey.getIsActivityOrgan()){
                         flagJYLY=1;
                         goal+=keyRule.getGoal();

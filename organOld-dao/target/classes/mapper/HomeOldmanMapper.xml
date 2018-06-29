@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.organOld.dao.repository.HomeOldmanDao">
+
+    <resultMap id="homeOldman" type="com.organOld.dao.entity.home.HomeOldman">
+        <id property="id" column="id" />
+        <result property="timeIn" column="time_in" />
+        <result property="timeOut" column="time_out"/>
+        <result property="time" column="time"/>
+        <association property="oldman" javaType="com.organOld.dao.entity.oldman.Oldman">
+            <id property="id" column="oid" />
+            <result property="name" column="name"/>
+        </association>
+        <association property="home" javaType="com.organOld.dao.entity.home.Home">
+            <id property="id" column="hid" />
+            <result property="firType" column="fir_type"/>
+            <result property="secType" column="sec_type"/>
+        </association>
+    </resultMap>
+
+
+    <select id="getByPage" parameterType="com.organOld.dao.util.Page" resultMap="homeOldman">
+        SELECT ho.id,ho.time_in,ho.time_out,o.id oid,o.name,h.id hid,ho.time,h.fir_type,
+        case h.fir_type
+        when 2 then c.level
+        when 4 then hd.name
+        when 5 then org.name
+        else h.sec_type
+        end sec_type
+        FROM home_oldman ho,oldman_base o,organ jw,auto_value x,home h left join chx c on c.id=h.sec_type left join organ org on org.id=h.sec_type left join home_doctor hd on hd.id=h.sec_type
+        WHERE ho.oldman_id=o.id AND x.id=o.xq_id AND jw.id=x.parent_index and ho.home_id=h.id
+        <if test="entity.jwId!=null and entity.jwId!=0">
+            AND jw.id=#{entity.jwId}
+        </if>
+        <if test="entity.homeId!=null and entity.homeId!=0">
+            AND ho.home_id=#{entity.homeId}
+        </if>
+        ORDER BY ${sortType} ${sort}
+        limit #{start},#{length}
+    </select>
+
+    <select id="getSizeByPage" parameterType="com.organOld.dao.util.Page" resultType="java.lang.Long">
+        SELECT count(1)
+        FROM home_oldman
+        WHERE home_id=#{entity.homeId}
+    </select>
+
+</mapper>

@@ -5,22 +5,41 @@ package com.organOld.service.contract;
  * Created by netlab606 on 2018/6/25.
  */
 public class CardConsumeRequest {
-    private int oldmanId;
-    private int organId;
+    private String oldmanId;
+    private String organId;
+    private String money;
 
-    public int getOldmanId() {
+
+    @Override
+    public String toString() {
+        return "CardConsumeRequest{" +
+                "oldmanId='" + oldmanId + '\'' +
+                ", organId='" + organId + '\'' +
+                ", money='" + money + '\'' +
+                '}';
+    }
+
+    public String getOldmanId() {
         return oldmanId;
     }
 
-    public void setOldmanId(int oldmanId) {
+    public void setOldmanId(String oldmanId) {
         this.oldmanId = oldmanId;
     }
 
-    public int getOrganId() {
+    public String getOrganId() {
         return organId;
     }
 
-    public void setOrganId(int organId) {
+    public void setOrganId(String organId) {
         this.organId = organId;
+    }
+
+    public String getMoney() {
+        return money;
+    }
+
+    public void setMoney(String money) {
+        this.money = money;
     }
 }

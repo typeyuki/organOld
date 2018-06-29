@@ -1,7 +1,7 @@
 package com.organOld.service.service.impl;
 
 import com.organOld.dao.entity.AutoValue;
-import com.organOld.dao.entity.Chx;
+import com.organOld.dao.entity.home.Chx;
 import com.organOld.dao.entity.label.Label;
 import com.organOld.dao.entity.label.LabelRule;
 import com.organOld.dao.entity.label.LabelRuleToDBSelectMan;
@@ -18,7 +18,6 @@ import com.organOld.service.model.LabelRuleModel;
 import com.organOld.service.model.OldmanModel;
 import com.organOld.service.service.CommonService;
 import com.organOld.service.service.LabelService;
-import com.organOld.service.service.OrganService;
 import com.organOld.service.wrapper.Wrappers;
 import com.organOld.service.contract.*;
 import org.springframework.beans.factory.annotation.Autowired;

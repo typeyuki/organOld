@@ -1,8 +1,6 @@
 package com.organOld.service.model;
 
 
-import com.organOld.dao.entity.oldman.Xq;
-
 public class OldmanModel extends ManModel{
     private String sex;
     private String census;//户籍

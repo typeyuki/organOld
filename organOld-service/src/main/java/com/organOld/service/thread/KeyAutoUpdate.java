@@ -174,7 +174,6 @@ public class KeyAutoUpdate implements FullUpdater{
     }
 
     public void update() {
-
         try {
             Future<List<OldmanKey>> future = this.loaderExecutor.submit(() -> load());
             List<OldmanKey> loadedData = future.get(LOADER_TIMEOUT, TimeUnit.MILLISECONDS);

@@ -2,6 +2,7 @@ package com.organOld.dao.entity.organ;
 
 
 import com.organOld.dao.entity.DBEntity;
+import com.organOld.dao.entity.DBInterface;
 import com.organOld.dao.entity.oldman.Oldman;
 
 import java.util.Date;
@@ -10,7 +11,7 @@ import java.util.Date;
  * 养老机构 中的老人
  * Created by netlab606 on 2018/4/2.
  */
-public class OrganOldman extends DBEntity {
+public class OrganOldman extends DBEntity implements DBInterface {
     private Oldman oldman;
     private Organ organ;
 
@@ -19,12 +20,24 @@ public class OrganOldman extends DBEntity {
     private int num;
 
 
+    private Integer jwId;//居委ID
+
+
     /**
      * 搜素
      * @return
      */
     private Integer firType;
 
+
+    public Integer getJwId() {
+        return jwId;
+    }
+
+    @Override
+    public void setJwId(Integer jwId) {
+        this.jwId = jwId;
+    }
 
     public Integer getFirType() {
         return firType;
@@ -73,5 +86,7 @@ public class OrganOldman extends DBEntity {
     public void setNum(int num) {
         this.num = num;
     }
+
+
 
 }

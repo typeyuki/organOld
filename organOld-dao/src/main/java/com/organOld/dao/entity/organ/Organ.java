@@ -33,6 +33,16 @@ public class Organ extends DBEntity {
      */
     private Integer organFirTypeId;//一级类型ID
     private String search;//模糊搜索
+    private Integer oldmanId;
+
+
+    public Integer getOldmanId() {
+        return oldmanId;
+    }
+
+    public void setOldmanId(Integer oldmanId) {
+        this.oldmanId = oldmanId;
+    }
 
     public Integer getOrganTypeId() {
         return organTypeId;

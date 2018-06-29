@@ -1,7 +1,6 @@
 package com.organOld.service.model;
 
 import com.organOld.dao.entity.AutoValue;
-import com.organOld.dao.entity.Chx;
 import com.organOld.dao.entity.oldman.HealthSelect;
 import com.organOld.dao.entity.organ.Organ;
 

@@ -26,7 +26,7 @@
             ob.future_goal goal
         </if>
         <if test="entity==null or entity.future==null or entity.future==''">
-            ob.goal
+            ob.goal,o.key_status
         </if>
         FROM oldman_base ob,organ org,auto_value x
         WHERE x.id=ob.xq_id AND org.id=x.parent_index AND ob.goal > ${entity.keyGoalBase}
@@ -48,18 +48,29 @@
 
 
     <select id="getAllOldmanKey" resultMap="oldmanKey">
-        SELECT ob.id,ob.key_status,ob.birthday,ob.floor,oe.economic_index,oldf.family_index,ohb.intelligence,ohb.eyesight,ho.home_id,hs.id hsid,hs.fir_type
+        SELECT ob.id,ob.key_status,ob.birthday,ob.floor,oe.economic_index,oldf.family_index,ohb.intelligence,ohb.eyesight,ho.home_id,hs.id hsid,hs.fir_type,
+        case oo.num
+			when 0 then 57
+			else 58
+			end isActivityOrgan
         FROM oldman_base ob left join home_oldman ho on ob.id=ho.oldman_id left join home h on ho.home_id=h.id and h.fir_type=2
-		  left join health_select_oldman hso on hso.oldman_id=ob.id left join health_select hs on hs.id=hso.health_select_id and hs.fir_type in (1,2),
+		  left join health_select_oldman hso on hso.oldman_id=ob.id left join health_select hs on hs.id=hso.health_select_id and hs.fir_type in (1,2)
+		  left join organ_oldman oo on oo.oldman_id=ob.id left join organ org on org.id=oo.organ_id left join organ_type ot on ot.id=org.organ_type_id and ot.fir_type=21,
 		  oldman_economic oe,oldman_family oldf,oldman_health_base ohb
         where ob.id=oe.oldman_id and ob.id=oldf.oldman_id and ob.id=ohb.oldman_id
     </select>
 
 
+    <!--是否主动申请进 养老院 的逻辑是： 床位号为0 则得分 其他有床位号 或者 没进养老院的都不得分-->
     <select id="getOldmanKeyByRound" resultMap="oldmanKey"  parameterType="com.organOld.dao.util.Page">
-        SELECT ob.id,ob.key_status,ob.future_key_status,ob.birthday,ob.floor,oe.economic_index,oldf.family_index,ohb.intelligence,ohb.eyesight,ho.home_id,hs.id hsid,hs.fir_type
+        SELECT ob.id,ob.key_status,ob.future_key_status,ob.birthday,ob.floor,oe.economic_index,oldf.family_index,ohb.intelligence,ohb.eyesight,ho.home_id,hs.id hsid,hs.fir_type,
+        case oo.num
+			when 0 then 57
+			else 58
+			end isActivityOrgan
         FROM oldman_base ob left join home_oldman ho on ob.id=ho.oldman_id left join home h on ho.home_id=h.id and h.fir_type=2
-        left join health_select_oldman hso on hso.oldman_id=ob.id left join health_select hs on hs.id=hso.health_select_id and hs.fir_type in (1,2),
+        left join health_select_oldman hso on hso.oldman_id=ob.id left join health_select hs on hs.id=hso.health_select_id and hs.fir_type in (1,2)
+		left join organ_oldman oo on oo.oldman_id=ob.id left join organ org on org.id=oo.organ_id left join organ_type ot on ot.id=org.organ_type_id and ot.fir_type=21,
         oldman_economic oe,oldman_family oldf,oldman_health_base ohb
         where ob.id=oe.oldman_id and ob.id=oldf.oldman_id and ob.id=ohb.oldman_id
         and ob.id in(

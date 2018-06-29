@@ -13,6 +13,14 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/visual")
 public class VisualController {
 
+    @RequestMapping(value = "/now/home" ,method = RequestMethod.GET)
+    public ModelAndView home(){
+        return new ModelAndView("visual/now/home");
+    }
+
+
+
+
     @RequestMapping(value ="/new/one",method = RequestMethod.GET)
     public ModelAndView one(){
         return new ModelAndView("visual/new/one");
@@ -85,10 +93,6 @@ public class VisualController {
     @RequestMapping(value = "/new/three15" ,method = RequestMethod.GET)
     public ModelAndView three15(){
         return new ModelAndView("visual/new/three_1_2_rz");
-    }
-    @RequestMapping(value = "/new/three16" ,method = RequestMethod.GET)
-    public ModelAndView three16(){
-        return new ModelAndView("visual/new/three_1_3");
     }
     @RequestMapping(value = "/new/threesum" ,method = RequestMethod.GET)
     public ModelAndView threesum(){

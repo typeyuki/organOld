@@ -10,5 +10,5 @@
 
 
 <script src="/js/content.min.js?v=1.0.0"></script>
-<script src="/static/js/visual/oldman.js" ></script>
+<#--<script src="/static/js/visual/oldman.js" ></script>-->
 <script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>

@@ -1,7 +1,7 @@
 package com.organOld.dao.repository;
 
 
-import com.organOld.dao.entity.Chx;
+import com.organOld.dao.entity.home.Chx;
 
 import java.util.List;
 
