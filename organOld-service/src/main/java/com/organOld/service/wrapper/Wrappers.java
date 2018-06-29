@@ -11,4 +11,5 @@ public class Wrappers {
     public static OrganWrapper organWrapper=new OrganWrapper();
     public static OldmanKeyWrapper oldmanKeyWrapper=new OldmanKeyWrapper();
     public static HomeWrapper homeWrapper=new HomeWrapper();
+    public static HomeOldmanWrapper homeOldmanWrapper=new HomeOldmanWrapper();
 }

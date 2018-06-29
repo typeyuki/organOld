@@ -252,6 +252,25 @@ public class OldmanController {
     }
 
 
+    /**
+     * 养老信息  居家养老
+     * @return
+     */
+    @RequestMapping(value = "/organ/home",method = RequestMethod.GET)
+    public ModelAndView homeOldman(){
+        ModelAndView mv=new ModelAndView("oldman/home_oldman");
+        return mv;
+    }
 
+    /**
+     * 获取基本信息数据 分页
+     //     * @param aoData
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/homeOldmanData",method = RequestMethod.POST)
+    public String homedata(HomeOldmanRequest homeOldmanRequest, BTableRequest bTableRequest,HttpSession session){
+        return oldmanService.getHomeOldmanByPage(homeOldmanRequest,bTableRequest,session);
+    }
 
 }

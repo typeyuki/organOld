@@ -1,34 +1,30 @@
-package com.organOld.dao.entity.organ;
-
+package com.organOld.dao.entity.home;
 
 import com.organOld.dao.entity.DBEntity;
 import com.organOld.dao.entity.DBInterface;
 import com.organOld.dao.entity.oldman.Oldman;
+import sun.dc.pr.PRError;
 
 import java.util.Date;
 
-/**
- * 养老机构 中的老人
- * Created by netlab606 on 2018/4/2.
- */
-public class OrganOldman extends DBEntity implements DBInterface {
+public class HomeOldman extends DBEntity implements DBInterface{
+    private int homeId;
     private Oldman oldman;
-    private Organ organ;
-
     private Date timeIn;
     private Date timeOut;
-    private int num;
 
+    private Home home;
 
     private Integer jwId;//居委ID
 
 
-    /**
-     * 搜素
-     * @return
-     */
-    private Integer firType;
+    public Home getHome() {
+        return home;
+    }
 
+    public void setHome(Home home) {
+        this.home = home;
+    }
 
     public Integer getJwId() {
         return jwId;
@@ -39,12 +35,12 @@ public class OrganOldman extends DBEntity implements DBInterface {
         this.jwId = jwId;
     }
 
-    public Integer getFirType() {
-        return firType;
+    public int getHomeId() {
+        return homeId;
     }
 
-    public void setFirType(Integer firType) {
-        this.firType = firType;
+    public void setHomeId(int homeId) {
+        this.homeId = homeId;
     }
 
     public Oldman getOldman() {
@@ -70,23 +66,4 @@ public class OrganOldman extends DBEntity implements DBInterface {
     public void setTimeOut(Date timeOut) {
         this.timeOut = timeOut;
     }
-
-    public Organ getOrgan() {
-        return organ;
-    }
-
-    public void setOrgan(Organ organ) {
-        this.organ = organ;
-    }
-
-    public int getNum() {
-        return num;
-    }
-
-    public void setNum(int num) {
-        this.num = num;
-    }
-
-
-
 }

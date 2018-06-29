@@ -1,10 +1,7 @@
 package com.organOld.web.controller;
 
 import com.organOld.dao.entity.AutoValue;
-import com.organOld.service.contract.BTableRequest;
-import com.organOld.service.contract.HomeRequest;
-import com.organOld.service.contract.OrganOldmanRequest;
-import com.organOld.service.contract.OrganRequest;
+import com.organOld.service.contract.*;
 import com.organOld.service.enumModel.AutoValueEnum;
 import com.organOld.service.enumModel.HomeEnum;
 import com.organOld.service.model.OrganModel;
@@ -46,7 +43,7 @@ public class HomeController {
      */
     @RequestMapping(value = "/{type}",method = RequestMethod.GET)
     public ModelAndView home(@PathVariable Integer type){
-        ModelAndView mv=new ModelAndView("organ/home");
+        ModelAndView mv=new ModelAndView("home/home");
         mv.addObject("title", HomeEnum.getValue(type));
         mv.addObject("type", type);
         return mv;
@@ -61,5 +58,23 @@ public class HomeController {
     @RequestMapping(value = "/data",method = RequestMethod.POST)
     public String home_data(HomeRequest homeRequest, BTableRequest bTableRequest){
         return homeService.getByPage(homeRequest,bTableRequest);
+    }
+
+    /**
+     * 人员页面
+     * @param hid
+     * @return
+     */
+    @RequestMapping(value = "/{hid}/man",method = RequestMethod.GET)
+    public ModelAndView man(@PathVariable int hid){
+        ModelAndView mv=new ModelAndView("home/home_man");
+        mv.addObject("hid",hid);
+        return mv;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/man",method = RequestMethod.POST)
+    public String home_man(HomeOldmanRequest homeOldmanRequest,BTableRequest bTableRequest){
+        return homeService.getManByPage(homeOldmanRequest,bTableRequest);
     }
 }

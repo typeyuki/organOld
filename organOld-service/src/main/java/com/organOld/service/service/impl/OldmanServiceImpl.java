@@ -1,6 +1,8 @@
 package com.organOld.service.service.impl;
 
 import com.organOld.dao.entity.AutoValue;
+import com.organOld.dao.entity.home.Home;
+import com.organOld.dao.entity.home.HomeOldman;
 import com.organOld.dao.entity.oldman.*;
 import com.organOld.dao.entity.organ.Organ;
 import com.organOld.dao.entity.organ.OrganOldman;
@@ -43,6 +45,8 @@ public class OldmanServiceImpl implements OldmanService {
     AutoValueDao autoValueDao;
     @Autowired
     OrganDao organDao;
+    @Autowired
+    HomeOldmanDao homeOldmanDao;
 
 
     @Override
@@ -94,6 +98,7 @@ public class OldmanServiceImpl implements OldmanService {
     public String getOrganOldmanByPage(OrganOldmanRequest organOldmanRequest, BTableRequest bTableRequest, HttpSession session) {
         Page<OrganOldman> page=commonService.getPage(bTableRequest,"oldman_organOldman");
         OrganOldman organOldman=Wrappers.organOldmanWrapper.unwrap(organOldmanRequest);
+        commonService.checkIsJw(session,organOldman);
         page.setEntity(organOldman);
         List<OrganOldmanModel> organOldmanModelList=organOldmanDao.getByPage(page).stream().map(Wrappers.organOldmanWrapper::wrap).collect(Collectors.toList());
         Long size=organOldmanDao.getSizeByPage(page);
@@ -175,5 +180,17 @@ public class OldmanServiceImpl implements OldmanService {
         List<HealthSelect> healthSelectList=oldmanHealthDao.getAllHealthSelect();
         OldmanAddInfoModel oldmanAddInfoModel=Wrappers.oldmanWrapper.wrapAddInfo(autoValueList,jwList,healthSelectList);
         return oldmanAddInfoModel;
+    }
+
+
+    @Override
+    public String getHomeOldmanByPage(HomeOldmanRequest homeOldmanRequest, BTableRequest bTableRequest, HttpSession session) {
+        Page<HomeOldman> page=commonService.getPage(bTableRequest,"oldman_homeOldman");
+        HomeOldman homeOldman=Wrappers.homeOldmanWrapper.unwrap(homeOldmanRequest);
+        commonService.checkIsJw(session,homeOldman);
+        page.setEntity(homeOldman);
+        List<HomeOldmanModel> organOldmanModelList=homeOldmanDao.getByPage(page).stream().map(Wrappers.homeOldmanWrapper::wrap).collect(Collectors.toList());
+        Long size=homeOldmanDao.getSizeByPage(page);
+        return commonService.tableReturn(bTableRequest.getsEcho(),size,organOldmanModelList);
     }
 }

@@ -38,4 +38,6 @@ public interface OldmanService {
     String getOrganOldmanByPage(OrganOldmanRequest organOldmanRequest, BTableRequest bTableRequest, HttpSession session);
 
     OldmanAddInfoModel getAddInfo();
+
+    String getHomeOldmanByPage(HomeOldmanRequest homeOldmanRequest, BTableRequest bTableRequest, HttpSession session);
 }

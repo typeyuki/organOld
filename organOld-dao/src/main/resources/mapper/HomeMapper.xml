@@ -4,8 +4,8 @@
 
     <resultMap id="home" type="com.organOld.dao.entity.home.Home">
         <id property="id" column="id" />
-        <result property="firType" column="firType"/>
-        <result property="secType" column="secType" />
+        <result property="firType" column="fir_type"/>
+        <result property="secType" column="sec_type" />
         <result property="time" column="time" />
         <association property="chx" javaType="com.organOld.dao.entity.home.Chx">
             <id property="id" column="cid"/>
@@ -38,7 +38,7 @@
         <if test="entity.firType!=null and entity.firType==4">
             h.id,h.fir_type,h.sec_type,d.id did,d.name,o.id oid,o.name oname,d.time
             FROM home h,home_doctor d,organ o
-            WHERE h.fir_type=#{entity.firType} AND h.sec_type=c.id AND d.organ_id=o.id
+            WHERE h.fir_type=#{entity.firType} AND h.sec_type=d.id AND d.organ_id=o.id
         </if>
         <if test="entity.firType!=null and entity.firType==5">
             h.id,h.fir_type,h.sec_type,o.id oid,o.name oname,o.time
@@ -55,16 +55,16 @@
             WHERE fir_type=#{entity.firType}
         </if>
         <if test="entity.firType!=null and entity.firType==2">
-            FROM home h,chx c
-            WHERE h.fir_type=#{entity.firType} AND h.sec_type=c.id
+            FROM home h
+            WHERE h.fir_type=#{entity.firType}
         </if>
         <if test="entity.firType!=null and entity.firType==4">
-            FROM home h,home_doctor d,organ o
-            WHERE h.fir_type=#{entity.firType} AND h.sec_type=c.id AND d.organ_id=o.id
+            FROM home h
+            WHERE h.fir_type=#{entity.firType}
         </if>
         <if test="entity.firType!=null and entity.firType==5">
-            FROM home h,organ o
-            WHERE h.fir_type=#{entity.firType} AND h.sec_type=o.id
+            FROM home h
+            WHERE h.fir_type=#{entity.firType}
         </if>
     </select>
 </mapper>

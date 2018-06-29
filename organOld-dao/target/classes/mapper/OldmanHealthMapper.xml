@@ -26,6 +26,7 @@
         </collection>
     </resultMap>
 
+    <!--不能简单的 limit 0，10  因为有1对多的关系  会补全   一条记录当多条使用（由于某个字段有多个值）-->
     <select id="getByPage" parameterType="com.organOld.dao.util.Page" resultMap="oldmanHealth">
         SELECT o.id,old.id oid,old.name,o.blood_type,e.value eyesight,i.value intelligence,ha.type,ha.desc,hs.fir_type,hs.sec_type_name,ha.id haid,hs.id hsid
         FROM oldman_base old,organ org,auto_value x,

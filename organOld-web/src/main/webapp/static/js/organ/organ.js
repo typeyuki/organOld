@@ -223,23 +223,23 @@ $(document).ready(function(){
         "submitdata":function(value,settings){return{"row_id":this.parentNode.getAttribute("id"),
             "column":oTable.fnGetPosition(this)[2]}},"width":"90%","height":"100%"});
 
-
-    function pass(id) {
-        $.ajax({
-            url: "/organ/pass",
-            data : {
-                id:id
-            },
-            type: 'POST',
-            dataType: 'json',
-            success: function (result) {
-                alert("更新完成");
-                // alert(1);
-                table.fnFilter();
-            },
-            error:function(XMLHttpRequest, textStatus, errorThrown) {
-
-            }
-        });
-    }
 });
+
+function pass(id) {
+    $.ajax({
+        url: "/organ/pass",
+        data : {
+            id:id
+        },
+        type: 'POST',
+        dataType: 'json',
+        success: function (result) {
+            alert("更新完成");
+            // alert(1);
+            table.fnFilter();
+        },
+        error:function(XMLHttpRequest, textStatus, errorThrown) {
+
+        }
+    });
+}

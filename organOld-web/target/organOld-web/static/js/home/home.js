@@ -4,7 +4,6 @@
 $(document).ready(function(){
     var columns=[];
     var columnDefs=[];
-    alert(type);
     if(type==1 || type==3){
         columns=[{},{
             data:"id"
@@ -25,14 +24,12 @@ $(document).ready(function(){
             },
             // 增加一列，包括删除和修改，同时将我们需要传递的数据传递到链接中
             {
-                "targets": [3], // 目标列位置，下标从0开始
+                "targets": [4], // 目标列位置，下标从0开始
                 "data": "id", // 数据列名
                 "render": function(data, type, full) { // 返回自定义内容
-                    return "<span onclick=newPage("+data+",$(this).parent().prev().prev().text(),'/organ/oldman/"+data+"/man') class='look' id='"+data+"'>人员</span><span class='mod' id='"+data+"'>修改</span>";
+                    return "<span onclick=newPage("+data+",$(this).parent().prev().prev().text(),'/home/"+data+"/man') class='look' id='"+data+"'>人员</span><span class='mod' id='"+data+"'>修改</span>";
                 }
-            },
-            //不进行排序的列
-            { "bSortable": false, "aTargets": [ 0,2 ,3] }
+            }
         ]
     }else if(type==4){
         columns=[{},{
@@ -56,14 +53,12 @@ $(document).ready(function(){
             },
             // 增加一列，包括删除和修改，同时将我们需要传递的数据传递到链接中
             {
-                "targets": [4], // 目标列位置，下标从0开始
+                "targets": [5], // 目标列位置，下标从0开始
                 "data": "id", // 数据列名
                 "render": function(data, type, full) { // 返回自定义内容
-                    return "<span onclick=newPage("+data+",$(this).parent().prev().prev().prev().text(),'/organ/oldman/"+data+"/man') class='look' id='"+data+"'>人员</span><span class='mod' id='"+data+"'>修改</span>";
+                    return "<span onclick=newPage("+data+",$(this).parent().prev().prev().prev().text(),'/home/"+data+"/man') class='look' id='"+data+"'>人员</span><span class='mod' id='"+data+"'>修改</span>";
                 }
-            },
-            //不进行排序的列
-            { "bSortable": false, "aTargets": [ 0,2 ,3, 4] }
+            }
         ]
     }else if(type==2){
         columns=[{},{
@@ -87,14 +82,12 @@ $(document).ready(function(){
             },
             // 增加一列，包括删除和修改，同时将我们需要传递的数据传递到链接中
             {
-                "targets": [4], // 目标列位置，下标从0开始
+                "targets": [5], // 目标列位置，下标从0开始
                 "data": "id", // 数据列名
                 "render": function(data, type, full) { // 返回自定义内容
-                    return "<span onclick=newPage("+data+",$(this).parent().prev().prev().prev().text(),'/organ/oldman/"+data+"/man') class='look' id='"+data+"'>人员</span><span class='mod' id='"+data+"'>修改</span>";
+                    return "<span onclick=newPage("+data+",$(this).parent().prev().prev().prev().text(),'/home/"+data+"/man') class='look' id='"+data+"'>人员</span><span class='mod' id='"+data+"'>修改</span>";
                 }
-            },
-            //不进行排序的列
-            { "bSortable": false, "aTargets": [ 0,2 ,3, 4] }
+            }
         ]
     }else if(type==5){
         columns=[{},{
@@ -116,14 +109,12 @@ $(document).ready(function(){
             },
             // 增加一列，包括删除和修改，同时将我们需要传递的数据传递到链接中
             {
-                "targets": [3], // 目标列位置，下标从0开始
+                "targets": [4], // 目标列位置，下标从0开始
                 "data": "id", // 数据列名
                 "render": function(data, type, full) { // 返回自定义内容
-                    return "<span onclick=newPage("+data+",$(this).parent().prev().prev().text(),'/organ/oldman/"+data+"/man') class='look' id='"+data+"'>人员</span><span class='mod' id='"+data+"'>修改</span>";
+                    return "<span onclick=newPage("+data+",$(this).parent().prev().prev().text(),'/home/"+data+"/man') class='look' id='"+data+"'>人员</span><span class='mod' id='"+data+"'>修改</span>";
                 }
-            },
-            //不进行排序的列
-            { "bSortable": false, "aTargets": [ 0,2 ,3] }
+            }
         ]
     }
 
@@ -132,13 +123,12 @@ $(document).ready(function(){
             "sPaginationType": "full_numbers",
             "bPaginite": true,
             "bInfo": true,
-            "bSort": true,
+            "bSort": false,
             "bFilter": false, //搜索栏
             "bStateSave": true,
             "bProcessing": true, //加载数据时显示正在加载信息
             "bServerSide": true, //指定从服务器端获取数据
             "columns":columns,
-            "order":[[1,"asc"]],
             "columnDefs": columnDefs,
             "sAjaxSource": "/home/data",//这个是请求的地址
             "fnServerData": retrieveData
@@ -176,24 +166,4 @@ $(document).ready(function(){
         "callback":function(sValue,y){var aPos=oTable.fnGetPosition(this);oTable.fnUpdate(sValue,aPos[0],aPos[1])},
         "submitdata":function(value,settings){return{"row_id":this.parentNode.getAttribute("id"),
             "column":oTable.fnGetPosition(this)[2]}},"width":"90%","height":"100%"});
-
-
-    function pass(id) {
-        $.ajax({
-            url: "/organ/pass",
-            data : {
-                id:id
-            },
-            type: 'POST',
-            dataType: 'json',
-            success: function (result) {
-                alert("更新完成");
-                // alert(1);
-                table.fnFilter();
-            },
-            error:function(XMLHttpRequest, textStatus, errorThrown) {
-
-            }
-        });
-    }
 });
