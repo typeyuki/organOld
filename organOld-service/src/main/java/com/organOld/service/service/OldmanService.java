@@ -3,7 +3,7 @@ package com.organOld.service.service;
 
 import com.organOld.service.contract.*;
 import com.organOld.service.model.OldmanAddInfoModel;
-
+import com.organOld.service.model.OldmanAllInfoModel;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -40,4 +40,6 @@ public interface OldmanService {
     OldmanAddInfoModel getAddInfo();
 
     String getHomeOldmanByPage(HomeOldmanRequest homeOldmanRequest, BTableRequest bTableRequest, HttpSession session);
+
+    OldmanAllInfoModel getOldmanInfo(int oldmanId);
 }

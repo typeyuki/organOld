@@ -1,6 +1,7 @@
 package com.organOld.web.controller;
 
 import com.organOld.service.contract.*;
+import com.organOld.service.model.Model;
 import com.organOld.service.service.OldmanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -271,6 +272,19 @@ public class OldmanController {
     @RequestMapping(value = "/homeOldmanData",method = RequestMethod.POST)
     public String homedata(HomeOldmanRequest homeOldmanRequest, BTableRequest bTableRequest,HttpSession session){
         return oldmanService.getHomeOldmanByPage(homeOldmanRequest,bTableRequest,session);
+    }
+
+
+
+    /**
+     * 查看某个老人的全部信息
+     * @return
+     */
+    @RequestMapping(value = "/{oldmanId}/info",method = RequestMethod.GET)
+    public ModelAndView info(@PathVariable int oldmanId){
+        ModelAndView mv=new ModelAndView("oldman/info");
+        mv.addObject("info",oldmanService.getOldmanInfo(oldmanId));
+        return mv;
     }
 
 }

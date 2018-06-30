@@ -20,6 +20,16 @@ public class Label extends DBEntity implements DBInterface{
 
 
     private Integer jwId;
+    private Integer oldmanId;
+
+
+    public Integer getOldmanId() {
+        return oldmanId;
+    }
+
+    public void setOldmanId(Integer oldmanId) {
+        this.oldmanId = oldmanId;
+    }
 
     public Integer getJwId() {
         return jwId;

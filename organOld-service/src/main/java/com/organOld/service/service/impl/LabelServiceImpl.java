@@ -25,6 +25,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -141,5 +142,24 @@ public class LabelServiceImpl implements LabelService {
     public void save(LabelRuleRequest labelRuleRequest) {
         LabelRule labelRule=Wrappers.labelWrapper.unwrapLabelRule(labelRuleRequest);
         labelDao.saveLabelRule(labelRule);
+    }
+
+    @Override
+    public Result getByOldmanId(int oldmanId) {
+        List<String> labelNames=new ArrayList<>();
+        //人员绑定标签
+        labelDao.getManLabelByOldmanId(oldmanId).forEach(r->labelNames.add(r.getName()));
+
+        //规则制定标签
+        List<LabelRule> labelRuleList=labelDao.getLabelRules();
+        for(LabelRule labelRule:labelRuleList){
+            LabelRuleToDBSelectMan labelRuleToDB=getLabelRuleToDB(labelRule);
+            List<Integer> oldmanIdList = labelDao.getRuleManIds(labelRuleToDB);
+            if(oldmanIdList.contains(oldmanId)){
+                labelNames.add(labelDao.getLabelNameByLabelRuleId(labelRule.getId()));
+            }
+        }
+
+        return new Result(true,labelNames);
     }
 }

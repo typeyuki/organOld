@@ -136,4 +136,18 @@ public class LabelController {
     public String bind_no_select_man_data(BTableRequest bTableRequest, OldmanRequest oldmanRequest, @PathVariable int labelId){
         return labelService.getNoSelectManDataByPage(oldmanRequest,bTableRequest,labelId);
     }
+
+
+    /**
+     * 获得某个老人的全部标签
+     * @param oldmanId
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/{oldmanId}",method = RequestMethod.GET)
+    public Result getManLabel(@PathVariable int oldmanId){
+        return labelService.getByOldmanId(oldmanId);
+    }
+
+
 }

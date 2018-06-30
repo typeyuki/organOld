@@ -86,8 +86,8 @@ public class OrganServiceImpl implements OrganService{
 
     @Override
     public Result pass(int organId) {
-        OrganReg organReg=organRegDao.getByOrganId(organId);
-        SysUser user=newAccount(organId);
+//        OrganReg organReg=organRegDao.getByOrganId(organId);
+//        SysUser user=newAccount(organId);
 
         Properties props = new Properties();                    // 参数配置
         props.setProperty("mail.transport.protocol", "smtp");   // 使用的协议（JavaMail规范要求）

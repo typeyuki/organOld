@@ -25,8 +25,18 @@
         <if test="entity!=null and entity.jwId!=null and entity.jwId!=0">
             and org.id=#{entity.jwId}
         </if>
-        ORDER BY ${sortType} ${sort}
-        limit #{start},#{length}
+        <if test="entity!=null and entity.oldman!=null and entity.oldman.id!=null and entity.oldman.id!=0">
+            and o.id=#{entity.oldman.id}
+        </if>
+        <if test="sortType!=null and sortType!=''">
+            ORDER BY ${sortType}
+        </if>
+        <if test="sort!=null and sort!=''">
+            ${sort}
+        </if>
+        <if test="length!=null and length!=0">
+            limit #{start},#{length}
+        </if>
     </select>
 
     <select id="getSizeByPage" parameterType="com.organOld.dao.util.Page" resultType="java.lang.Long">
@@ -38,6 +48,9 @@
         </if>
         <if test="entity!=null and entity.jwId!=null and entity.jwId!=0">
             and org.id=#{entity.jwId}
+        </if>
+        <if test="entity!=null and entity.oldman!=null and entity.oldman.id!=null and entity.oldman.id!=0">
+            and o.oldman_id=#{entity.oldman.id}
         </if>
     </select>
     <update id="updateById" parameterType="com.organOld.dao.entity.oldman.Linkman">

@@ -1,10 +1,7 @@
 package com.organOld.service.service;
 
 
-import com.organOld.service.contract.BTableRequest;
-import com.organOld.service.contract.LabelRequest;
-import com.organOld.service.contract.LabelRuleRequest;
-import com.organOld.service.contract.OldmanRequest;
+import com.organOld.service.contract.*;
 import com.organOld.service.model.LabelAllRuleModel;
 import com.organOld.service.model.LabelRuleModel;
 
@@ -25,4 +22,6 @@ public interface LabelService {
     LabelRuleModel getLabelRuleById(int labelId);
 
     void save(LabelRuleRequest labelRuleRequest);
+
+    Result getByOldmanId(int oldmanId);
 }

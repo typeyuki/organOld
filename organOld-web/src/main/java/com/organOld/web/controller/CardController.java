@@ -1,5 +1,6 @@
 package com.organOld.web.controller;
 
+import com.organOld.service.contract.CardConsumeRequest;
 import com.organOld.service.contract.Result;
 import com.organOld.service.service.CardService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * 一卡通
  * Created by netlab606 on 2018/6/25.
  */
-@Controller()
+@Controller
 @RequestMapping("/card")
 public class CardController {
 
@@ -21,8 +22,11 @@ public class CardController {
 
     @ResponseBody
     @RequestMapping(value = "",method = RequestMethod.GET)
-    public Result consume(){
-        Result result=null;
+    public Result consume(CardConsumeRequest cardConsumeRequest){
+        CardConsumeRequest consumeRequest=cardConsumeRequest;
+
+        System.out.println(cardConsumeRequest.toString());
+        Result result=new Result(true,"成功");
         return result;
     }
 }

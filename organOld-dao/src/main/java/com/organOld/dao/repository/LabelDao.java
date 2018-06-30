@@ -25,9 +25,18 @@ public interface LabelDao extends BaseDao<Label,Integer> {
 
     LabelRule getLabelRuleByLid(int labelId);
 
+    List<LabelRule> getLabelRules();
+
     List<Oldman> getRuleManByPage(@Param("page") Page<Oldman> page, @Param("rule") LabelRuleToDBSelectMan labelRuleToDB);
 
     Long getRuleManSizeByPage(@Param("page") Page<Oldman> page, @Param("rule") LabelRuleToDBSelectMan labelRuleToDB);
 
     void saveLabelRule(LabelRule labelRule);
+
+    //对应的人员绑定标签
+    List<Label> getManLabelByOldmanId(int oldmanId);
+
+    List<Integer> getRuleManIds(@Param("rule") LabelRuleToDBSelectMan labelRuleToDB);
+
+    String getLabelNameByLabelRuleId(int id);
 }

@@ -1,8 +1,12 @@
 package com.organOld.service.service.impl;
 
 import com.organOld.dao.entity.AutoValue;
+import com.organOld.dao.entity.DBEntity;
 import com.organOld.dao.entity.home.Home;
 import com.organOld.dao.entity.home.HomeOldman;
+import com.organOld.dao.entity.label.Label;
+import com.organOld.dao.entity.label.LabelRule;
+import com.organOld.dao.entity.label.LabelRuleToDBSelectMan;
 import com.organOld.dao.entity.oldman.*;
 import com.organOld.dao.entity.organ.Organ;
 import com.organOld.dao.entity.organ.OrganOldman;
@@ -47,7 +51,10 @@ public class OldmanServiceImpl implements OldmanService {
     OrganDao organDao;
     @Autowired
     HomeOldmanDao homeOldmanDao;
-
+    @Autowired
+    OldmanKeyDao oldmanKeyDao;
+    @Autowired
+    LabelDao labelDao;
 
     @Override
     public String getOldmanByPage(OldmanRequest oldmanRequest, BTableRequest bTableRequest, HttpSession session) {
@@ -192,5 +199,67 @@ public class OldmanServiceImpl implements OldmanService {
         List<HomeOldmanModel> organOldmanModelList=homeOldmanDao.getByPage(page).stream().map(Wrappers.homeOldmanWrapper::wrap).collect(Collectors.toList());
         Long size=homeOldmanDao.getSizeByPage(page);
         return commonService.tableReturn(bTableRequest.getsEcho(),size,organOldmanModelList);
+    }
+
+    @Override
+    public OldmanAllInfoModel getOldmanInfo(int oldmanId) {
+        OldmanAllInfoModel oldmanAllInfoModel=new OldmanAllInfoModel();
+        Page<DBEntity> page=new Page<>();
+
+        Oldman oldman=new Oldman();
+        oldman.setId(oldmanId);
+
+        page.setEntity(oldman);
+        List<OldmanModel> oldmanModelList=oldmanBaseDao.getByPage(page).stream().map(Wrappers.oldmanWrapper::wrap).collect(Collectors.toList());
+        oldmanAllInfoModel.setOldman(oldmanModelList.get(0));
+
+        List<Oldman> oldmanList=oldmanKeyDao.getByPage(page);
+        oldmanAllInfoModel.setKey(oldmanList.get(0));
+
+        OldmanHealth oldmanHealth=new OldmanHealth();
+        oldmanHealth.setOldman(oldman);
+        page.setEntity(oldmanHealth);
+        List<OldmanHealthModel> oldmanHealthModelList=oldmanHealthDao.getByPage(page).stream().map(Wrappers.oldmanHealthWrapper::wrap).collect(Collectors.toList());
+        oldmanAllInfoModel.setHealth(oldmanHealthModelList.get(0));
+
+        OldmanFamily oldmanFamily=new OldmanFamily();
+        oldmanFamily.setOldman(oldman);
+        page.setEntity(oldmanFamily);
+        List<OldmanFamilyModel> familyModelList=familyDao.getByPage(page).stream().map(Wrappers.familyWrapper::wrap).collect(Collectors.toList());
+        oldmanAllInfoModel.setFamily(familyModelList.get(0).getFamily());
+
+        OldmanEconomic oldmanEconomic=new OldmanEconomic();
+        oldmanEconomic.setOldman(oldman);
+        page.setEntity(oldmanEconomic);
+        List<OldmanEconomicModel> economicModelList=economicDao.getByPage(page).stream().map(Wrappers.economicWrapper::wrap).collect(Collectors.toList());
+        oldmanAllInfoModel.setEconomic(economicModelList.get(0).getEconomic());
+
+        Linkman linkman=new Linkman();
+        linkman.setOldman(oldman);
+        page.setEntity(linkman);
+        List<LinkmanModel> linkmanModelList=linkmanDao.getByPage(page).stream().map(Wrappers.linkmanWrapper::wrap).collect(Collectors.toList());
+        oldmanAllInfoModel.setLinkman(linkmanModelList.get(0));
+
+        OrganOldman organOldman=new OrganOldman();
+        organOldman.setFirType(21);
+        organOldman.setOldman(oldman);
+        page.setEntity(organOldman);
+        List<OrganOldmanModel> organOldmanModelList=organOldmanDao.getByPage(page).stream().map(Wrappers.organOldmanWrapper::wrap).collect(Collectors.toList());
+        oldmanAllInfoModel.setOrgan(organOldmanModelList.get(0));
+
+        OrganOldman communityOldman=new OrganOldman();
+        communityOldman.setFirType(22);
+        communityOldman.setOldman(oldman);
+        page.setEntity(communityOldman);
+        List<OrganOldmanModel> communityOldmanModelList=organOldmanDao.getByPage(page).stream().map(Wrappers.organOldmanWrapper::wrap).collect(Collectors.toList());
+        oldmanAllInfoModel.setCommunity(communityOldmanModelList);
+
+        HomeOldman homeOldman=new HomeOldman();
+        homeOldman.setOldman(oldman);
+        page.setEntity(homeOldman);
+        List<HomeOldmanModel> homeOldmanModelList=homeOldmanDao.getByPage(page).stream().map(Wrappers.homeOldmanWrapper::wrap).collect(Collectors.toList());
+        oldmanAllInfoModel.setHome(homeOldmanModelList);
+
+        return oldmanAllInfoModel;
     }
 }
