@@ -4,6 +4,9 @@ import com.organOld.dao.entity.AutoValue;
 import com.organOld.dao.entity.DBEntity;
 import com.organOld.dao.entity.home.Home;
 import com.organOld.dao.entity.home.HomeOldman;
+import com.organOld.dao.entity.label.Label;
+import com.organOld.dao.entity.label.LabelRule;
+import com.organOld.dao.entity.label.LabelRuleToDBSelectMan;
 import com.organOld.dao.entity.oldman.*;
 import com.organOld.dao.entity.organ.Organ;
 import com.organOld.dao.entity.organ.OrganOldman;
@@ -50,7 +53,8 @@ public class OldmanServiceImpl implements OldmanService {
     HomeOldmanDao homeOldmanDao;
     @Autowired
     OldmanKeyDao oldmanKeyDao;
-
+    @Autowired
+    LabelDao labelDao;
 
     @Override
     public String getOldmanByPage(OldmanRequest oldmanRequest, BTableRequest bTableRequest, HttpSession session) {
@@ -201,9 +205,6 @@ public class OldmanServiceImpl implements OldmanService {
     public OldmanAllInfoModel getOldmanInfo(int oldmanId) {
         OldmanAllInfoModel oldmanAllInfoModel=new OldmanAllInfoModel();
         Page<DBEntity> page=new Page<>();
-        page.setStart(0);
-        page.setLength(999);
-        page.setSort("asc");
 
         Oldman oldman=new Oldman();
         oldman.setId(oldmanId);
@@ -247,8 +248,8 @@ public class OldmanServiceImpl implements OldmanService {
         oldmanAllInfoModel.setOrgan(organOldmanModelList.get(0));
 
         OrganOldman communityOldman=new OrganOldman();
-        organOldman.setFirType(22);
-        organOldman.setOldman(oldman);
+        communityOldman.setFirType(22);
+        communityOldman.setOldman(oldman);
         page.setEntity(communityOldman);
         List<OrganOldmanModel> communityOldmanModelList=organOldmanDao.getByPage(page).stream().map(Wrappers.organOldmanWrapper::wrap).collect(Collectors.toList());
         oldmanAllInfoModel.setCommunity(communityOldmanModelList);

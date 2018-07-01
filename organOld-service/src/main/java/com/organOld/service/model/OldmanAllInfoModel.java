@@ -22,7 +22,6 @@ public class OldmanAllInfoModel {
     private OrganOldmanModel organ;//机构养老
     private List<OrganOldmanModel> community;//社区养老
     private List<HomeOldmanModel> home;//居家养老
-    private List<Label> labels;//所属标签
     private Oldman key;//重点老人参数
 
     public Oldman getKey() {
@@ -95,13 +94,5 @@ public class OldmanAllInfoModel {
 
     public void setHome(List<HomeOldmanModel> home) {
         this.home = home;
-    }
-
-    public List<Label> getLabels() {
-        return labels;
-    }
-
-    public void setLabels(List<Label> labels) {
-        this.labels = labels;
     }
 }

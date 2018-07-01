@@ -45,8 +45,15 @@
             FROM home h,organ o
             WHERE h.fir_type=#{entity.firType} AND h.sec_type=o.id
         </if>
-        ORDER BY ${sortType} ${sort}
-        limit #{start},#{length}
+        <if test="sortType!=null and sortType!=''">
+            ORDER BY ${sortType}
+        </if>
+        <if test="sort!=null and sort!=''">
+            ${sort}
+        </if>
+        <if test="length!=null and length!=0">
+            limit #{start},#{length}
+        </if>
     </select>
     <select id="getSizeByPage" parameterType="com.organOld.dao.util.Page" resultMap="home">
         SELECT count(1)

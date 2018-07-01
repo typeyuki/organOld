@@ -52,8 +52,15 @@
         <if test="entity!=null and entity.jwId!=null and entity.jwId!=0">
             and l.organ_id=#{entity.jwId}
         </if>
-        ORDER BY ${sortType} ${sort}
-        limit #{start},#{length}
+        <if test="sortType!=null and sortType!=''">
+            ORDER BY ${sortType}
+        </if>
+        <if test="sort!=null and sort!=''">
+            ${sort}
+        </if>
+        <if test="length!=null and length!=0">
+            limit #{start},#{length}
+        </if>
 
     </select>
 
@@ -85,6 +92,121 @@
         FROM oldman_base o,label_oldman lo
         WHERE lo.label_id=#{labelId} AND o.id=lo.oldman_id
     </select>
+
+
+    <select id="getRuleManIds" parameterType="com.organOld.dao.util.Page" resultType="java.lang.Integer">
+        SELECT o.id
+        FROM oldman_base o,auto_value c,auto_value p,auto_value x,auto_value d,organ org,label_oldman lo,oldman_family oldf,
+        auto_value e,oldman_economic oe,
+        oldman_health_base ohb,auto_value hbi,auto_value hbe
+        WHERE o.census=c.id AND o.political_status=p.id AND x.id=o.xq_id AND org.id=x.parent_index AND d.id=org.district_id
+        AND e.id=oe.economic_index AND oe.oldman_id=o.id AND oldf.oldman_id=o.id
+        AND ohb.oldman_id=o.id AND hbi.id=ohb.intelligence AND hbe.id=ohb.eyesight
+        <if test="rule.birStart!=null">
+            <![CDATA[
+            and DATE_FORMAT(o.birthday,'%Y') >= DATE_FORMAT(#{rule.birStart},'%Y')
+            ]]>
+        </if>
+        <if test="rule.birEnd!=null">
+            <![CDATA[
+            and DATE_FORMAT(o.birthday,'%Y') <= DATE_FORMAT(#{rule.birEnd},'%Y')
+            ]]>
+        </if>
+        <if test="rule.sex!=null and rule.sex!=0">
+            and o.sex=#{rule.sex}
+        </if>
+        <if test="rule.isKey!=null and rule.isKey!=0">
+
+        </if>
+        <if test="rule.censuses!=null and rule.censuses.size() > 0">
+            and o.census IN
+            <foreach collection="rule.censuses" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="rule.families!=null and rule.families.size() > 0">
+            and oldf.family_index IN
+            <foreach collection="rule.families" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="rule.districtIds!=null and rule.districtIds.size() > 0">
+            and d.id IN
+            <foreach collection="rule.districtIds" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="rule.jwIds!=null and rule.jwIds.size() > 0">
+            and org.id IN
+            <foreach collection="rule.jwIds" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="rule.politicalStatuses!=null and rule.politicalStatuses.size() > 0">
+            and p.id IN
+            <foreach collection="rule.politicalStatuses" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="rule.economics!=null and rule.economics.size() > 0">
+            and e.id IN
+            <foreach collection="rule.economics" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="rule.intelligences!=null and rule.intelligences.size() > 0">
+            and hbi.id IN
+            <foreach collection="rule.intelligences" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="rule.eyesights!=null and rule.eyesights.size() > 0">
+            and hbe.id IN
+            <foreach collection="rule.eyesights" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="rule.isHealths!=null and rule.isHealths.size() > 0">
+            and (ohb.is_mb in
+            <foreach collection="rule.isHealths" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+            OR ohb.is_sn in
+            <foreach collection="rule.isHealths" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+            OR ohb.is_ywfy in
+            <foreach collection="rule.isHealths" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+            OR ohb.is_exzl in
+            <foreach collection="rule.isHealths" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+            OR ohb.is_gz in
+            <foreach collection="rule.isHealths" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+            OR ohb.is_cj in
+            <foreach collection="rule.isHealths" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+            )
+        </if>
+        <if test="rule.chxs!=null and rule.chxs.size() > 0">
+
+            <foreach collection="rule.chxs" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="rule.oldStatuses!=null and rule.oldStatuses.size() > 0">
+
+            <foreach collection="rule.oldStatuses" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+    </select>
+
 
 
     <select id="getRuleManByPage" parameterType="com.organOld.dao.util.Page" resultMap="bindOldman">
@@ -260,6 +382,10 @@
         SELECT * FROM label_rule WHERE label_id=#{labelId}
     </select>
 
+    <select id="getLabelRules" resultType="com.organOld.dao.entity.label.LabelRule">
+        SELECT * FROM label_rule
+    </select>
+
     <update id="saveLabelRule" parameterType="com.organOld.dao.entity.label.LabelRule">
         UPDATE  label_rule
         SET age_start=#{ageStart},
@@ -279,4 +405,16 @@
         old_statuses=#{oldStatuses}
         WHERE label_id=#{id}
     </update>
+
+    <select id="getManLabelByOldmanId" resultType="com.organOld.dao.entity.label.Label">
+        select l.id,l.name
+        FROM label l,label_oldman lo
+        WHERE lo.oldman_id=#{oldmanId} and lo.label_id=l.id
+    </select>
+
+    <select id="getLabelNameByLabelRuleId" resultType="java.lang.String">
+        SELECT l.name
+        FROM label l,label_rule lr
+        WHERE lr.id=#{id} and l.id=lr.label_id
+    </select>
 </mapper>

@@ -29,14 +29,24 @@
         end sec_type
         FROM home_oldman ho,oldman_base o,organ jw,auto_value x,home h left join chx c on c.id=h.sec_type left join organ org on org.id=h.sec_type left join home_doctor hd on hd.id=h.sec_type
         WHERE ho.oldman_id=o.id AND x.id=o.xq_id AND jw.id=x.parent_index and ho.home_id=h.id
+        <if test="entity!=null and entity.oldman!=null and entity.oldman.id!=null and entity.oldman.id!=0">
+            and o.id=#{entity.oldman.id}
+        </if>
         <if test="entity.jwId!=null and entity.jwId!=0">
             AND jw.id=#{entity.jwId}
         </if>
         <if test="entity.homeId!=null and entity.homeId!=0">
             AND ho.home_id=#{entity.homeId}
         </if>
-        ORDER BY ${sortType} ${sort}
-        limit #{start},#{length}
+        <if test="sortType!=null and sortType!=''">
+            ORDER BY ${sortType}
+        </if>
+        <if test="sort!=null and sort!=''">
+            ${sort}
+        </if>
+        <if test="length!=null and length!=0">
+            limit #{start},#{length}
+        </if>
     </select>
 
     <select id="getSizeByPage" parameterType="com.organOld.dao.util.Page" resultType="java.lang.Long">

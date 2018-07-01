@@ -5,6 +5,7 @@ import com.organOld.dao.entity.DBEntity;
 
 //规则绑定标签
 public class LabelRule extends DBEntity {
+
     private int ageStart;
     private int ageEnd;
     private String districtIds;
