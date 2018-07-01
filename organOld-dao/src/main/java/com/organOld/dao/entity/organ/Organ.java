@@ -20,12 +20,16 @@ public class Organ extends DBEntity {
     private String imgUrl;
     private Integer num;
     private String require;
-    private String insitution;
+    private String institution;
     private Integer numIn;
     private Integer numRemain;
+    private String districtId;//所属片区 如果有的话
     private String districtName;//所属片区名称 如果有的话
     private String status;
 
+    private Integer authConsume;
+    private Integer authProduct;
+    private Integer authSign;
 
     /**
      * 搜索
@@ -35,6 +39,38 @@ public class Organ extends DBEntity {
     private String search;//模糊搜索
     private Integer oldmanId;
 
+
+    public String getDistrictId() {
+        return districtId;
+    }
+
+    public void setDistrictId(String districtId) {
+        this.districtId = districtId;
+    }
+
+    public Integer getAuthConsume() {
+        return authConsume;
+    }
+
+    public void setAuthConsume(Integer authConsume) {
+        this.authConsume = authConsume;
+    }
+
+    public Integer getAuthProduct() {
+        return authProduct;
+    }
+
+    public void setAuthProduct(Integer authProduct) {
+        this.authProduct = authProduct;
+    }
+
+    public Integer getAuthSign() {
+        return authSign;
+    }
+
+    public void setAuthSign(Integer authSign) {
+        this.authSign = authSign;
+    }
 
     public Integer getOldmanId() {
         return oldmanId;
@@ -156,12 +192,13 @@ public class Organ extends DBEntity {
         this.require = require;
     }
 
-    public String getInsitution() {
-        return insitution;
+
+    public String getInstitution() {
+        return institution;
     }
 
-    public void setInsitution(String insitution) {
-        this.insitution = insitution;
+    public void setInstitution(String institution) {
+        this.institution = institution;
     }
 
     public Integer getNumIn() {

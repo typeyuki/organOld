@@ -92,7 +92,7 @@ $(document).ready(function(){
             //不进行排序的列
             { "bSortable": false, "aTargets": [ 0,2 ,3, 4,5,6,7,8,9,10] }
         ]
-    }else if(firType=="society" && status==2){
+    }else if(firType=="society" && status=="2"){
         columns=[{},{
             data:"id"
         },{
@@ -129,11 +129,46 @@ $(document).ready(function(){
                 "targets": [11], // 目标列位置，下标从0开始
                 "data": "id", // 数据列名
                 "render": function(data, type, full) { // 返回自定义内容
-                    return "<span class='look' id='"+data+"'>查看</span><span class='mod' id='"+data+"'>修改</span>";
+                    return "<span class='look' id='"+data+"'>查看</span>";
                 }
             },
             //不进行排序的列
             { "bSortable": false, "aTargets": [ 0,2 ,3, 4,5,6,7,8,9,10,11] }
+        ]
+    }else if(firType=="society" && status=="3"){
+        columns=[{
+            data:"id"
+        },{
+            data:"organType"
+        },{
+            data:"name"
+        },{
+            data:"intro"
+        },{
+            data:"num"
+        },{
+            data:"serviceTime"
+        },{
+            data:"address"
+        },{
+            data:"phone"
+        },{
+            data:"districtName"
+        },{
+            data:"time"
+        }
+        ];
+        columnDefs= [
+            // 增加一列，包括删除和修改，同时将我们需要传递的数据传递到链接中
+            {
+                "targets": [10], // 目标列位置，下标从0开始
+                "data": "id", // 数据列名
+                "render": function(data, type, full) { // 返回自定义内容
+                    return "<span class='look' id='"+data+"'>查看</span>";
+                }
+            },
+            //不进行排序的列
+            { "bSortable": false, "aTargets": [ 0,2 ,3, 4,5,6,7,8,9,10] }
         ]
     }else {
         columns=[{
@@ -165,7 +200,7 @@ $(document).ready(function(){
                 "targets": [10], // 目标列位置，下标从0开始
                 "data": "id", // 数据列名
                 "render": function(data, type, full) { // 返回自定义内容
-                    return "<span class='look' id='"+data+"'>查看</span><span class='mod' onclick='pass("+data+")' id='"+data+"'>通过</span><span class='mod' id='"+data+"'>不通过</span>";
+                    return "<span class='look' id='"+data+"'>查看</span><span class='mod' onclick=opera("+data+",'pass') id='"+data+"'>通过</span><span class='mod' onclick=opera("+data+",'reject') id='"+data+"'>不通过</span>";
                 }
             },
             //不进行排序的列
@@ -225,9 +260,9 @@ $(document).ready(function(){
 
 });
 
-function pass(id) {
+function opera(id,type) {
     $.ajax({
-        url: "/organ/pass",
+        url: "/organ/"+type,
         data : {
             id:id
         },
@@ -235,8 +270,19 @@ function pass(id) {
         dataType: 'json',
         success: function (result) {
             alert("操作成功");
+<<<<<<< HEAD
             // alert(1);
             // table.fnFilter();
+=======
+            start = $(".dataTables-example").dataTable().fnSettings()._iDisplayStart;
+            total = $(".dataTables-example").dataTable().fnSettings().fnRecordsDisplay();
+            window.location.reload();
+            if(total-start==1){
+                if(start>0){
+                    $(".dataTables-example").dataTable().fnPageChange('previous',true);
+                }
+            }
+>>>>>>> 931186cb0a645581863b770917c0b6a002586737
         },
         error:function(XMLHttpRequest, textStatus, errorThrown) {
 

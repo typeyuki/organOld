@@ -3,6 +3,7 @@ package com.organOld.dao.repository;
 import com.organOld.dao.entity.organ.Organ;
 import com.organOld.dao.entity.organ.OrganOldman;
 import com.organOld.dao.util.Page;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -13,4 +14,7 @@ public interface OrganDao extends BaseDao<Organ,Integer>{
     List<Organ> getSimpleByType(Integer type);
 
     Organ getByUsername(String username);
+
+    Organ getAuthById(int organId);
+
 }
