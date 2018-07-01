@@ -270,10 +270,6 @@ function opera(id,type) {
         dataType: 'json',
         success: function (result) {
             alert("操作成功");
-<<<<<<< HEAD
-            // alert(1);
-            // table.fnFilter();
-=======
             start = $(".dataTables-example").dataTable().fnSettings()._iDisplayStart;
             total = $(".dataTables-example").dataTable().fnSettings().fnRecordsDisplay();
             window.location.reload();
@@ -282,7 +278,6 @@ function opera(id,type) {
                     $(".dataTables-example").dataTable().fnPageChange('previous',true);
                 }
             }
->>>>>>> 931186cb0a645581863b770917c0b6a002586737
         },
         error:function(XMLHttpRequest, textStatus, errorThrown) {
 
