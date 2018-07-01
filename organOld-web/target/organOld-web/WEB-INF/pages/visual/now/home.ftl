@@ -39,6 +39,8 @@
                 </div>
                 <div class="col-lg-6" id="oldman">
                     <#include "oldman.ftl" />
+
+                    <#include "key.ftl" />
                 </div>
             </div>
             <div class="row">
@@ -54,4 +56,10 @@
 </div>
 
 </body>
+<script>
+    function change(source,des) {
+        $("#"+source).hide();
+        $("#"+des).show();
+    }
+</script>
 </html>

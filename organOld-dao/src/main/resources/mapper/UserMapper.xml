@@ -17,8 +17,8 @@
         WHERE uo.user_id=u.id AND u.username=#{username}
     </select>
 
-    <insert id="saveAndReturn" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO sysuser(username,password) VALUE (#{entity.username},#{entity.password})
+    <insert id="save" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO sysuser(username,password) VALUE (#{username},#{password})
     </insert>
 
     <insert id="setUserRole">

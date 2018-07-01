@@ -13,9 +13,9 @@ public interface UserService {
 
     Collection<GrantedAuthority> loadUserAuthorities(String username);
 
-    void saveAndReturn(SysUser user);
-
     void setUserRole(int id, int i);
 
     void setUserOrgan(int id, int organId);
+
+    void save(SysUser user);
 }

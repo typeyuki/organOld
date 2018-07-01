@@ -211,41 +211,48 @@ public class OldmanServiceImpl implements OldmanService {
 
         page.setEntity(oldman);
         List<OldmanModel> oldmanModelList=oldmanBaseDao.getByPage(page).stream().map(Wrappers.oldmanWrapper::wrap).collect(Collectors.toList());
-        oldmanAllInfoModel.setOldman(oldmanModelList.get(0));
+        if(oldmanModelList!=null && oldmanModelList.size()>0)
+            oldmanAllInfoModel.setOldman(oldmanModelList.get(0));
 
         List<Oldman> oldmanList=oldmanKeyDao.getByPage(page);
-        oldmanAllInfoModel.setKey(oldmanList.get(0));
+        if(oldmanList!=null && oldmanList.size()>0)
+            oldmanAllInfoModel.setKey(oldmanList.get(0));
 
         OldmanHealth oldmanHealth=new OldmanHealth();
         oldmanHealth.setOldman(oldman);
         page.setEntity(oldmanHealth);
         List<OldmanHealthModel> oldmanHealthModelList=oldmanHealthDao.getByPage(page).stream().map(Wrappers.oldmanHealthWrapper::wrap).collect(Collectors.toList());
-        oldmanAllInfoModel.setHealth(oldmanHealthModelList.get(0));
+        if(oldmanHealthModelList!=null && oldmanHealthModelList.size()>0)
+            oldmanAllInfoModel.setHealth(oldmanHealthModelList.get(0));
 
         OldmanFamily oldmanFamily=new OldmanFamily();
         oldmanFamily.setOldman(oldman);
         page.setEntity(oldmanFamily);
         List<OldmanFamilyModel> familyModelList=familyDao.getByPage(page).stream().map(Wrappers.familyWrapper::wrap).collect(Collectors.toList());
-        oldmanAllInfoModel.setFamily(familyModelList.get(0).getFamily());
+        if(familyModelList!=null && familyModelList.size()>0)
+            oldmanAllInfoModel.setFamily(familyModelList.get(0).getFamily());
 
         OldmanEconomic oldmanEconomic=new OldmanEconomic();
         oldmanEconomic.setOldman(oldman);
         page.setEntity(oldmanEconomic);
         List<OldmanEconomicModel> economicModelList=economicDao.getByPage(page).stream().map(Wrappers.economicWrapper::wrap).collect(Collectors.toList());
-        oldmanAllInfoModel.setEconomic(economicModelList.get(0).getEconomic());
+        if(economicModelList!=null && economicModelList.size()>0)
+            oldmanAllInfoModel.setEconomic(economicModelList.get(0).getEconomic());
 
         Linkman linkman=new Linkman();
         linkman.setOldman(oldman);
         page.setEntity(linkman);
         List<LinkmanModel> linkmanModelList=linkmanDao.getByPage(page).stream().map(Wrappers.linkmanWrapper::wrap).collect(Collectors.toList());
-        oldmanAllInfoModel.setLinkman(linkmanModelList.get(0));
+        if(linkmanModelList!=null && linkmanModelList.size()>0)
+            oldmanAllInfoModel.setLinkman(linkmanModelList.get(0));
 
         OrganOldman organOldman=new OrganOldman();
         organOldman.setFirType(21);
         organOldman.setOldman(oldman);
         page.setEntity(organOldman);
         List<OrganOldmanModel> organOldmanModelList=organOldmanDao.getByPage(page).stream().map(Wrappers.organOldmanWrapper::wrap).collect(Collectors.toList());
-        oldmanAllInfoModel.setOrgan(organOldmanModelList.get(0));
+        if(organOldmanModelList!=null && organOldmanModelList.size()>0)
+            oldmanAllInfoModel.setOrgan(organOldmanModelList.get(0));
 
         OrganOldman communityOldman=new OrganOldman();
         communityOldman.setFirType(22);

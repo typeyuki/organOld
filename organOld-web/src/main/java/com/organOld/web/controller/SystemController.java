@@ -50,9 +50,5 @@ public class SystemController {
     }
 
 
-    @RequestMapping(value = "/organReg",method = RequestMethod.GET)
-    public ModelAndView organReg(){
-        ModelAndView mv=new ModelAndView("organ_reg");
-        return mv;
-    }
+
 }

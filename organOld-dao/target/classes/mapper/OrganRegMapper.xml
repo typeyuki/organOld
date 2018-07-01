@@ -6,4 +6,8 @@
       SELECT * FROM organ_reg WHERE organ_id=#{organId}
     </select>
 
+    <insert id="save" parameterType="com.organOld.dao.entity.organ.OrganReg">
+        INSERT into organ_reg(organ_id,phone,email)
+        VALUES (#{organId},#{phone},#{email})
+    </insert>
 </mapper>

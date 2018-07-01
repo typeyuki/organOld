@@ -28,7 +28,7 @@
                 </div>
                 <div class="ibox-content">
                     <div>
-                        <#if status?? && status=="1">
+                        <#if status?? && (status=="1" || status=="3")>
                         <#else >
                             <a onclick="" href="javascript:void(0);" class="btn btn-primary ">添加</a>
                             <a onclick="" href="javascript:void(0);" class="btn btn-primary ">删除</a>
@@ -51,7 +51,7 @@
                     <table class="table table-striped table-bordered table-hover dataTables-example">
                         <thead>
                         <tr>
-                            <#if status?? && status=="1">
+                            <#if status?? && (status=="1" || status=="3")>
                             <#else >
                                 <th><input type='checkbox' /></th> <!-- checkbox-->
                             </#if>

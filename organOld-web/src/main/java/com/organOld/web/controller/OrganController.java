@@ -1,11 +1,8 @@
 package com.organOld.web.controller;
 
 import com.organOld.dao.entity.AutoValue;
-import com.organOld.service.contract.BTableRequest;
-import com.organOld.service.contract.HomeRequest;
-import com.organOld.service.contract.OrganOldmanRequest;
-import com.organOld.service.contract.OrganRequest;
-import com.organOld.service.contract.Result;
+import com.organOld.dao.entity.organ.OrganReg;
+import com.organOld.service.contract.*;
 import com.organOld.service.enumModel.AutoValueEnum;
 import com.organOld.service.enumModel.HomeEnum;
 import com.organOld.service.model.OrganModel;
@@ -18,6 +15,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -136,5 +134,41 @@ public class OrganController {
     public Result pass(@RequestParam int id){
         Result result=organService.pass(id);
         return result;
+    }
+
+    /**
+     * 审核不通过
+     * @param id
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/reject",method = RequestMethod.POST)
+    public Result reject(@RequestParam int id){
+        Result result=organService.reject(id);
+        return result;
+    }
+
+    /**
+     * 机构注册
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/reg",method = RequestMethod.POST)
+    public ModelAndView reg(OrganRegRequest organRegRequest, HttpServletRequest request){
+        ModelAndView mv=new ModelAndView("organ/reg_return");
+        Result result=organService.reg(organRegRequest,request);
+        mv.addObject("result",result);
+        return mv;
+    }
+
+    /**
+     * 机构注册页面
+     * @return
+     */
+    @RequestMapping(value = "/organReg",method = RequestMethod.GET)
+    public ModelAndView organReg(){
+        ModelAndView mv=new ModelAndView("organ/organ_reg");
+        mv.addObject("info",organService.getRegInfo());
+        return mv;
     }
 }

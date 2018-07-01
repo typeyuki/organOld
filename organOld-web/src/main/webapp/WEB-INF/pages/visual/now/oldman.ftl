@@ -6,26 +6,29 @@
         }
     }
 </style>
-        <div class="row" >
-            <div class="col-lg-6 box">
-                <div class="zz"></div>
-                <div id="oldman_zbPie" class="oldman_tu"></div>
-            </div>
-            <div class="col-lg-6 box" >
-                <div class="zz"></div>
-                <div id="oldman_familyPie" class="oldman_tu"></div>
-            </div>
+<div id="child_oldman">
+    <div class="row" >
+        <div class="col-lg-6 box">
+            <div class="zz"></div>
+            <div id="oldman_zbPie" class="oldman_tu"></div>
         </div>
-        <div class="row" >
-            <div class="col-lg-6 box">
-                <div class="zz"></div>
-                <div id="oldman_healthPie" class="oldman_tu"></div>
-            </div>
-            <div class="col-lg-6 box" >
-                <div class="zz"></div>
-                <div id="oldman_econmicPie" class="oldman_tu"></div>
-            </div>
+        <div class="col-lg-6 box" >
+            <div class="zz"></div>
+            <div id="oldman_familyPie" class="oldman_tu"></div>
         </div>
+    </div>
+    <div class="row" >
+        <div class="col-lg-6 box">
+            <div class="zz"></div>
+            <div id="oldman_healthPie" class="oldman_tu"></div>
+        </div>
+        <div class="col-lg-6 box" >
+            <div class="zz"></div>
+            <div id="oldman_econmicPie" class="oldman_tu"></div>
+        </div>
+    </div>
+</div>
+
 <script type="text/javascript">
     var oldman_tu_w,oldman_tu_h;
     var oldman_width=$("#oldman").width();
@@ -47,7 +50,21 @@
 
 
 <script>
-    title_text="重点老人比例";
+    title={
+        text: '',
+                link: "",
+                target: "self",// 保证不会在新的窗口弹出
+        textStyle:{
+            color:title_color,
+            fontSize:title_fontSize,
+            fontWeight:100
+        },
+        x:'0%',
+        y:'0%'
+    };
+
+    title.text="重点老人比例";
+    title.link="javascript: change('child_oldman','child_key')";
     legend_data=[{name:'老人',textStyle:{color:legend_color,fontSize:18}},{name:'非老人',textStyle:{color:legend_color,fontSize:18}}];
     series=[
         {
@@ -70,7 +87,7 @@
             ]
         }
     ];
-    var oldman_option_zb_pie = chartPie(title_text,legend_data,series);
+    var oldman_option_zb_pie = chartPieClick(title,legend_data,series);
     oldman_zbPie.setOption(oldman_option_zb_pie);
 
     //家庭结构

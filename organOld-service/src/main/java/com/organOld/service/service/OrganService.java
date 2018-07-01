@@ -1,11 +1,10 @@
 package com.organOld.service.service;
 
-import com.organOld.service.contract.BTableRequest;
-import com.organOld.service.contract.OrganOldmanRequest;
-import com.organOld.service.contract.OrganRequest;
-import com.organOld.service.contract.Result;
+import com.organOld.service.contract.*;
 import com.organOld.service.model.OrganModel;
+import com.organOld.service.model.OrganRegInfoModel;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 public interface OrganService {
@@ -18,4 +17,9 @@ public interface OrganService {
     OrganModel getById(int organId);
     Result pass(int organId);
 
+    OrganRegInfoModel getRegInfo();
+
+    Result reg(OrganRegRequest organReg, HttpServletRequest request);
+
+    Result reject(int id);
 }
