@@ -30,6 +30,7 @@
                     </div>
                 </div>
                 <div class="ibox-content">
+                    <a onclick=newPage("+data+",this,'/oldman/add_organ') href="javascript:void(0);" class="btn btn-primary ">添加</a>
                     <div>
                         <input class="id" type="text" placeholder="序号">
                         <input class="id" type="text" placeholder="机构序号">

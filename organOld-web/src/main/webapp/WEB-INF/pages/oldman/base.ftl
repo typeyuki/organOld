@@ -31,8 +31,9 @@
                 </div>
                 <div class="ibox-content">
                     <div>
-                        <a onclick="" href="javascript:void(0);" class="btn btn-primary ">添加</a>
-                        <a onclick="" href="javascript:void(0);" class="btn btn-primary ">删除</a>
+                        <a onclick=newPage("+data+",this,'/oldman/base/add') href="javascript:void(0);" class="btn btn-primary ">添加</a>
+                        <a onclick=newPage("+data+",this,'/oldman/base/delete') href="javascript:void(0);" class="btn btn-primary ">删除</a>
+                        <a onclick=newPage("+data+",this,'/oldman/base/modify') href="javascript:void(0);" class="btn btn-primary ">修改</a>
                     </div>
                     <div>
                         <input class="id" type="text" placeholder="序号">
@@ -86,7 +87,11 @@
 <#--<script src="/js/plugins/jeditable/jquery.jeditable.js"></script>-->
 
 <script src="/js/content.min.js?v=1.0.0"></script>
+<<<<<<< HEAD
+<script src="/static/js/common.js"></script>
+=======
 <script src="/static/js/common.js" ></script>
+>>>>>>> 9575856b71bbeba6b5e1bad89030c93844d7bb80
 <script src="/static/js/oldman/base.js" ></script>
 <script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
 

@@ -63,9 +63,9 @@ public class OldmanController {
      * 添加  全部信息 页面
      * @return
      */
-    @RequestMapping(value = "/base/add",method = RequestMethod.GET)
+    @RequestMapping(value = "/add",method = RequestMethod.GET)
     public ModelAndView add_get(){
-        ModelAndView mv=new ModelAndView("oldman/add");
+        ModelAndView mv=new ModelAndView("oldman/add_all");
         mv.addObject("info",oldmanService.getAddInfo());
         return mv;
     }
