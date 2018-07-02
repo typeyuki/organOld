@@ -19,4 +19,12 @@
         FROM auto_value
         WHERE type=#{type}
     </select>
+
+
+    <select id="getStringLikeIndex" resultType="java.lang.Integer">
+        SELECT id
+        FROM auto_value
+        WHERE value LIKE concat("%",#{str},"%")
+        and type=#{type}
+    </select>
 </mapper>

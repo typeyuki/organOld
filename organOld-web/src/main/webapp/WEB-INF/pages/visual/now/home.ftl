@@ -36,11 +36,14 @@
             <div class="row">
                 <div class="col-lg-6"  id="total">
                     <#include "total.ftl" />
+                    <#include "base.ftl" />
                 </div>
                 <div class="col-lg-6" id="oldman">
                     <#include "oldman.ftl" />
-
                     <#include "key.ftl" />
+                    <#include "family.ftl" />
+                    <#include "economic.ftl" />
+                    <#include "health.ftl" />
                 </div>
             </div>
             <div class="row">

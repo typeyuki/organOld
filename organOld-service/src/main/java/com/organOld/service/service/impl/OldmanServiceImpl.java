@@ -12,16 +12,26 @@ import com.organOld.dao.entity.organ.Organ;
 import com.organOld.dao.entity.organ.OrganOldman;
 import com.organOld.dao.repository.*;
 import com.organOld.dao.util.Page;
+import com.organOld.service.enumModel.AutoValueEnum;
+import com.organOld.service.enumModel.HealthEnum;
 import com.organOld.service.model.*;
 import com.organOld.service.service.CommonService;
 import com.organOld.service.service.OldmanService;
+import com.organOld.service.util.Tool;
 import com.organOld.service.wrapper.Wrappers;
 import com.organOld.service.contract.*;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -268,5 +278,234 @@ public class OldmanServiceImpl implements OldmanService {
         oldmanAllInfoModel.setHome(homeOldmanModelList);
 
         return oldmanAllInfoModel;
+    }
+
+
+    @Override
+    public void importExcel(MultipartFile file) throws IOException {
+        List temp = new ArrayList();
+        Workbook wb0 = new HSSFWorkbook(file.getInputStream());
+        //获取Excel文档中的第一个表单
+        Sheet sht0 = wb0.getSheetAt(0);
+        //对Sheet中的每一行进行迭代
+        for (Row r : sht0) {
+            //如果当前行的行号（从0开始）未达到2（第二行）则从新循环
+            while (r.getRowNum() < 2) {
+                break;
+            }
+            //创建实体类
+            Oldman oldman=new Oldman();
+            oldman.setName(r.getCell(3).getStringCellValue());
+            oldman.setSex((r.getCell(4).getStringCellValue().equals("男"))?2:1);
+            oldman.setBirthday(Tool.stringToDate((r.getCell(5).getStringCellValue())));
+            oldman.setPid(r.getCell(6).getStringCellValue());
+            oldman.setAddress(r.getCell(7).getStringCellValue());
+            oldman.setPhone(r.getCell(8).getStringCellValue());
+
+            String politicalStatus=r.getCell(9).getStringCellValue().equals("")?"群众":r.getCell(9).getStringCellValue();
+            Integer poliIndex=autoValueDao.getStringLikeIndex(politicalStatus, AutoValueEnum.ZZMM.getIndex());
+            oldman.setPoliticalStatus(poliIndex+"");
+
+            if(r.getCell(11).getStringCellValue().equals("1")){
+                Integer hjIndex=autoValueDao.getStringLikeIndex("户籍", AutoValueEnum.HJ.getIndex());
+                oldman.setCensus(hjIndex+"");
+            }else if(r.getCell(12).getStringCellValue().equals("1")){
+                Integer hjIndex=autoValueDao.getStringLikeIndex("非户籍", AutoValueEnum.HJ.getIndex());
+                oldman.setCensus(hjIndex+"");
+            }else if(r.getCell(13).getStringCellValue().equals("1")){
+                Integer hjIndex=autoValueDao.getStringLikeIndex("人户分离", AutoValueEnum.HJ.getIndex());
+                oldman.setCensus(hjIndex+"");
+            }
+
+            Linkman linkman=new Linkman();
+            linkman.setName(r.getCell(25).getStringCellValue());
+            linkman.setRelation(r.getCell(26).getStringCellValue());
+            linkman.setPhone(r.getCell(27).getStringCellValue());
+
+
+
+            OldmanHealth health=new OldmanHealth();
+            health.setBloodType(r.getCell(10).getStringCellValue());
+            List<Integer> selectIdList=new ArrayList<>();
+            if(r.getCell(28).getStringCellValue().equals("1")){
+                selectIdList.add(oldmanHealthDao.getSelectStringLikeIndex("青霉素", HealthEnum.YW.getIndex()));
+            }
+            if(r.getCell(29).getStringCellValue().equals("1")){
+                selectIdList.add(oldmanHealthDao.getSelectStringLikeIndex("磺胺", HealthEnum.YW.getIndex()));
+            }
+            if(r.getCell(30).getStringCellValue().equals("1")){
+                selectIdList.add(oldmanHealthDao.getSelectStringLikeIndex("四环素", HealthEnum.YW.getIndex()));
+            }
+            if(r.getCell(31).getStringCellValue().equals("1")){
+                selectIdList.add(oldmanHealthDao.getSelectStringLikeIndex("其他", HealthEnum.YW.getIndex()));
+            }
+
+            if(r.getCell(32).getStringCellValue().equals("1")){
+                selectIdList.add(oldmanHealthDao.getSelectStringLikeIndex("高血压", HealthEnum.MB.getIndex()));
+            }
+            if(r.getCell(33).getStringCellValue().equals("1")){
+                selectIdList.add(oldmanHealthDao.getSelectStringLikeIndex("糖尿病", HealthEnum.MB.getIndex()));
+            }
+            if(r.getCell(34).getStringCellValue().equals("1")){
+                selectIdList.add(oldmanHealthDao.getSelectStringLikeIndex("脑卒中", HealthEnum.MB.getIndex()));
+            }
+            if(r.getCell(35).getStringCellValue().equals("1")){
+                selectIdList.add(oldmanHealthDao.getSelectStringLikeIndex("帕金森", HealthEnum.MB.getIndex()));
+            }
+            if(r.getCell(36).getStringCellValue().equals("1")){
+                selectIdList.add(oldmanHealthDao.getSelectStringLikeIndex("癫痫", HealthEnum.MB.getIndex()));
+            }
+            if(r.getCell(37).getStringCellValue().equals("1")){
+                selectIdList.add(oldmanHealthDao.getSelectStringLikeIndex("肺炎", HealthEnum.MB.getIndex()));
+            }
+            if(r.getCell(38).getStringCellValue().equals("1")){
+                selectIdList.add(oldmanHealthDao.getSelectStringLikeIndex("慢阻肺", HealthEnum.MB.getIndex()));
+            }
+            if(r.getCell(39).getStringCellValue().equals("1")){
+                selectIdList.add(oldmanHealthDao.getSelectStringLikeIndex("冠心病", HealthEnum.MB.getIndex()));
+            }
+            if(r.getCell(40).getStringCellValue().equals("1")){
+                selectIdList.add(oldmanHealthDao.getSelectStringLikeIndex("甲亢/甲减", HealthEnum.MB.getIndex()));
+            }
+            if(r.getCell(41).getStringCellValue().equals("1")){
+                selectIdList.add(oldmanHealthDao.getSelectStringLikeIndex("慢性肾功能障碍", HealthEnum.MB.getIndex()));
+            }
+            if(r.getCell(42).getStringCellValue().equals("1")){
+                selectIdList.add(oldmanHealthDao.getSelectStringLikeIndex("肝炎/肝硬化", HealthEnum.MB.getIndex()));
+            }
+            if(r.getCell(43).getStringCellValue().equals("1")){
+                selectIdList.add(oldmanHealthDao.getSelectStringLikeIndex("恶性肿瘤", HealthEnum.MB.getIndex()));
+            }
+            if(r.getCell(44).getStringCellValue().equals("1")){
+                selectIdList.add(oldmanHealthDao.getSelectStringLikeIndex("骨折", HealthEnum.MB.getIndex()));
+            }
+            if(r.getCell(45).getStringCellValue().equals("1")){
+                selectIdList.add(oldmanHealthDao.getSelectStringLikeIndex("其他消化道疾病", HealthEnum.MB.getIndex()));
+            }
+            if(r.getCell(46).getStringCellValue().equals("1")){
+                selectIdList.add(oldmanHealthDao.getSelectStringLikeIndex("类风关", HealthEnum.MB.getIndex()));
+            }
+
+            if(r.getCell(49).getStringCellValue().equals("1")){
+                selectIdList.add(oldmanHealthDao.getSelectStringLikeIndex("上厕所", HealthEnum.SN.getIndex()));
+            }
+            if(r.getCell(50).getStringCellValue().equals("1")){
+                selectIdList.add(oldmanHealthDao.getSelectStringLikeIndex("洗澡", HealthEnum.SN.getIndex()));
+            }
+            if(r.getCell(51).getStringCellValue().equals("1")){
+                selectIdList.add(oldmanHealthDao.getSelectStringLikeIndex("穿衣", HealthEnum.SN.getIndex()));
+            }
+            if(r.getCell(52).getStringCellValue().equals("1")){
+                selectIdList.add(oldmanHealthDao.getSelectStringLikeIndex("上下床", HealthEnum.SN.getIndex()));
+            }
+            if(r.getCell(53).getStringCellValue().equals("1")){
+                selectIdList.add(oldmanHealthDao.getSelectStringLikeIndex("室内行走", HealthEnum.SN.getIndex()));
+            }
+            if(r.getCell(54).getStringCellValue().equals("1")){
+                selectIdList.add(oldmanHealthDao.getSelectStringLikeIndex("吃饭", HealthEnum.SN.getIndex()));
+            }
+
+
+            List<HealthAdd> healthAddList=new ArrayList<>();
+            if(!r.getCell(47).getStringCellValue().equals("")){
+                String[] add=r.getCell(47).getStringCellValue().split("#");
+                for(int i=0;i<add.length;i++){
+                    HealthAdd healthAdd=new HealthAdd();
+                    healthAdd.setDesc(add[i]);
+                    healthAdd.setType(HealthEnum.EXZL.getIndex());
+                    healthAddList.add(healthAdd);
+                }
+            }
+            if(!r.getCell(48).getStringCellValue().equals("")){
+                String[] add=r.getCell(48).getStringCellValue().split("#");
+                for(int i=0;i<add.length;i++){
+                    HealthAdd healthAdd=new HealthAdd();
+                    healthAdd.setDesc(add[i]);
+                    healthAdd.setType(HealthEnum.GZ.getIndex());
+                    healthAddList.add(healthAdd);
+                }
+            }
+
+            if(r.getCell(55).getStringCellValue().equals("1")){
+                Integer IndexSZ=autoValueDao.getStringLikeIndex("痴呆", AutoValueEnum.SZ.getIndex());
+                health.setIntelligence(IndexSZ+"");
+            }
+            if(r.getCell(56).getStringCellValue().equals("1")){
+                Integer IndexSZ=autoValueDao.getStringLikeIndex("智障", AutoValueEnum.SZ.getIndex());
+                health.setIntelligence(IndexSZ+"");
+            }
+            if(r.getCell(57).getStringCellValue().equals("1")){
+                Integer IndexSZ=autoValueDao.getStringLikeIndex("正常", AutoValueEnum.SZ.getIndex());
+                health.setIntelligence(IndexSZ+"");
+            }
+
+            if(r.getCell(58).getStringCellValue().equals("1")){
+                Integer IndexSZ=autoValueDao.getStringLikeIndex("失明", AutoValueEnum.SL.getIndex());
+                health.setIntelligence(IndexSZ+"");
+            }
+            if(r.getCell(59).getStringCellValue().equals("1")){
+                Integer IndexSZ=autoValueDao.getStringLikeIndex("一般障碍", AutoValueEnum.SL.getIndex());
+                health.setIntelligence(IndexSZ+"");
+            }
+            if(r.getCell(60).getStringCellValue().equals("1")){
+                Integer IndexSZ=autoValueDao.getStringLikeIndex("正常", AutoValueEnum.SL.getIndex());
+                health.setIntelligence(IndexSZ+"");
+            }
+
+            if(!r.getCell(60).getStringCellValue().equals("")){
+                String[] add=r.getCell(60).getStringCellValue().split("#");
+                for(int i=0;i<add.length;i++){
+                    HealthAdd healthAdd=new HealthAdd();
+                    healthAdd.setDesc(add[i]);
+                    healthAdd.setType(HealthEnum.CJQK.getIndex());
+                    healthAddList.add(healthAdd);
+                }
+            }
+
+            OldmanFamily family=new OldmanFamily();
+            if(r.getCell(61).getStringCellValue().equals("1")){
+                family.setFamily(autoValueDao.getStringLikeIndex("纯老", AutoValueEnum.JJJG.getIndex())+"");
+            }
+            if(r.getCell(62).getStringCellValue().equals("1")){
+                family.setFamily(autoValueDao.getStringLikeIndex("独居", AutoValueEnum.JJJG.getIndex())+"");
+            }
+            if(r.getCell(63).getStringCellValue().equals("1")){
+                family.setFamily(autoValueDao.getStringLikeIndex("失独", AutoValueEnum.JJJG.getIndex())+"");
+            }
+            if(r.getCell(64).getStringCellValue().equals("1")){
+                family.setFamily(autoValueDao.getStringLikeIndex("一老养", AutoValueEnum.JJJG.getIndex())+"");
+            }
+            if(r.getCell(65).getStringCellValue().equals("1")){
+                family.setFamily(autoValueDao.getStringLikeIndex("孤老", AutoValueEnum.JJJG.getIndex())+"");
+            }
+            if(r.getCell(66).getStringCellValue().equals("1")){
+                family.setFamily(autoValueDao.getStringLikeIndex("三支人员", AutoValueEnum.JJJG.getIndex())+"");
+            }
+            if(r.getCell(67).getStringCellValue().equals("1")){
+                family.setFamily(autoValueDao.getStringLikeIndex("其他", AutoValueEnum.JJJG.getIndex())+"");
+            }
+
+            OldmanEconomic economic=new OldmanEconomic();
+            if(r.getCell(68).getStringCellValue().equals("1")){
+                economic.setEconomic(autoValueDao.getStringLikeIndex("帮困", AutoValueEnum.JJTJ.getIndex())+"");
+            }
+            if(r.getCell(69).getStringCellValue().equals("1")){
+                economic.setEconomic(autoValueDao.getStringLikeIndex("低保", AutoValueEnum.JJTJ.getIndex())+"");
+            }
+            if(r.getCell(70).getStringCellValue().equals("1")){
+                economic.setEconomic(autoValueDao.getStringLikeIndex("养老保险", AutoValueEnum.JJTJ.getIndex())+"");
+            }
+            if(r.getCell(71).getStringCellValue().equals("1")){
+                economic.setEconomic(autoValueDao.getStringLikeIndex("医疗救助金", AutoValueEnum.JJTJ.getIndex())+"");
+            }
+            if(r.getCell(72).getStringCellValue().equals("1")){
+                economic.setEconomic(autoValueDao.getStringLikeIndex("城镇医保", AutoValueEnum.JJTJ.getIndex())+"");
+            }
+            if(r.getCell(73).getStringCellValue().equals("1")){
+                economic.setEconomic(autoValueDao.getStringLikeIndex("其他", AutoValueEnum.JJTJ.getIndex())+"");
+            }
+
+        }
+
     }
 }

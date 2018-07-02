@@ -23,28 +23,35 @@
     <select id="getByPage" parameterType="com.organOld.dao.util.Page" resultType="com.organOld.dao.entity.oldman.Oldman">
         SELECT ob.id,ob.name,
         <if test="entity!=null and entity.future!=null and entity.future!=''">
-            ob.future_goal goal
+            ob.future_goal goal,ob.future_key_status key_status
         </if>
         <if test="entity==null or entity.future==null or entity.future==''">
             ob.goal,ob.key_status
         </if>
         FROM oldman_base ob,organ org,auto_value x
         WHERE x.id=ob.xq_id AND org.id=x.parent_index
-        <if test="entity.keyGoalBase!=null and entity.keyGoalBase!=0">
-            AND ob.goal > ${entity.keyGoalBase}
+        <if test="entity!=null and entity.future!=null and entity.future!=''">
+            and (ob.future_key_status =2 or ob.future_key_status =3 or ob.future_key_status =4)
         </if>
+        <if test="entity==null or entity.future==null or entity.future==''">
+            and (ob.key_status =2 or ob.key_status =3 or ob.key_status =4)
+        </if>
+
         <if test="entity!=null and  entity.id!=null and entity.id!=0">
             and ob.id=#{entity.id}
         </if>
         <if test="entity!=null and entity.jwId!=null and entity.jwId!=0">
             and org.id=#{entity.jwId}
         </if>
-        <if test="sortType!=null and sortType!=''">
-            ORDER BY ${sortType}
+
+
+        <if test="entity!=null and entity.future!=null and entity.future!=''">
+            ORDER BY future_key_status
         </if>
-        <if test="sort!=null and sort!=''">
-            ${sort}
+        <if test="entity==null or entity.future==null or entity.future==''">
+            ORDER BY key_status
         </if>
+        desc
         <if test="length!=null and length!=0">
             limit #{start},#{length}
         </if>
@@ -53,7 +60,13 @@
     <select id="getSizeByPage" parameterType="com.organOld.dao.util.Page" resultType="java.lang.Long">
         SELECT count(1)
         FROM oldman_base ob,organ org,auto_value x
-        WHERE x.id=ob.xq_id AND org.id=x.parent_index AND ob.goal > ${entity.keyGoalBase}
+        WHERE x.id=ob.xq_id AND org.id=x.parent_index
+        <if test="entity!=null and entity.future!=null and entity.future!=''">
+            and (ob.future_key_status =2 or ob.future_key_status =3 or ob.future_key_status =4)
+        </if>
+        <if test="entity==null or entity.future==null or entity.future==''">
+            and (ob.key_status =2 or ob.key_status =3 or ob.key_status =4)
+        </if>
         <if test="entity!=null and entity.jwId!=null and entity.jwId!=0">
             and org.id=#{entity.jwId}
         </if>

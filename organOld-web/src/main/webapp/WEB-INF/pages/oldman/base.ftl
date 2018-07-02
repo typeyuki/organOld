@@ -44,10 +44,8 @@
                         <input class="age" type="text" placeholder="居委">
                         <input class="time" type="text" placeholder="模糊匹配">
                         <button id="search">搜索</button>
-                        <form action="/importExcel" method="post" enctype="multipart/form-data">
+                        <form action="/oldman/importExcel" method="post" enctype="multipart/form-data">
                             <input type="file" name="file">
-                            <input type="hidden" name="pType" value="oldman">
-                            <input type="hidden" name="cType" value="base">
                             <input type="submit" value="导入">
                         </form>
                     </div>

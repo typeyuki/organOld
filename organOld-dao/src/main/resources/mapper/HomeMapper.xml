@@ -55,7 +55,7 @@
             limit #{start},#{length}
         </if>
     </select>
-    <select id="getSizeByPage" parameterType="com.organOld.dao.util.Page" resultMap="home">
+    <select id="getSizeByPage" parameterType="com.organOld.dao.util.Page" resultType="java.lang.Long">
         SELECT count(1)
         <if test="entity.firType!=null and (entity.firType==1 or entity.firType==3)">
             FROM home

@@ -7,10 +7,6 @@ $(document).ready(function(){
     },{
         data:"oldmanName"
     },{
-        data:"homeType"
-    },{
-        data:"homeName"
-    },{
         data:"timeIn"
     },{
         data:"timeOut"
@@ -23,14 +19,14 @@ $(document).ready(function(){
         // 列样式
         // 增加一列，包括删除和修改，同时将我们需要传递的数据传递到链接中
         {
-            "targets": [7], // 目标列位置，下标从0开始
+            "targets": [5], // 目标列位置，下标从0开始
             "data": "oldmanId", // 数据列名
             "render": function(data, type, full) { // 返回自定义内容
                 return "<span class='look' id='"+data+"'>查看</span>";
             }
         },
         //不进行排序的列
-        { "bSortable": false, "aTargets": [ 1,2 ,3, 4,5,6,7] }
+        { "bSortable": false, "aTargets": [ 1,2 ,3, 4,5] }
     ];
 
     var table =$(".dataTables-example").dataTable(
@@ -46,7 +42,7 @@ $(document).ready(function(){
             "columns":columns,
             "order":order,
             "columnDefs": columnDefs,
-            "sAjaxSource": "/oldman/homeOldmanData",//这个是请求的地址
+            "sAjaxSource": "/home/man",//这个是请求的地址
             "fnServerData": retrieveData
         });
     function retrieveData(url, aoData, fnCallback) {
@@ -57,7 +53,8 @@ $(document).ready(function(){
                 "iDisplayLength" : aoData.iDisplayLength,
                 "iSortCol_0" : aoData.iSortCol_0,
                 "sEcho" : aoData.sEcho,
-                "sSortDir_0" : aoData.sSortDir_0
+                "sSortDir_0" : aoData.sSortDir_0,
+                "homeId":hid
             },
             type: 'POST',
             dataType: 'json',

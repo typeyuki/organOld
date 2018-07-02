@@ -208,11 +208,11 @@ public class KeyUpdate{
                             Oldman oldman=new Oldman();
                             oldman.setId(oldmanKey.getOldmanId());
                             oldman.setGoal(oldmanKeyService.calculateKeyGoal(oldmanKey));
-                            if(futureTime!=null && !futureTime.equals("")){
-                                oldman.setKeyStatus(oldmanKey.getFutureKeyStatus());
-                            }else{
+//                            if(futureTime!=null && !futureTime.equals("")){
+//                                oldman.setKeyStatus(oldmanKey.getFutureKeyStatus());
+//                            }else{
                                 oldman.setKeyStatus(oldmanKey.getKeyStatus());
-                            }
+//                            }
 
                             oldmanKeyService.checkKeyStatus(oldman);
                             oldmanList.add(oldman);

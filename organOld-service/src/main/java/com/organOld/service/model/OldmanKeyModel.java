@@ -2,8 +2,16 @@ package com.organOld.service.model;
 
 public class OldmanKeyModel {
     private Integer oldmanId;
-    private String oldmanName;
+    private String oldmanNameKeyStatus;//以# 分割
     private Integer goal;
+
+    public String getOldmanNameKeyStatus() {
+        return oldmanNameKeyStatus;
+    }
+
+    public void setOldmanNameKeyStatus(String oldmanNameKeyStatus) {
+        this.oldmanNameKeyStatus = oldmanNameKeyStatus;
+    }
 
     public Integer getOldmanId() {
         return oldmanId;
@@ -13,13 +21,6 @@ public class OldmanKeyModel {
         this.oldmanId = oldmanId;
     }
 
-    public String getOldmanName() {
-        return oldmanName;
-    }
-
-    public void setOldmanName(String oldmanName) {
-        this.oldmanName = oldmanName;
-    }
 
     public Integer getGoal() {
         return goal;

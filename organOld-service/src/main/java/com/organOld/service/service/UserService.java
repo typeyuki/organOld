@@ -1,6 +1,8 @@
 package com.organOld.service.service;
 
 import com.organOld.dao.entity.SysUser;
+import com.organOld.service.contract.BTableRequest;
+import com.organOld.service.contract.UserRequest;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Collection;
@@ -18,4 +20,6 @@ public interface UserService {
     void setUserOrgan(int id, int organId);
 
     void save(SysUser user);
+
+    String getByPage(UserRequest userRequest, BTableRequest bTableRequest);
 }

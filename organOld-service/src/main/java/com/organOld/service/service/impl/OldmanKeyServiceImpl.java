@@ -102,6 +102,7 @@ public class OldmanKeyServiceImpl implements OldmanKeyService {
         Boolean isKeyNow=false;
         if(oldman.getGoal()>= ValueConstant.OLDMAN_KEY_GOAL_BASE)
             isKeyNow=true;
+
         if(oldman.getKeyStatus()== KeyStatusEnum.NO.getIndex() || oldman.getKeyStatus()== KeyStatusEnum.DEL.getIndex()){
             if(isKeyNow){
                 //上次不是 这次是
@@ -110,8 +111,7 @@ public class OldmanKeyServiceImpl implements OldmanKeyService {
                 //上次这次都不是
                 oldman.setKeyStatus(KeyStatusEnum.NO.getIndex());
             }
-        }
-        if(oldman.getKeyStatus()== KeyStatusEnum.YES.getIndex() || oldman.getKeyStatus()== KeyStatusEnum.ADD.getIndex()){
+        }else if(oldman.getKeyStatus()== KeyStatusEnum.YES.getIndex() || oldman.getKeyStatus()== KeyStatusEnum.ADD.getIndex()){
             if(isKeyNow){
                 //上次这次都是
                 oldman.setKeyStatus(KeyStatusEnum.YES.getIndex());

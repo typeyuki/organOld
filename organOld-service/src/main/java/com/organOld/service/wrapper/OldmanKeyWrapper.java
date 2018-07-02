@@ -26,7 +26,7 @@ public class OldmanKeyWrapper implements Wrapper<Oldman,OldmanKeyModel,OldmanKey
         OldmanKeyModel oldmanKeyModel=new OldmanKeyModel();
         oldmanKeyModel.setOldmanId(oldman.getId());
         oldmanKeyModel.setGoal(oldman.getGoal());
-        oldmanKeyModel.setOldmanName(oldman.getName());
+        oldmanKeyModel.setOldmanNameKeyStatus(oldman.getName()+"#"+oldman.getKeyStatus());
         return oldmanKeyModel;
     }
 

@@ -27,4 +27,26 @@
     <insert id="setUserOrgan">
         INSERT INTO user_organ(user_id,organ_id) VALUE (#{userId},#{organId})
     </insert>
+
+
+
+    <select id="getByPage" parameterType="com.organOld.dao.util.Page" resultType="com.organOld.dao.entity.SysUser">
+        SELECT u.id,u.username,u.password,r.role_desc,u.time
+        FROM sysuser u,sysrole r,user_role ur
+        WHERE u.id=ur.user_id and r.id=ur.role_id
+        <if test="sortType!=null and sortType!=''">
+            ORDER BY ${sortType}
+        </if>
+        <if test="sort!=null and sort!=''">
+            ${sort}
+        </if>
+        <if test="length!=null and length!=0">
+            limit #{start},#{length}
+        </if>
+    </select>
+    <select id="getSizeByPage" parameterType="com.organOld.dao.util.Page" resultType="java.lang.Long">
+        SELECT count(1)
+        FROM sysuser u,sysrole r,user_role ur
+        WHERE u.id=ur.user_id and r.id=ur.role_id
+    </select>
 </mapper>

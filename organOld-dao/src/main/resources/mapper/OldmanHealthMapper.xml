@@ -94,4 +94,11 @@
     <select id="getAllHealthSelect" resultType="com.organOld.dao.entity.oldman.HealthSelect">
         SELECT * FROM health_select
     </select>
+
+    <select id="getSelectStringLikeIndexx" resultType="java.lang.Integer">
+        SELECT id
+        FROM health_select
+        WHERE sec_type_name LIKE concat("%",#{str},"%")
+        and fir_type=#{type}
+    </select>
 </mapper>

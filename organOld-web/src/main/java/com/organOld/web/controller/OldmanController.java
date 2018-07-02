@@ -6,9 +6,11 @@ import com.organOld.service.service.OldmanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 
 /**
  * Created by netlab606 on 2018/4/1.
@@ -45,6 +47,14 @@ public class OldmanController {
     @RequestMapping(value = "/baseData",method = RequestMethod.POST)
     public String data(OldmanRequest oldmanRequest, BTableRequest bTableRequest, HttpSession session){
         return oldmanService.getOldmanByPage(oldmanRequest,bTableRequest,session);
+    }
+
+
+    @RequestMapping(value = "/importExcel",method = RequestMethod.POST)
+    public ModelAndView importExcel(@RequestParam MultipartFile file) throws IOException {
+        ModelAndView mv=new ModelAndView("redirect:/oldman/base");
+        oldmanService.importExcel(file);
+        return mv;
     }
 
     /**

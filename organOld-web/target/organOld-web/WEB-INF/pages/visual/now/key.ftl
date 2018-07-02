@@ -32,7 +32,7 @@
     var key_tu_w,key_tu_h,key_tu_big_w,key_tu_big_h;
     var key_width=$("#oldman").width();
     if(winWidth>=1900){
-        key_tu_w=oldman_width/3.2;
+        key_tu_w=key_width/3.2;
         key_tu_h=winHeight/4.4;
         key_tu_big_w=key_width;
         key_tu_big_h=winHeight/4.4;

@@ -21,11 +21,11 @@
         <div class="zz"></div>
         <div id="organ_jg_pie" class="organ_tu"></div>
     </div>
-    <div class="col-lg-4 box line">
+    <div class="col-lg-4 box">
         <div class="zz"></div>
         <div id="organ_sq_sub_pie" class="organ_tu"></div>
     </div>
-    <div class="col-lg-4 box" style="position: relative;left: 10px">
+    <div class="col-lg-4 box">
         <div class="zz"></div>
         <div id="organ_jj_pie" class="organ_tu"></div>
     </div>
@@ -150,9 +150,11 @@
     organ_sq_sub_pie.setOption(organ_option_sq_sub_pie);
 
     title_text="居家养老";
-    legend_data=[{name:'家庭养老',textStyle:{color:legend_color,fontSize:18}},{name:'长护险',textStyle:{color:legend_color,fontSize:18}},{name:'智能化应用',textStyle:{color:legend_color,fontSize:18}}
-        ,{name:'家庭医生',textStyle:{color:legend_color,fontSize:18}}
-        ,{name:'家庭病床',textStyle:{color:legend_color,fontSize:18}}];
+    legend_data=[{name:'家庭养老',link:"javascript: change('child_organ','child_homeOldman')",target: "self",textStyle:{color:legend_color,fontSize:18}},
+        {name:'长护险',textStyle:{color:legend_color,fontSize:18}},
+        {name:'智能化应用',textStyle:{color:legend_color,fontSize:18}},
+        {name:'家庭医生',textStyle:{color:legend_color,fontSize:18}},
+        {name:'家庭病床',textStyle:{color:legend_color,fontSize:18}}];
     series=[{
         name: '居家养老',
         type: 'pie',

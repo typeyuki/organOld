@@ -21,38 +21,41 @@
 
     }
 </style>
-        <div class="row">
-            <div class="col-lg-6 box total_text">
-                <div class="zz"></div>
-                <p style="text-align: center;" id="ttt"><span class="title">街道人口总数：</span><span class="number">16万</span><span class="title">人</span></p>
-                <p style="text-align: center"><span class="title">60岁及以上老人总数：</span><span class="number">4.1万</span><span class="title">人</span></p>
-                <p style="text-align: center"><span class="title">80岁及以上老人总数：</span><span class="number">5300</span><span class="title">人</span></p>
-            </div>
-            <div class="col-lg-6">
-                <div class="row">
-                    <div class="col-lg-12  box" >
-                        <div class="zz"></div>
-                        <div id="total_oldmanPie" class="total_tu"></div>
-                    </div>
+<div id="child_total">
+    <div class="row">
+        <div class="col-lg-6 box total_text">
+            <div class="zz"></div>
+            <p style="text-align: center;" id="ttt"><span class="title">街道人口总数：</span><span class="number">16万</span><span class="title">人</span></p>
+            <p style="text-align: center"><span class="title">60岁及以上老人总数：</span><span class="number">4.1万</span><span class="title">人</span></p>
+            <p style="text-align: center"><span class="title">80岁及以上老人总数：</span><span class="number">5300</span><span class="title">人</span></p>
+        </div>
+        <div class="col-lg-6">
+            <div class="row">
+                <div class="col-lg-12  box" >
+                    <div class="zz"></div>
+                    <div id="total_oldmanPie" class="total_tu"></div>
                 </div>
-                <div class="row">
-                    <div class="col-lg-12  box">
-                        <div class="zz"></div>
-                        <div id="total_zdPie" class="total_tu"></div>
-                    </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12  box">
+                    <div class="zz"></div>
+                    <div id="total_zdPie" class="total_tu"></div>
                 </div>
             </div>
         </div>
-        <div class="row" >
-            <div class="col-lg-6 box">
-                <div class="zz"></div>
-                <div id="total_pqBar" class="total_tu_big"></div>
-            </div>
-            <div class="col-lg-6 box">
-                <div class="zz"></div>
-                <div id="total_statusPie" class="total_tu_big"></div>
-            </div>
     </div>
+    <div class="row" >
+        <div class="col-lg-6 box">
+            <div class="zz"></div>
+            <div id="total_pqBar" class="total_tu_big"></div>
+        </div>
+        <div class="col-lg-6 box">
+            <div class="zz"></div>
+            <div id="total_statusPie" class="total_tu_big"></div>
+        </div>
+    </div>
+</div>
+
 <script type="text/javascript">
     var total_tu_w,total_tu_h,total_tu_big_w,total_tu_big_h,total_text_h;
     var total_width=$("#total").width();
@@ -145,7 +148,8 @@
 
 
     //60岁老人占比
-    title_text="老人\n\n比例";
+    title.text="老人\n\n比例";
+    title.link="javascript: change('child_total','child_base')";
     legend_data=[{name:'老人',textStyle:{color:legend_color,fontSize:legand_fontSize}},{name:'非老人',textStyle:{color:legend_color,fontSize:legand_fontSize}}];
     series=[
         {
@@ -168,7 +172,7 @@
             ]
         }
     ];
-    var total_option_oldman_pie = chartPie(title_text,legend_data,series);
+    var total_option_oldman_pie = chartPieClick(title,legend_data,series);
 
     //重点老人占比
     title_text="80岁及\n\n以上\n\n老人比例";

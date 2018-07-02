@@ -2,10 +2,14 @@
 var legend_color='#fff';
 var title_color="#fff";
 var series_color_1='#6cbdfc',series_color_2='#dc88a9',series_color_3='#ffd289',series_color_4='#48e8dc',series_color_5='#f2f989',series_color_6='orange',series_color_7='rgb(139, 182, 93)';
-var  title,title_text,yAxis_data,xAxis_data,series,legend_data;
+var  title_text,yAxis_data,xAxis_data,series,legend_data;
 
 var series_lebel_fontSize,title_fontSize,yAxis_axisLabel_fontSize_bar,yAxis_axisLabel_fontSize_line,xAxis_axisLabel_fontSize,
     yAxis_axisLabel_fontSize_barHei,xAxis_axisLabel_fontSize_barHei,series_item_fontSize,legand_fontSize;
+
+
+
+
 if(winWidth>=1900){
     series_lebel_fontSize=20;
     title_fontSize=26;
@@ -27,6 +31,19 @@ if(winWidth>=1900){
     series_item_fontSize=10;
     legand_fontSize=12;
 }
+
+var title= {
+    text: "",
+    target: "self",
+    textStyle:{
+        color:title_color,
+        fontSize:title_fontSize,
+        fontWeight:100
+    },
+    x:'0%',
+    y:'0%'
+};
+
 //条形图
 function chartBar(title_text,legend_data,yAxis_data,series) {
     var option = {
@@ -88,6 +105,7 @@ function chartBar(title_text,legend_data,yAxis_data,series) {
     };
     return option;
 }
+
 
 
 //折线图
@@ -178,31 +196,8 @@ function chartLine(title_text,legend_data,xAxis_data,series) {
 
 //饼图
 function chartPie(title_text,legend_data,series) {
-    var option = {
-        title : {
-            text: title_text,
-            textStyle:{
-                color:title_color,
-                fontSize:title_fontSize,
-                fontWeight:100
-            },
-            x:'0%',
-            y:'0%'
-        },
-        tooltip : {
-            trigger: 'item',
-            formatter: ""
-        },
-        legend: {
-            orient: 'vertical',
-            right: '0',
-            top:"0",
-            data: legend_data
-        },
-        series :series,
-        color: [series_color_1,series_color_2,series_color_3,series_color_4,series_color_5,series_color_6,series_color_7]
-    };
-    return option;
+    title.text=title_text;
+    return chartPieClick(title,legend_data,series);
 }
 
 //饼图

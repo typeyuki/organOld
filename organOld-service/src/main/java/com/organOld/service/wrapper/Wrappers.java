@@ -12,4 +12,5 @@ public class Wrappers {
     public static OldmanKeyWrapper oldmanKeyWrapper=new OldmanKeyWrapper();
     public static HomeWrapper homeWrapper=new HomeWrapper();
     public static HomeOldmanWrapper homeOldmanWrapper=new HomeOldmanWrapper();
+    public static UserWrapper userWrapper=new UserWrapper();
 }

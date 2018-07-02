@@ -4,7 +4,9 @@ package com.organOld.service.service;
 import com.organOld.service.contract.*;
 import com.organOld.service.model.OldmanAddInfoModel;
 import com.organOld.service.model.OldmanAllInfoModel;
+import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 
 /**
  * Created by netlab606 on 2018/4/1.
@@ -42,4 +44,6 @@ public interface OldmanService {
     String getHomeOldmanByPage(HomeOldmanRequest homeOldmanRequest, BTableRequest bTableRequest, HttpSession session);
 
     OldmanAllInfoModel getOldmanInfo(int oldmanId);
+
+    void importExcel(MultipartFile file) throws IOException;
 }

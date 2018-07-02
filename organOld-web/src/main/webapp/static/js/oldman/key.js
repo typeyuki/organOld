@@ -15,14 +15,27 @@ $(document).ready(function(){
             "bServerSide": true, //指定从服务器端获取数据
             "columns":[{
                 data:"oldmanId"
-            },{
-                data:"oldmanName"
-            },{
+            },{},{
                 data:"goal"
             },{}
             ],
             "order":[[0,"asc"]],
             "columnDefs": [
+                {
+                    "targets": [1], // 目标列位置，下标从0开始
+                    "data": "oldmanNameKeyStatus", // 数据列名
+                    "render": function(data, type, full) { // 返回自定义内容
+                        var name=data.split("#")[0];
+                        var status=data.split("#")[1];
+                        if(status=="4"){
+                            return "<span style='background-color: red;color: white;padding: 5px'>"+name+"</span>";
+                        }else if(status=="3"){
+                            return "<span style='background-color: grey;color: white;padding: 5px'>"+name+"</span>";
+                        }else {
+                            return "<span>"+name+"</span>";
+                        }
+                    }
+                },
                 // 增加一列，包括删除和修改，同时将我们需要传递的数据传递到链接中
                 {
                     "targets": [3], // 目标列位置，下标从0开始
