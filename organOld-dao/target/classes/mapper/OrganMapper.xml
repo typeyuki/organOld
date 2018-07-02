@@ -102,4 +102,17 @@
         </if>
         WHERE id=#{id}
     </update>
+
+
+    <select id="getRoleOrgan" resultType="com.organOld.dao.entity.organ.Organ">
+        SELECT o.id,o.name
+        FROM organ o,organ_type ot
+        WHERE o.organ_type_id=ot.id
+        <if test="type==1">
+            and ot.fir_type=#{typeIndex}
+        </if>
+        <if test="type==2">
+            and ot.sec_type=#{typeIndex}
+        </if>
+    </select>
 </mapper>

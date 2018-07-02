@@ -31,8 +31,8 @@
                 </div>
                 <div class="ibox-content">
                     <div>
-                        <a onclick="" href="javascript:void(0);" class="btn btn-primary ">添加</a>
-                        <a onclick="" href="javascript:void(0);" class="btn btn-primary ">删除</a>
+                        <a onclick=newPage("132","用户添加",'/oldman/add') href="javascript:void(0);" class="btn btn-primary ">添加</a>
+                        <a  href="javascript:void(0);" class="btn btn-primary ">删除</a>
                     </div>
                     <div>
                         <input class="id" type="text" placeholder="序号">
@@ -84,6 +84,7 @@
 <#--<script src="/js/plugins/jeditable/jquery.jeditable.js"></script>-->
 
 <script src="/js/content.min.js?v=1.0.0"></script>
+
 <script src="/static/js/common.js" ></script>
 <script src="/static/js/oldman/base.js" ></script>
 <script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>

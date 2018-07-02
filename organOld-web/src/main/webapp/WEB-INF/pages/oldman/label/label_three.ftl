@@ -31,8 +31,7 @@
                 </div>
                 <div class="ibox-content">
                     <div>
-                        <a onclick="" href="javascript:void(0);" class="btn btn-primary ">添加</a>
-                        <a onclick="" href="javascript:void(0);" class="btn btn-primary ">删除</a>
+                        <a onclick="$('#selectModal').modal()" href="javascript:void(0);" class="btn btn-primary ">添加</a>
                     </div>
                     <div>
                         <input class="id" type="text" placeholder="序号">
@@ -70,6 +69,7 @@
 <script>
     var typeLabel="${type}";
 </script>
+<#include "add_label.ftl" />
 <script src="/js/content.min.js?v=1.0.0"></script>
 <script src="/static/js/common.js"></script>
 <script src="/static/js/oldman/label/label_three.js" ></script>

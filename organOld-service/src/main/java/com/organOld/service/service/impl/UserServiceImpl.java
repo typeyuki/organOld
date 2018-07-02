@@ -1,6 +1,7 @@
 package com.organOld.service.service.impl;
 
 import com.organOld.dao.entity.SysAuthority;
+import com.organOld.dao.entity.SysRole;
 import com.organOld.dao.entity.oldman.Oldman;
 import com.organOld.dao.repository.UserDao;
 import com.organOld.dao.entity.SysUser;
@@ -85,5 +86,11 @@ public class UserServiceImpl implements UserService {
         List<UserModel> userModelList=userDao.getByPage(page).stream().map(Wrappers.userWrapper::wrap).collect(Collectors.toList());
         Long size=userDao.getSizeByPage(page);
         return commonService.tableReturn(bTableRequest.getsEcho(),size,userModelList);
+    }
+
+
+    @Override
+    public List<SysRole> getAllRole() {
+        return userDao.getAllRole();
     }
 }

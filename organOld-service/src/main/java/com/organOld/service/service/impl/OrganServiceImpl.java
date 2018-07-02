@@ -178,4 +178,10 @@ public class OrganServiceImpl implements OrganService{
         organRegDao.save(organReg);
         return new Result(true,"注册成功！请等待审核");
     }
+
+
+    @Override
+    public Result getRoleOrgan(int type, int typeIndex) {
+        return new Result(true,organDao.getRoleOrgan(type,typeIndex));
+    }
 }

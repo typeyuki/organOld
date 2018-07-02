@@ -19,7 +19,7 @@ public class UserWrapper implements Wrapper<SysUser,UserModel,UserRequest> {
         userModel.setId(sysUser.getId());
         userModel.setPassword(sysUser.getPassword());
         userModel.setUsername(sysUser.getUsername());
-        userModel.setRoleDesc(sysUser.getRoleDesc());
+        userModel.setRoleDesc(sysUser.getDesc());
         userModel.setTime(Tool.dateToString(sysUser.getTime(), TimeConstant.DATA_FORMAT_YMD));
         return userModel;
     }

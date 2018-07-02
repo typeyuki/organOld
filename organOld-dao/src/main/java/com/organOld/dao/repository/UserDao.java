@@ -2,6 +2,7 @@ package com.organOld.dao.repository;
 
 
 import com.organOld.dao.entity.SysAuthority;
+import com.organOld.dao.entity.SysRole;
 import com.organOld.dao.entity.SysUser;
 import org.apache.ibatis.annotations.Param;
 
@@ -22,4 +23,5 @@ public interface UserDao extends BaseDao<SysUser,Number>{
 
     void setUserOrgan(@Param("userId")int userId,@Param("organId") int organId);
 
+    List<SysRole> getAllRole();
 }

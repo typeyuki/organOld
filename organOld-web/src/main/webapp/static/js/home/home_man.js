@@ -42,7 +42,7 @@ $(document).ready(function(){
             "columns":columns,
             "order":order,
             "columnDefs": columnDefs,
-            "sAjaxSource": "/home/man",//这个是请求的地址
+            "sAjaxSource": url,//这个是请求的地址
             "fnServerData": retrieveData
         });
     function retrieveData(url, aoData, fnCallback) {

@@ -29,7 +29,7 @@
                 </div>
                 <div class="ibox-content">
                     <div>
-                        <a onclick="" href="javascript:void(0);" class="btn btn-primary ">添加</a>
+                        <a onclick="$('#selectModal').modal()" href="javascript:void(0);" class="btn btn-primary ">添加</a>
                         <a onclick="" href="javascript:void(0);" class="btn btn-primary ">删除</a>
                     </div>
                     <div>
@@ -60,7 +60,7 @@
 
 </div>
 
-<#--<script src="/js/plugins/jeditable/jquery.jeditable.js"></script>-->
+<#include "add_account.ftl" />
 
 <script src="/js/content.min.js?v=1.0.0"></script>
 <script src="/static/js/sys/account.js" ></script>
