@@ -11,17 +11,47 @@ import java.util.Date;
 public class OldmanEconomic extends DBEntity implements DBInterface {
     private String economic;
     private Oldman oldman;
+    private Integer oldmanId;
+
+    private Integer economicIndex;
+
+    private Integer organId;
 
 
-    private Integer jwId;
+    @Override
+    public String toString() {
+        return "OldmanEconomic{" +
+                "economic='" + economic + '\'' +
+                ", oldman=" + oldman +
+                ", oldmanId=" + oldmanId +
+                ", economicIndex=" + economicIndex +
+                ", organId=" + organId +
+                '}';
+    }
 
-    public Integer getJwId() {
-        return jwId;
+    public Integer getEconomicIndex() {
+        return economicIndex;
+    }
+
+    public void setEconomicIndex(Integer economicIndex) {
+        this.economicIndex = economicIndex;
+    }
+
+    public Integer getOldmanId() {
+        return oldmanId;
+    }
+
+    public void setOldmanId(Integer oldmanId) {
+        this.oldmanId = oldmanId;
+    }
+
+    public Integer getOrganId() {
+        return organId;
     }
 
     @Override
-    public void setJwId(Integer jwId) {
-        this.jwId = jwId;
+    public void setOrganId(Integer organId) {
+        this.organId = organId;
     }
 
     public String getEconomic() {

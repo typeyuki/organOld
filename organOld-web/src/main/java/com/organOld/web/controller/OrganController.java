@@ -95,7 +95,7 @@ public class OrganController {
      */
     @RequestMapping(value = "/oldman/single",method = RequestMethod.GET)
     public ModelAndView oldman(HttpSession httpSession){
-        ModelAndView mv=new ModelAndView("organ/oldman_single");
+        ModelAndView mv=new ModelAndView("organ/organ_single");
         OrganModel organModel=organService.getBySession(httpSession);
         mv.addObject("organ",organModel);
         List<AutoValue> districtList=autoValueService.getByType(AutoValueEnum.PQ.getIndex());

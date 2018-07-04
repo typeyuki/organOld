@@ -36,6 +36,17 @@ $(document).ready(function(){
                     }
                 },
                 {
+                    "targets": [2], // 目标列位置，下标从0开始
+                    "data": "content", // 数据列名
+                    "render": function(data, type, full) { // 返回自定义内容
+                        if(data==null){
+                            return "";
+                        }else{
+                            return data;
+                        }
+                    }
+                },
+                {
                     "targets": [7], // 目标列位置，下标从0开始
                     "data": "content", // 数据列名
                     "render": function(data, type, full) { // 返回自定义内容

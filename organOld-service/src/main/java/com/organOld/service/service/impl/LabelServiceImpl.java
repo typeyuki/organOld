@@ -22,6 +22,7 @@ import com.organOld.service.wrapper.Wrappers;
 import com.organOld.service.contract.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpSession;
@@ -52,7 +53,7 @@ public class LabelServiceImpl implements LabelService {
     public String getByPage(LabelRequest labelRequest, BTableRequest bTableRequest, HttpSession session) {
         Page<Label> page=commonService.getPage(bTableRequest,"label");
         Label label= Wrappers.labelWrapper.unwrap(labelRequest);
-        commonService.checkIsJw(session,label);
+        commonService.checkIsOrgan(session,label);
         page.setEntity(label);
         List<LabelModel> labelList=labelDao.getByPage(page).stream().map(Wrappers.labelWrapper::wrap).collect(Collectors.toList());
         Long size=labelDao.getSizeByPage(page);
@@ -161,5 +162,17 @@ public class LabelServiceImpl implements LabelService {
         }
 
         return new Result(true,labelNames);
+    }
+
+    @Override
+    @Transactional
+    public void save(Label label, HttpSession session) {
+        label.setOrganId(0);
+        commonService.checkIsOrgan(session,label);
+        labelDao.save(label);
+        if(label.getType()==2){
+            //规则制定
+            labelDao.addLabelRule(label.getId());
+        }
     }
 }

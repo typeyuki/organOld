@@ -27,16 +27,19 @@ public class OldmanWrapper implements Wrapper<Oldman,OldmanModel,OldmanRequest> 
         OldmanModel oldmanModel=new OldmanModel();
         oldmanModel.setId(oldman.getId());
         oldmanModel.setName(oldman.getName());
-        oldmanModel.setLouNum(oldman.getLouNum());
+        if(oldman.getLouNum()==null || oldman.getLouNum()==0)
+            oldmanModel.setLouNum("");
+        else
+            oldmanModel.setLouNum(oldman.getLouNum()+"");
         if(oldman.getBirthday()!=null)
             oldmanModel.setAge(CommonService.birthdayToAge(oldman.getBirthday()));
         oldmanModel.setSex(SexEnum.getValue(oldman.getSex()));
-        oldmanModel.setCensus(oldman.getCensus());
-        oldmanModel.setPoliticalStatus(oldman.getPoliticalStatus());
+        oldmanModel.setCensus(oldman.getCensus()==null?"":oldman.getCensus());
+        oldmanModel.setPoliticalStatus(oldman.getPoliticalStatus()==null?"":oldman.getPoliticalStatus());
         if(oldman.getTime()!=null)
             oldmanModel.setTime(Tool.dateToString(oldman.getTime(), TimeConstant.DATA_FORMAT_YMD));
         oldmanModel.setPid(oldman.getPid());
-        oldmanModel.setAddress(oldman.getAddress());
+        oldmanModel.setAddress(oldman.getAddress()==null?"":oldman.getAddress());
         oldmanModel.setPhone(oldman.getPhone());
         oldmanModel.setjName(oldman.getXq().getJwName());
         oldmanModel.setdName(oldman.getXq().getDistrictName());

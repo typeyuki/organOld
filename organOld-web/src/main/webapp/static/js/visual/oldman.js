@@ -85,7 +85,7 @@ $(document).ready(function(){
                 fnCallback(result);//把返回的数据传给这个方法就可以了,datatable会自动绑定数据的
             },
             error:function(XMLHttpRequest, textStatus, errorThrown) {
-                alert("status:"+XMLHttpRequest.status+",readyState:"+XMLHttpRequest.readyState+",textStatus:"+textStatus);
+                // alert("status:"+XMLHttpRequest.status+",readyState:"+XMLHttpRequest.readyState+",textStatus:"+textStatus);
             }
         });
     }

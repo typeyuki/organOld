@@ -22,4 +22,6 @@ public interface OrganService {
     Result reg(OrganRegRequest organReg, HttpServletRequest request);
 
     Result reject(int id);
+
+    Result getRoleOrgan(int type, int typeIndex);
 }

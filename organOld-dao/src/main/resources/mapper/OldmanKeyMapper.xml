@@ -40,11 +40,9 @@
         <if test="entity!=null and  entity.id!=null and entity.id!=0">
             and ob.id=#{entity.id}
         </if>
-        <if test="entity!=null and entity.jwId!=null and entity.jwId!=0">
-            and org.id=#{entity.jwId}
+        <if test="entity!=null and entity.organId!=null and entity.organId!=0">
+            and org.id=#{entity.organId}
         </if>
-
-
         <if test="entity!=null and entity.future!=null and entity.future!=''">
             ORDER BY future_key_status
         </if>
@@ -67,8 +65,8 @@
         <if test="entity==null or entity.future==null or entity.future==''">
             and (ob.key_status =2 or ob.key_status =3 or ob.key_status =4)
         </if>
-        <if test="entity!=null and entity.jwId!=null and entity.jwId!=0">
-            and org.id=#{entity.jwId}
+        <if test="entity!=null and entity.organId!=null and entity.organId!=0">
+            and org.id=#{entity.organId}
         </if>
     </select>
 

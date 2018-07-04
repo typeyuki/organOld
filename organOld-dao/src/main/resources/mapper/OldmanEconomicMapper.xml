@@ -16,16 +16,16 @@
 
     <select id="getByPage" parameterType="com.organOld.dao.util.Page" resultMap="oldmanEconomic">
         SELECT oe.id,ob.id oid,e.value economic,oe.time,ob.name
-        FROM oldman_economic oe,oldman_base ob,auto_value e,organ org,auto_value x
-        WHERE ob.id=oe.oldman_id AND e.id=oe.economic_index AND x.id=ob.xq_id AND org.id=x.parent_index
-        <if test="entity!=null and entity.jwId!=null and entity.jwId!=0">
-            and org.id=#{entity.jwId}
+        FROM oldman_economic oe left join auto_value e on e.id=oe.economic_index,oldman_base ob,organ org,auto_value x
+        WHERE ob.id=oe.oldman_id AND x.id=ob.xq_id AND org.id=x.parent_index
+        <if test="entity!=null and entity.organId!=null and entity.organId!=0">
+            and org.id=#{entity.organId}
         </if>
         <if test="entity!=null and entity.oldman!=null and entity.oldman.id!=null and entity.oldman.id!=0">
             and ob.id=#{entity.oldman.id}
         </if>
         <if test="sortType!=null and sortType!=''">
-            ORDER BY ${sortType}
+            ORDER BY ob.${sortType}
         </if>
         <if test="sort!=null and sort!=''">
             ${sort}
@@ -39,8 +39,8 @@
         SELECT count(1)
         FROM oldman_economic oe,oldman_base ob,organ org,auto_value x
         WHERE oe.oldman_id=ob.id AND x.id=ob.xq_id AND org.id=x.parent_index
-        <if test="entity!=null and entity.jwId!=null and entity.jwId!=0">
-            and org.id=#{entity.jwId}
+        <if test="entity!=null and entity.organId!=null and entity.organId!=0">
+            and org.id=#{entity.organId}
         </if>
         <if test="entity!=null and entity.oldman!=null and entity.oldman.id!=null and entity.oldman.id!=0">
             and o.oldman_id=#{entity.oldman.id}
@@ -52,4 +52,28 @@
         SET econmic_index=#{econmic_index},oldman_id=#{oldman_id},id=#{id},time=#{time}
         WHERE id=#{id}
     </update>
+
+
+    <update id="updateByOldmanIds" parameterType="java.util.List">
+        update oldman_economic
+        SET
+        economic_index= CASE oldman_id
+        <foreach collection="list" index="index" item="item" open="" separator=" " close="">
+            WHEN ${item.oldmanId} THEN #{item.economicIndex}
+        </foreach>
+        END
+        where oldman_id in
+        <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
+            #{item.oldmanId,jdbcType=BIGINT}
+        </foreach>
+    </update>
+
+
+    <insert id="saveAll" parameterType="java.util.List">
+        INSERT into oldman_economic(oldman_id,economic_index)
+        VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.oldmanId}, #{item.economicIndex})
+        </foreach>
+    </insert>
 </mapper>

@@ -52,6 +52,17 @@ $(document).ready(function(){
                         return"<input type='checkbox' />"
                     }
                 },
+                {
+                    "targets": [9], // 目标列位置，下标从0开始
+                    "data": "politicalStatus", // 数据列名
+                    "render": function(data, type, full) { // 返回自定义内容
+                        if(data==null){
+                            return "";
+                        }else{
+                            return data;
+                        }
+                    }
+                },
                 // 增加一列，包括删除和修改，同时将我们需要传递的数据传递到链接中
                 {
                     "targets": [15], // 目标列位置，下标从0开始
@@ -92,7 +103,7 @@ $(document).ready(function(){
                 fnCallback(result);//把返回的数据传给这个方法就可以了,datatable会自动绑定数据的
             },
             error:function(XMLHttpRequest, textStatus, errorThrown) {
-                alert("status:"+XMLHttpRequest.status+",readyState:"+XMLHttpRequest.readyState+",textStatus:"+textStatus);
+                // alert("status:"+XMLHttpRequest.status+",readyState:"+XMLHttpRequest.readyState+",textStatus:"+textStatus);
             }
         });
     }
@@ -134,3 +145,4 @@ function del(id) {
         }
     });
 }
+

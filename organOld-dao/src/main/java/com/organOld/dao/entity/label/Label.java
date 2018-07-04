@@ -19,7 +19,7 @@ public class Label extends DBEntity implements DBInterface{
     private Organ organ;//发布的组织ID 主要是居委 0的话 表示针对所有
 
 
-    private Integer jwId;
+    private Integer organId;
     private Integer oldmanId;
 
 
@@ -31,13 +31,13 @@ public class Label extends DBEntity implements DBInterface{
         this.oldmanId = oldmanId;
     }
 
-    public Integer getJwId() {
-        return jwId;
+    public Integer getOrganId() {
+        return organId;
     }
 
     @Override
-    public void setJwId(Integer jwId) {
-        this.jwId = jwId;
+    public void setOrganId(Integer organId) {
+        this.organId = organId;
     }
 
     public Organ getOrgan() {

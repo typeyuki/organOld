@@ -14,7 +14,7 @@ public class OrganModel {
     private String imgUrl;
     private Integer num;
     private String require;
-    private String insitution;
+    private String institution;
     private Integer numIn;
     private Integer numRemain;
     private String districtName;//所属片区名称 如果有的话
@@ -125,12 +125,12 @@ public class OrganModel {
         this.require = require;
     }
 
-    public String getInsitution() {
-        return insitution;
+    public String getInstitution() {
+        return institution;
     }
 
-    public void setInsitution(String insitution) {
-        this.insitution = insitution;
+    public void setInstitution(String institution) {
+        this.institution = institution;
     }
 
     public Integer getNumIn() {

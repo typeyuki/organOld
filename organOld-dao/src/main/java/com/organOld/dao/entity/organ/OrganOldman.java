@@ -20,7 +20,7 @@ public class OrganOldman extends DBEntity implements DBInterface {
     private int num;
 
 
-    private Integer jwId;//居委ID
+    private Integer organId;//居委ID
 
 
     /**
@@ -29,14 +29,13 @@ public class OrganOldman extends DBEntity implements DBInterface {
      */
     private Integer firType;
 
-
-    public Integer getJwId() {
-        return jwId;
+    public Integer getOrganId() {
+        return organId;
     }
 
     @Override
-    public void setJwId(Integer jwId) {
-        this.jwId = jwId;
+    public void setOrganId(Integer organId) {
+        this.organId = organId;
     }
 
     public Integer getFirType() {

@@ -28,13 +28,12 @@
 
     <!--不能简单的 limit 0，10  因为有1对多的关系  会补全   一条记录当多条使用（由于某个字段有多个值）-->
     <select id="getByPage" parameterType="com.organOld.dao.util.Page" resultMap="oldmanHealth">
-        SELECT o.id,old.id oid,old.name,o.blood_type,e.value eyesight,i.value intelligence,ha.type,ha.desc,hs.fir_type,hs.sec_type_name,ha.id haid,hs.id hsid
+        SELECT o.id,o.time,old.id oid,old.name,o.blood_type,e.value eyesight,i.value intelligence,ha.type,ha.desc,hs.fir_type,hs.sec_type_name,ha.id haid,hs.id hsid
         FROM oldman_base old,organ org,auto_value x,
         oldman_health_base o LEFT JOIN health_add ha ON ha.oldman_id=o.oldman_id
-        LEFT JOIN health_select_oldman hso on hso.oldman_id=o.oldman_id left join health_select hs on hso.health_select_id=hs.id,
-        auto_value e,auto_value i
-        WHERE old.id=o.oldman_id AND e.id=o.eyesight AND i.id=o.intelligence AND x.id=old.xq_id AND org.id=x.parent_index
-
+        LEFT JOIN health_select_oldman hso on hso.oldman_id=o.oldman_id left join health_select hs on hso.health_select_id=hs.id
+        left join auto_value e on e.id=o.eyesight left join auto_value i on i.id=o.intelligence
+        WHERE old.id=o.oldman_id AND x.id=old.xq_id AND org.id=x.parent_index
         <if test="length!=null and length!=0">
             and old.id in(
             select a.id from
@@ -47,8 +46,8 @@
         </if>
 
 
-        <if test="entity!=null and entity.jwId!=null and entity.jwId!=0">
-            and org.id=#{entity.jwId}
+        <if test="entity!=null and entity.organId!=null and entity.organId!=0">
+            and org.id=#{entity.organId}
         </if>
         <if test="entity!=null and entity.search!=null and entity.search!=''">
             and old.id in
@@ -60,6 +59,7 @@
                 OR o.intelligence LIKE  concat('%',#{entity.search},'%') OR ha.desc LIKE  concat('%',#{entity.search},'%') OR hs.sec_type_name LIKE  concat('%',#{entity.search},'%'))
             )
         </if>
+        order by o.${sortType} ${sort}
     </select>
 
     <select id="getSizeByPage" parameterType="com.organOld.dao.util.Page" resultType="java.lang.Long">
@@ -69,8 +69,8 @@
         <if test="entity!=null and entity.oldman!=null and entity.oldman.id!=null and entity.oldman.id!=0">
             and oldman_id=#{entity.oldmanId}
         </if>
-        <if test="entity!=null and entity.jwId!=null and entity.jwId!=0">
-            and org.id=#{entity.jwId}
+        <if test="entity!=null and entity.organId!=null and entity.organId!=0">
+            and org.id=#{entity.organId}
         </if>
     </select>
 
@@ -95,10 +95,58 @@
         SELECT * FROM health_select
     </select>
 
-    <select id="getSelectStringLikeIndexx" resultType="java.lang.Integer">
+    <select id="getSelectStringLikeIndex" resultType="java.lang.Integer">
         SELECT id
         FROM health_select
         WHERE sec_type_name LIKE concat("%",#{str},"%")
         and fir_type=#{type}
     </select>
+
+
+    <update id="updateByOldmanIds" parameterType="java.util.List">
+        update oldman_health_base
+        SET
+        blood_type= CASE oldman_id
+        <foreach collection="list" index="index" item="item" open="" separator=" " close="">
+            WHEN ${item.oldmanId} THEN #{item.bloodType}
+        </foreach>
+        END,
+        eyesight= CASE oldman_id
+        <foreach collection="list" index="index" item="item" open="" separator=" " close="">
+            WHEN ${item.oldmanId} THEN #{item.eyesight}
+        </foreach>
+        END,
+        intelligence= CASE oldman_id
+        <foreach collection="list" index="index" item="item" open="" separator=" " close="">
+            WHEN ${item.oldmanId} THEN #{item.intelligence}
+        </foreach>
+        END,
+        is_mb= CASE oldman_id
+        <foreach collection="list" index="index" item="item" open="" separator=" " close="">
+            WHEN ${item.oldmanId} THEN #{item.isMb}
+        </foreach>
+        END,
+        is_sn= CASE oldman_id
+        <foreach collection="list" index="index" item="item" open="" separator=" " close="">
+            WHEN ${item.oldmanId} THEN #{item.isSn}
+        </foreach>
+        END,
+        is_ywfy= CASE oldman_id
+        <foreach collection="list" index="index" item="item" open="" separator=" " close="">
+            WHEN ${item.oldmanId} THEN #{item.isYwfy}
+        </foreach>
+        END
+        where oldman_id in
+        <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
+            #{item.oldmanId,jdbcType=BIGINT}
+        </foreach>
+    </update>
+
+    <insert id="saveAll" parameterType="java.util.List">
+        INSERT into oldman_health_base(oldman_id,blood_type,eyesight,intelligence,is_mb,is_sn,is_ywfy,is_exzl,is_gz,is_cj)
+        VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.oldmanId}, #{item.bloodType},#{item.eyesight},#{item.intelligence},#{item.isMb},#{item.isSn},#{item.isYwfy},#{item.isExzl},#{item.isGz},#{item.isCj})
+        </foreach>
+    </insert>
 </mapper>

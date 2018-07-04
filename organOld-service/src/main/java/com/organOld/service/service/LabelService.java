@@ -1,6 +1,7 @@
 package com.organOld.service.service;
 
 
+import com.organOld.dao.entity.label.Label;
 import com.organOld.service.contract.*;
 import com.organOld.service.model.LabelAllRuleModel;
 import com.organOld.service.model.LabelRuleModel;
@@ -24,4 +25,6 @@ public interface LabelService {
     void save(LabelRuleRequest labelRuleRequest);
 
     Result getByOldmanId(int oldmanId);
+
+    void save(Label label, HttpSession session);
 }

@@ -16,7 +16,7 @@ public class OldmanFamilyWrapper implements Wrapper<OldmanFamily,OldmanFamilyMod
         familyModel.setId(family.getId());
         familyModel.setOldmanId(family.getOldman().getId());
         familyModel.setOldmanName(family.getOldman().getName());
-        familyModel.setFamily(family.getFamily());
+        familyModel.setFamily(family.getFamily()==null?"":family.getFamily());
         familyModel.setTime(Tool.dateToString(family.getTime(),"yyyy-MM-dd"));
         return familyModel;
     }

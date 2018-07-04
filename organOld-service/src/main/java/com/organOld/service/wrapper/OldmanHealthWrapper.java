@@ -4,9 +4,11 @@ package com.organOld.service.wrapper;
 import com.organOld.dao.entity.oldman.HealthAdd;
 import com.organOld.dao.entity.oldman.HealthSelect;
 import com.organOld.dao.entity.oldman.OldmanHealth;
+import com.organOld.service.constant.TimeConstant;
 import com.organOld.service.enumModel.HealthEnum;
 import com.organOld.service.model.OldmanHealthModel;
 import com.organOld.service.contract.*;
+import com.organOld.service.util.Tool;
 import org.springframework.beans.BeanUtils;
 
 public class OldmanHealthWrapper implements Wrapper<OldmanHealth,OldmanHealthModel,OldmanHealthRequest> {
@@ -19,10 +21,10 @@ public class OldmanHealthWrapper implements Wrapper<OldmanHealth,OldmanHealthMod
         oldmanHealthModel.setOldmanId(oldmanHealth.getOldman().getId());
         oldmanHealthModel.setName(oldmanHealth.getOldman().getName());
         oldmanHealthModel.setBloodType(oldmanHealth.getBloodType());
-        oldmanHealthModel.setIntelligence(oldmanHealth.getIntelligence());
-        oldmanHealthModel.setEyesight(oldmanHealth.getEyesight());
+        oldmanHealthModel.setIntelligence(oldmanHealth.getIntelligence()==null?"":oldmanHealth.getIntelligence());
+        oldmanHealthModel.setEyesight(oldmanHealth.getEyesight()==null?"":oldmanHealth.getEyesight());
         //TODO  选取所有表格中最新的一个时间  暂时还没实现
-        oldmanHealthModel.setTime("2018-05-25");
+        oldmanHealthModel.setTime(Tool.dateToString(oldmanHealth.getTime(), TimeConstant.DATA_FORMAT_YMD));
 
         if(oldmanHealth.getHealthAdd()!=null && oldmanHealth.getHealthAdd().size()>0){
             for(HealthAdd healthAdd:oldmanHealth.getHealthAdd()){

@@ -13,4 +13,6 @@ public class Wrappers {
     public static HomeWrapper homeWrapper=new HomeWrapper();
     public static HomeOldmanWrapper homeOldmanWrapper=new HomeOldmanWrapper();
     public static UserWrapper userWrapper=new UserWrapper();
+    public static ProductWrapper productWrapper=new ProductWrapper();
+    public static ProductBookWrapper productBookWrapper=new ProductBookWrapper();
 }

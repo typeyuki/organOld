@@ -15,7 +15,7 @@ public class SysUser extends DBEntity implements UserDetails,Serializable{
     private String username;
     private String password;
 
-    private String roleDesc;
+    private String desc;
 
     Collection<GrantedAuthority> authorities;
 
@@ -30,13 +30,12 @@ public class SysUser extends DBEntity implements UserDetails,Serializable{
         return this.username.equals(((SysUser)obj).getUsername());
     }
 
-
-    public String getRoleDesc() {
-        return roleDesc;
+    public String getDesc() {
+        return desc;
     }
 
-    public void setRoleDesc(String roleDesc) {
-        this.roleDesc = roleDesc;
+    public void setDesc(String desc) {
+        this.desc = desc;
     }
 
     @Override

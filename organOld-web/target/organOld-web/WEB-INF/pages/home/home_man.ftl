@@ -54,7 +54,8 @@
 
 </div>
 <script>
-    var hid="${hid}";
+    var hid="${hid!}";
+    var url="/home/man";
 </script>
 <script src="/js/content.min.js?v=1.0.0"></script>
 <script src="/static/js/home/home_man.js" ></script>

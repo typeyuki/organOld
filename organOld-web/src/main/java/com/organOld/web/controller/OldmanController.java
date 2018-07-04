@@ -50,10 +50,17 @@ public class OldmanController {
     }
 
 
+    /**
+     * 导入的话  已有老人 更新  没有的添加
+     * @param file
+     * @return
+     * @throws IOException
+     */
     @RequestMapping(value = "/importExcel",method = RequestMethod.POST)
-    public ModelAndView importExcel(@RequestParam MultipartFile file) throws IOException {
+    public ModelAndView importExcel(@RequestParam MultipartFile file,HttpSession session) throws IOException {
         ModelAndView mv=new ModelAndView("redirect:/oldman/base");
-        oldmanService.importExcel(file);
+        Result result=oldmanService.importExcel(file,session);
+        mv.addObject("result",result);
         return mv;
     }
 
@@ -73,9 +80,9 @@ public class OldmanController {
      * 添加  全部信息 页面
      * @return
      */
-    @RequestMapping(value = "/base/add",method = RequestMethod.GET)
-    public ModelAndView add_get(){
-        ModelAndView mv=new ModelAndView("oldman/add");
+    @RequestMapping(value = "/add",method = RequestMethod.GET)
+    public ModelAndView add_get(@RequestParam(required = false) String v){
+        ModelAndView mv=new ModelAndView("oldman/add_all");
         mv.addObject("info",oldmanService.getAddInfo());
         return mv;
     }

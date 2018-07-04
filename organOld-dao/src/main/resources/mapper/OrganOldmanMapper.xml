@@ -29,8 +29,8 @@
         <if test="entity.firType!=null and entity.firType!=''">
             AND ot.fir_type=#{entity.firType}
         </if>
-        <if test="entity!=null and entity.jwId!=null and entity.jwId!=0">
-            and jw.id=#{entity.jwId}
+        <if test="entity!=null and entity.organId!=null and entity.organId!=0">
+            and jw.id=#{entity.organId}
         </if>
         <if test="entity!=null and entity.oldman!=null and entity.oldman.id!=null and entity.oldman.id!=0">
             and o.id=#{entity.oldman.id}
@@ -56,8 +56,8 @@
         <if test="entity.firType!=null and entity.firType!=''">
             AND ot.fir_type=#{entity.firType}
         </if>
-        <if test="entity!=null and entity.jwId!=null and entity.jwId!=0">
-            and jw.id=#{entity.jwId}
+        <if test="entity!=null and entity.organId!=null and entity.organId!=0">
+            and jw.id=#{entity.organId}
         </if>
 
     </select>

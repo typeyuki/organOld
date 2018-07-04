@@ -1,5 +1,6 @@
 package com.organOld.web.controller;
 
+import com.organOld.dao.entity.label.Label;
 import com.organOld.service.contract.*;
 import com.organOld.service.service.LabelService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -149,5 +150,12 @@ public class LabelController {
         return labelService.getByOldmanId(oldmanId);
     }
 
+
+    @RequestMapping(value = "/add",method = RequestMethod.POST)
+    public ModelAndView add(Label label, HttpSession session){
+        ModelAndView mv=new ModelAndView("redirect:/label/"+((label.getType()==1)?"bind":"rule"));
+        labelService.save(label,session);
+        return mv;
+    }
 
 }

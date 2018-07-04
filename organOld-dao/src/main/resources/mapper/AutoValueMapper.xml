@@ -24,7 +24,13 @@
     <select id="getStringLikeIndex" resultType="java.lang.Integer">
         SELECT id
         FROM auto_value
-        WHERE value LIKE concat("%",#{str},"%")
-        and type=#{type}
+        WHERE value
+        <if test="type=='like'">
+            LIKE concat("%",#{str},"%")
+        </if>
+        <if test="type=='equals'">
+            =#{str}
+        </if>
+        and type=#{index}
     </select>
 </mapper>

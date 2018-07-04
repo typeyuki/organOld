@@ -39,4 +39,6 @@ public interface LabelDao extends BaseDao<Label,Integer> {
     List<Integer> getRuleManIds(@Param("rule") LabelRuleToDBSelectMan labelRuleToDB);
 
     String getLabelNameByLabelRuleId(int id);
+
+    void addLabelRule(int id);
 }

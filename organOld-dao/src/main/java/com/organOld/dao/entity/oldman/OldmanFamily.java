@@ -11,16 +11,46 @@ import com.organOld.dao.entity.DBInterface;
 public class OldmanFamily extends DBEntity implements DBInterface {
     private String family;
     private Oldman oldman;
+    private Integer oldmanId;
+    private Integer organId;
 
-    private Integer jwId;
+    private Integer familyIndex;
 
-    public Integer getJwId() {
-        return jwId;
+
+    @Override
+    public String toString() {
+        return "OldmanFamily{" +
+                "family='" + family + '\'' +
+                ", oldman=" + oldman +
+                ", oldmanId=" + oldmanId +
+                ", organId=" + organId +
+                ", familyIndex=" + familyIndex +
+                '}';
+    }
+
+    public Integer getFamilyIndex() {
+        return familyIndex;
+    }
+
+    public void setFamilyIndex(Integer familyIndex) {
+        this.familyIndex = familyIndex;
+    }
+
+    public Integer getOldmanId() {
+        return oldmanId;
+    }
+
+    public void setOldmanId(Integer oldmanId) {
+        this.oldmanId = oldmanId;
+    }
+
+    public Integer getOrganId() {
+        return organId;
     }
 
     @Override
-    public void setJwId(Integer jwId) {
-        this.jwId = jwId;
+    public void setOrganId(Integer organId) {
+        this.organId = organId;
     }
 
     public String getFamily() {

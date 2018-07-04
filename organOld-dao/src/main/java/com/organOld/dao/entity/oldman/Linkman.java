@@ -12,17 +12,35 @@ import java.util.Date;
 public class Linkman extends Man implements DBInterface{
     private Oldman oldman;
     private String relation;
+    private Integer oldmanId;
+    private Integer organId;//居委ID
 
-    private Integer jwId;//居委ID
 
+    @Override
+    public String toString() {
+        return "Linkman{" +
+                "oldman=" + oldman +
+                ", relation='" + relation + '\'' +
+                ", oldmanId=" + oldmanId +
+                ", organId=" + organId +
+                '}';
+    }
 
-    public Integer getJwId() {
-        return jwId;
+    public Integer getOldmanId() {
+        return oldmanId;
+    }
+
+    public void setOldmanId(Integer oldmanId) {
+        this.oldmanId = oldmanId;
+    }
+
+    public Integer getOrganId() {
+        return organId;
     }
 
     @Override
-    public void setJwId(Integer jwId) {
-        this.jwId = jwId;
+    public void setOrganId(Integer organId) {
+        this.organId = organId;
     }
 
     public Oldman getOldman() {

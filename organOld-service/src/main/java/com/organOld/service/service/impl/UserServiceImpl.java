@@ -1,12 +1,14 @@
 package com.organOld.service.service.impl;
 
 import com.organOld.dao.entity.SysAuthority;
+import com.organOld.dao.entity.SysRole;
 import com.organOld.dao.entity.oldman.Oldman;
 import com.organOld.dao.repository.UserDao;
 import com.organOld.dao.entity.SysUser;
 import com.organOld.dao.util.Page;
 import com.organOld.service.contract.BTableRequest;
 import com.organOld.service.contract.OldmanRequest;
+import com.organOld.service.contract.UserAddRequest;
 import com.organOld.service.contract.UserRequest;
 import com.organOld.service.model.OldmanModel;
 import com.organOld.service.model.UserModel;
@@ -17,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
@@ -85,5 +88,25 @@ public class UserServiceImpl implements UserService {
         List<UserModel> userModelList=userDao.getByPage(page).stream().map(Wrappers.userWrapper::wrap).collect(Collectors.toList());
         Long size=userDao.getSizeByPage(page);
         return commonService.tableReturn(bTableRequest.getsEcho(),size,userModelList);
+    }
+
+
+    @Override
+    public List<SysRole> getAllRole() {
+        return userDao.getAllRole();
+    }
+
+    @Override
+    @Transactional
+
+    public void save(UserAddRequest userAddRequest) {
+        SysUser sysUser=new SysUser();
+        sysUser.setUsername(userAddRequest.getUsername());
+        sysUser.setPassword(userAddRequest.getPassword());
+        userDao.save(sysUser);
+        if(userAddRequest.getOrganId()!=null && !userAddRequest.getOrganId().equals(""))
+            userDao.setUserOrgan(sysUser.getId(),Integer.parseInt(userAddRequest.getOrganId()));
+        userDao.setUserRole(sysUser.getId(),Integer.parseInt(userAddRequest.getRoleId()));
+        //TODO 更新organ 的权限
     }
 }

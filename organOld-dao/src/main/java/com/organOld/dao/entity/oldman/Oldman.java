@@ -19,6 +19,8 @@ public class Oldman extends Man implements DBInterface{
     private Integer louNum;//楼号
     private int goal;//得分用于 重点老人
     private Integer keyStatus;
+    private Integer xqId;
+    private Integer floor;
 
     /**
      * 搜索对象
@@ -26,7 +28,7 @@ public class Oldman extends Man implements DBInterface{
     private Date birthdayStart;//出生年月-起
     private Date birthdayEnd;//出生年月-止
     private String search;//模糊搜索
-    private Integer jwId;//居委ID
+    private Integer organId;//居委ID
     private String future;//是否是查询未来的重点老人得分
 
     private Integer keyGoalBase;//重点老人分数基线
@@ -36,8 +38,39 @@ public class Oldman extends Man implements DBInterface{
      */
     private Xq xq;//小区
 
+    @Override
+    public String toString() {
+        return "Oldman{" +
+                "sex=" + sex +
+                ", birthday=" + birthday +
+                ", pid='" + pid + '\'' +
+                ", address='" + address + '\'' +
+                ", census='" + census + '\'' +
+                ", politicalStatus='" + politicalStatus + '\'' +
+                ", louNum=" + louNum +
+                ", xqId=" + xqId +
+                ", floor=" + floor +
+                ", xq=" + xq +
+                ", name='" + name + '\'' +
+                ", phone='" + phone + '\'' +
+                '}';
+    }
 
+    public Integer getFloor() {
+        return floor;
+    }
 
+    public void setFloor(Integer floor) {
+        this.floor = floor;
+    }
+
+    public Integer getXqId() {
+        return xqId;
+    }
+
+    public void setXqId(Integer xqId) {
+        this.xqId = xqId;
+    }
 
     public String getFuture() {
         return future;
@@ -63,12 +96,13 @@ public class Oldman extends Man implements DBInterface{
         this.keyGoalBase = keyGoalBase;
     }
 
-    public Integer getJwId() {
-        return jwId;
+    public Integer getOrganId() {
+        return organId;
     }
 
-    public void setJwId(Integer jwId) {
-        this.jwId = jwId;
+    @Override
+    public void setOrganId(Integer organId) {
+        this.organId = organId;
     }
 
     public int getGoal() {

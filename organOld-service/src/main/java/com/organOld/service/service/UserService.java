@@ -1,11 +1,14 @@
 package com.organOld.service.service;
 
+import com.organOld.dao.entity.SysRole;
 import com.organOld.dao.entity.SysUser;
 import com.organOld.service.contract.BTableRequest;
+import com.organOld.service.contract.UserAddRequest;
 import com.organOld.service.contract.UserRequest;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Created by netlab606 on 2018/4/8.
@@ -22,4 +25,8 @@ public interface UserService {
     void save(SysUser user);
 
     String getByPage(UserRequest userRequest, BTableRequest bTableRequest);
+
+    List<SysRole> getAllRole();
+
+    void save(UserAddRequest userAddRequest);
 }

@@ -15,7 +15,7 @@ public class HomeOldman extends DBEntity implements DBInterface{
 
     private Home home;
 
-    private Integer jwId;//居委ID
+    private Integer organId;//居委ID
 
 
     public Home getHome() {
@@ -26,13 +26,13 @@ public class HomeOldman extends DBEntity implements DBInterface{
         this.home = home;
     }
 
-    public Integer getJwId() {
-        return jwId;
+    public Integer getOrganId() {
+        return organId;
     }
 
     @Override
-    public void setJwId(Integer jwId) {
-        this.jwId = jwId;
+    public void setOrganId(Integer organId) {
+        this.organId = organId;
     }
 
     public int getHomeId() {

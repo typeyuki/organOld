@@ -8,7 +8,7 @@ public class OldmanModel extends ManModel{
     private String politicalStatus;//政治面貌
     private String address;//地址
     private String pid;//身份证号码
-    private int louNum;//楼号
+    private String louNum;//楼号
     private String xName;//小区名称
     private String jName;//居委名称
     private String dName;//片区名称
@@ -65,11 +65,11 @@ public class OldmanModel extends ManModel{
         this.address = address;
     }
 
-    public int getLouNum() {
+    public String getLouNum() {
         return louNum;
     }
 
-    public void setLouNum(int louNum) {
+    public void setLouNum(String louNum) {
         this.louNum = louNum;
     }
 

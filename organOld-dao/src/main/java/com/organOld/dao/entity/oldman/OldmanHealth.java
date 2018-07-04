@@ -19,18 +19,107 @@ public class OldmanHealth extends DBEntity implements DBInterface{
     //TODO 选取所有表格中最新的一个时间  暂时还没实现
     private Oldman oldman;
 
+//    值与健康表  类型的索引一直  用于规则制定标签筛选
+    private int isMb;
+    private int isSn;
+    private int isYwfy;
+    private int isExzl;
+    private int isGz;
+    private int isCj;
+
+
+
+
+
     private String search;//模糊搜索
+    private Integer oldmanId;
+    private Integer organId;//居委Id
 
-    private Integer jwId;//居委Id
 
+    @Override
+    public String toString() {
+        return "OldmanHealth{" +
+                "bloodType='" + bloodType + '\'' +
+                ", intelligence='" + intelligence + '\'' +
+                ", eyesight='" + eyesight + '\'' +
+                ", healthAdd=" + healthAdd +
+                ", healthSelect=" + healthSelect +
+                ", oldman=" + oldman +
+                ", isMb=" + isMb +
+                ", isSn=" + isSn +
+                ", isYwfy=" + isYwfy +
+                ", isExzl=" + isExzl +
+                ", isGz=" + isGz +
+                ", isCj=" + isCj +
+                ", search='" + search + '\'' +
+                ", oldmanId=" + oldmanId +
+                ", organId=" + organId +
+                '}';
+    }
 
-    public Integer getJwId() {
-        return jwId;
+    public int getIsMb() {
+        return isMb;
+    }
+
+    public void setIsMb(int isMb) {
+        this.isMb = isMb;
+    }
+
+    public int getIsSn() {
+        return isSn;
+    }
+
+    public void setIsSn(int isSn) {
+        this.isSn = isSn;
+    }
+
+    public int getIsYwfy() {
+        return isYwfy;
+    }
+
+    public void setIsYwfy(int isYwfy) {
+        this.isYwfy = isYwfy;
+    }
+
+    public int getIsExzl() {
+        return isExzl;
+    }
+
+    public void setIsExzl(int isExzl) {
+        this.isExzl = isExzl;
+    }
+
+    public int getIsGz() {
+        return isGz;
+    }
+
+    public void setIsGz(int isGz) {
+        this.isGz = isGz;
+    }
+
+    public int getIsCj() {
+        return isCj;
+    }
+
+    public void setIsCj(int isCj) {
+        this.isCj = isCj;
+    }
+
+    public Integer getOldmanId() {
+        return oldmanId;
+    }
+
+    public void setOldmanId(Integer oldmanId) {
+        this.oldmanId = oldmanId;
+    }
+
+    public Integer getOrganId() {
+        return organId;
     }
 
     @Override
-    public void setJwId(Integer jwId) {
-        this.jwId = jwId;
+    public void setOrganId(Integer organId) {
+        this.organId = organId;
     }
 
     public String getSearch() {

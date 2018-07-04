@@ -38,3 +38,6 @@ function newPage(id,name,url) {
     }
     return!1
 }
+
+
+

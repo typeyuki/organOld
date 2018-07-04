@@ -2,6 +2,7 @@ package com.organOld.dao.repository;
 
 
 import com.organOld.dao.entity.oldman.Oldman;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -14,4 +15,8 @@ public interface OldmanDao extends BaseDao<Oldman,Integer>{
     long getMaxId();
 
     void updateKeyOldmanFuture(List<Oldman> updatedData);
+
+    Integer getIdByPid(String pid);
+
+    int setDisabled(@Param("list") List<Integer> existOldmanIds,@Param("organId") Integer organId);
 }

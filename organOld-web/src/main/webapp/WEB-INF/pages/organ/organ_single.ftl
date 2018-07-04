@@ -36,21 +36,21 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label">类型</label>
                             <div class="col-sm-5">
-                                <input type="text" class="form-control" value="${organ.organType!}" disabled/>
+                                <input type="text" class="form-control" value="${organ.organType!}" />
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">名称</label>
                             <div class="col-sm-5">
-                                <input type="text" name="name" class="form-control" value="${organ.name!}" disabled/>
+                                <input type="text" name="name" class="form-control" value="${organ.name!}" />
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">简介</label>
                             <div class="col-sm-5">
-                                <textarea name="intro" class="form-control" value="${organ.intro!}"  disabled></textarea>
+                                <textarea name="intro" class="form-control" value="${organ.intro!}"  ></textarea>
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>
@@ -58,7 +58,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">席位数</label>
                                 <div class="col-sm-5">
-                                    <input type="text" class="form-control" value="${organ.num!}"  disabled/>
+                                    <input type="text" class="form-control" value="${organ.num!}"  />
                                 </div>
                             </div>
                             <div class="hr-line-dashed"></div>
@@ -67,14 +67,28 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">入住数</label>
                                 <div class="col-sm-5">
-                                    <input type="text" class="form-control" value="${organ.numIn!}"  disabled/>
+                                    <input type="text" class="form-control" value="${organ.numIn!}"  />
                                 </div>
                             </div>
                             <div class="hr-line-dashed"></div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">剩余床数</label>
                                 <div class="col-sm-5">
-                                    <input type="text" class="form-control" value="${organ.numRemain!}"  disabled/>
+                                    <input type="text" class="form-control" value="${organ.numRemain!}"  />
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">设施情况</label>
+                                <div class="col-sm-5">
+                                    <textarea class="form-control" value="${organ.insitution!}"   ></textarea>
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">入住要求</label>
+                                <div class="col-sm-5">
+                                    <textarea class="form-control" value="${organ.require!}" ></textarea>
                                 </div>
                             </div>
                             <div class="hr-line-dashed"></div>
@@ -82,63 +96,54 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label">服务内容</label>
                             <div class="col-sm-5">
-                                <textarea class="form-control" value="${organ.work!}"  disabled></textarea>
-                            </div>
-                        </div>
-                        <div class="hr-line-dashed"></div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">设施情况</label>
-                            <div class="col-sm-5">
-                                <textarea class="form-control" value="${organ.insitution!}"  disabled ></textarea>
-                            </div>
-                        </div>
-                        <div class="hr-line-dashed"></div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">入住要求</label>
-                            <div class="col-sm-5">
-                                <textarea class="form-control" value="${organ.require!}"  disabled></textarea>
+                                <textarea class="form-control" value="${organ.work!}"  ></textarea>
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">工作时间</label>
                             <div class="col-sm-5">
-                                <textarea class="form-control"  value="${organ.serviceTime!}"  disabled></textarea>
+                                <textarea class="form-control"  value="${organ.serviceTime!}" ></textarea>
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">地址</label>
                             <div class="col-sm-5">
-                                <textarea t class="form-control" value="${organ.address!}"  disabled></textarea>
+                                <textarea t class="form-control" value="${organ.address!}" ></textarea>
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">联系方式</label>
                             <div class="col-sm-5">
-                                <input type="text" class="form-control" value="${organ.phone!}"  disabled/>
+                                <input type="text" class="form-control" value="${organ.phone!}" />
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">网站</label>
                             <div class="col-sm-5">
-                                <input type="text" class="form-control" value="${organ.webUrl!}"  disabled/>
+                                <input type="text" class="form-control" value="${organ.webUrl!}" />
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">照片</label>
-                            <div class="col-sm-5">
-                                <input type="text" class="form-control" value="${organ.imgUrl!}"  disabled/>
+                            <div class="col-sm-3">
+                            <#if organ.imgUrl??>
+                                <img src="${organ.imgUrl}">
+                            </#if>
+                            </div>
+                            <div class="col-sm-2">
+                                <input type="file" class="form-control"  />
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">所属片区</label>
                             <div class="col-sm-5">
-                                <select name="districtId" disabled>
+                                <select name="districtId">
                                     <option value="">无</option>
                                     <#list districts as district>
                                         <#if organ.districtName?? && organ.districtName==district.value>
@@ -153,7 +158,7 @@
                         <div class="hr-line-dashed"></div>
                         <div class="form-group">
                             <div class="col-sm-4 col-sm-offset-2">
-                                <button class="btn btn-primary" type="submit">编辑</button>
+                                <button class="btn btn-primary" type="submit">保存</button>
                             </div>
                         </div>
                     </form>

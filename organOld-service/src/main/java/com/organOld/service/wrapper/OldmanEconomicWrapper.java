@@ -14,7 +14,7 @@ public class OldmanEconomicWrapper implements Wrapper<OldmanEconomic,OldmanEcono
         OldmanEconomicModel economicModel=new OldmanEconomicModel();
         economicModel.setId(economic.getId());
         economicModel.setOldmanId(economic.getOldman().getId());
-        economicModel.setEconomic(economic.getEconomic());
+        economicModel.setEconomic(economic.getEconomic()==null?"":economic.getEconomic());
         economicModel.setOldmanName(economic.getOldman().getName());
         economicModel.setTime(Tool.dateToString(economic.getTime(),"yyyy-MM-dd"));
 

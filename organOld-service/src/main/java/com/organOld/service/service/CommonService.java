@@ -132,10 +132,10 @@ public class CommonService {
         }
     }
 
-    public void checkIsJw(HttpSession session, DBInterface dbInterface) {
-        Integer jwId=getIdBySession(session);
-        if (jwId!=null && jwId!=0){
-            dbInterface.setJwId(jwId);
+    public void checkIsOrgan(HttpSession session, DBInterface dbInterface) {
+        Integer organId=getIdBySession(session);
+        if (organId!=null && organId!=0){
+            dbInterface.setOrganId(organId);
         }
     }
 

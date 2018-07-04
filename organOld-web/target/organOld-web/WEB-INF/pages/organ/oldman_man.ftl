@@ -39,6 +39,12 @@
                         <input class="time" type="text" placeholder="模糊匹配">
                         <button id="search">搜索</button>
                     </div>
+                    <#if single??>
+                        <form action="/oldman/importExcel" method="post" enctype="multipart/form-data">
+                            <input type="file" name="file">
+                            <input type="submit" value="导入">
+                        </form>
+                    </#if>
                     <table class="table table-striped table-bordered table-hover dataTables-example">
                         <thead>
                         <tr>

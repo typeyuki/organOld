@@ -45,5 +45,5 @@ public interface OldmanService {
 
     OldmanAllInfoModel getOldmanInfo(int oldmanId);
 
-    void importExcel(MultipartFile file) throws IOException;
+    Result importExcel(MultipartFile file, HttpSession session) throws IOException;
 }

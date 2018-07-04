@@ -22,8 +22,8 @@
         <if test="entity!=null and entity.id!=null and entity.id!=0">
             and id=#{entity.id}
         </if>
-        <if test="entity!=null and entity.jwId!=null and entity.jwId!=0">
-            and org.id=#{entity.jwId}
+        <if test="entity!=null and entity.organId!=null and entity.organId!=0">
+            and org.id=#{entity.organId}
         </if>
         <if test="entity!=null and entity.oldman!=null and entity.oldman.id!=null and entity.oldman.id!=0">
             and o.id=#{entity.oldman.id}
@@ -46,16 +46,50 @@
         <if test="entity!=null and entity.id!=null and entity.id!=0">
             and id=#{entity.id}
         </if>
-        <if test="entity!=null and entity.jwId!=null and entity.jwId!=0">
-            and org.id=#{entity.jwId}
+        <if test="entity!=null and entity.organId!=null and entity.organId!=0">
+            and org.id=#{entity.organId}
         </if>
         <if test="entity!=null and entity.oldman!=null and entity.oldman.id!=null and entity.oldman.id!=0">
             and o.oldman_id=#{entity.oldman.id}
         </if>
     </select>
     <update id="updateById" parameterType="com.organOld.dao.entity.oldman.Linkman">
-        UPDATE linkman_base
+        UPDATE linkman
         SET name=#{name},phone=#{phone},oldman_id=#{oldman_id},id=#{id},time=#{time},relation=#relation
         WHERE id=#{id}
     </update>
+
+
+    <update id="updateByOldmanIds" parameterType="java.util.List">
+        update link
+        SET
+        name= CASE oldman_id
+        <foreach collection="list" index="index" item="item" open="" separator=" " close="">
+            WHEN ${item.oldmanId} THEN #{item.name}
+        </foreach>
+        END,
+        phone= CASE oldman_id
+        <foreach collection="list" index="index" item="item" open="" separator=" " close="">
+            WHEN ${item.oldmanId} THEN #{item.phone}
+        </foreach>
+        END,
+        relation= CASE oldman_id
+        <foreach collection="list" index="index" item="item" open="" separator=" " close="">
+            WHEN ${item.oldmanId} THEN #{item.relation}
+        </foreach>
+        END
+        where oldman_id in
+        <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
+            #{item.oldmanId,jdbcType=BIGINT}
+        </foreach>
+
+    </update>
+
+    <insert id="saveAll" parameterType="java.util.List">
+        INSERT into linkman(oldman_id,name,phone,relation)
+        VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.oldmanId}, #{item.name},#{item.phone},#{item.relation})
+        </foreach>
+    </insert>
 </mapper>

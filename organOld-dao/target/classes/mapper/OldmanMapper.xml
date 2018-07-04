@@ -24,13 +24,15 @@
 
     <select id="getByPage" parameterType="com.organOld.dao.util.Page" resultMap="oldman">
         SELECT o.id,o.name,o.sex,o.birthday,c.value census,p.value political_status,o.time,o.phone,o.address,o.pid,o.lou_num,x.value xname,org.name jname,d.value dname
-        FROM oldman_base o,auto_value c,auto_value p,auto_value x,auto_value d,organ org
-        WHERE o.census=c.id AND o.political_status=p.id AND x.id=o.xq_id AND org.id=x.parent_index AND d.id=org.district_id
+        FROM oldman_base o left join auto_value c on o.census=c.id
+        left join auto_value p on o.political_status=p.id,
+        auto_value x,auto_value d,organ org
+        WHERE  x.id=o.xq_id AND org.id=x.parent_index AND d.id=org.district_id
         <if test="entity!=null and entity.id!=null and entity.id!=0">
             and o.id=#{entity.id}
         </if>
-        <if test="entity!=null and entity.jwId!=null and entity.jwId!=0">
-            and org.id=#{entity.jwId}
+        <if test="entity!=null and entity.organId!=null and entity.organId!=0">
+            and org.id=#{entity.organId}
         </if>
         <if test="entity!=null and entity.sex!=null and entity.sex!=0">
             and o.sex=#{entity.sex}
@@ -64,8 +66,8 @@
         <if test="entity!=null and entity.id!=null and entity.id!=0">
             and id=#{entity.id}
         </if>
-        <if test="entity!=null and entity.jwId!=null and entity.jwId!=0">
-            and org.id=#{entity.jwId}
+        <if test="entity!=null and entity.organId!=null and entity.organId!=0">
+            and org.id=#{entity.organId}
         </if>
         <if test="entity!=null and entity.sex!=null and entity.sex!=0">
             and sex=#{entity.sex}
@@ -90,14 +92,14 @@
         DELETE FROM oldman_base WHERE id=#{id}
     </delete>
 
-    <insert id="save" parameterType="com.organOld.dao.entity.oldman.Oldman">
-        INSERT INTO oldman_base(name,sex,birthday,pid,address,jw_id,census,political_status,district_id,phone)
-        VALUE (#{name},#{sex},#{birthday},#{pid},#{address},#{jwId},#{census},#{politicalStatus},#{districtId},#{phone})
+    <insert id="save" parameterType="com.organOld.dao.entity.oldman.Oldman" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO oldman_base(name,sex,birthday,pid,address,xq_id,census,political_status,phone,lou_num,floor)
+        VALUE (#{name},#{sex},#{birthday},#{pid},#{address},#{xqId},#{census},#{politicalStatus},#{phone},#{louNum},#{floor})
     </insert>
 
     <update id="updateById" parameterType="com.organOld.dao.entity.oldman.Oldman">
         UPDATE oldman_base
-        SET name=#{name},sex=#{sex},birthday=#{birthday},pid=#{pid},address=#{address},jw_id=#{jwId},census=#{census},political_status#{politicalStatus},
+        SET name=#{name},sex=#{sex},birthday=#{birthday},pid=#{pid},address=#{address},xq_id=#{xqId},census=#{census},political_status=#{politicalStatus},
         district_id=#{districtId},phone=#{phone}
         WHERE id=#{id}
     </update>
@@ -144,4 +146,88 @@
     <select id="getMaxId" resultType="java.lang.Long">
         select MAX(id) FROM oldman_base
     </select>
+
+
+    <select id="getIdByPid" resultType="java.lang.Integer">
+        SELECT id FROM oldman_base WHERE pid=#{pid}
+    </select>
+
+
+
+    <update id="updateByIds" parameterType="java.util.List">
+        update oldman_base
+        SET
+        name= CASE id
+        <foreach collection="list" index="index" item="item" open="" separator=" " close="">
+            WHEN ${item.id} THEN #{item.name}
+        </foreach>
+        END,
+        sex= CASE id
+        <foreach collection="list" index="index" item="item" open="" separator=" " close="">
+            WHEN ${item.id} THEN #{item.sex}
+        </foreach>
+        END,
+        birthday= CASE id
+        <foreach collection="list" index="index" item="item" open="" separator=" " close="">
+            WHEN ${item.id} THEN #{item.birthday}
+        </foreach>
+        END,
+        pid= CASE id
+        <foreach collection="list" index="index" item="item" open="" separator=" " close="">
+            WHEN ${item.id} THEN #{item.pid}
+        </foreach>
+        END,
+        address= CASE id
+        <foreach collection="list" index="index" item="item" open="" separator=" " close="">
+            WHEN ${item.id} THEN #{item.address}
+        </foreach>
+        END,
+        xq_id= CASE id
+        <foreach collection="list" index="index" item="item" open="" separator=" " close="">
+            WHEN ${item.id} THEN #{item.xqId}
+        </foreach>
+        END,
+        census= CASE id
+        <foreach collection="list" index="index" item="item" open="" separator=" " close="">
+            WHEN ${item.id} THEN #{item.census}
+        </foreach>
+        END,
+        political_status= CASE id
+        <foreach collection="list" index="index" item="item" open="" separator=" " close="">
+            WHEN ${item.id} THEN #{item.politicalStatus}
+        </foreach>
+        END,
+        phone= CASE id
+        <foreach collection="list" index="index" item="item" open="" separator=" " close="">
+            WHEN ${item.id} THEN #{item.phone}
+        </foreach>
+        END,
+        lou_num= CASE id
+        <foreach collection="list" index="index" item="item" open="" separator=" " close="">
+            WHEN ${item.id} THEN #{item.louNum}
+        </foreach>
+        END,
+        floor= CASE id
+        <foreach collection="list" index="index" item="item" open="" separator=" " close="">
+            WHEN ${item.id} THEN #{item.floor}
+        </foreach>
+        END
+        where id in
+        <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
+            #{item.id,jdbcType=BIGINT}
+        </foreach>
+    </update>
+
+
+    <update id="setDisabled">
+        UPDATE oldman_base o,auto_value x,organ org
+        SET o.disable=1
+        WHERE o.id NOT in
+        <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+        <if test="organId!=null and organId!=0">
+            and x.id=o.xq_id AND org.id=x.parent_index AND org.id=#{organId}
+        </if>
+    </update>
 </mapper>

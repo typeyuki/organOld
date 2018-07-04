@@ -9,7 +9,7 @@
     </select>
 
     <select id="getByPage" parameterType="com.organOld.dao.util.Page" resultType="com.organOld.dao.entity.organ.Organ">
-        SELECT o.id,o.name,o.intro,o.address,o.phone,o.num,o.num_in,o.num_remain,o.status,ot.sec_type organType,d.value districtName,o.time
+        SELECT o.id,o.name,o.intro,o.address,o.phone,o.service_time,o.num,o.num_in,o.num_remain,o.status,ot.sec_type organType,d.value districtName,o.time
         FROM organ o LEFT JOIN auto_value d on d.id=o.district_id,organ_type ot
         WHERE o.organ_type_id=ot.id AND ot.fir_type=#{entity.organFirTypeId}
 
@@ -102,4 +102,17 @@
         </if>
         WHERE id=#{id}
     </update>
+
+
+    <select id="getRoleOrgan" resultType="com.organOld.dao.entity.organ.Organ">
+        SELECT o.id,o.name
+        FROM organ o,organ_type ot
+        WHERE o.organ_type_id=ot.id
+        <if test="type==1">
+            and ot.fir_type=#{typeIndex}
+        </if>
+        <if test="type==2">
+            and ot.sec_type=#{typeIndex}
+        </if>
+    </select>
 </mapper>

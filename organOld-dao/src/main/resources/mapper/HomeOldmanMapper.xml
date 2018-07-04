@@ -32,8 +32,8 @@
         <if test="entity!=null and entity.oldman!=null and entity.oldman.id!=null and entity.oldman.id!=0">
             and o.id=#{entity.oldman.id}
         </if>
-        <if test="entity.jwId!=null and entity.jwId!=0">
-            AND jw.id=#{entity.jwId}
+        <if test="entity.organId!=null and entity.organId!=0">
+            AND jw.id=#{entity.organId}
         </if>
         <if test="entity.homeId!=null and entity.homeId!=0">
             AND ho.home_id=#{entity.homeId}
@@ -51,8 +51,14 @@
 
     <select id="getSizeByPage" parameterType="com.organOld.dao.util.Page" resultType="java.lang.Long">
         SELECT count(1)
-        FROM home_oldman
-        WHERE home_id=#{entity.homeId}
+        FROM home_oldman ho,oldman_base o,organ jw,auto_value x
+        WHERE ho.oldman_id=o.id AND x.id=o.xq_id AND jw.id=x.parent_index
+        <if test="entity!=null and entity.organId!=null and entity.organId!=0">
+            and jw.id=#{entity.organId}
+        </if>
+        <if test="entity.homeId!=null and entity.homeId!=0">
+            AND ho.home_id=#{entity.homeId}
+        </if>
     </select>
 
 </mapper>

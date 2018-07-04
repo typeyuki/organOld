@@ -49,8 +49,8 @@
         <if test="entity!=null and entity.id!=null and entity.id!=0">
             and l.id=#{entity.id}
         </if>
-        <if test="entity!=null and entity.jwId!=null and entity.jwId!=0">
-            and l.organ_id=#{entity.jwId}
+        <if test="entity!=null and entity.organId!=null and entity.organId!=0">
+            and l.organ_id=#{entity.organId}
         </if>
         <if test="sortType!=null and sortType!=''">
             ORDER BY ${sortType}
@@ -71,8 +71,8 @@
         <if test="entity!=null and entity.id!=null and entity.id!=0">
             and id=#{entity.id}
         </if>
-        <if test="entity!=null and entity.jwId!=null and entity.jwId!=0">
-            and l.organ_id=#{entity.jwId}
+        <if test="entity!=null and entity.organId!=null and entity.organId!=0">
+            and l.organ_id=#{entity.organId}
         </if>
     </select>
 
@@ -417,4 +417,15 @@
         FROM label l,label_rule lr
         WHERE lr.id=#{id} and l.id=lr.label_id
     </select>
+
+
+    <insert id="save" parameterType="com.organOld.dao.entity.label.Label" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO label(secId,name,rule,content,type,organ_id)
+        VALUES (#{labelSec.id},#{name},#{rule},#{content},#{type},#{organId})
+
+    </insert>
+
+    <insert id="addLabelRule">
+        INSERT INTO label_rule(label_id) VALUES (#{id})
+    </insert>
 </mapper>
