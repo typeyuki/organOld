@@ -10,7 +10,9 @@
                                     <h5>账号<small>添加</small></h5>
                                 </div>
                                 <div class="ibox-content">
+
                                     <form method="post" action="/user/save" class="form-horizontal">
+
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label">用户名</label>
                                             <div class="col-sm-2">
@@ -52,7 +54,9 @@
                 </div>
             </div>
             <div class="modal-footer">
+
                 <a onclick="$('form').submit()" href="javascript:void(0);" class="btn btn-primary ">添加</a>
+
                 <a data-dismiss="modal" href="javascript:void(0);" class="btn btn-primary ">关闭</a>
             </div>
         </div><!-- /.modal-content -->
@@ -62,8 +66,10 @@
 <script>
     function roleSelect() {
         if($("select[name='roleId']").find("option:selected").attr("type")!="0"){
+
             $("select[name='organId']").html("");
             $("#organ").show();
+
             $.ajax({
                 url: "/user/getRoleOrgan",
                 data : {
@@ -82,7 +88,9 @@
                 }
             });
         }else{
+
             $("#organ").hide();
+
         }
     }
 </script>

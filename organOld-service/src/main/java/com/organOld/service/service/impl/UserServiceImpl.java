@@ -96,6 +96,7 @@ public class UserServiceImpl implements UserService {
         return userDao.getAllRole();
     }
 
+
     @Override
     @Transactional
 
