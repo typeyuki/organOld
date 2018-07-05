@@ -120,6 +120,11 @@
                                     </#list>
                                 </select>
                             </div>
+                            <script>
+                                $('.selectpicker').selectpicker({
+                                    'selectedText': 'cat'
+                                });
+                            </script>
                     </div>
 
                         <form action="/oldman/importExcel" method="post" enctype="multipart/form-data">
@@ -161,15 +166,11 @@
 <#--<script src="/js/plugins/jeditable/jquery.jeditable.js"></script>-->
 
 <script>
+
     <#if result??>
         alert("录入数据：${result.data.total}\n其中成功导入数据：${result.data.numSuccess}\n包括添加：${result.data.successAdd}\n更新：${result.data.successUpdate}\n删除：${result.data.successDel}\n失败：${result.data.numFail}");
     </#if>
 
-    $(window).on('load', function () {
-        $('.selectpicker').selectpicker({
-            'selectedText': 'cat'
-        });
-    });
 
 </script>
 
