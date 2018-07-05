@@ -1,6 +1,8 @@
 package com.organOld.web.controller;
 
+
 import com.organOld.service.contract.*;
+
 import com.organOld.service.model.Model;
 import com.organOld.service.service.OrganService;
 import com.organOld.service.service.UserService;
@@ -54,6 +56,11 @@ public class UserController {
     }
 
 
+    /**
+     * 账号添加
+     * @param userAddRequest
+     * @return
+     */
     @RequestMapping(value = "/save",method = RequestMethod.POST)
     public ModelAndView save(UserAddRequest userAddRequest){
         ModelAndView mv=new ModelAndView("redirect:/user");
