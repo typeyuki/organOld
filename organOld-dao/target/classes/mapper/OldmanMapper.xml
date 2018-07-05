@@ -229,5 +229,6 @@
         <if test="organId!=null and organId!=0">
             and x.id=o.xq_id AND org.id=x.parent_index AND org.id=#{organId}
         </if>
+        and o.disable=0
     </update>
 </mapper>

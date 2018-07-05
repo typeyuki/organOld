@@ -35,7 +35,9 @@ public class OldmanController {
      */
     @RequestMapping(value = "/base",method = RequestMethod.GET)
     public ModelAndView base(){
-        return new ModelAndView("oldman/base");
+        ModelAndView mv=new ModelAndView("oldman/base");
+        mv.addObject("info",oldmanService.getAddInfo());
+        return mv;
     }
 
     /**
@@ -58,7 +60,7 @@ public class OldmanController {
      */
     @RequestMapping(value = "/importExcel",method = RequestMethod.POST)
     public ModelAndView importExcel(@RequestParam MultipartFile file,HttpSession session) throws IOException {
-        ModelAndView mv=new ModelAndView("redirect:/oldman/base");
+        ModelAndView mv=new ModelAndView("oldman/base");
         Result result=oldmanService.importExcel(file,session);
         mv.addObject("result",result);
         return mv;

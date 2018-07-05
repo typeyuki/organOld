@@ -50,7 +50,7 @@
             and l.id=#{entity.id}
         </if>
         <if test="entity!=null and entity.organId!=null and entity.organId!=0">
-            and l.organ_id=#{entity.organId}
+            and (l.organ_id=#{entity.organId} or l.organ_id=0)
         </if>
         <if test="sortType!=null and sortType!=''">
             ORDER BY ${sortType}
@@ -211,12 +211,16 @@
 
     <select id="getRuleManByPage" parameterType="com.organOld.dao.util.Page" resultMap="bindOldman">
         SELECT o.id,o.name,o.sex,o.birthday,c.value census,p.value political_status,o.time,o.phone,o.address,o.pid,o.lou_num,x.value xname,org.name jname,d.value dname
-        FROM oldman_base o,auto_value c,auto_value p,auto_value x,auto_value d,organ org,label_oldman lo,oldman_family oldf,
-        auto_value e,oldman_economic oe,
-        oldman_health_base ohb,auto_value hbi,auto_value hbe
-        WHERE o.census=c.id AND o.political_status=p.id AND x.id=o.xq_id AND org.id=x.parent_index AND d.id=org.district_id
-        AND e.id=oe.economic_index AND oe.oldman_id=o.id AND oldf.oldman_id=o.id
-        AND ohb.oldman_id=o.id AND hbi.id=ohb.intelligence AND hbe.id=ohb.eyesight
+        FROM oldman_base o
+        left join auto_value c on o.census=c.id
+        left join auto_value p on o.political_status=p.id
+        ,auto_value x,auto_value d,organ org,label_oldman lo
+        ,oldman_family oldf,oldman_economic oe,oldman_health_base ohb
+        left join auto_value hbi on hbi.id=ohb.intelligence
+        left join auto_value hbe on  hbe.id=ohb.eyesight
+        WHERE x.id=o.xq_id AND org.id=x.parent_index AND d.id=org.district_id
+        AND oe.oldman_id=o.id AND oldf.oldman_id=o.id
+        AND ohb.oldman_id=o.id
         <if test="rule.birStart!=null">
             <![CDATA[
             and DATE_FORMAT(o.birthday,'%Y') >= DATE_FORMAT(#{rule.birStart},'%Y')

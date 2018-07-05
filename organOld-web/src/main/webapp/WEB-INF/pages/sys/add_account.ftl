@@ -62,6 +62,7 @@
 <script>
     function roleSelect() {
         if($("select[name='roleId']").find("option:selected").attr("type")!="0"){
+            $("select[name='organId']").html("");
             $("#organ").show();
             $.ajax({
                 url: "/user/getRoleOrgan",

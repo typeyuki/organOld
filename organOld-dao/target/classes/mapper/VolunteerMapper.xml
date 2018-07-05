@@ -2,6 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.organOld.dao.repository.VolunteerDao">
 
+    <resultMap id="volunteer" type="com.organOld.dao.entity.volunteer.Volunteer">
+        <id property="id" column="id" />
+        <result property="time" column="time" />
+        <association property="oldman" javaType="com.organOld.dao.entity.oldman.Oldman">
+            <id property="id" column="oid" />
+            <result property="name" column="name"/>
+        </association>
+    </resultMap>
+
     <insert id="saveAll" parameterType="java.util.List">
         INSERT into volunteer(oldman_id)
         VALUES
@@ -17,4 +26,33 @@
             #{item}
         </foreach>
     </delete>
+
+
+
+    <select id="getByPage" parameterType="com.organOld.dao.util.Page" resultMap="volunteer">
+        SELECT v.id,ob.id oid,ob.name,v.time
+        FROM volunteer v,oldman_base ob,organ org,auto_value x
+        WHERE ob.id=v.oldman_id AND x.id=ob.xq_id AND org.id=x.parent_index
+        <if test="entity!=null and entity.organId!=null and entity.organId!=0">
+            and org.id=#{entity.organId}
+        </if>
+        <if test="sortType!=null and sortType!=''">
+            ORDER BY ob.${sortType}
+        </if>
+        <if test="sort!=null and sort!=''">
+            ${sort}
+        </if>
+        <if test="length!=null and length!=0">
+            limit #{start},#{length}
+        </if>
+    </select>
+
+    <select id="getSizeByPage" parameterType="com.organOld.dao.util.Page" resultType="java.lang.Long">
+        SELECT count(1)
+        FROM volunteer v,oldman_base ob,organ org,auto_value x
+        WHERE ob.id=v.oldman_id AND x.id=ob.xq_id AND org.id=x.parent_index
+        <if test="entity!=null and entity.organId!=null and entity.organId!=0">
+            and org.id=#{entity.organId}
+        </if>
+    </select>
 </mapper>

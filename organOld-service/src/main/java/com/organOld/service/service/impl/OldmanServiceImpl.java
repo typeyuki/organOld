@@ -224,6 +224,8 @@ public class OldmanServiceImpl implements OldmanService {
     public OldmanAllInfoModel getOldmanInfo(int oldmanId) {
         OldmanAllInfoModel oldmanAllInfoModel=new OldmanAllInfoModel();
         Page<DBEntity> page=new Page<>();
+        page.setSortType("id");
+        page.setSort("asc");
 
         Oldman oldman=new Oldman();
         oldman.setId(oldmanId);
@@ -544,9 +546,9 @@ public class OldmanServiceImpl implements OldmanService {
                         }
                     }
 
-                    if (!r.getCell(60).getStringCellValue().equals("")) {
+                    if (!r.getCell(61).getStringCellValue().equals("")) {
                         health.setIsCj(HealthEnum.CJQK.getIndex());
-                        String[] add = r.getCell(60).getStringCellValue().split("#");
+                        String[] add = r.getCell(61).getStringCellValue().split("#");
                         for (int i = 0; i < add.length; i++) {
                             HealthAdd healthAdd = new HealthAdd();
                             healthAdd.setDesc(add[i]);
@@ -554,47 +556,47 @@ public class OldmanServiceImpl implements OldmanService {
                             healthAddList.add(healthAdd);
                         }
                     }
-
+//!!!!
                     OldmanFamily family = new OldmanFamily();
-                    if (r.getCell(61).getStringCellValue().equals("1")) {
+                    if (r.getCell(62).getStringCellValue().equals("1")) {
                         family.setFamilyIndex(autoValueDao.getStringLikeIndex("纯老", AutoValueEnum.JJJG.getIndex(), "like"));
                     }
-                    if (r.getCell(62).getStringCellValue().equals("1")) {
+                    if (r.getCell(63).getStringCellValue().equals("1")) {
                         family.setFamilyIndex(autoValueDao.getStringLikeIndex("独居", AutoValueEnum.JJJG.getIndex(), "like"));
                     }
-                    if (r.getCell(63).getStringCellValue().equals("1")) {
+                    if (r.getCell(64).getStringCellValue().equals("1")) {
                         family.setFamilyIndex(autoValueDao.getStringLikeIndex("失独", AutoValueEnum.JJJG.getIndex(), "like"));
                     }
-                    if (r.getCell(64).getStringCellValue().equals("1")) {
+                    if (r.getCell(65).getStringCellValue().equals("1")) {
                         family.setFamilyIndex(autoValueDao.getStringLikeIndex("一老养", AutoValueEnum.JJJG.getIndex(), "like"));
                     }
-                    if (r.getCell(65).getStringCellValue().equals("1")) {
+                    if (r.getCell(66).getStringCellValue().equals("1")) {
                         family.setFamilyIndex(autoValueDao.getStringLikeIndex("孤老", AutoValueEnum.JJJG.getIndex(), "like"));
                     }
-                    if (r.getCell(66).getStringCellValue().equals("1")) {
+                    if (r.getCell(67).getStringCellValue().equals("1")) {
                         family.setFamilyIndex(autoValueDao.getStringLikeIndex("三支人员", AutoValueEnum.JJJG.getIndex(), "like"));
                     }
-                    if (r.getCell(67).getStringCellValue().equals("1")) {
+                    if (r.getCell(68).getStringCellValue().equals("1")) {
                         family.setFamilyIndex(autoValueDao.getStringLikeIndex("其他", AutoValueEnum.JJJG.getIndex(), "like"));
                     }
 
                     OldmanEconomic economic = new OldmanEconomic();
-                    if (r.getCell(68).getStringCellValue().equals("1")) {
+                    if (r.getCell(69).getStringCellValue().equals("1")) {
                         economic.setEconomicIndex(autoValueDao.getStringLikeIndex("帮困", AutoValueEnum.JJTJ.getIndex(), "like"));
                     }
-                    if (r.getCell(69).getStringCellValue().equals("1")) {
+                    if (r.getCell(70).getStringCellValue().equals("1")) {
                         economic.setEconomicIndex(autoValueDao.getStringLikeIndex("低保", AutoValueEnum.JJTJ.getIndex(), "like"));
                     }
-                    if (r.getCell(70).getStringCellValue().equals("1")) {
+                    if (r.getCell(71).getStringCellValue().equals("1")) {
                         economic.setEconomicIndex(autoValueDao.getStringLikeIndex("养老保险", AutoValueEnum.JJTJ.getIndex(), "like"));
                     }
-                    if (r.getCell(71).getStringCellValue().equals("1")) {
+                    if (r.getCell(72).getStringCellValue().equals("1")) {
                         economic.setEconomicIndex(autoValueDao.getStringLikeIndex("医疗救助金", AutoValueEnum.JJTJ.getIndex(), "like"));
                     }
-                    if (r.getCell(72).getStringCellValue().equals("1")) {
+                    if (r.getCell(73).getStringCellValue().equals("1")) {
                         economic.setEconomicIndex(autoValueDao.getStringLikeIndex("城镇医保", AutoValueEnum.JJTJ.getIndex(), "like"));
                     }
-                    if (r.getCell(73).getStringCellValue().equals("1")) {
+                    if (r.getCell(74).getStringCellValue().equals("1")) {
                         economic.setEconomicIndex(autoValueDao.getStringLikeIndex("其他", AutoValueEnum.JJTJ.getIndex(), "like"));
                     }
 

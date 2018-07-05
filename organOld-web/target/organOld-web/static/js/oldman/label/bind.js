@@ -61,7 +61,7 @@ $(document).ready(function(){
                 "targets": [15], // 目标列位置，下标从0开始
                 "data": "id", // 数据列名
                 "render": function(data, type, full) { // 返回自定义内容
-                    return "<span class='look' id='"+data+"'>查看</span>";
+                    return "<span class='look' id='"+data+"'>查看</span><span class='look' id='\"+data+\"'>已落实</span>";
                 }
             },
             //不进行排序的列

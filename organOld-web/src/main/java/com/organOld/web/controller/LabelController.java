@@ -151,9 +151,15 @@ public class LabelController {
     }
 
 
+    /**
+     * 标签添加
+     * @param label
+     * @param session
+     * @return
+     */
     @RequestMapping(value = "/add",method = RequestMethod.POST)
     public ModelAndView add(Label label, HttpSession session){
-        ModelAndView mv=new ModelAndView("redirect:/label/"+((label.getType()==1)?"bind":"rule"));
+        ModelAndView mv=new ModelAndView("redirect:/oldman/label/"+((label.getType()==1)?"bind":"rule"));
         labelService.save(label,session);
         return mv;
     }

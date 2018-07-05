@@ -44,8 +44,6 @@
         <if test="entity!=null and entity.oldman!=null and entity.oldman.id!=null and entity.oldman.id!=0">
             and o.oldman_id=#{entity.oldman.id}
         </if>
-
-
         <if test="entity!=null and entity.organId!=null and entity.organId!=0">
             and org.id=#{entity.organId}
         </if>

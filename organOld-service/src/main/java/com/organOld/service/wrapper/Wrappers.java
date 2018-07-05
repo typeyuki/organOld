@@ -15,4 +15,5 @@ public class Wrappers {
     public static UserWrapper userWrapper=new UserWrapper();
     public static ProductWrapper productWrapper=new ProductWrapper();
     public static ProductBookWrapper productBookWrapper=new ProductBookWrapper();
+    public static VolunteerWrapper volunteerWrapper=new VolunteerWrapper();
 }

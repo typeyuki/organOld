@@ -35,10 +35,8 @@ $(document).ready(function(){
             },{
                 data:"phone"
             },{
-                data:"address"
-            },{
                 data:"pid"
-            },{
+            },{},{
                 data:"time"
             }
             ],
@@ -62,7 +60,20 @@ $(document).ready(function(){
                             return data;
                         }
                     }
+                }, {
+                    "targets": [13], // 目标列位置，下标从0开始
+                    "data": "address", // 数据列名
+                    "render": function(data, type, full) { // 返回自定义内容
+                        if(data=="东兰路东兰小区56栋302"){
+                            return "楼组长"
+                        }else if(data=="古龙路古龙小区12栋111号"){
+                            return "康乐福信息服务  已落实"
+                        }else{
+                            return "";
+                        }
+                    }
                 },
+
                 // 增加一列，包括删除和修改，同时将我们需要传递的数据传递到链接中
                 {
                     "targets": [15], // 目标列位置，下标从0开始

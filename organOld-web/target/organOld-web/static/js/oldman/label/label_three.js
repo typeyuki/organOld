@@ -70,7 +70,7 @@ $(document).ready(function(){
                             return "<span onclick=newPage("+data+",$(this).parent().prev().prev().prev().prev().text(),'/oldman/label/bind/"+typeLabel+"/man') id='"+data+"'>人员</span><span class='edit' id='"+data+"'>修改</span>";
                         }else{
                             //规则指定
-                            return "<span onclick=newPage("+data+",$(this).parent().prev().prev().prev().prev().text(),'/oldman/label/rule/"+typeLabel+"/man')>人员</span><span onclick=newPage("+data+",$(this).parent().prev().prev().prev().prev().text(),'/oldman/label/rule/"+typeLabel+"')>规则</span><span class='edit' id='"+data+"'>修改</span>";
+                            return "<span onclick=newPage("+data+",$(this).parent().prev().prev().prev().prev().text(),'/oldman/label/rule/"+data+"/man')>人员</span><span onclick=newPage("+data+",$(this).parent().prev().prev().prev().prev().text(),'/oldman/label/rule/"+data+"')>规则</span><span class='edit' id='"+data+"'>修改</span>";
                         }
                     }
                 },

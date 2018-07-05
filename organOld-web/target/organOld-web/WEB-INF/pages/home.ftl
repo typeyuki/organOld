@@ -58,15 +58,20 @@
                 </li>
                 <#list menus! as menu>
                     <li>
-                        <a href="#">
-                            <i class="fa ${menu.icon}"></i>
-                            <span class="nav-label">${menu.name}</span>
+
                             <#if (menu.children)??  && (menu.children)?size gt 0>
+                            <a href="#">
+                                <i class="fa ${menu.icon}"></i>
+                                <span class="nav-label">${menu.name}</span>
                                 <span class="fa arrow"></span>
+                            </a>
                             <#else >
+                            <a class="J_menuItem" href="${menu.url}">
+                                <i class="fa ${menu.icon}"></i>
+                                <span class="nav-label">${menu.name}</span>
                                 <span class="label label-warning pull-right">16</span>
+                            </a>
                             </#if>
-                        </a>
                         <#if (menu.children)??  && (menu.children)?size gt 0>
                         <ul class="nav nav-second-level">
                             <#list menu.children as child>

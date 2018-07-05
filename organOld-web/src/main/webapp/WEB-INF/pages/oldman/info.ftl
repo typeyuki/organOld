@@ -67,9 +67,9 @@
                             <label class="col-sm-2 control-label label_title">健康档案</label>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">血型：${info.health.bloodType!}</label>
-                            <label class="col-sm-2 control-label">失智情况：${info.health.intelligence!}</label>
-                            <label class="col-sm-2 control-label">视力：${info.health.eyesight!}</label>
+                            <label class="col-sm-2 control-label">血型：${info.health.bloodType!"无"}</label>
+                            <label class="col-sm-2 control-label">失智情况：${info.health.intelligence!"无"}</label>
+                            <label class="col-sm-2 control-label">视力：${info.health.eyesight!"无"}</label>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">慢病</label>
@@ -237,7 +237,7 @@
         success: function (result) {
             if(result.success==true){
                 for(var i=0;i<result.data.length;i++){
-                    var l=$("<label style='margin: 5px'>"+result.data[i]+"</label>");
+                    var l=$("<label style='margin: 5px'>"+result.data[i]+"</label>已落实<br>");
                     $("#label").append(l);
                 }
             }

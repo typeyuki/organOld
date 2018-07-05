@@ -61,7 +61,7 @@
 
 
     <update id="updateByOldmanIds" parameterType="java.util.List">
-        update link
+        update linkman
         SET
         name= CASE oldman_id
         <foreach collection="list" index="index" item="item" open="" separator=" " close="">
