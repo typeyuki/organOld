@@ -63,6 +63,7 @@ public class OldmanController {
         ModelAndView mv=new ModelAndView("oldman/base");
         Result result=oldmanService.importExcel(file,session);
         mv.addObject("result",result);
+        mv.addObject("info",oldmanService.getAddInfo());
         return mv;
     }
 

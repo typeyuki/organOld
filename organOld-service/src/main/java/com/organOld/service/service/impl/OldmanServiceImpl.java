@@ -668,8 +668,8 @@ public class OldmanServiceImpl implements OldmanService {
 //                    System.out.println(health.toString());
 //                    System.out.println(family.toString());
 //                    System.out.println(economic.toString());
+                    numSuccess++;
                 }
-                numSuccess++;
             }catch (Exception e){
                 e.printStackTrace();
                 excelReturnModel.getFail().add(r.getRowNum()+1);

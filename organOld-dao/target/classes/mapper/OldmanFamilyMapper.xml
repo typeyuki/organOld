@@ -12,6 +12,41 @@
         </association>
     </resultMap>
 
+
+    <select id="getByPage" parameterType="com.organOld.dao.util.Page" resultMap="oldmanFamliy">
+        SELECT ofa.id,ob.id oid,f.value family,ofa.time,ob.name
+        FROM oldman_family ofa left join auto_value f on f.id=ofa.family_index,oldman_base ob,organ org,auto_value x
+        WHERE ob.id=ofa.oldman_id AND x.id=ob.xq_id AND org.id=x.parent_index
+        <if test="entity!=null and entity.organId!=null and entity.organId!=0">
+            and org.id=#{entity.organId}
+        </if>
+        <if test="entity!=null and entity.oldman!=null and entity.oldman.id!=null and entity.oldman.id!=0">
+            and ob.id=#{entity.oldman.id}
+        </if>
+        <if test="sortType!=null and sortType!=''">
+            ORDER BY ob.${sortType}
+        </if>
+        <if test="sort!=null and sort!=''">
+            ${sort}
+        </if>
+        <if test="length!=null and length!=0">
+            limit #{start},#{length}
+        </if>
+    </select>
+
+    <select id="getSizeByPage" parameterType="com.organOld.dao.util.Page" resultType="java.lang.Long">
+        SELECT count(1)
+        FROM oldman_family ofa,oldman_base ob,organ org,auto_value x
+        WHERE ofa.oldman_id=ob.id AND x.id=ob.xq_id AND org.id=x.parent_index
+        <if test="entity!=null and entity.organId!=null and entity.organId!=0">
+            and org.id=#{entity.organId}
+        </if>
+        <if test="entity!=null and entity.oldman!=null and entity.oldman.id!=null and entity.oldman.id!=0">
+            and o.oldman_id=#{entity.oldman.id}
+        </if>
+    </select>
+
+
     <update id="updateById" parameterType="com.organOld.dao.entity.oldman.OldmanFamily">
         UPDATE oldman_family
         SET family_index=#{family_index},oldman_id=#{oldman_id},id=#{id},time=#{time}
