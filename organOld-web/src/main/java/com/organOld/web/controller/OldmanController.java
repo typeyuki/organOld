@@ -41,13 +41,32 @@ public class OldmanController {
     }
 
     /**
-     * 获取基本信息数据 分页
-     //     * @param aoData
+     * 获取基本信息数据 分页 由于前台传过来的 参数都带 [] 所以对象封装数组 用不了 只能这样
+     * requestparam 的名字不能跟 oldmanRequest的属性名一样
      * @return
      */
     @ResponseBody
     @RequestMapping(value = "/baseData",method = RequestMethod.POST)
-    public String data(OldmanRequest oldmanRequest, BTableRequest bTableRequest, HttpSession session){
+    public String data(OldmanRequest oldmanRequest, BTableRequest bTableRequest, HttpSession session,
+                       @RequestParam(value = "census_array[]",required = false) String census[],
+                       @RequestParam(value = "family_array[]",required = false) String family[],
+                       @RequestParam(value = "economic_array[]",required = false) String economic[],
+                       @RequestParam(value = "politicalStatus_array[]",required = false) String politicalStatus[],
+                       @RequestParam(value = "isHealth_array[]",required = false) String isHealth[],
+                       @RequestParam(value = "intelligence_array[]",required = false) String intelligence[],
+                       @RequestParam(value = "eyesight_array[]",required = false) String eyesight[],
+                       @RequestParam(value = "district_array[]",required = false) String district[],
+                       @RequestParam(value = "jw_array[]",required = false) String jw[]){
+        oldmanRequest.setCensusArray(census);
+        oldmanRequest.setFamily(family);
+        oldmanRequest.setEconomic(economic);
+        oldmanRequest.setPoliticalStatusArray(politicalStatus);
+        oldmanRequest.setIntelligence(intelligence);
+        oldmanRequest.setEyesight(eyesight);
+        oldmanRequest.setDistrict(district);
+        oldmanRequest.setJw(jw);
+        oldmanRequest.setIsHealth(isHealth);
+
         return oldmanService.getOldmanByPage(oldmanRequest,bTableRequest,session);
     }
 

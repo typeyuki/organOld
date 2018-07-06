@@ -1,64 +1,28 @@
 package com.organOld.service.contract;
 
-import java.util.Date;
-
 public class OldmanRequest {
     private int id;
-    private Integer census;//户籍 1非 2户籍 3人户分离
-    private Integer districtId;//片区索引
-    private Integer ageStart;//年龄段-起
-    private Integer ageEnd;//年龄段-止
+    private String[] censusArray;//户籍
+    private String[] district;//片区索引
+    private String ageStart;//年龄段-起
+    private String ageEnd;//年龄段-止
     private String search;//模糊全文 匹配搜索  姓名、身份证、地址、电话
-    private Integer jwId;//居委索引
+    private String[] jw;//居委索引
     private Integer sex;//1女 2男
-    private Integer politicalStatus;//政治面貌 1群众 2党员
+    private String[] politicalStatusArray;//政治面貌
+    private String[] family;
+    private String[] economic;
+    private String[] isHealth;
+    private String[] intelligence;
+    private String[] eyesight;
 
 
-    private String name;
-    private String phone;
-    private String address;
-    private String pid;
-    private Date birthday;
-
-
-    public Date getBirthday() {
-        return birthday;
+    public String[] getIsHealth() {
+        return isHealth;
     }
 
-    public void setBirthday(Date birthday) {
-        this.birthday = birthday;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getPid() {
-        return pid;
-    }
-
-    public void setPid(String pid) {
-        this.pid = pid;
+    public void setIsHealth(String[] isHealth) {
+        this.isHealth = isHealth;
     }
 
     public int getId() {
@@ -69,35 +33,28 @@ public class OldmanRequest {
         this.id = id;
     }
 
-    public Integer getCensus() {
-        return census;
+
+    public String[] getDistrict() {
+        return district;
     }
 
-    public void setCensus(Integer census) {
-        this.census = census;
+    public void setDistrict(String[] district) {
+        this.district = district;
     }
 
-    public Integer getDistrictId() {
-        return districtId;
-    }
-
-    public void setDistrictId(Integer districtId) {
-        this.districtId = districtId;
-    }
-
-    public Integer getAgeStart() {
+    public String getAgeStart() {
         return ageStart;
     }
 
-    public void setAgeStart(Integer ageStart) {
+    public void setAgeStart(String ageStart) {
         this.ageStart = ageStart;
     }
 
-    public Integer getAgeEnd() {
+    public String getAgeEnd() {
         return ageEnd;
     }
 
-    public void setAgeEnd(Integer ageEnd) {
+    public void setAgeEnd(String ageEnd) {
         this.ageEnd = ageEnd;
     }
 
@@ -109,12 +66,12 @@ public class OldmanRequest {
         this.search = search;
     }
 
-    public Integer getJwId() {
-        return jwId;
+    public String[] getJw() {
+        return jw;
     }
 
-    public void setJwId(Integer jwId) {
-        this.jwId = jwId;
+    public void setJw(String[] jw) {
+        this.jw = jw;
     }
 
     public Integer getSex() {
@@ -125,11 +82,51 @@ public class OldmanRequest {
         this.sex = sex;
     }
 
-    public Integer getPoliticalStatus() {
-        return politicalStatus;
+    public String[] getCensusArray() {
+        return censusArray;
     }
 
-    public void setPoliticalStatus(Integer politicalStatus) {
-        this.politicalStatus = politicalStatus;
+    public void setCensusArray(String[] censusArray) {
+        this.censusArray = censusArray;
+    }
+
+    public String[] getPoliticalStatusArray() {
+        return politicalStatusArray;
+    }
+
+    public void setPoliticalStatusArray(String[] politicalStatusArray) {
+        this.politicalStatusArray = politicalStatusArray;
+    }
+
+    public String[] getFamily() {
+        return family;
+    }
+
+    public void setFamily(String[] family) {
+        this.family = family;
+    }
+
+    public String[] getEconomic() {
+        return economic;
+    }
+
+    public void setEconomic(String[] economic) {
+        this.economic = economic;
+    }
+
+    public String[] getIntelligence() {
+        return intelligence;
+    }
+
+    public void setIntelligence(String[] intelligence) {
+        this.intelligence = intelligence;
+    }
+
+    public String[] getEyesight() {
+        return eyesight;
+    }
+
+    public void setEyesight(String[] eyesight) {
+        this.eyesight = eyesight;
     }
 }
