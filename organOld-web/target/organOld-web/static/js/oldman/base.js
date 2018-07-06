@@ -105,7 +105,12 @@ $(document).ready(function(){
                 "iSortCol_0" : aoData.iSortCol_0,
                 "sEcho" : aoData.sEcho,
                 "sSortDir_0" : aoData.sSortDir_0,
-                "id" : ($('.id').val()==""?"0":aoData.id)//参数不能是空 400
+                "id" : ($('.id').val()==""?"0":aoData.id),//参数不能是空 400
+                "census":$("select[name='census']").val(),
+                "ageStart":$("input[name='ageStart']").val(),
+                "ageEnd":$("input[name='ageEnd']").val(),
+                "familyIndex":$("select[name='familyIndex']").val(),
+                "economicIndex":$("select[name='economicIndex']").val()
             },
             type: 'POST',
             dataType: 'json',

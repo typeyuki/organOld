@@ -4,15 +4,16 @@ import java.util.Date;
 
 public class OldmanRequest {
     private int id;
-    private Integer census;//户籍 1非 2户籍 3人户分离
-    private Integer districtId;//片区索引
-    private Integer ageStart;//年龄段-起
-    private Integer ageEnd;//年龄段-止
+    private String[] census;//户籍 1非 2户籍 3人户分离
+    private String districtId;//片区索引
+    private String ageStart;//年龄段-起
+    private String ageEnd;//年龄段-止
     private String search;//模糊全文 匹配搜索  姓名、身份证、地址、电话
-    private Integer jwId;//居委索引
-    private Integer sex;//1女 2男
-    private Integer politicalStatus;//政治面貌 1群众 2党员
-
+    private String jwId;//居委索引
+    private String sex;//1女 2男
+    private String politicalStatus;//政治面貌 1群众 2党员
+    private String[] familyIndex;
+    private String[] economicIndex;
 
     private String name;
     private String phone;
@@ -20,6 +21,45 @@ public class OldmanRequest {
     private String pid;
     private Date birthday;
 
+    public String[] getCensus() {
+        return census;
+    }
+
+    public String getAgeStart() {
+        return ageStart;
+    }
+
+    public String getAgeEnd() {
+        return ageEnd;
+    }
+
+    public void setCensus(String[] census) {
+        this.census = census;
+    }
+
+    public void setAgeStart(String ageStart) {
+        this.ageStart = ageStart;
+    }
+
+    public void setAgeEnd(String ageEnd) {
+        this.ageEnd = ageEnd;
+    }
+
+    public String[] getFamilyIndex() {
+        return familyIndex;
+    }
+
+    public void setFamilyIndex(String[] familyIndex) {
+        this.familyIndex = familyIndex;
+    }
+
+    public String[] getEconomicIndex() {
+        return economicIndex;
+    }
+
+    public void setEconomicIndex(String[] economicIndex) {
+        this.economicIndex = economicIndex;
+    }
 
     public Date getBirthday() {
         return birthday;
@@ -69,36 +109,37 @@ public class OldmanRequest {
         this.id = id;
     }
 
-    public Integer getCensus() {
-        return census;
-    }
 
-    public void setCensus(Integer census) {
-        this.census = census;
-    }
-
-    public Integer getDistrictId() {
+    public String getDistrictId() {
         return districtId;
     }
 
-    public void setDistrictId(Integer districtId) {
+    public void setDistrictId(String districtId) {
         this.districtId = districtId;
     }
 
-    public Integer getAgeStart() {
-        return ageStart;
+    public String getJwId() {
+        return jwId;
     }
 
-    public void setAgeStart(Integer ageStart) {
-        this.ageStart = ageStart;
+    public void setJwId(String jwId) {
+        this.jwId = jwId;
     }
 
-    public Integer getAgeEnd() {
-        return ageEnd;
+    public String getSex() {
+        return sex;
     }
 
-    public void setAgeEnd(Integer ageEnd) {
-        this.ageEnd = ageEnd;
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
+    public String getPoliticalStatus() {
+        return politicalStatus;
+    }
+
+    public void setPoliticalStatus(String politicalStatus) {
+        this.politicalStatus = politicalStatus;
     }
 
     public String getSearch() {
@@ -109,27 +150,4 @@ public class OldmanRequest {
         this.search = search;
     }
 
-    public Integer getJwId() {
-        return jwId;
-    }
-
-    public void setJwId(Integer jwId) {
-        this.jwId = jwId;
-    }
-
-    public Integer getSex() {
-        return sex;
-    }
-
-    public void setSex(Integer sex) {
-        this.sex = sex;
-    }
-
-    public Integer getPoliticalStatus() {
-        return politicalStatus;
-    }
-
-    public void setPoliticalStatus(Integer politicalStatus) {
-        this.politicalStatus = politicalStatus;
-    }
 }

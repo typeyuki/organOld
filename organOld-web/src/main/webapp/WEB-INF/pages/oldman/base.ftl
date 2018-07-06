@@ -36,7 +36,7 @@
                     </div>
                     <div class="row">
                         <div class="col-sm-10">
-                            <input class="id" type="text" placeholder="序号">
+                            <input class="id" name="id" type="text" placeholder="序号">
                             <label >性别</label>
                             <select name="sex">
                                 <option></option>
@@ -45,7 +45,7 @@
                                 </#list>
                             </select>
                             <input class="age" name="ageStart" type="text" placeholder="年龄段-起">
-                            <input class="age" type="text" placeholder="年龄段-止">
+                            <input class="age" name="ageEnd" type="text" placeholder="年龄段-止">
                             <input class="" type="text" placeholder="模糊匹配">
                         </div>
                         <div class="col-sm-2">
@@ -55,25 +55,25 @@
                     <div class="row">
                         <div class="col-sm-10">
                             <label >户籍：</label>
-                            <select  class="selectpicker bla bla bli" multiple data-live-search="true">
+                            <select name="census"  class="selectpicker bla bla bli" multiple data-live-search="true">
                                 <#list info.census as census>
                                     <option type="checkbox" value="${census.id!}" >${census.value!}</option>
                                 </#list>
                             </select>
                             <label >政治面貌：</label>
-                            <select  class="selectpicker bla bla bli" multiple data-live-search="true">
+                            <select name="politicalStatuses" class="selectpicker bla bla bli" multiple data-live-search="true">
                                 <#list info.politicalStatuses as politicalStatuses>
                                     <option value="${politicalStatuses.id!}">${politicalStatuses.value!}</option>
                                 </#list>
                             </select>
                             <label>家庭结构：</label>
-                            <select  class="selectpicker bla bla bli" multiple data-live-search="true">
+                            <select name="familyIndex"  class="selectpicker bla bla bli" multiple data-live-search="true">
                                 <#list info.family as family>
                                     <option value="${family.id!}"> <i></i> ${family.value!}</option>
                                 </#list>
                             </select>
                             <label >经济条件：</label>
-                            <select  class="selectpicker bla bla bli" multiple data-live-search="true">
+                            <select name="economicIndex" class="selectpicker bla bla bli" multiple data-live-search="true">
                                 <#list info.economic as economic>
                                     <option type="checkbox" value="${economic.id!}" > <i></i> ${economic.value!}</option>
                                 </#list>
