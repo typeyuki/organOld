@@ -261,6 +261,47 @@ function chartPie_1(title_text,legend_data,series) {
     return option;
 }
 
+function chartPie_1Click(title,legend_data,series) {
+    var option = {
+        title : {
+            text: title_text,
+            textStyle:{
+                color:title_color,
+                fontSize:title_fontSize,
+                fontWeight:100
+            },
+            x:'0%',
+            y:'0%'
+        },
+        graphic:{
+            type:'text',
+            left:'center',
+            top:'center',
+            style:{
+                text:'总人数:1562',
+                textAlign:'center',
+                fill:'#fff',
+                width:100,
+                height:100,
+                font: '2em "STHeiti", sans-serif'
+            }
+        },
+        tooltip : {
+            trigger: 'item',
+            formatter: ""
+        },
+        legend: {
+            orient: 'vertical',
+            right: '0',
+            top:"0",
+            data: legend_data
+        },
+        series :series,
+        color: [series_color_1,series_color_2,series_color_3,series_color_4,series_color_5,series_color_6,series_color_7]
+    };
+    return option;
+}
+
 //横向条形图
 function chartBarHei(title_text,legend_data,xAxis_data,series) {
     var option = {

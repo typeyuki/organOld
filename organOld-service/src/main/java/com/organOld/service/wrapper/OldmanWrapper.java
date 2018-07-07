@@ -58,19 +58,9 @@ public class OldmanWrapper implements Wrapper<Oldman,OldmanModel,OldmanRequest> 
             oldman.setBirthdayEnd(commonService.AgeTobirthday(Integer.parseInt(oldmanRequest.getAgeStart())));
         if(oldmanRequest.getAgeEnd()!=null && !oldmanRequest.getAgeEnd().equals(""))
             oldman.setBirthdayStart(commonService.AgeTobirthday(Integer.parseInt(oldmanRequest.getAgeEnd())));
-        //TODO 转换 年龄段到出生年月
-//        if(oldmanRequest.getSearch()!=null && !oldmanRequest.getSearch().equals("")){
-//            if(CommonService.isPid(oldmanRequest.getSearch())){
-//                //查找的是身份证
-//                oldman.setPid(oldmanRequest.getSearch());
-//            }else if(CommonService.isPhone(oldmanRequest.getSearch())){
-//                //查找的是电话
-//                oldman.setPhone(oldmanRequest.getSearch());
-//            }else{
-//                oldman.setName(oldmanRequest.getSearch());
-//                oldman.setAddress(oldmanRequest.getSearch());
-//            }
-//        }
+
+
+
         return oldman;
     }
 

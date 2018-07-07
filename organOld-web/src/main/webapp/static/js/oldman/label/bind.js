@@ -56,6 +56,7 @@ $(document).ready(function(){
                     }
                 }
             },
+
             // 增加一列，包括删除和修改，同时将我们需要传递的数据传递到链接中
             {
                 "targets": [15], // 目标列位置，下标从0开始
@@ -100,6 +101,28 @@ $(document).ready(function(){
         ];
         order=[[0,"asc"]];
         columnDefs= [
+            {
+                "targets": [9], // 目标列位置，下标从0开始
+                "data": "census", // 数据列名
+                "render": function(data, type, full) { // 返回自定义内容
+                    if(data==null){
+                        return "";
+                    }else{
+                        return data;
+                    }
+                }
+            },
+            {
+                "targets": [8], // 目标列位置，下标从0开始
+                "data": "politicalStatus", // 数据列名
+                "render": function(data, type, full) { // 返回自定义内容
+                    if(data==null){
+                        return "";
+                    }else{
+                        return data;
+                    }
+                }
+            },
             // 增加一列，包括删除和修改，同时将我们需要传递的数据传递到链接中
             {
                 "targets": [14], // 目标列位置，下标从0开始

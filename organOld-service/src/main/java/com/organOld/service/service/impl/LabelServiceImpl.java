@@ -53,7 +53,7 @@ public class LabelServiceImpl implements LabelService {
     public String getByPage(LabelRequest labelRequest, BTableRequest bTableRequest, HttpSession session) {
         Page<Label> page=commonService.getPage(bTableRequest,"label");
         Label label= Wrappers.labelWrapper.unwrap(labelRequest);
-        commonService.checkIsOrgan(session,label);
+        commonService.checkIsOrgan(label);
         page.setEntity(label);
         List<LabelModel> labelList=labelDao.getByPage(page).stream().map(Wrappers.labelWrapper::wrap).collect(Collectors.toList());
         Long size=labelDao.getSizeByPage(page);
@@ -168,7 +168,7 @@ public class LabelServiceImpl implements LabelService {
     @Transactional
     public void save(Label label, HttpSession session) {
         label.setOrganId(0);
-        commonService.checkIsOrgan(session,label);
+        commonService.checkIsOrgan(label);
         labelDao.save(label);
         if(label.getType()==2){
             //规则制定

@@ -25,10 +25,26 @@ public class Oldman extends Man implements DBInterface{
     /**
      * 搜索对象
      */
+    private Integer organId;//居委ID 或者片区ID
     private Date birthdayStart;//出生年月-起
     private Date birthdayEnd;//出生年月-止
-    private String search;//模糊搜索
-    private Integer organId;//居委ID
+
+
+    private String censusArray[];//户籍 1非 2户籍 3人户分离
+    private String district[];//片区索引
+    private String search;//模糊全文 匹配搜索  姓名、身份证、地址、电话
+    private String jw[];//居委索引
+    private String politicalStatusArray[];//政治面貌 1群众 2党员
+    private String family[];
+    private String economic[];
+    private String isHealth[];
+    private String intelligence[];
+    private String eyesight[];
+
+
+
+
+
     private String future;//是否是查询未来的重点老人得分
 
     private Integer keyGoalBase;//重点老人分数基线
@@ -38,22 +54,78 @@ public class Oldman extends Man implements DBInterface{
      */
     private Xq xq;//小区
 
-    @Override
-    public String toString() {
-        return "Oldman{" +
-                "sex=" + sex +
-                ", birthday=" + birthday +
-                ", pid='" + pid + '\'' +
-                ", address='" + address + '\'' +
-                ", census='" + census + '\'' +
-                ", politicalStatus='" + politicalStatus + '\'' +
-                ", louNum=" + louNum +
-                ", xqId=" + xqId +
-                ", floor=" + floor +
-                ", xq=" + xq +
-                ", name='" + name + '\'' +
-                ", phone='" + phone + '\'' +
-                '}';
+
+    public String[] getIsHealth() {
+        return isHealth;
+    }
+
+    public void setIsHealth(String[] isHealth) {
+        this.isHealth = isHealth;
+    }
+
+    public String[] getCensusArray() {
+        return censusArray;
+    }
+
+    public void setCensusArray(String[] censusArray) {
+        this.censusArray = censusArray;
+    }
+
+    public String[] getDistrict() {
+        return district;
+    }
+
+    public void setDistrict(String[] district) {
+        this.district = district;
+    }
+
+
+    public String[] getJw() {
+        return jw;
+    }
+
+    public void setJw(String[] jw) {
+        this.jw = jw;
+    }
+
+    public String[] getPoliticalStatusArray() {
+        return politicalStatusArray;
+    }
+
+    public void setPoliticalStatusArray(String[] politicalStatusArray) {
+        this.politicalStatusArray = politicalStatusArray;
+    }
+
+    public String[] getFamily() {
+        return family;
+    }
+
+    public void setFamily(String[] family) {
+        this.family = family;
+    }
+
+    public String[] getEconomic() {
+        return economic;
+    }
+
+    public void setEconomic(String[] economic) {
+        this.economic = economic;
+    }
+
+    public String[] getIntelligence() {
+        return intelligence;
+    }
+
+    public void setIntelligence(String[] intelligence) {
+        this.intelligence = intelligence;
+    }
+
+    public String[] getEyesight() {
+        return eyesight;
+    }
+
+    public void setEyesight(String[] eyesight) {
+        this.eyesight = eyesight;
     }
 
     public Integer getFloor() {

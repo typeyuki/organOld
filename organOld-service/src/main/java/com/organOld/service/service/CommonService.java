@@ -120,7 +120,7 @@ public class CommonService {
     }
 
 
-    public Integer getIdBySession(HttpSession session) {
+    public Integer getIdBySession() {
         try {
             UserDetails userDetails=(UserDetails) SecurityContextHolder.getContext()
                     .getAuthentication()
@@ -132,8 +132,8 @@ public class CommonService {
         }
     }
 
-    public void checkIsOrgan(HttpSession session, DBInterface dbInterface) {
-        Integer organId=getIdBySession(session);
+    public void checkIsOrgan(DBInterface dbInterface) {
+        Integer organId=getIdBySession();
         if (organId!=null && organId!=0){
             dbInterface.setOrganId(organId);
         }
@@ -171,6 +171,25 @@ public class CommonService {
             }
         }
         return age;
+    }
+
+    public Result checkUserOrganType() {
+        Result result;
+        try {
+            UserDetails userDetails=(UserDetails) SecurityContextHolder.getContext()
+                    .getAuthentication()
+                    .getPrincipal();
+            String username=userDetails.getUsername();
+            String type=userDao.getOrganTypeByUsername(username);
+            if(type!=null &&!type.equals("")){
+                result=new Result(true,type);
+            }else{
+                result=new Result(false);
+            }
+        }catch (Exception e){
+            result=new Result(false);
+        }
+        return result;
     }
 }
 

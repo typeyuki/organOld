@@ -58,7 +58,19 @@
 </script>
 <script>
     //家庭结构
-    title_text="家庭结构分布饼图";
+    var title_family_1={
+        text: "家庭结构分布饼图",
+        link:"javascript: change('child_family','child_oldman')",
+        target: "self",
+        textStyle:{
+            color:title_color,
+            fontSize:title_fontSize,
+            fontWeight:100
+        },
+        x:'0%',
+        y:'0%'
+    };
+//    title_text="家庭结构分布饼图";
     legend_data=[{name:'纯老',textStyle:{color:legend_color,fontSize:18}},{name:'独居',textStyle:{color:legend_color,fontSize:18}}
         ,{name:'失独',textStyle:{color:legend_color,fontSize:18}},{name:'一老养一老',textStyle:{color:legend_color,fontSize:18}},
         {name:'孤老',textStyle:{color:legend_color,fontSize:18}},{name:'三支人员',textStyle:{color:legend_color,fontSize:18}},{name:'其他',textStyle:{color:legend_color,fontSize:18}}];
@@ -93,7 +105,7 @@
             }
         }
     }];
-    var family_option_family_pie = chartPie(title_text,legend_data,series);
+    var family_option_family_pie = chartPieClick(title_family_1,legend_data,series);
     //家庭结构增长趋势图
     title_text='家庭结构变化趋势图';
     xAxis_data=['2月','3月','4月','今天','6月','7月','8月'];

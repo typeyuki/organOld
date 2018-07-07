@@ -24,4 +24,6 @@ public interface UserDao extends BaseDao<SysUser,Number>{
     void setUserOrgan(@Param("userId")int userId,@Param("organId") int organId);
 
     List<SysRole> getAllRole();
+
+    String getOrganTypeByUsername(String username);
 }

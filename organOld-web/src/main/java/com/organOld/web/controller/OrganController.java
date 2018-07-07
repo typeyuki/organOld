@@ -119,7 +119,7 @@ public class OrganController {
     @ResponseBody
     @RequestMapping(value = "/oldman/single/man/data",method = RequestMethod.POST)
     public String single(BTableRequest bTableRequest, OrganOldmanRequest organOldmanManRequest,HttpSession session){
-        int organId=commonService.getIdBySession(session);
+        int organId=commonService.getIdBySession();
         organOldmanManRequest.setOrganId(organId);
         return organService.getManByPage(bTableRequest,organOldmanManRequest);
     }

@@ -35,7 +35,7 @@ public class ProductServiceImpl implements ProductService {
     public String getByPage(ProductRequest productRequest, BTableRequest bTableRequest, HttpSession session) {
         Page<Product> page=commonService.getPage(bTableRequest,"product");
         Product product= Wrappers.productWrapper.unwrap(productRequest);
-        commonService.checkIsOrgan(session,product);
+        commonService.checkIsOrgan(product);
         page.setEntity(product);
         List<ProductModel> productModelList=productDao.getByPage(page).stream().map(Wrappers.productWrapper::wrap).collect(Collectors.toList());
         Long size=productDao.getSizeByPage(page);
@@ -46,7 +46,7 @@ public class ProductServiceImpl implements ProductService {
     public String getBookByPage(ProductBookRequest productBookRequest, BTableRequest bTableRequest, HttpSession session) {
         Page<ProductBook> page=commonService.getPage(bTableRequest,"product_book");
         ProductBook productBook= Wrappers.productBookWrapper.unwrap(productBookRequest);
-        commonService.checkIsOrgan(session,productBook);
+        commonService.checkIsOrgan(productBook);
         page.setEntity(productBook);
         List<ProductBookModel> productBookModelList=productBookDao.getByPage(page).stream().map(Wrappers.productBookWrapper::wrap).collect(Collectors.toList());
         Long size=productBookDao.getSizeByPage(page);

@@ -6,17 +6,18 @@
         }
     }
 </style>
-<div class="row">
-    <div class="col-lg-6 box"  align="center">
-        <div class="zz"></div>
-        <div id="organ_zbPie" class="organ_tu_big"></div>
+<div id="child_organ">
+    <div class="row">
+        <div class="col-lg-6 box"  align="center">
+            <div class="zz"></div>
+            <div id="organ_zbPie" class="organ_tu_big"></div>
+        </div>
+        <div class="col-lg-6 box">
+            <div class="zz"></div>
+            <div id="organ_sum_pie" class="organ_tu_big"></div>
+        </div>
     </div>
-    <div class="col-lg-6 box">
-        <div class="zz"></div>
-        <div id="organ_sum_pie" class="organ_tu_big"></div>
-    </div>
-</div>
-<div class="row">
+    <div class="row">
     <div class="col-lg-4 box">
         <div class="zz"></div>
         <div id="organ_jg_pie" class="organ_tu"></div>
@@ -29,6 +30,7 @@
         <div class="zz"></div>
         <div id="organ_jj_pie" class="organ_tu"></div>
     </div>
+</div>
 </div>
 <script type="text/javascript">
     var organ_tu_w,organ_tu_h,organ_tu_big_w,organ_tu_big_h;
@@ -84,7 +86,18 @@
     organ_zbPie.setOption(organ_option_zb_pie);
 
 
-    title_text="机构养老";
+    var title_organOldman_1={
+        text: "机构养老",
+        link:"javascript: change('child_organ','child_organOldman')",
+        target: "self",
+        textStyle:{
+            color:title_color,
+            fontSize:title_fontSize,
+            fontWeight:100
+        },
+        x:'0%',
+        y:'0%'
+    };
     legend_data=[{name:'古美养老院',textStyle:{color:legend_color,fontSize:18}},{name:'东兰养老院',textStyle:{color:legend_color,fontSize:18}},{name:'平阳养老院',textStyle:{color:legend_color,fontSize:18}}];
     series=[{
         name: '老人户籍',
@@ -113,7 +126,7 @@
             }
         }
     }];
-    var organ_option_jg_pie = chartPie(title_text,legend_data,series);
+    var organ_option_jg_pie = chartPieClick(title_organOldman_1,legend_data,series);
     organ_jg_pie.setOption(organ_option_jg_pie);
 
 
@@ -149,8 +162,21 @@
     var organ_option_sq_sub_pie = chartPie(title_text,legend_data,series);
     organ_sq_sub_pie.setOption(organ_option_sq_sub_pie);
 
+    //legend 点击事件
+    organ_sq_sub_pie.on('legendselectchanged', function (params) {
+        var name = params.name;
+        if(name=="助餐点"){
+            change('child_organ','child_zcdOldman');
+        }else if(name=="日照中心"){
+            change('child_organ','child_rzzxOldman');
+        }else if(name=="长者照护之家"){
+            change('child_organ','child_zzOldman');
+    }
+    });
+
+
     title_text="居家养老";
-    legend_data=[{name:'家庭养老',link:"javascript: change('child_organ','child_homeOldman')",target: "self",textStyle:{color:legend_color,fontSize:18}},
+    legend_data=[{name:'家庭养老',textStyle:{color:legend_color,fontSize:18}},
         {name:'长护险',textStyle:{color:legend_color,fontSize:18}},
         {name:'智能化应用',textStyle:{color:legend_color,fontSize:18}},
         {name:'家庭医生',textStyle:{color:legend_color,fontSize:18}},
@@ -184,8 +210,27 @@
             }
         }
     }];
+
+
     var organ_option_jj_pie = chartPie(title_text,legend_data,series);
     organ_jj_pie.setOption(organ_option_jj_pie);
+
+
+    //legend 点击事件
+    organ_jj_pie.on('legendselectchanged', function (params) {
+        var name = params.name;
+        if(name=="家庭养老"){
+            change('child_organ','child_homeOldman');
+        }else if(name=="长护险"){
+            change('child_organ','child_chx');
+        }else if(name=="智能化应用"){
+            change('child_organ','child_znh');
+        }else if(name=="家庭医生"){
+            change('child_organ','child_jjys');
+        }else if(name=="家庭病床"){
+            change('child_organ','child_jjbc');
+        }
+    });
 
 
     title_text="养老服务覆盖率";

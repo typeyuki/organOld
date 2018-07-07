@@ -26,8 +26,18 @@
         SELECT o.id,o.name,o.sex,o.birthday,c.value census,p.value political_status,o.time,o.phone,o.address,o.pid,o.lou_num,x.value xname,org.name jname,d.value dname
         FROM oldman_base o left join auto_value c on o.census=c.id
         left join auto_value p on o.political_status=p.id,
-        auto_value x,auto_value d,organ org
-        WHERE  x.id=o.xq_id AND org.id=x.parent_index AND d.id=org.district_id
+        auto_value x,auto_value d,organ org,oldman_family ofa,oldman_economic oe,oldman_health_base ohb
+        WHERE  x.id=o.xq_id AND org.id=x.parent_index AND d.id=org.district_id and ofa.oldman_id=o.id and oe.oldman_id=o.id AND ohb.oldman_id=o.id
+        <if test="entity.birthdayStart!=null">
+            <![CDATA[
+            and DATE_FORMAT(o.birthday,'%Y') >= DATE_FORMAT(#{entity.birthdayStart},'%Y')
+            ]]>
+        </if>
+        <if test="entity.birthdayEnd!=null">
+            <![CDATA[
+            and DATE_FORMAT(o.birthday,'%Y') <= DATE_FORMAT(#{entity.birthdayEnd},'%Y')
+            ]]>
+        </if>
         <if test="entity!=null and entity.id!=null and entity.id!=0">
             and o.id=#{entity.id}
         </if>
@@ -37,11 +47,80 @@
         <if test="entity!=null and entity.sex!=null and entity.sex!=0">
             and o.sex=#{entity.sex}
         </if>
-        <if test="entity!=null and entity.census!=null and entity.census!=0">
-            and o.census=#{entity.census}
+        <if test="entity!=null and entity.isHealth!=null and entity.isHealth.length > 0">
+            and (ohb.is_mb in
+            <foreach collection="entity.isHealth" index="index" item="item" open="(" separator="," close=")">
+                ${item}
+            </foreach>
+            or ohb.is_sn in
+            <foreach collection="entity.isHealth" index="index" item="item" open="(" separator="," close=")">
+                ${item}
+            </foreach>
+            or ohb.is_ywfy in
+            <foreach collection="entity.isHealth" index="index" item="item" open="(" separator="," close=")">
+                ${item}
+            </foreach>
+            or ohb.is_exzl in
+            <foreach collection="entity.isHealth" index="index" item="item" open="(" separator="," close=")">
+                ${item}
+            </foreach>
+            or ohb.is_gz in
+            <foreach collection="entity.isHealth" index="index" item="item" open="(" separator="," close=")">
+                ${item}
+            </foreach>
+            or ohb.is_cj in
+            <foreach collection="entity.isHealth" index="index" item="item" open="(" separator="," close=")">
+                ${item}
+            </foreach>
+            )
         </if>
-        <if test="entity!=null and entity.politicalStatus!=null and entity.politicalStatuss!=''">
-            and o.political_status=#{entity.politicalStatus}
+        <if test="entity!=null and entity.family!=null and entity.family.length > 0">
+            and ofa.family_index in
+            <foreach collection="entity.family" index="index" item="item" open="(" separator="," close=")">
+                ${item}
+            </foreach>
+        </if>
+        <if test="entity!=null and entity.intelligence!=null and entity.intelligence.length > 0">
+            and ohb.intelligence in
+            <foreach collection="entity.intelligence" index="index" item="item" open="(" separator="," close=")">
+                ${item}
+            </foreach>
+        </if>
+        <if test="entity!=null and entity.eyesight!=null and entity.eyesight.length > 0">
+            and ohb.eyesight in
+            <foreach collection="entity.eyesight" index="index" item="item" open="(" separator="," close=")">
+                ${item}
+            </foreach>
+        </if>
+        <if test="entity!=null and entity.economic!=null and entity.economic.length > 0">
+            and oe.economic_index in
+            <foreach collection="entity.economic" index="index" item="item" open="(" separator="," close=")">
+                ${item}
+            </foreach>
+        </if>
+        <if test="entity!=null and entity.censusArray!=null and entity.censusArray.length > 0">
+            and o.census in
+            <foreach collection="entity.censusArray" index="index" item="item" open="(" separator="," close=")">
+                ${item}
+            </foreach>
+        </if>
+        <if test="entity!=null and entity.politicalStatusArray!=null and entity.politicalStatusArray.length > 0">
+            and o.political_status in
+            <foreach collection="entity.politicalStatusArray" index="index" item="item" open="(" separator="," close=")">
+                ${item}
+            </foreach>
+        </if>
+        <if test="entity!=null and entity.jw!=null and entity.jw.length > 0">
+            and org.id in
+            <foreach collection="entity.jw" index="index" item="item" open="(" separator="," close=")">
+                ${item}
+            </foreach>
+        </if>
+        <if test="entity!=null and entity.district!=null and entity.district.length > 0">
+            and d.id in
+            <foreach collection="entity.district" index="index" item="item" open="(" separator="," close=")">
+                ${item}
+            </foreach>
         </if>
         <if test="entity!=null and entity.search!=null and entity.search!=''">
             and (o.pid LIKE  concat('%',#{entity.search},'%') OR o.address LIKE  concat('%',#{entity.search},'%') OR o.name LIKE  concat('%',#{entity.search},'%')
@@ -61,30 +140,108 @@
 
     <select id="getSizeByPage" parameterType="com.organOld.dao.util.Page" resultType="java.lang.Long">
         SELECT count(1)
-        FROM oldman_base o,auto_value x,organ org
-        WHERE x.id=o.xq_id AND org.id=x.parent_index
+        FROM oldman_base o left join auto_value c on o.census=c.id
+        left join auto_value p on o.political_status=p.id,
+        auto_value x,auto_value d,organ org,oldman_family ofa,oldman_economic oe,oldman_health_base ohb
+        WHERE  x.id=o.xq_id AND org.id=x.parent_index AND d.id=org.district_id and ofa.oldman_id=o.id and oe.oldman_id=o.id AND ohb.oldman_id=o.id
+        <if test="entity.birthdayStart!=null">
+            <![CDATA[
+            and DATE_FORMAT(o.birthday,'%Y') >= DATE_FORMAT(#{entity.birthdayStart},'%Y')
+            ]]>
+        </if>
+        <if test="entity.birthdayEnd!=null">
+            <![CDATA[
+            and DATE_FORMAT(o.birthday,'%Y') <= DATE_FORMAT(#{entity.birthdayEnd},'%Y')
+            ]]>
+        </if>
         <if test="entity!=null and entity.id!=null and entity.id!=0">
-            and id=#{entity.id}
+            and o.id=#{entity.id}
         </if>
         <if test="entity!=null and entity.organId!=null and entity.organId!=0">
             and org.id=#{entity.organId}
         </if>
         <if test="entity!=null and entity.sex!=null and entity.sex!=0">
-            and sex=#{entity.sex}
+            and o.sex=#{entity.sex}
         </if>
-        <if test="entity!=null and entity.census!=null and entity.census!=0">
-            and census=#{entity.census}
+        <if test="entity!=null and entity.isHealth!=null and entity.isHealth.length > 0">
+            and (ohb.is_mb in
+            <foreach collection="entity.isHealth" index="index" item="item" open="(" separator="," close=")">
+                ${item}
+            </foreach>
+            or ohb.is_sn in
+            <foreach collection="entity.isHealth" index="index" item="item" open="(" separator="," close=")">
+                ${item}
+            </foreach>
+            or ohb.is_ywfy in
+            <foreach collection="entity.isHealth" index="index" item="item" open="(" separator="," close=")">
+                ${item}
+            </foreach>
+            or ohb.is_exzl in
+            <foreach collection="entity.isHealth" index="index" item="item" open="(" separator="," close=")">
+                ${item}
+            </foreach>
+            or ohb.is_gz in
+            <foreach collection="entity.isHealth" index="index" item="item" open="(" separator="," close=")">
+                ${item}
+            </foreach>
+            or ohb.is_cj in
+            <foreach collection="entity.isHealth" index="index" item="item" open="(" separator="," close=")">
+                ${item}
+            </foreach>
+            )
         </if>
-        <if test="entity!=null and entity.politicalStatus!=null and entity.politicalStatuss!=''">
-            and political_status=#{entity.politicalStatus}
+        <if test="entity!=null and entity.family!=null and entity.family.length > 0">
+            and ofa.family_index in
+            <foreach collection="entity.family" index="index" item="item" open="(" separator="," close=")">
+                ${item}
+            </foreach>
+        </if>
+        <if test="entity!=null and entity.intelligence!=null and entity.intelligence.length > 0">
+            and ohb.intelligence in
+            <foreach collection="entity.intelligence" index="index" item="item" open="(" separator="," close=")">
+                ${item}
+            </foreach>
+        </if>
+        <if test="entity!=null and entity.eyesight!=null and entity.eyesight.length > 0">
+            and ohb.eyesight in
+            <foreach collection="entity.eyesight" index="index" item="item" open="(" separator="," close=")">
+                ${item}
+            </foreach>
+        </if>
+        <if test="entity!=null and entity.economic!=null and entity.economic.length > 0">
+            and oe.economic_index in
+            <foreach collection="entity.economic" index="index" item="item" open="(" separator="," close=")">
+                ${item}
+            </foreach>
+        </if>
+        <if test="entity!=null and entity.censusArray!=null and entity.censusArray.length > 0">
+            and o.census in
+            <foreach collection="entity.censusArray" index="index" item="item" open="(" separator="," close=")">
+                ${item}
+            </foreach>
+        </if>
+        <if test="entity!=null and entity.politicalStatusArray!=null and entity.politicalStatusArray.length > 0">
+            and o.political_status in
+            <foreach collection="entity.politicalStatusArray" index="index" item="item" open="(" separator="," close=")">
+                ${item}
+            </foreach>
+        </if>
+        <if test="entity!=null and entity.jw!=null and entity.jw.length > 0">
+            and org.id in
+            <foreach collection="entity.jw" index="index" item="item" open="(" separator="," close=")">
+                ${item}
+            </foreach>
+        </if>
+        <if test="entity!=null and entity.district!=null and entity.district.length > 0">
+            and d.id in
+            <foreach collection="entity.district" index="index" item="item" open="(" separator="," close=")">
+                ${item}
+            </foreach>
         </if>
         <if test="entity!=null and entity.search!=null and entity.search!=''">
-            and (pid LIKE  concat('%',#{entity.search},'%') OR address LIKE  concat('%',#{entity.search},'%') OR name LIKE  concat('%',#{entity.search},'%')
-            OR phone LIKE  concat('%',#{entity.search},'%'))
+            and (o.pid LIKE  concat('%',#{entity.search},'%') OR o.address LIKE  concat('%',#{entity.search},'%') OR o.name LIKE  concat('%',#{entity.search},'%')
+            OR o.phone LIKE  concat('%',#{entity.search},'%'))
         </if>
-        <!--<if test="oldman!=null and oldman.birthday!=null and oldman.birthday!=''">-->
-        <!--and birthday=#{oldman.birthday}-->
-        <!--</if>-->
 
     </select>
 

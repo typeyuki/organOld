@@ -36,11 +36,10 @@
             <div class="row">
                 <div class="col-lg-6"  id="total">
                     <#include "total.ftl" />
-                    <#include "base.ftl" />
                 </div>
                 <div class="col-lg-6" id="oldman">
                     <#include "oldman.ftl" />
-                    <#include "key.ftl" />
+                    <#include "base.ftl" />
                     <#include "family.ftl" />
                     <#include "economic.ftl" />
                     <#include "health.ftl" />
@@ -49,6 +48,15 @@
             <div class="row">
                 <div class="col-lg-6" id="organ">
                     <#include "organ.ftl" />
+                    <#include "homeOldman.ftl" />
+                    <#include "organOldman.ftl" />
+                    <#include "zcdOldman.ftl" />
+                    <#include "zzOldman.ftl" />
+                    <#include "rzzxOldman.ftl" />
+                    <#include "chx.ftl" />
+                    <#include "znh.ftl" />
+                    <#include "jjys.ftl" />
+                    <#include "jjbc.ftl" />
                 </div>
                 <div class="col-lg-6" id="finish">
                     <#include "finish.ftl" />

@@ -52,7 +52,7 @@ public class OldmanKeyServiceImpl implements OldmanKeyService {
     public String getByPage(BTableRequest bTableRequest, HttpSession session, OldmanKeyRequest oldmanKeyRequest) {
         Page<Oldman> page=commonService.getPage(bTableRequest,"oldman_key");
         Oldman oldman= Wrappers.oldmanKeyWrapper.unwrap(oldmanKeyRequest);
-        commonService.checkIsOrgan(session,oldman);
+        commonService.checkIsOrgan(oldman);
         page.setEntity(oldman);
         List<OldmanKeyModel> oldmanKeyModelList=oldmanKeyDao.getByPage(page).stream().map(Wrappers.oldmanKeyWrapper::wrap).collect(Collectors.toList());
         Long size=oldmanKeyDao.getSizeByPage(page);

@@ -83,7 +83,7 @@
                     <div class="row">
                         <div class="col-sm-10">
                             <label >健康状况：</label>
-                            <select class="selectpicker bla bla bli" multiple data-live-search="true">
+                            <select name="isHealth" class="selectpicker bla bla bli" multiple data-live-search="true">
                                 <option value="1">有慢病</option>
                                 <option value="2">有失能情况</option>
                                 <option value="3">有药物反应</option>
@@ -92,29 +92,29 @@
                                 <option value="6">有残疾史</option>
                             </select>
                             <label >智力：</label>
-                            <select class="selectpicker bla bla bli" multiple data-live-search="true">
+                            <select name="intelligence" class="selectpicker bla bla bli" multiple data-live-search="true">
                                 <#list info.intelligence as intelligence>
                                     <option value="${intelligence.id!}" > ${intelligence.value!}</option>
                                 </#list>
                             </select>
                             <label>视力：</label>
-                            <select class="selectpicker bla bla bli" multiple data-live-search="true">
+                            <select name="eyesight" class="selectpicker bla bla bli" multiple data-live-search="true">
                                 <#list info.eyesight as eyesight>
                                     <option value="${eyesight.id!}"> ${eyesight.value!}</option>
                                 </#list>
                             </select>
                         </div>
                     </div>
-                        <div class="row">
+                        <div class="row" id="jw">
                             <div class="col-sm-10">
                                 <label >片区：</label>
-                                <select class="selectpicker bla bla bli" multiple data-live-search="true">
+                                <select name="district" class="selectpicker bla bla bli" multiple data-live-search="true">
                                     <#list info.district as district>
                                         <option  value="${district.id!}" > ${district.value!}</option>
                                     </#list>
                                 </select>
                                 <label >居委：</label>
-                                <select class="selectpicker bla bla bli" multiple data-live-search="true">
+                                <select name="jw" class="selectpicker bla bla bli" multiple data-live-search="true">
                                     <#list info.organ as organ>
                                         <option value="${organ.id!}"> ${organ.name!}</option>
                                     </#list>
@@ -123,6 +123,17 @@
                             <script>
                                 $('.selectpicker').selectpicker({
                                     'selectedText': 'cat'
+                                });
+                                $.ajax({
+                                    url: "/user/checkUserOrganType",
+                                    type: "get",
+                                    success: function (data) {
+                                        if (data.success == true) {
+                                            if(data.data=="居委会"){
+                                                $("#jw").hide();
+                                            }
+                                        }
+                                    }
                                 });
                             </script>
                     </div>

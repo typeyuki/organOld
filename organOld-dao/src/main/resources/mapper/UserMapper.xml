@@ -16,6 +16,11 @@
         FROM user_organ uo,sysuser u
         WHERE uo.user_id=u.id AND u.username=#{username}
     </select>
+    <select id="getOrganTypeByUsername" resultType="java.lang.String">
+        SELECT ot.sec_type
+        FROM user_organ uo,sysuser u,organ o,organ_type ot
+        WHERE uo.user_id=u.id AND u.username=#{username} and uo.organ_id=o.id AND o.organ_type_id=ot.id
+    </select>
 
     <insert id="save" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO sysuser(username,password) VALUE (#{username},#{password})

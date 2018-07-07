@@ -97,6 +97,7 @@ $(document).ready(function(){
             // }
         });
     function retrieveData(url, aoData, fnCallback) {
+
         $.ajax({
             url: url,//这个就是请求地址对应sAjaxSource
             data : {
@@ -106,11 +107,19 @@ $(document).ready(function(){
                 "sEcho" : aoData.sEcho,
                 "sSortDir_0" : aoData.sSortDir_0,
                 "id" : ($('.id').val()==""?"0":aoData.id),//参数不能是空 400
-                "census":$("select[name='census']").val(),
+                "census_array":$("select[name='census']").val(),
                 "ageStart":$("input[name='ageStart']").val(),
                 "ageEnd":$("input[name='ageEnd']").val(),
-                "familyIndex":$("select[name='familyIndex']").val(),
-                "economicIndex":$("select[name='economicIndex']").val()
+                "family_array":$("select[name='familyIndex']").val(),
+                "economic_array":$("select[name='economicIndex']").val(),
+                "sex":$("select[name='sex']").val(),
+                "search":$("input[name='search']").val(),
+                "politicalStatus_array":$("select[name='politicalStatuses']").val(),
+                "isHealth_array":$("select[name='isHealth']").val(),
+                "intelligence_array":$("select[name='intelligence']").val(),
+                "eyesight_array":$("select[name='eyesight']").val(),
+                "district_array":$("select[name='district']").val(),
+                "jw_array":$("select[name='jw']").val()
             },
             type: 'POST',
             dataType: 'json',

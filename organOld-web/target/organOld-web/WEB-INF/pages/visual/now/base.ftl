@@ -53,7 +53,7 @@
     var base_width=$("#total").width();
     if(winWidth>=1900){
         base_tu_w=base_width/2.2;
-        base_tu_h=winHeight/9.2;
+        base_tu_h=winHeight/8.8;
     }else if(winWidth<=1400 && winWidth>=1300){
         oldman_tu_w=winWidth/4.5;
         oldman_tu_h=winHeight/4.1;
@@ -72,7 +72,18 @@
     var base_zbPie= echarts.init(document.getElementById('base_zbPie'));
 </script>
 <script>
-    title_text="老人比例";
+    var title_base_1={
+        text: "老\n人\n比\n例",
+        link:"javascript: change('child_base','child_oldman')",
+        target: "self",
+        textStyle:{
+            color:title_color,
+            fontSize:title_fontSize,
+            fontWeight:100
+        },
+        x:'0%',
+        y:'20%'
+    };
     legend_data=[{name:'老人',textStyle:{color:legend_color,fontSize:18}},{name:'非老人',textStyle:{color:legend_color,fontSize:18}}];
     series=[
         {
@@ -95,7 +106,7 @@
             ]
         }
     ];
-    var base_option_zb_pie = chartPie(title_text,legend_data,series);
+    var base_option_zb_pie = chartPieClick(title_base_1,legend_data,series);
     base_zbPie.setOption(base_option_zb_pie);
 
     title_text='老人数量变化趋势';
