@@ -107,14 +107,14 @@
                     </div>
                         <div class="row" id="jw">
                             <div class="col-sm-10">
-                                <label >片区：</label>
-                                <select name="district" class="selectpicker bla bla bli" multiple data-live-search="true">
+                                <label class="pq">片区：</label>
+                                <select name="district" class="selectpicker bla bla bli pq" multiple data-live-search="true">
                                     <#list info.district as district>
                                         <option  value="${district.id!}" > ${district.value!}</option>
                                     </#list>
                                 </select>
                                 <label >居委：</label>
-                                <select name="jw" class="selectpicker bla bla bli" multiple data-live-search="true">
+                                <select  name="jw" class="selectpicker bla bla bli" multiple data-live-search="true">
                                     <#list info.organ as organ>
                                         <option value="${organ.id!}"> ${organ.name!}</option>
                                     </#list>
@@ -131,6 +131,8 @@
                                         if (data.success == true) {
                                             if(data.data=="居委会"){
                                                 $("#jw").hide();
+                                            }else if(data.data=="片区"){
+                                                $(".pq").hide();
                                             }
                                         }
                                     }

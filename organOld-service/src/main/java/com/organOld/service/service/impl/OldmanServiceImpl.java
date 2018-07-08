@@ -202,7 +202,8 @@ public class OldmanServiceImpl implements OldmanService {
     public OldmanAddInfoModel getAddInfo() {
         List<Integer> typeList=commonService.getAutoValueTypes("oldman_add");
         List<AutoValue> autoValueList=autoValueDao.getByTypeList(typeList);
-        List<Organ> jwList=organDao.getSimpleByType(2);
+        Integer organId=commonService.getIdBySession();
+        List<Organ> jwList=organDao.getSimpleByType(2,organId);
         List<HealthSelect> healthSelectList=oldmanHealthDao.getAllHealthSelect();
         OldmanAddInfoModel oldmanAddInfoModel=Wrappers.oldmanWrapper.wrapAddInfo(autoValueList,jwList,healthSelectList);
         return oldmanAddInfoModel;

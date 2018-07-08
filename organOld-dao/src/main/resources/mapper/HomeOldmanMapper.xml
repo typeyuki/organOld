@@ -33,7 +33,15 @@
             and o.id=#{entity.oldman.id}
         </if>
         <if test="entity.organId!=null and entity.organId!=0">
-            AND jw.id=#{entity.organId}
+            and jw.id in (
+            SELECT
+            case o.parent
+            when 0 then child.id
+            else o.id
+            end id
+            from organ o left join organ child on child.parent=o.id
+            WHERE o.id=#{entity.organId}
+            )
         </if>
         <if test="entity.homeId!=null and entity.homeId!=0">
             AND ho.home_id=#{entity.homeId}
@@ -54,7 +62,15 @@
         FROM home_oldman ho,oldman_base o,organ jw,auto_value x
         WHERE ho.oldman_id=o.id AND x.id=o.xq_id AND jw.id=x.parent_index
         <if test="entity!=null and entity.organId!=null and entity.organId!=0">
-            and jw.id=#{entity.organId}
+            and jw.id in (
+            SELECT
+            case o.parent
+            when 0 then child.id
+            else o.id
+            end id
+            from organ o left join organ child on child.parent=o.id
+            WHERE o.id=#{entity.organId}
+            )
         </if>
         <if test="entity.homeId!=null and entity.homeId!=0">
             AND ho.home_id=#{entity.homeId}

@@ -24,7 +24,15 @@
         FROM organ_oldman oo,oldman_base o,organ org,organ_type ot,organ jw,auto_value x
         WHERE oo.oldman_id=o.id AND org.id=oo.organ_id AND org.organ_type_id=ot.id AND x.id=o.xq_id AND jw.id=x.parent_index
         <if test="entity.organ!=null and entity.organ.id!=0">
-            AND oo.organ_id=#{entity.organ.id}
+            and oo.organ_id in (
+            SELECT
+            case o.parent
+            when 0 then child.id
+            else o.id
+            end id
+            from organ o left join organ child on child.parent=o.id
+            WHERE o.id=#{entity.organId}
+            )
         </if>
         <if test="entity.firType!=null and entity.firType!=''">
             AND ot.fir_type=#{entity.firType}
@@ -51,7 +59,15 @@
         FROM organ_oldman oo,oldman_base o,organ org,organ_type ot,organ jw,auto_value x
         WHERE oo.oldman_id=o.id AND org.id=oo.organ_id AND org.organ_type_id=ot.id AND x.id=o.xq_id AND jw.id=x.parent_index
         <if test="entity.organ!=null and entity.organ.id!=0">
-            AND oo.organ_id=#{entity.organ.id}
+            and oo.organ_id in (
+            SELECT
+            case o.parent
+            when 0 then child.id
+            else o.id
+            end id
+            from organ o left join organ child on child.parent=o.id
+            WHERE o.id=#{entity.organId}
+            )
         </if>
         <if test="entity.firType!=null and entity.firType!=''">
             AND ot.fir_type=#{entity.firType}

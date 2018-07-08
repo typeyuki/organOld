@@ -41,7 +41,15 @@
             and ob.id=#{entity.id}
         </if>
         <if test="entity!=null and entity.organId!=null and entity.organId!=0">
-            and org.id=#{entity.organId}
+            and org.id in (
+            SELECT
+            case o.parent
+            when 0 then child.id
+            else o.id
+            end id
+            from organ o left join organ child on child.parent=o.id
+            WHERE o.id=#{entity.organId}
+            )
         </if>
         <if test="entity!=null and entity.future!=null and entity.future!=''">
             ORDER BY future_key_status
@@ -66,7 +74,15 @@
             and (ob.key_status =2 or ob.key_status =3 or ob.key_status =4)
         </if>
         <if test="entity!=null and entity.organId!=null and entity.organId!=0">
-            and org.id=#{entity.organId}
+            and org.id in (
+            SELECT
+            case o.parent
+            when 0 then child.id
+            else o.id
+            end id
+            from organ o left join organ child on child.parent=o.id
+            WHERE o.id=#{entity.organId}
+            )
         </if>
     </select>
 

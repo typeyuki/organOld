@@ -124,8 +124,8 @@ public class LabelServiceImpl implements LabelService {
     public LabelAllRuleModel getLabelRule() {
         List<Integer> typeList=commonService.getAutoValueTypes("label");
         List<AutoValue> autoValueList=autoValueDao.getByTypeList(typeList);
-
-        List<Organ> jwList=organDao.getSimpleByType(2);
+        Integer organId=commonService.getIdBySession();
+        List<Organ> jwList=organDao.getSimpleByType(2, organId);
 
         List<Chx> chxList=chxDao.getSimple();
 

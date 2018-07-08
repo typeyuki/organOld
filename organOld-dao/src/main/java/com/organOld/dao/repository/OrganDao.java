@@ -1,8 +1,6 @@
 package com.organOld.dao.repository;
 
 import com.organOld.dao.entity.organ.Organ;
-import com.organOld.dao.entity.organ.OrganOldman;
-import com.organOld.dao.util.Page;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -11,7 +9,7 @@ import java.util.List;
  * Created by netlab606 on 2018/6/16.
  */
 public interface OrganDao extends BaseDao<Organ,Integer>{
-    List<Organ> getSimpleByType(Integer type);
+    List<Organ> getSimpleByType(@Param("type") Integer type,@Param("organId") Integer organId);
 
     Organ getByUsername(String username);
 

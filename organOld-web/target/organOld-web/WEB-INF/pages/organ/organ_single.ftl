@@ -157,6 +157,22 @@
                         </div>
                         <div class="hr-line-dashed"></div>
                         <div class="form-group">
+                            <label class="col-sm-2 control-label">父机构</label>
+                            <div class="col-sm-5">
+                                <select name="districtId">
+                                    <option value="">无</option>
+                                <#list districts as district>
+                                    <#if organ.districtName?? && organ.districtName==district.value>
+                                        <option value="${district.id}" selected>${district.value}</option>
+                                    <#else >
+                                        <option value="${district.id}">${district.value}</option>
+                                    </#if>
+                                </#list>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+                        <div class="form-group">
                             <div class="col-sm-4 col-sm-offset-2">
                                 <button class="btn btn-primary" type="submit">保存</button>
                             </div>

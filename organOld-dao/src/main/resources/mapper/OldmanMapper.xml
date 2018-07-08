@@ -42,7 +42,15 @@
             and o.id=#{entity.id}
         </if>
         <if test="entity!=null and entity.organId!=null and entity.organId!=0">
-            and org.id=#{entity.organId}
+            and org.id in (
+            SELECT
+            case o.parent
+            when 0 then child.id
+            else o.id
+            end id
+            from organ o left join organ child on child.parent=o.id
+            WHERE o.id=#{entity.organId}
+            )
         </if>
         <if test="entity!=null and entity.sex!=null and entity.sex!=0">
             and o.sex=#{entity.sex}
@@ -158,7 +166,15 @@
             and o.id=#{entity.id}
         </if>
         <if test="entity!=null and entity.organId!=null and entity.organId!=0">
-            and org.id=#{entity.organId}
+            and org.id in (
+            SELECT
+            case o.parent
+            when 0 then child.id
+            else o.id
+            end id
+            from organ o left join organ child on child.parent=o.id
+            WHERE o.id=#{entity.organId}
+            )
         </if>
         <if test="entity!=null and entity.sex!=null and entity.sex!=0">
             and o.sex=#{entity.sex}

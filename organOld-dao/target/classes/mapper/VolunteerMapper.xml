@@ -34,7 +34,15 @@
         FROM volunteer v,oldman_base ob,organ org,auto_value x
         WHERE ob.id=v.oldman_id AND x.id=ob.xq_id AND org.id=x.parent_index
         <if test="entity!=null and entity.organId!=null and entity.organId!=0">
-            and org.id=#{entity.organId}
+            and org.id in (
+            SELECT
+            case o.parent
+            when 0 then child.id
+            else o.id
+            end id
+            from organ o left join organ child on child.parent=o.id
+            WHERE o.id=#{entity.organId}
+            )
         </if>
         <if test="sortType!=null and sortType!=''">
             ORDER BY ob.${sortType}
@@ -52,7 +60,15 @@
         FROM volunteer v,oldman_base ob,organ org,auto_value x
         WHERE ob.id=v.oldman_id AND x.id=ob.xq_id AND org.id=x.parent_index
         <if test="entity!=null and entity.organId!=null and entity.organId!=0">
-            and org.id=#{entity.organId}
+            and org.id in (
+            SELECT
+            case o.parent
+            when 0 then child.id
+            else o.id
+            end id
+            from organ o left join organ child on child.parent=o.id
+            WHERE o.id=#{entity.organId}
+            )
         </if>
     </select>
 </mapper>

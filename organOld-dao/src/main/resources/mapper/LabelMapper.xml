@@ -50,7 +50,16 @@
             and l.id=#{entity.id}
         </if>
         <if test="entity!=null and entity.organId!=null and entity.organId!=0">
-            and (l.organ_id=#{entity.organId} or l.organ_id=0)
+            and (l.organ_id in (
+                SELECT
+                case o.parent
+                when 0 then child.id
+                else o.id
+                end id
+                from organ o left join organ child on child.parent=o.id
+                WHERE o.id=#{entity.organId}
+                )
+            or l.organ_id=0 or l.organ_id=#{entity.organId})
         </if>
         <if test="sortType!=null and sortType!=''">
             ORDER BY ${sortType}
@@ -72,7 +81,16 @@
             and id=#{entity.id}
         </if>
         <if test="entity!=null and entity.organId!=null and entity.organId!=0">
-            and l.organ_id=#{entity.organId}
+            and (l.organ_id in (
+            SELECT
+            case o.parent
+            when 0 then child.id
+            else o.id
+            end id
+            from organ o left join organ child on child.parent=o.id
+            WHERE o.id=#{entity.organId}
+            )
+            or l.organ_id=0 or l.organ_id=#{entity.organId})
         </if>
     </select>
 
