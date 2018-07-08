@@ -107,6 +107,7 @@
                     </div>
                         <div class="row" id="jw">
                             <div class="col-sm-10">
+
                                 <label class="pq">片区：</label>
                                 <select name="district" class="selectpicker bla bla bli pq" multiple data-live-search="true">
                                     <#list info.district as district>
@@ -114,7 +115,9 @@
                                     </#list>
                                 </select>
                                 <label >居委：</label>
+
                                 <select  name="jw" class="selectpicker bla bla bli" multiple data-live-search="true">
+
                                     <#list info.organ as organ>
                                         <option value="${organ.id!}"> ${organ.name!}</option>
                                     </#list>
