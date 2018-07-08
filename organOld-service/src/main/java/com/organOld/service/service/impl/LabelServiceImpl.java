@@ -3,19 +3,14 @@ package com.organOld.service.service.impl;
 import com.organOld.dao.entity.AutoValue;
 import com.organOld.dao.entity.home.Chx;
 import com.organOld.dao.entity.label.Label;
+import com.organOld.dao.entity.label.LabelMan;
 import com.organOld.dao.entity.label.LabelRule;
 import com.organOld.dao.entity.label.LabelRuleToDBSelectMan;
 import com.organOld.dao.entity.oldman.Oldman;
 import com.organOld.dao.entity.organ.Organ;
-import com.organOld.dao.repository.AutoValueDao;
-import com.organOld.dao.repository.ChxDao;
-import com.organOld.dao.repository.LabelDao;
-import com.organOld.dao.repository.OrganDao;
+import com.organOld.dao.repository.*;
 import com.organOld.dao.util.Page;
-import com.organOld.service.model.LabelModel;
-import com.organOld.service.model.LabelAllRuleModel;
-import com.organOld.service.model.LabelRuleModel;
-import com.organOld.service.model.OldmanModel;
+import com.organOld.service.model.*;
 import com.organOld.service.service.CommonService;
 import com.organOld.service.service.LabelService;
 import com.organOld.service.wrapper.Wrappers;
@@ -47,6 +42,8 @@ public class LabelServiceImpl implements LabelService {
     OrganDao organDao;
     @Autowired
     ChxDao chxDao;
+    @Autowired
+    LabelManDao labelManDao;
 
 
     @Override
@@ -61,22 +58,13 @@ public class LabelServiceImpl implements LabelService {
     }
 
     @Override
-    public String getBindManByPage(OldmanRequest oldmanRequest, BTableRequest bTableRequest, int labelId, String type) {
-        Page<Oldman> page=commonService.getPage(bTableRequest,"oldman_base");
-        Oldman oldman= Wrappers.oldmanWrapper.unwrap(oldmanRequest);
-        page.setEntity(oldman);
-        List<OldmanModel> oldmanModelList;
-        Long size;
-        if(type.equals("bind")) {
-            oldmanModelList = labelDao.getBindManByPage(page, labelId).stream().map(Wrappers.oldmanWrapper::wrap).collect(Collectors.toList());
-            size=labelDao.getBindManSizeByPage(page,labelId);
-        }else{
-            LabelRule labelRule=labelDao.getLabelRuleByLid(labelId);
-            LabelRuleToDBSelectMan labelRuleToDB=getLabelRuleToDB(labelRule);
-            oldmanModelList = labelDao.getRuleManByPage(page, labelRuleToDB).stream().map(Wrappers.oldmanWrapper::wrap).collect(Collectors.toList());
-            size=labelDao.getRuleManSizeByPage(page,labelRuleToDB);
-        }
-        return commonService.tableReturn(bTableRequest.getsEcho(),size,oldmanModelList);
+    public String getBindManByPage(LabelManRequest labelManRequest, BTableRequest bTableRequest) {
+        Page<LabelMan> page=commonService.getPage(bTableRequest,"label_man");
+        LabelMan labelMan=Wrappers.labelManWrapper.unwrap(labelManRequest);
+        page.setEntity(labelMan);
+        List<LabelManModel> labelManModelList= labelDao.getBindManByPage(page).stream().map(Wrappers.labelManWrapper::wrap).collect(Collectors.toList());
+        Long size=labelDao.getBindManSizeByPage(page);
+        return commonService.tableReturn(bTableRequest.getsEcho(),size,labelManModelList);
     }
 
     private LabelRuleToDBSelectMan getLabelRuleToDB(LabelRule labelRule) {
@@ -140,9 +128,16 @@ public class LabelServiceImpl implements LabelService {
     }
 
     @Override
-    public void save(LabelRuleRequest labelRuleRequest) {
+    @Transactional
+    public void saveRule(LabelRuleRequest labelRuleRequest) {
         LabelRule labelRule=Wrappers.labelWrapper.unwrapLabelRule(labelRuleRequest);
         labelDao.saveLabelRule(labelRule);
+//        LabelRule labelRule=labelDao.getLabelRuleByLid(labelId);
+        labelDao.deleteLableManByLabelId(labelRule.getLabelId());
+        LabelRuleToDBSelectMan labelRuleToDB=getLabelRuleToDB(labelRule);
+        List<LabelMan> labelManList= labelDao.getRuleManIds(labelRuleToDB);
+        labelManList.stream().forEach(r->r.setLabelId(labelRule.getLabelId()));
+        labelManDao.saveAll(labelManList);
     }
 
     @Override
@@ -152,21 +147,21 @@ public class LabelServiceImpl implements LabelService {
         labelDao.getManLabelByOldmanId(oldmanId).forEach(r->labelNames.add(r.getName()));
 
         //规则制定标签
-        List<LabelRule> labelRuleList=labelDao.getLabelRules();
-        for(LabelRule labelRule:labelRuleList){
-            LabelRuleToDBSelectMan labelRuleToDB=getLabelRuleToDB(labelRule);
-            List<Integer> oldmanIdList = labelDao.getRuleManIds(labelRuleToDB);
-            if(oldmanIdList.contains(oldmanId)){
-                labelNames.add(labelDao.getLabelNameByLabelRuleId(labelRule.getId()));
-            }
-        }
+//        List<LabelRule> labelRuleList=labelDao.getLabelRules();
+//        for(LabelRule labelRule:labelRuleList){
+//            LabelRuleToDBSelectMan labelRuleToDB=getLabelRuleToDB(labelRule);
+//            List<Integer> oldmanIdList = labelDao.getRuleManIds(labelRuleToDB);
+//            if(oldmanIdList.contains(oldmanId)){
+//                labelNames.add(labelDao.getLabelNameByLabelRuleId(labelRule.getId()));
+//            }
+//        }
 
         return new Result(true,labelNames);
     }
 
     @Override
     @Transactional
-    public void save(Label label, HttpSession session) {
+    public void save(Label label) {
         label.setOrganId(0);
         commonService.checkIsOrgan(label);
         labelDao.save(label);
@@ -174,5 +169,10 @@ public class LabelServiceImpl implements LabelService {
             //规则制定
             labelDao.addLabelRule(label.getId());
         }
+    }
+
+    @Override
+    public Result saveLabelMan(int labelId, int[] oldmanIds) {
+        return null;
     }
 }

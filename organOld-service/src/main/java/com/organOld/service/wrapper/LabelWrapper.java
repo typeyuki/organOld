@@ -133,7 +133,7 @@ public class LabelWrapper implements Wrapper<Label,LabelModel,LabelRequest> {
 
     public LabelRule unwrapLabelRule(LabelRuleRequest labelRuleRequest) {
         LabelRule labelRule=new LabelRule();
-        labelRule.setId(labelRuleRequest.getLabelId());
+        labelRule.setLabelId(labelRuleRequest.getLabelId());
         if(labelRuleRequest.getAgeEnd()!=null && !labelRuleRequest.getAgeEnd().equals(""))
             labelRule.setAgeEnd(Integer.parseInt(labelRuleRequest.getAgeEnd()));
         if(labelRuleRequest.getAgeStart()!=null && !labelRuleRequest.getAgeStart().equals(""))

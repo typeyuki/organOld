@@ -5,10 +5,7 @@ import com.organOld.service.contract.*;
 import com.organOld.service.service.LabelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
@@ -93,7 +90,7 @@ public class LabelController {
     @RequestMapping(value = "/rule/save",method = RequestMethod.POST)
     public ModelAndView rule_save(LabelRuleRequest labelRuleRequest){
         ModelAndView mv=new ModelAndView("redirect:/oldman/label/rule/"+labelRuleRequest.getLabelId());
-        labelService.save(labelRuleRequest);
+        labelService.saveRule(labelRuleRequest);
         return mv;
     }
 
@@ -115,14 +112,13 @@ public class LabelController {
     /**
      * 获取人员绑定标签的人员 分页数据
      * @param bTableRequest
-     * @param oldmanRequest
-     * @param type  bind 人员绑定  rule规则制定
+     * @param labelManRequest
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/{type}/{labelId}/manData",method = RequestMethod.POST)
-    public String bind_man_data(BTableRequest bTableRequest, OldmanRequest oldmanRequest, @PathVariable int labelId, @PathVariable String type){
-        return labelService.getBindManByPage(oldmanRequest,bTableRequest,labelId,type);
+    @RequestMapping(value = "/manData",method = RequestMethod.POST)
+    public String bind_man_data(BTableRequest bTableRequest, LabelManRequest labelManRequest){
+        return labelService.getBindManByPage(labelManRequest,bTableRequest);
     }
 
     /**
@@ -138,6 +134,19 @@ public class LabelController {
         return labelService.getNoSelectManDataByPage(oldmanRequest,bTableRequest,labelId);
     }
 
+
+    /**
+     * 添加 标签的老人
+     * @param labelId
+     * @param oldmanIds
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/{labelId}/saveMan",method = RequestMethod.POST)
+    public Result saveLabelMan(@PathVariable int labelId, @RequestParam("oldmanId[]") int[] oldmanIds){
+        Result result=labelService.saveLabelMan(labelId,oldmanIds);
+        return result;
+    }
 
     /**
      * 获得某个老人的全部标签
@@ -159,8 +168,13 @@ public class LabelController {
      */
     @RequestMapping(value = "/add",method = RequestMethod.POST)
     public ModelAndView add(Label label, HttpSession session){
-        ModelAndView mv=new ModelAndView("redirect:/oldman/label/"+((label.getType()==1)?"bind":"rule"));
-        labelService.save(label,session);
+        ModelAndView mv;
+        labelService.save(label);
+        if(label.getType()==1){
+            mv=new ModelAndView("redirect:/oldman/label/bind");
+        }else{
+            mv=new ModelAndView("redirect:/oldman/rule/"+label.getId()+"/getRule");
+        }
         return mv;
     }
 

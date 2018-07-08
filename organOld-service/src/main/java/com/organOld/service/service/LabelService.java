@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
 public interface LabelService {
     String getByPage(LabelRequest labelRequest, BTableRequest bTableRequest, HttpSession session);
 
-    String getBindManByPage(OldmanRequest labelBindManRequest, BTableRequest bTableRequest, int labelId, String type);
+    String getBindManByPage(LabelManRequest labelManRequest, BTableRequest bTableRequest);
 
     String getNoSelectManDataByPage(OldmanRequest oldmanRequest, BTableRequest bTableRequest, int labelId);
 
@@ -22,9 +22,11 @@ public interface LabelService {
 
     LabelRuleModel getLabelRuleById(int labelId);
 
-    void save(LabelRuleRequest labelRuleRequest);
+    void saveRule(LabelRuleRequest labelRuleRequest);
 
     Result getByOldmanId(int oldmanId);
 
-    void save(Label label, HttpSession session);
+    void save(Label label);
+
+    Result saveLabelMan(int labelId, int[] oldmanIds);
 }
