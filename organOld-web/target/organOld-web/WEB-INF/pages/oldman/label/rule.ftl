@@ -5,6 +5,7 @@
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/js/jquery.min.js?v=2.1.4"></script>
     <link href="/css/bootstrap.min.css?v=3.3.5" rel="stylesheet">
     <link href="/css/font-awesome.min.css?v=4.4.0" rel="stylesheet">
     <link href="/css/plugins/iCheck/custom.css" rel="stylesheet">
@@ -64,7 +65,7 @@
                             </#list>
                         </div>
                         <div class="hr-line-dashed"></div>
-                        <div class="form-group">
+                        <div class="form-group jw pq">
                             <label class="col-sm-2 control-label">所属片区
                             </label>
                             <div class="col-sm-1">
@@ -82,9 +83,9 @@
                                 </div>
                             </#list>
                         </div>
-                        <div class="hr-line-dashed"></div>
+                        <div class="hr-line-dashed jw pq"></div>
                         <#if (rule.organ)?? && (rule.organ)?size &gt;0 >
-                            <div class="form-group">
+                            <div class="form-group jw">
                                 <label class="col-sm-2 control-label">所属居委
                                 </label>
                                 <div class="col-sm-1">
@@ -102,8 +103,23 @@
                                     </div>
                                 </#list>
                             </div>
-                            <div class="hr-line-dashed"></div>
+                            <div class="hr-line-dashed jw"></div>
                         </#if>
+                        <script>
+                            $.ajax({
+                                url: "/user/checkUserOrganType",
+                                type: "get",
+                                success: function (data) {
+                                    if (data.success == true) {
+                                        if(data.data=="居委会"){
+                                            $(".jw").hide();
+                                        }else if(data.data=="片区"){
+                                            $(".pq").hide();
+                                        }
+                                    }
+                                }
+                            });
+                        </script>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">户籍
                             </label>

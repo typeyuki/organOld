@@ -46,9 +46,33 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <a onclick="" href="javascript:void(0);" class="btn btn-primary ">添加</a>
+                <a onclick="addMan()" href="javascript:void(0);" class="btn btn-primary ">添加</a>
                 <a data-dismiss="modal" href="javascript:void(0);" class="btn btn-primary ">关闭</a>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div>
+
+<script>
+    function addMan() {
+        var ids=[];
+        $("input[name='addSelectMan']:checked").each(function () {
+            ids.push($(this).val());
+        });
+        $.ajax({
+            url : "/oldman/label/"+labelId+"/saveMan",
+            type : "post",
+            dataType : 'json',
+            data:{
+                oldmanId:ids
+            },
+            success : function(data) {
+                if (data.success==true) {
+                    location.reload();
+                } else {
+                    alert('删除失败！');
+                }
+            }
+        });
+    }
+</script>

@@ -2,8 +2,10 @@ package com.organOld.dao.entity.oldman;
 
 
 import com.organOld.dao.entity.DBInterface;
+import com.organOld.dao.entity.label.LabelMan;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * 老人
@@ -53,7 +55,16 @@ public class Oldman extends Man implements DBInterface{
      * @return
      */
     private Xq xq;//小区
+    private List<LabelMan> labelManList;
 
+
+    public List<LabelMan> getLabelManList() {
+        return labelManList;
+    }
+
+    public void setLabelManList(List<LabelMan> labelManList) {
+        this.labelManList = labelManList;
+    }
 
     public String[] getIsHealth() {
         return isHealth;

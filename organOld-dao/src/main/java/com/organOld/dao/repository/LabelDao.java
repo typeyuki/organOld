@@ -35,7 +35,7 @@ public interface LabelDao extends BaseDao<Label,Integer> {
     void saveLabelRule(LabelRule labelRule);
 
     //对应的人员绑定标签
-    List<Label> getManLabelByOldmanId(int oldmanId);
+    List<LabelMan> getManLabelByOldmanId(int oldmanId);
 
     List<LabelMan> getRuleManIds(@Param("rule") LabelRuleToDBSelectMan labelRuleToDB);
 
@@ -44,4 +44,8 @@ public interface LabelDao extends BaseDao<Label,Integer> {
     void addLabelRule(int id);
 
     void deleteLableManByLabelId(int labelId);
+
+    void implement(int id);
+
+    void saveLabelMan(@Param("labelId") int labelId,@Param("oldmanIds") int[] oldmanIds);
 }

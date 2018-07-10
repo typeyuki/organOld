@@ -1,6 +1,8 @@
 package com.organOld.service.model;
 
 
+import java.util.List;
+
 public class OldmanModel extends ManModel{
     private String sex;
     private String census;//户籍
@@ -13,9 +15,16 @@ public class OldmanModel extends ManModel{
     private String jName;//居委名称
     private String dName;//片区名称
 
+    private List<LabelManInfoModel> labelManInfoModelList;
 
 
+    public List<LabelManInfoModel> getLabelManInfoModelList() {
+        return labelManInfoModelList;
+    }
 
+    public void setLabelManInfoModelList(List<LabelManInfoModel> labelManInfoModelList) {
+        this.labelManInfoModelList = labelManInfoModelList;
+    }
 
     public String getPid() {
         return pid;

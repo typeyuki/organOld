@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class OldmanWrapper implements Wrapper<Oldman,OldmanModel,OldmanRequest> {
 
@@ -47,6 +48,8 @@ public class OldmanWrapper implements Wrapper<Oldman,OldmanModel,OldmanRequest> 
         oldmanModel.setdName(oldman.getXq().getDistrictName());
         oldmanModel.setxName(oldman.getXq().getName());
         oldmanModel.setPoliticalStatus(oldman.getPoliticalStatus());
+
+        oldmanModel.setLabelManInfoModelList(oldman.getLabelManList().stream().map(Wrappers.labelWrapper::wrapManInfo).collect(Collectors.toList()));
         return oldmanModel;
     }
 

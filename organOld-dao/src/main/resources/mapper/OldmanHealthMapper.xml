@@ -37,7 +37,9 @@
         <if test="length!=null and length!=0">
             and old.id in(
             select a.id from
-            (select oo.id from oldman_base oo where oo.id>0 order by oo.${sortType} ${sort} limit #{start},#{length} ) as a
+            (select oo.id from oldman_base oo where oo.id>0
+
+            order by oo.${sortType} ${sort} limit #{start},#{length} ) as a
             )
         </if>
 

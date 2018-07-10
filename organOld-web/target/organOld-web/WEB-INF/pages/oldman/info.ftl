@@ -237,7 +237,7 @@
         success: function (result) {
             if(result.success==true){
                 for(var i=0;i<result.data.length;i++){
-                    var l=$("<label style='margin: 5px'>"+result.data[i]+"</label>已落实<br>");
+                    var l=$("<label style='margin: 5px'>"+result.data[i].labelName+"</label>"+result.data[i].isImplement+"<br>");
                     $("#label").append(l);
                 }
             }

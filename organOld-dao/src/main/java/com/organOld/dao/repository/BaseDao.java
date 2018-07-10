@@ -11,6 +11,7 @@ public interface BaseDao<T extends DBEntity,ID extends Number> {
     void save(T entity);
     void saveAll(List<T> list);
     void delById(ID id);
+    T getById(ID id);
     List<T> getByPage(Page page);
     Long getSizeByPage(Page page);
     void updateById(T entity);

@@ -72,9 +72,13 @@ $(document).ready(function(){
             // 增加一列，包括删除和修改，同时将我们需要传递的数据传递到链接中
             {
                 "targets": [11], // 目标列位置，下标从0开始
-                "data": "id", // 数据列名
+                "data": "isImplement", // 数据列名
                 "render": function(data, type, full) { // 返回自定义内容
-                    return "<span class='look' id='"+data+"'>查看</span><button class='btn' id='"+data+"'>落实</button>";
+                    if(data==0){
+                        return "<span class='look'>查看</span><button class='btn btn-primary' onclick='implement($(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().text(),this)'>落实</button>";
+                    }else{
+                        return "<span class='look' >查看</span><button class='btn'>已落实</button>";
+                    }
                 }
             },
             //不进行排序的列
@@ -130,9 +134,13 @@ $(document).ready(function(){
             // 增加一列，包括删除和修改，同时将我们需要传递的数据传递到链接中
             {
                 "targets": [10], // 目标列位置，下标从0开始
-                "data": "id", // 数据列名
+                "data": "isImplement", // 数据列名
                 "render": function(data, type, full) { // 返回自定义内容
-                    return "<span class='look' id='"+data+"'>查看</span><button class='btn' id='"+data+"'>落实</button>";
+                    if(data==0){
+                        return "<span class='look'>查看</span><button class='btn btn-primary' onclick='implement($(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().text(),this)'>落实</button>";
+                    }else{
+                        return "<span class='look' >查看</span><button class='btn'>已落实</button>";
+                    }
                 }
             },
             //不进行排序的列
@@ -222,7 +230,7 @@ $(document).ready(function(){
                         "targets": [0], // 目标列位置，下标从0开始
                         "data": "id", // 数据列名
                         "render": function(data, type, full) { // 返回自定义内容
-                            return"<input type='checkbox' />"
+                            return"<input type='checkbox' value='"+data+"' name='addSelectMan' />"
                         }
                     },
                     {
@@ -318,6 +326,24 @@ function del(id) {
                     }
                 }
 
+            } else {
+                alert('删除失败！');
+            }
+        }
+    });
+}
+
+function implement(id,obj) {
+    $.ajax({
+        url : "/oldman/label/implement",
+        type : "post",
+        dataType : 'json',
+        data:{
+            id:id
+        },
+        success : function(data) {
+            if (data.success==true) {
+                $(obj).attr("class","btn").html("已落实");
             } else {
                 alert('删除失败！');
             }

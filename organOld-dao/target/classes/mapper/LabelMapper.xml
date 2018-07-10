@@ -9,6 +9,8 @@
         <result property="content" column="content"/>
         <result property="rule" column="rule" />
         <result property="type" column="type" />
+        <result property="wh" column="wh"/>
+        <result property="isFeedback" column="lfid"/>
         <result property="time" column="time" />
         <association property="labelSec" javaType="com.organOld.dao.entity.label.LabelSec">
             <id property="id" column="lid" />
@@ -60,23 +62,29 @@
     </resultMap>
 
     <select id="getByPage" parameterType="com.organOld.dao.util.Page" resultMap="label">
-        SELECT l.id,l.name,l.content,l.rule,l.time,lt.sec_name sname,f.value fname,o.name oname
-        FROM label l LEFT JOIN organ o on o.id=l.organ_id,label_type lt,auto_value f
+        SELECT l.id,l.wh,l.name,l.content,l.rule,l.time,lt.sec_name sname,f.value fname,o.name oname,lf.id lfid
+        FROM label l LEFT JOIN organ o on o.id=l.organ_id
+        left join label_feedback lf on lf.label_id=l.id and lf.organ_id=#{entity.organId}
+        ,label_type lt,auto_value f
         WHERE l.type=#{entity.type} AND l.secId=lt.id AND lt.fir_index=f.id
         <if test="entity!=null and entity.id!=null and entity.id!=0">
             and l.id=#{entity.id}
         </if>
         <if test="entity!=null and entity.organId!=null and entity.organId!=0">
-            and (l.organ_id in (
-                SELECT
-                case o.parent
-                when 0 then child.id
-                else o.id
-                end id
-                from organ o left join organ child on child.parent=o.id
-                WHERE o.id=#{entity.organId}
-                )
-            or l.organ_id=0 or l.organ_id=#{entity.organId})
+            and (
+            l.organ_id=0 or l.organ_id=#{entity.organId} or l.organ_id=(
+            select parent from organ oo where oo.id=#{entity.organId}
+            )
+            or l.organ_id in (
+            SELECT
+            case o.parent
+            when 0 then child.id
+            else o.id
+            end id
+            from organ o left join organ child on child.parent=o.id
+            WHERE o.id=#{entity.organId}
+            )
+            )
         </if>
         <if test="sortType!=null and sortType!=''">
             ORDER BY ${sortType}
@@ -98,7 +106,11 @@
             and id=#{entity.id}
         </if>
         <if test="entity!=null and entity.organId!=null and entity.organId!=0">
-            and (l.organ_id in (
+            and (
+            l.organ_id=0 or l.organ_id=#{entity.organId} or l.organ_id=(
+            select parent from organ oo where oo.id=#{entity.organId}
+            )
+            or l.organ_id in (
             SELECT
             case o.parent
             when 0 then child.id
@@ -107,7 +119,7 @@
             from organ o left join organ child on child.parent=o.id
             WHERE o.id=#{entity.organId}
             )
-            or l.organ_id=0 or l.organ_id=#{entity.organId})
+            )
         </if>
     </select>
 
@@ -444,8 +456,8 @@
         WHERE label_id=#{labelId}
     </update>
 
-    <select id="getManLabelByOldmanId" resultType="com.organOld.dao.entity.label.Label">
-        select l.id,l.name
+    <select id="getManLabelByOldmanId" resultType="com.organOld.dao.entity.label.LabelMan">
+        select l.id label_id,l.name label_name,lo.is_implement
         FROM label l,label_oldman lo
         WHERE lo.oldman_id=#{oldmanId} and lo.label_id=l.id
     </select>
@@ -470,4 +482,23 @@
     <delete id="deleteLableManByLabelId">
         DELETE from label_oldman WHERE label_id=#{labelId}
     </delete>
+
+    <update id="implement">
+        UPDATE label_oldman
+        SET is_implement=1
+        WHERE id=#{id}
+    </update>
+
+    <insert id="saveLabelMan">
+        INSERT INTO label_oldman(label_id,oldman_id)
+        VALUES
+        <foreach collection="oldmanIds" item="item" index="index" separator=",">
+            (#{labelId}, #{item})
+        </foreach>
+    </insert>
+
+
+    <select id="getById" resultType="com.organOld.dao.entity.label.Label">
+        SELECT  * from label where id=#{id}
+    </select>
 </mapper>

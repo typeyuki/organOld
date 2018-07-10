@@ -10,8 +10,18 @@ public class LabelMan extends DBEntity {
     private int labelId;
     private int oldmanId;
     private int isImplement;
+    private String labelName;
 
     private Oldman oldman;
+
+
+    public String getLabelName() {
+        return labelName;
+    }
+
+    public void setLabelName(String labelName) {
+        this.labelName = labelName;
+    }
 
     public int getIsImplement() {
         return isImplement;

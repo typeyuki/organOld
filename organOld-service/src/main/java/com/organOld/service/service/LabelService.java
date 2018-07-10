@@ -29,4 +29,12 @@ public interface LabelService {
     void save(Label label);
 
     Result saveLabelMan(int labelId, int[] oldmanIds);
+
+    Result implement(int id);
+
+    String getFeedbackByPage(LabelFeedbackRequest labelFeedbackRequest, BTableRequest bTableRequest);
+
+    void feedbackAdd(LabelFeedbackAddRequest labelFeedbackAddRequest);
+
+    Result getFeedbackByLabelId(int labelId);
 }

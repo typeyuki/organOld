@@ -62,14 +62,16 @@ $(document).ready(function(){
                     }
                 }, {
                     "targets": [13], // 目标列位置，下标从0开始
-                    "data": "address", // 数据列名
+                    "data": "labelManInfoModelList", // 数据列名
                     "render": function(data, type, full) { // 返回自定义内容
-                        if(data=="东兰路东兰小区56栋302"){
-                            return "楼组长"
-                        }else if(data=="古龙路古龙小区12栋111号"){
-                            return "康乐福信息服务  已落实"
+                        if(data!=undefined && data.length>0){
+                            var s="";
+                            for(var i=0;i<data.length;i++){
+                                s+="<label style='margin: 5px'>"+data[i].labelName+"</label>"+data[i].isImplement+"<br>";
+                            }
+                            return s;
                         }else{
-                            return "";
+                            return "无";
                         }
                     }
                 },

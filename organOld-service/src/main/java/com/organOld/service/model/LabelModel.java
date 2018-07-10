@@ -10,6 +10,24 @@ public class LabelModel extends Model{
     private String rule;
     private String content;
     private String organName;
+    private String wh;
+    private Integer isFeedback;
+
+    public Integer getIsFeedback() {
+        return isFeedback;
+    }
+
+    public void setIsFeedback(Integer isFeedback) {
+        this.isFeedback = isFeedback;
+    }
+
+    public String getWh() {
+        return wh;
+    }
+
+    public void setWh(String wh) {
+        this.wh = wh;
+    }
 
     public String getOrganName() {
         return organName;

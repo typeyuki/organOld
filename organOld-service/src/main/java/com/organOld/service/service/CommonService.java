@@ -126,7 +126,8 @@ public class CommonService {
                     .getAuthentication()
                     .getPrincipal();
             String username=userDetails.getUsername();
-            return userDao.getOrganIdByUsername(username);
+            Integer organId= userDao.getOrganIdByUsername(username);
+            return organId;
         }catch (Exception e){
             return 0;
         }
@@ -163,13 +164,14 @@ public class CommonService {
 
         int age = yearNow - yearBirth;
 
-        if (monthNow <= monthBirth) {
-            if (monthNow == monthBirth) {
-                if (dayOfMonthNow < dayOfMonthBirth) age--;
-            }else{
-                age--;
-            }
-        }
+        //只比较 年  不比较月
+//        if (monthNow <= monthBirth) {
+//            if (monthNow == monthBirth) {
+//                if (dayOfMonthNow < dayOfMonthBirth) age--;
+//            }else{
+//                age--;
+//            }
+//        }
         return age;
     }
 
