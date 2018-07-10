@@ -30,7 +30,7 @@
                     </div>
                 </div>
                 <div class="ibox-content">
-                    <div>
+                    <div class="func">
                         <input type="date" id="futureTime">
                         <input type="hidden" name="future">
                         <a onclick="update('future')" href="#" class="btn btn-primary ">查看</a>
@@ -38,6 +38,17 @@
                         <a onclick="autoUpdate(true,this)" href="#" class="btn btn-primary ">开启自动更新</a>
                         <a onclick="newPage(999,'重点老人规则','/oldman/key/rule')" href="javascript:void(0);" class="btn btn-primary ">规则</a>
                     </div>
+                    <script>
+                        $.ajax({
+                            url: "/user/checkUserOrganType",
+                            type: "get",
+                            success: function (data) {
+                                if (data.success == true) {
+                                    $(".func").hide();
+                                }
+                            }
+                        });
+                    </script>
                     <div>
                         <input class="oldmanId" type="text" placeholder="老人序号">
                         <input class="search" type="text" placeholder="最低分">-

@@ -2,7 +2,7 @@ package com.organOld.service.enumModel;
 
 //养老状态
 public enum OldStatusEnum {
-    JG("机构养老",1),SQ("社区养老",2),JJ("居家养老",3);
+    JG("机构养老",1),SQ("社区养老",2),JJ("居家养老",3),SJ("社区居家",4);
 
     private String name ;
     private int index ;

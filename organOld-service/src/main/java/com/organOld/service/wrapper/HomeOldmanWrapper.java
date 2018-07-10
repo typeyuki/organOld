@@ -25,8 +25,12 @@ public class HomeOldmanWrapper implements Wrapper<HomeOldman,HomeOldmanModel,Hom
         homeOldmanModel.setId(homeOldman.getId());
         homeOldmanModel.setOldmanId(homeOldman.getOldman().getId());
         homeOldmanModel.setOldmanName(homeOldman.getOldman().getName());
-        homeOldmanModel.setTimeIn(Tool.dateToString(homeOldman.getTimeIn(),"yyyy-MM-dd"));
-        homeOldmanModel.setTimeOut(Tool.dateToString(homeOldman.getTimeOut(),"yyyy-MM-dd"));
+        if(homeOldman.getHome().getFirType()==HomeEnum.CHX.getIndex()){
+            homeOldmanModel.setIsService(homeOldman.getIsService()==0?"未获得":"已获得");
+        }else{
+            homeOldmanModel.setTimeIn(Tool.dateToString(homeOldman.getTimeIn(),"yyyy-MM-dd"));
+            homeOldmanModel.setTimeOut(Tool.dateToString(homeOldman.getTimeOut(),"yyyy-MM-dd"));
+        }
         homeOldmanModel.setTime(Tool.dateToString(homeOldman.getTime(),"yyyy-MM-dd"));
 
         return homeOldmanModel;

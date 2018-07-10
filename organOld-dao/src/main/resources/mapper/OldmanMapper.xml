@@ -41,7 +41,7 @@
             select a.id from
             (select oo.id from oldman_base oo,
             auto_value x,auto_value d,organ org,oldman_family ofa,oldman_economic oe,oldman_health_base ohb
-            where oo.id>0 and x.id=oo.xq_id AND org.id=x.parent_index AND d.id=org.district_id and ofa.oldman_id=oo.id and oe.oldman_id=oo.id AND ohb.oldman_id=oo.id
+            where x.id=oo.xq_id AND org.id=x.parent_index AND d.id=org.district_id and ofa.oldman_id=oo.id and oe.oldman_id=oo.id AND ohb.oldman_id=oo.id
             <if test="entity.birthdayStart!=null">
                 <![CDATA[
             and DATE_FORMAT(oo.birthday,'%Y') >= DATE_FORMAT(#{entity.birthdayStart},'%Y')
@@ -123,6 +123,12 @@
             <if test="entity!=null and entity.censusArray!=null and entity.censusArray.length > 0">
                 and oo.census in
                 <foreach collection="entity.censusArray" index="index" item="item" open="(" separator="," close=")">
+                    ${item}
+                </foreach>
+            </if>
+            <if test="entity!=null and entity.oldStatus!=null and entity.oldStatus.length > 0">
+                and oo.old_status in
+                <foreach collection="entity.oldStatus" index="index" item="item" open="(" separator="," close=")">
                     ${item}
                 </foreach>
             </if>

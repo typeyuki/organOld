@@ -239,4 +239,17 @@ public class LabelController {
         Result result=labelService.getFeedbackByLabelId(labelId);
         return result;
     }
+
+
+    /**
+     * 检测 该角色能够修改标签规则
+     * @param labelId
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/{labelId}/checkCanChange",method = RequestMethod.GET)
+    public Result checkCanChange(@PathVariable int labelId){
+        Result result=labelService.checkCanChange(labelId);
+        return result;
+    }
 }

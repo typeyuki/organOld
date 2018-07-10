@@ -12,11 +12,19 @@ public class HomeOldman extends DBEntity implements DBInterface{
     private Oldman oldman;
     private Date timeIn;
     private Date timeOut;
+    private int isService;
 
     private Home home;
 
     private Integer organId;//居委ID
 
+    public int getIsService() {
+        return isService;
+    }
+
+    public void setIsService(int isService) {
+        this.isService = isService;
+    }
 
     public Home getHome() {
         return home;

@@ -62,8 +62,6 @@ public class OldmanWrapper implements Wrapper<Oldman,OldmanModel,OldmanRequest> 
         if(oldmanRequest.getAgeEnd()!=null && !oldmanRequest.getAgeEnd().equals(""))
             oldman.setBirthdayStart(commonService.AgeTobirthday(Integer.parseInt(oldmanRequest.getAgeEnd())));
 
-
-
         return oldman;
     }
 
@@ -77,6 +75,13 @@ public class OldmanWrapper implements Wrapper<Oldman,OldmanModel,OldmanRequest> 
         sexMap.put(SexEnum.MAN.getIndex(),SexEnum.MAN.getName());
         sexMap.put(SexEnum.WOMAN.getIndex(),SexEnum.WOMAN.getName());
         oldmanAddInfoModel.setSex(sexMap);
+
+        Map<Integer,String> oldStatus=new HashMap<>();
+        oldStatus.put(OldStatusEnum.SQ.getIndex(),OldStatusEnum.SQ.getName());
+        oldStatus.put(OldStatusEnum.JG.getIndex(),OldStatusEnum.JG.getName());
+        oldStatus.put(OldStatusEnum.JJ.getIndex(),OldStatusEnum.JJ.getName());
+        oldStatus.put(OldStatusEnum.SJ.getIndex(),OldStatusEnum.SJ.getName());
+        oldmanAddInfoModel.setOldStatus(oldStatus);
 
         for(AutoValue autoValue:autoValueList){
             if (autoValue.getType()== AutoValueEnum.HJ.getIndex()){

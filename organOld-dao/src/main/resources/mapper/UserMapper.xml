@@ -62,9 +62,10 @@
     <select id="getJwUserId" resultType="java.lang.Integer">
         SELECT u.id
         FROM sysuser u,organ o,user_organ uo
-        WHERE o.organ_type_id=2 and u.id=uo.user_id and uo.organ_id=o.id
+        WHERE (o.organ_type_id=2 or o.organ_type_id=33) and u.id=uo.user_id and uo.organ_id=o.id
         <if test="organId!=null and organId!=0">
             and o.parent=#{organId}
         </if>
     </select>
+
 </mapper>

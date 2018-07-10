@@ -227,6 +227,8 @@ public class OldmanServiceImpl implements OldmanService {
         Page<DBEntity> page=new Page<>();
         page.setSortType("id");
         page.setSort("asc");
+        page.setLength(1);
+        page.setStart(0);
 
         Oldman oldman=new Oldman();
         oldman.setId(oldmanId);
@@ -332,7 +334,7 @@ public class OldmanServiceImpl implements OldmanService {
         int numSuccess=0;//成功导入的数量
         int successUpdate=0;//导入数量中  更新的个数
         int successAdd=0;//导入数量中  更新的个数
-        int successDel=0;//删除的个数
+//        int successDel=0;//删除的个数
         excelReturnModel.setTotal(sht0.getLastRowNum()-1);//一共
 
 
@@ -712,7 +714,7 @@ public class OldmanServiceImpl implements OldmanService {
 
 
 
-        //老人不可用
+        //老人不可用  机构范围
         excelReturnModel.setSuccessDel(oldmanBaseDao.setDisabled(existOldmanIds,organId));
 
         excelReturnModel.setNumSuccess(numSuccess);

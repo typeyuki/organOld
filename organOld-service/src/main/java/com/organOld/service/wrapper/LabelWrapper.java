@@ -71,6 +71,7 @@ public class LabelWrapper implements Wrapper<Label,LabelModel,LabelRequest> {
         oldStatus.put(OldStatusEnum.SQ.getIndex(),OldStatusEnum.SQ.getName());
         oldStatus.put(OldStatusEnum.JG.getIndex(),OldStatusEnum.JG.getName());
         oldStatus.put(OldStatusEnum.JJ.getIndex(),OldStatusEnum.JJ.getName());
+        oldStatus.put(OldStatusEnum.SJ.getIndex(),OldStatusEnum.SJ.getName());
         labelRuleModel.setOldStatus(oldStatus);
 
         for(AutoValue autoValue:autoValueList){

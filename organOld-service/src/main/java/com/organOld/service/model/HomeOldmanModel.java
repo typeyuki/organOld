@@ -9,7 +9,15 @@ public class HomeOldmanModel {
     private String time;
     private String homeType;
     private String homeName;
+    private String isService;
 
+    public String getIsService() {
+        return isService;
+    }
+
+    public void setIsService(String isService) {
+        this.isService = isService;
+    }
 
     public String getHomeType() {
         return homeType;

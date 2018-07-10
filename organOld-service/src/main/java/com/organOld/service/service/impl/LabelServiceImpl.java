@@ -66,6 +66,7 @@ public class LabelServiceImpl implements LabelService {
     public String getBindManByPage(LabelManRequest labelManRequest, BTableRequest bTableRequest) {
         Page<LabelMan> page=commonService.getPage(bTableRequest,"label_man");
         LabelMan labelMan=Wrappers.labelManWrapper.unwrap(labelManRequest);
+        commonService.checkIsOrgan(labelMan);
         page.setEntity(labelMan);
         List<LabelManModel> labelManModelList= labelDao.getBindManByPage(page).stream().map(Wrappers.labelManWrapper::wrap).collect(Collectors.toList());
         Long size=labelDao.getBindManSizeByPage(page);
@@ -107,6 +108,7 @@ public class LabelServiceImpl implements LabelService {
     public String getNoSelectManDataByPage(OldmanRequest oldmanRequest, BTableRequest bTableRequest, int labelId) {
         Page<Oldman> page=commonService.getPage(bTableRequest,"oldman_base");
         Oldman oldman= Wrappers.oldmanWrapper.unwrap(oldmanRequest);
+        commonService.checkIsOrgan(oldman);
         page.setEntity(oldman);
         List<OldmanModel> oldmanModelList=labelDao.getNoSelectManDataByPage(page,labelId).stream().map(Wrappers.oldmanWrapper::wrap).collect(Collectors.toList());
         Long size=labelDao.getNoSelectManDataSizeByPage(page,labelId);
@@ -148,21 +150,11 @@ public class LabelServiceImpl implements LabelService {
 
         //通知 居委
         Label label=labelDao.getById(labelRule.getLabelId());
-        informJw("您有新的人员绑定标签："+label.getName());
+        commonService.informJwAndPq("您有新的人员绑定标签："+label.getName());
 
     }
 
-    private void informJw(String content) {
-        Result result=commonService.checkUserOrganType();
-        if(result.isSuccess()==false || result.getData().equals("片区")){
-            Integer organId=commonService.getIdBySession();
-            List<Integer> userIds=userDao.getJwUserId(organId);
-            Message message=new Message();
-            message.setType(MessageTypeEnum.XT.getIndex());
-            message.setContent(content);
-            messageDao.saveAllMessage(userIds,message);
-        }
-    }
+
 
     @Override
     public Result getByOldmanId(int oldmanId) {
@@ -197,7 +189,7 @@ public class LabelServiceImpl implements LabelService {
             labelDao.addLabelRule(label.getId());
         }else{
             //人员绑定
-            informJw("您有新的人员绑定标签："+label.getName());
+            commonService.informJwAndPq("您有新的人员绑定标签："+label.getName());
         }
     }
 
@@ -241,5 +233,16 @@ public class LabelServiceImpl implements LabelService {
     public Result getFeedbackByLabelId(int labelId) {
         Integer organId=commonService.getIdBySession();
         return new Result(true,Wrappers.labelWrapper.wrapFeedback(labelFeedbackDao.getByLabelIdOrganId(labelId,organId)));
+    }
+
+
+    @Override
+    public Result checkCanChange(int labelId) {
+        Label label=labelDao.getById(labelId);
+        Integer organId=commonService.getIdBySession();
+        if(organId==label.getOrganId()){
+            return new Result(true);
+        }
+        return new Result(false);
     }
 }

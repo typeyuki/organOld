@@ -37,4 +37,6 @@ public interface LabelService {
     void feedbackAdd(LabelFeedbackAddRequest labelFeedbackAddRequest);
 
     Result getFeedbackByLabelId(int labelId);
+
+    Result checkCanChange(int labelId);
 }

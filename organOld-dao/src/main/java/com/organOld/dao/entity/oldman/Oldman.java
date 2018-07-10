@@ -31,7 +31,6 @@ public class Oldman extends Man implements DBInterface{
     private Date birthdayStart;//出生年月-起
     private Date birthdayEnd;//出生年月-止
 
-
     private String censusArray[];//户籍 1非 2户籍 3人户分离
     private String district[];//片区索引
     private String search;//模糊全文 匹配搜索  姓名、身份证、地址、电话
@@ -42,9 +41,7 @@ public class Oldman extends Man implements DBInterface{
     private String isHealth[];
     private String intelligence[];
     private String eyesight[];
-
-
-
+    private String oldStatus[];
 
 
     private String future;//是否是查询未来的重点老人得分
@@ -57,6 +54,14 @@ public class Oldman extends Man implements DBInterface{
     private Xq xq;//小区
     private List<LabelMan> labelManList;
 
+
+    public String[] getOldStatus() {
+        return oldStatus;
+    }
+
+    public void setOldStatus(String[] oldStatus) {
+        this.oldStatus = oldStatus;
+    }
 
     public List<LabelMan> getLabelManList() {
         return labelManList;

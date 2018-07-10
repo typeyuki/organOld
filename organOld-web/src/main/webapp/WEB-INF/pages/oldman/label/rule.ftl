@@ -106,16 +106,28 @@
                             <div class="hr-line-dashed jw"></div>
                         </#if>
                         <script>
+//                            居委的发布的话 不显示片区和居委   管理员发布的话 居委看的话  不能更改
                             $.ajax({
                                 url: "/user/checkUserOrganType",
                                 type: "get",
                                 success: function (data) {
                                     if (data.success == true) {
-                                        if(data.data=="居委会"){
-                                            $(".jw").hide();
-                                        }else if(data.data=="片区"){
-                                            $(".pq").hide();
-                                        }
+                                        $.ajax({
+                                            url: "/oldman/label/${labelId}/checkCanChange",
+                                            type: "get",
+                                            dataType:"json",
+                                            success: function (data2) {
+                                                if (data2.success == false) {
+                                                    $("input").prop("disabled",true);
+                                                }else{
+                                                    if(data.data=="居委会"){
+                                                        $(".jw").hide();
+                                                    }else if(data.data=="片区"){
+                                                        $(".pq").hide();
+                                                    }
+                                                }
+                                            }
+                                        });
                                     }
                                 }
                             });

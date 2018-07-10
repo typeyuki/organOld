@@ -67,7 +67,7 @@
 
 </div>
 <script>
-    var type=${type}
+    var typeHome="${type}"
 </script>
 
 <script src="/js/content.min.js?v=1.0.0"></script>

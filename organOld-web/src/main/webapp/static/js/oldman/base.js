@@ -121,7 +121,8 @@ $(document).ready(function(){
                 "intelligence_array":$("select[name='intelligence']").val(),
                 "eyesight_array":$("select[name='eyesight']").val(),
                 "district_array":$("select[name='district']").val(),
-                "jw_array":$("select[name='jw']").val()
+                "jw_array":$("select[name='jw']").val(),
+                "oldStatus_array":$("select[name='oldStatus']").val()
             },
             type: 'POST',
             dataType: 'json',

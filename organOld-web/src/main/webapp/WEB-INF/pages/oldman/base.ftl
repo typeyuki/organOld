@@ -103,6 +103,12 @@
                                     <option value="${eyesight.id!}"> ${eyesight.value!}</option>
                                 </#list>
                             </select>
+                            <label>养老状态：</label>
+                            <select name="oldStatus" class="selectpicker bla bla bli" multiple data-live-search="true">
+                                <#list (info.oldStatus)?keys as key>
+                                    <option  value="${key!}"> ${(info.oldStatus)?values[key_index]!}</option>
+                                </#list>
+                            </select>
                         </div>
                     </div>
                         <div class="row" id="jw">
@@ -115,13 +121,13 @@
                                     </#list>
                                 </select>
                                 <label >居委：</label>
-
                                 <select  name="jw" class="selectpicker bla bla bli" multiple data-live-search="true">
 
                                     <#list info.organ as organ>
                                         <option value="${organ.id!}"> ${organ.name!}</option>
                                     </#list>
                                 </select>
+
                             </div>
                             <script>
                                 $('.selectpicker').selectpicker({

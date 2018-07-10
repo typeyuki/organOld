@@ -37,8 +37,13 @@
                         <tr>
                             <th>老人编号</th>
                             <th>老人姓名</th>
-                            <th>服务开始时间</th>
-                            <th>服务结束时间</th>
+                            <#--长护险-->
+                            <#if type==2>
+                                <th>是否获得服务</th>
+                            <#else >
+                                <th>服务开始时间</th>
+                                <th>服务结束时间</th>
+                            </#if>
                             <th>更新时间</th>
                             <th></th>
                         </tr>
@@ -56,6 +61,7 @@
 <script>
     var hid="${hid!}";
     var url="/home/man";
+    var type="${type!}";
 </script>
 <script src="/js/content.min.js?v=1.0.0"></script>
 <script src="/static/js/home/home_man.js" ></script>

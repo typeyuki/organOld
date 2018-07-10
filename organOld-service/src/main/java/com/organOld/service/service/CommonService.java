@@ -4,11 +4,14 @@ import com.alibaba.fastjson.JSONObject;
 
 import com.organOld.dao.entity.AutoValue;
 import com.organOld.dao.entity.DBInterface;
+import com.organOld.dao.entity.Message;
 import com.organOld.dao.entity.label.LabelRule;
+import com.organOld.dao.repository.MessageDao;
 import com.organOld.dao.repository.UserDao;
 import com.organOld.dao.util.Page;
 import com.organOld.service.contract.*;
 import com.organOld.service.enumModel.AutoValueEnum;
+import com.organOld.service.enumModel.MessageTypeEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -28,6 +31,8 @@ public class CommonService {
 
     @Autowired
     UserDao userDao;
+    @Autowired
+    MessageDao messageDao;
 
     public static int birthdayToAge(Date birthday){
         Date date=new Date();
@@ -192,6 +197,18 @@ public class CommonService {
             result=new Result(false);
         }
         return result;
+    }
+
+    public void informJwAndPq(String content) {
+        Result result=checkUserOrganType();
+        if(result.isSuccess()==false || result.getData().equals("片区")){
+            Integer organId=getIdBySession();
+            List<Integer> userIds=userDao.getJwUserId(organId);
+            Message message=new Message();
+            message.setType(MessageTypeEnum.XT.getIndex());
+            message.setContent(content);
+            messageDao.saveAllMessage(userIds,message);
+        }
     }
 }
 

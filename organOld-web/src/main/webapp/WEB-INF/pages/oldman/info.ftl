@@ -47,7 +47,6 @@
                             <label class="col-sm-2 control-label">姓名：${info.oldman.name!}</label>
                             <label class="col-sm-2 control-label">性别：${info.oldman.sex!}</label>
                             <label class="col-sm-2 control-label">年龄：${info.oldman.age!}</label>
-                            <label class="col-sm-2 control-label">政治面貌：${info.oldman.politicalStatus!}</label>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">电话：${info.oldman.phone!}</label>
@@ -200,12 +199,20 @@
                                         <label class="col-sm-2 control-label">居家养老</label>
                                         <label class="col-sm-2 control-label">${list.homeName}</label>
                                         <label class="col-sm-2 control-label">类型：${list.homeType}</label>
-                                        <label class="col-sm-2 control-label">服务时间：${list.timeIn}-${list.timeOut}</label>
+                                        <#if list.homeType=="长护险">
+                                            <label class="col-sm-2 control-label">是否已获得服务：${list.isService}</label>
+                                        <#else >
+                                            <label class="col-sm-2 control-label">服务时间：${list.timeIn}-${list.timeOut}</label>
+                                        </#if>
                                     <#else >
                                         <label class="col-sm-2 control-label"></label>
                                         <label class="col-sm-2 control-label">${list.homeName}</label>
                                         <label class="col-sm-2 control-label">类型：${list.homeType}</label>
-                                        <label class="col-sm-2 control-label">服务时间：${list.timeIn}-${list.timeOut}</label>
+                                        <#if list.homeType=="长护险">
+                                            <label class="col-sm-2 control-label">是否已获得服务：${list.isService}</label>
+                                        <#else >
+                                            <label class="col-sm-2 control-label">服务时间：${list.timeIn}-${list.timeOut}</label>
+                                        </#if>
                                     </#if>
                                 </div>
                             </#list>
