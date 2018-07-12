@@ -15,13 +15,6 @@ import java.util.Collection;
 public class Remote {
 
 
-//    public static Map<String,String> user=new HashMap<String,String>();
-
-    //实现 筛选 发送推送
-//    public void getData(String userCode) {
-//        noticeNewOrder("123",userCode);
-//    }
-
     // 得到推送信息并推送  预警推送
     public static void noticeNewOrder(final DwrData dwrData) {
 

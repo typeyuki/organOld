@@ -3,14 +3,13 @@ package com.organOld.service.service.impl;
 import com.organOld.dao.entity.SysAuthority;
 import com.organOld.dao.entity.SysRole;
 import com.organOld.dao.entity.oldman.Oldman;
+import com.organOld.dao.entity.organ.Organ;
 import com.organOld.dao.repository.UserDao;
 import com.organOld.dao.entity.SysUser;
 import com.organOld.dao.util.Page;
-import com.organOld.service.contract.BTableRequest;
-import com.organOld.service.contract.OldmanRequest;
-import com.organOld.service.contract.UserAddRequest;
-import com.organOld.service.contract.UserRequest;
+import com.organOld.service.contract.*;
 import com.organOld.service.model.OldmanModel;
+import com.organOld.service.model.OrganAuth;
 import com.organOld.service.model.UserModel;
 import com.organOld.service.service.CommonService;
 import com.organOld.service.service.UserService;
@@ -109,5 +108,21 @@ public class UserServiceImpl implements UserService {
             userDao.setUserOrgan(sysUser.getId(),Integer.parseInt(userAddRequest.getOrganId()));
         userDao.setUserRole(sysUser.getId(),Integer.parseInt(userAddRequest.getRoleId()));
         //TODO 更新organ 的权限
+    }
+
+    @Override
+    public Result ckeckOrganLogin(SysUser sysUser) {
+        Organ organ=userDao.ckeckOrganLogin(sysUser);
+        if(organ==null) {
+            return new Result(false, "账号密码错误");
+        }else{
+            OrganAuth organAuth=new OrganAuth();
+            organAuth.setOrganId(organ.getId());
+            organAuth.setAuthConsume(organ.getAuthConsume());
+            organAuth.setAuthSign(organ.getAuthSign());
+            organAuth.setAuthQueryInfo(organ.getAuthQueryInfo());
+            organAuth.setAuthQueryIntegral(organAuth.getAuthQueryIntegral());
+            return new Result(true, organAuth);
+        }
     }
 }

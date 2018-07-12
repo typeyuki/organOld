@@ -149,9 +149,9 @@
                             </script>
                     </div>
 
-                        <form action="/oldman/importExcel" method="post" enctype="multipart/form-data">
+                        <form action="/oldman/importExcel" method="post" enctype="multipart/form-data" id="importForm">
                             <input type="file" name="file">
-                            <input type="submit" value="导入">
+                            <input type="button" onclick="$('.wrapper').hide();$('#process').show();$('#importForm').submit()" value="导入">
                         </form>
                     <table class="table table-striped table-bordered table-hover dataTables-example">
                         <thead>
@@ -184,7 +184,7 @@
     </div>
 
 </div>
-
+<#include  "../spinner.ftl"/>
 <#--<script src="/js/plugins/jeditable/jquery.jeditable.js"></script>-->
 
 <script>

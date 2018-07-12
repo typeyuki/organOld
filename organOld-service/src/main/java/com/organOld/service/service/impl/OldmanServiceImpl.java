@@ -729,4 +729,12 @@ public class OldmanServiceImpl implements OldmanService {
         return new Result(true,excelReturnModel);
     }
 
+
+    @Override
+    public Result getIntegralByOldmanId(int oldmanId) {
+        OrganQueryIntegralModel organQueryIntegralModel=Wrappers.oldmanWrapper.wrapInregral(oldmanBaseDao.getIntegralByOldmanId(oldmanId));
+        if(organQueryIntegralModel!=null)
+            return new Result(true,organQueryIntegralModel);
+        else return new Result(false,"找不到");
+    }
 }

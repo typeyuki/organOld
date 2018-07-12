@@ -4,6 +4,7 @@ package com.organOld.dao.repository;
 import com.organOld.dao.entity.SysAuthority;
 import com.organOld.dao.entity.SysRole;
 import com.organOld.dao.entity.SysUser;
+import com.organOld.dao.entity.organ.Organ;
 import org.apache.ibatis.annotations.Param;
 
 
@@ -29,4 +30,5 @@ public interface UserDao extends BaseDao<SysUser,Number>{
 
     List<Integer> getJwUserId(Integer organId);
 
+    Organ ckeckOrganLogin(SysUser sysUser);
 }

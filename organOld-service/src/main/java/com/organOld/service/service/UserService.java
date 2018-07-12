@@ -3,6 +3,7 @@ package com.organOld.service.service;
 import com.organOld.dao.entity.SysRole;
 import com.organOld.dao.entity.SysUser;
 import com.organOld.service.contract.BTableRequest;
+import com.organOld.service.contract.Result;
 import com.organOld.service.contract.UserAddRequest;
 import com.organOld.service.contract.UserRequest;
 import org.springframework.security.core.GrantedAuthority;
@@ -30,4 +31,6 @@ public interface UserService {
 
 
     void save(UserAddRequest userAddRequest);
+
+    Result ckeckOrganLogin(SysUser sysUser);
 }

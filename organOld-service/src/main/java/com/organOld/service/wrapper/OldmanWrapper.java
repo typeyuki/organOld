@@ -9,6 +9,7 @@ import com.organOld.service.enumModel.*;
 import com.organOld.service.model.LabelAllRuleModel;
 import com.organOld.service.model.OldmanAddInfoModel;
 import com.organOld.service.model.OldmanModel;
+import com.organOld.service.model.OrganQueryIntegralModel;
 import com.organOld.service.service.CommonService;
 import com.organOld.service.util.Tool;
 import com.organOld.service.contract.*;
@@ -123,5 +124,15 @@ public class OldmanWrapper implements Wrapper<Oldman,OldmanModel,OldmanRequest> 
         }
 
         return oldmanAddInfoModel;
+    }
+
+    public OrganQueryIntegralModel wrapInregral(Oldman oldman) {
+        if(oldman!=null) {
+            OrganQueryIntegralModel organQueryIntegralModel = new OrganQueryIntegralModel();
+            organQueryIntegralModel.setIntegral(oldman.getIntegral());
+            organQueryIntegralModel.setOldmanName(oldman.getName());
+            return organQueryIntegralModel;
+        }
+        return null;
     }
 }

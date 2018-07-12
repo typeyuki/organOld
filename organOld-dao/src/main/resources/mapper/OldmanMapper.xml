@@ -13,6 +13,7 @@
         <result property="census" column="census" />
         <result property="louNum" column="lou_num" />
         <result property="politicalStatus" column="political_status" />
+        <result property="integral" column="integral"/>
         <result property="time" column="time" />
         <association property="xq" javaType="com.organOld.dao.entity.oldman.Xq">
             <id property="id" column="xid"/>
@@ -424,4 +425,8 @@
         SET ${prop}=#{value}
         WHERE id=#{id}
     </update>
+
+    <select id="getIntegralByOldmanId" resultMap="oldman">
+        SELECT name,integral FROM oldman_base WHERE id=#{oldmanId}
+    </select>
 </mapper>

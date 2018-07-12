@@ -40,9 +40,9 @@
                         <button id="search">搜索</button>
                     </div>
                     <#if single??>
-                        <form action="/organ/man/importExcel" method="post" enctype="multipart/form-data">
+                        <form action="/organ/man/importExcel" method="post" enctype="multipart/form-data" id="importForm">
                             <input type="file" name="file">
-                            <input type="submit" value="导入">
+                            <input type="button" onclick="$('.wrapper').hide();$('#process').show();$('#importForm').submit()" value="导入">
                         </form>
                     </#if>
                     <table class="table table-striped table-bordered table-hover dataTables-example">
@@ -70,6 +70,8 @@
     </div>
 
 </div>
+</div>
+<#include  "../spinner.ftl"/>
 <script>
     var organId="${organId!'0'}";
     var dataUrl="${dataUrl!}";

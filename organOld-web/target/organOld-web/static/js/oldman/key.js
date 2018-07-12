@@ -151,6 +151,8 @@ function autoUpdate(open,obj) {
 }
 
 function update(type) {
+    $(".wrapper").hide();
+    $("#process").show();
     var data;
     if(type=="future"){
         data={
@@ -161,6 +163,7 @@ function update(type) {
         data={};
         $("#goal").html("分数");
     }
+
     $.ajax({
         url: "/oldman/key/update",
         data : data,
@@ -184,6 +187,8 @@ function update(type) {
 
 
 function finish(data) {
+    $("#process").hide();
+    $(".wrapper").show();
     alert("更新完成");
     table.fnFilter();
 }

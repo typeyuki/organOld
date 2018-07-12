@@ -40,10 +40,10 @@
                         <button id="search">搜索</button>
                         <#if status?? && status=="1">
                         <#else >
-                            <form action="/organ/${type}/importExcel" method="post" enctype="multipart/form-data">
+                            <form action="/organ/${type}/importExcel" method="post" enctype="multipart/form-data" id="importForm">
                                 <input type="file" name="file">
                                 <input type="hidden" name="pType" value="oldman">
-                                <input type="submit" value="导入">
+                                <input type="button" onclick="$('.wrapper').hide();$('#process').show();$('#importForm').submit()" value="导入">
                             </form>
                         </#if>
                     </div>
@@ -83,6 +83,8 @@
     </div>
 
 </div>
+
+<#include  "../spinner.ftl"/>
 <script>
     var firType=${type};
     var status="${status!}";

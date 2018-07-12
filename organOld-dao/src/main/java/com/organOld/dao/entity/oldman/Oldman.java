@@ -24,7 +24,7 @@ public class Oldman extends Man implements DBInterface{
     private Integer xqId;
     private Integer floor;
     private Integer isHandle;
-
+    private Integer integral;
     /**
      * 搜索对象
      */
@@ -59,6 +59,14 @@ public class Oldman extends Man implements DBInterface{
     private Xq xq;//小区
     private List<LabelMan> labelManList;
 
+
+    public Integer getIntegral() {
+        return integral;
+    }
+
+    public void setIntegral(Integer integral) {
+        this.integral = integral;
+    }
 
     public Integer getIsActivity() {
         return isActivity;

@@ -93,6 +93,9 @@
     </div>
 
 </div>
+
+
+<#include  "../spinner.ftl"/>
 <#include "key_handle.ftl" />
 <script>
     var userType;
