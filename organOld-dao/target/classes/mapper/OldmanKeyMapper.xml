@@ -21,25 +21,49 @@
     </resultMap>
 
     <select id="getByPage" parameterType="com.organOld.dao.util.Page" resultType="com.organOld.dao.entity.oldman.Oldman">
-        SELECT ob.id,ob.name,
+        SELECT ob.id,ob.name,ob.is_handle,
         <if test="entity!=null and entity.future!=null and entity.future!=''">
             ob.future_goal goal,ob.future_key_status key_status
         </if>
         <if test="entity==null or entity.future==null or entity.future==''">
             ob.goal,ob.key_status
         </if>
-        FROM oldman_base ob,organ org,auto_value x
+        FROM oldman_base ob left join organ_oldman oo on oo.oldman_id=ob.id,organ org,auto_value x
         WHERE x.id=ob.xq_id AND org.id=x.parent_index
+
         <if test="entity!=null and entity.future!=null and entity.future!=''">
             and (ob.future_key_status =2 or ob.future_key_status =3 or ob.future_key_status =4)
-        </if>
-        <if test="entity==null or entity.future==null or entity.future==''">
-            and (ob.key_status =2 or ob.key_status =3 or ob.key_status =4)
+            <if test="entity!=null and  entity.goalStart!=null and entity.goalStart!=0">
+               and ob.future_goal &gt;= #{entity.goalStart}
+            </if>
+            <if test="entity!=null and  entity.goalEnd!=null and entity.goalEnd!=0">
+                and ob.future_goal &lt;= #{entity.goalEnd}
+            </if>
         </if>
 
+        <if test="entity==null or entity.future==null or entity.future==''">
+            and (ob.key_status =2 or ob.key_status =3 or ob.key_status =4)
+            <if test="entity!=null and  entity.goalStart!=null and entity.goalStart!=0">
+               and ob.goal &gt;= #{entity.goalStart}
+            </if>
+            <if test="entity!=null and  entity.goalEnd!=null and entity.goalEnd!=0">
+               and ob.goal &lt;= #{entity.goalEnd}
+            </if>
+        </if>
+
+        <if test="entity!=null and  entity.isHandle!=null">
+            and ob.is_handle=#{entity.isHandle}
+        </if>
+        <if test="entity!=null and  entity.isActivity!=null and entity.isActivity==1">
+            and oo.num=0
+        </if>
+        <if test="entity!=null and  entity.isActivity!=null and entity.isActivity==0">
+            and (oo.num!=0 or oo.num IS NULL)
+        </if>
         <if test="entity!=null and  entity.id!=null and entity.id!=0">
             and ob.id=#{entity.id}
         </if>
+
         <if test="entity!=null and entity.organId!=null and entity.organId!=0">
             and org.id in (
             SELECT
@@ -65,14 +89,39 @@
 
     <select id="getSizeByPage" parameterType="com.organOld.dao.util.Page" resultType="java.lang.Long">
         SELECT count(1)
-        FROM oldman_base ob,organ org,auto_value x
+        FROM oldman_base ob left join organ_oldman oo on oo.oldman_id=ob.id,organ org,auto_value x
         WHERE x.id=ob.xq_id AND org.id=x.parent_index
         <if test="entity!=null and entity.future!=null and entity.future!=''">
             and (ob.future_key_status =2 or ob.future_key_status =3 or ob.future_key_status =4)
+            <if test="entity!=null and  entity.goalStart!=null and entity.goalStart!=0">
+               and ob.future_goal &gt;= #{entity.goalStart}
+            </if>
+            <if test="entity!=null and  entity.goalEnd!=null and entity.goalEnd!=0">
+               and ob.future_goal &lt;= #{entity.goalEnd}
+            </if>
         </if>
         <if test="entity==null or entity.future==null or entity.future==''">
             and (ob.key_status =2 or ob.key_status =3 or ob.key_status =4)
+            <if test="entity!=null and  entity.goalStart!=null and entity.goalStart!=0">
+                and ob.goal &gt;= #{entity.goalStart}
+            </if>
+            <if test="entity!=null and  entity.goalEnd!=null and entity.goalEnd!=0">
+                and ob.goal &lt;= #{entity.goalEnd}
+            </if>
         </if>
+        <if test="entity!=null and  entity.isHandle!=null">
+            and ob.is_handle=#{entity.isHandle}
+        </if>
+        <if test="entity!=null and  entity.isActivity!=null and entity.isActivity==1">
+            and oo.num=0
+        </if>
+        <if test="entity!=null and  entity.isActivity!=null and entity.isActivity==0">
+            and (oo.num!=0 or oo.num IS NULL)
+        </if>
+        <if test="entity!=null and  entity.id!=null and entity.id!=0">
+            and ob.id=#{entity.id}
+        </if>
+
         <if test="entity!=null and entity.organId!=null and entity.organId!=0">
             and org.id in (
             SELECT

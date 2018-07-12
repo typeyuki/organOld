@@ -1,16 +1,12 @@
 package com.organOld.web.controller;
 
-import com.organOld.service.contract.BTableRequest;
-import com.organOld.service.contract.KeyRuleRequest;
-import com.organOld.service.contract.OldmanKeyRequest;
-import com.organOld.service.contract.Result;
+import com.organOld.service.contract.*;
+import com.organOld.service.service.HomeService;
 import com.organOld.service.service.OldmanKeyService;
+import com.organOld.service.service.OrganService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
@@ -26,6 +22,10 @@ public class OldmanKeyController {
 
     @Autowired
     OldmanKeyService oldmanKeyService;
+    @Autowired
+    OrganService organService;
+    @Autowired
+    HomeService homeService;
 
     /**
      * 页面
@@ -34,6 +34,7 @@ public class OldmanKeyController {
     @RequestMapping("")
     public ModelAndView index(){
         ModelAndView mv=new ModelAndView("oldman/key");
+        mv.addObject("organ",organService.getAllOldmanType());
         return mv;
     }
 
@@ -93,5 +94,36 @@ public class OldmanKeyController {
         ModelAndView mv=new ModelAndView("redirect:/oldman/key/rule");
         oldmanKeyService.updateRule(keyRuleRequest);
         return mv;
+    }
+
+
+    /**
+     * 重点老人 处理  增加 更新 删除
+     * @param organIds
+     * @param homeFirTypes
+     * @param oldmanhKeyHandleRequest
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/handle",method = RequestMethod.POST)
+    public Result handle(@RequestParam(value = "organIds_array[]",required = false) String organIds[],
+                         @RequestParam(value = "homeFirTypes_array[]",required = false) String homeFirTypes[],
+                         OldmanhKeyHandleRequest oldmanhKeyHandleRequest){
+        oldmanhKeyHandleRequest.setOrganIds(organIds);
+        oldmanhKeyHandleRequest.setHomeFirTypes(homeFirTypes);
+        Result result=oldmanKeyService.handle(oldmanhKeyHandleRequest);
+        return result;
+    }
+
+    /**
+     * 获得某一老人的 处理
+     * @param oldmanId
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/{oldmanId}/handle",method = RequestMethod.GET)
+    public Result getOldmanHandle(@PathVariable int oldmanId){
+        Result result=oldmanKeyService.getHandleByOldmanId(oldmanId);
+        return result;
     }
 }

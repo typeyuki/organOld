@@ -119,4 +119,21 @@
             and ot.sec_type=#{typeIndex}
         </if>
     </select>
+
+
+    <insert id="saveAll" parameterType="java.util.List">
+        INSERT into organ(organ_type_id,name,intro,work,service_time,address,phone,web_url,img_url,num,`require`,institution,num_in,num_remain,status,district_id)
+        VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+            #{item.organTypeId},#{item.name},#{item.intro},#{item.work},#{item.serviceTime},#{item.address},#{item.phone},#{item.webUrl},#{item.imgUrl},#{item.num}
+                ,#{item.require}
+                ,#{item.institution}
+                ,#{item.numIn}
+                ,#{item.numRemain}
+                ,#{item.status}
+                ,#{item.districtId}
+            )
+        </foreach>
+    </insert>
 </mapper>

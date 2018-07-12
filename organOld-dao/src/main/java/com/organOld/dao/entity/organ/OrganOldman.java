@@ -17,7 +17,7 @@ public class OrganOldman extends DBEntity implements DBInterface {
 
     private Date timeIn;
     private Date timeOut;
-    private int num;
+    private String num;
 
 
     private Integer organId;//居委ID
@@ -78,14 +78,11 @@ public class OrganOldman extends DBEntity implements DBInterface {
         this.organ = organ;
     }
 
-    public int getNum() {
+    public String getNum() {
         return num;
     }
 
-    public void setNum(int num) {
+    public void setNum(String num) {
         this.num = num;
     }
-
-
-
 }

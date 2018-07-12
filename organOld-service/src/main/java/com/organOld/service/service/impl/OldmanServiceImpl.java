@@ -325,7 +325,6 @@ public class OldmanServiceImpl implements OldmanService {
         List<Oldman> oldmanList_update=new ArrayList<>();//对已存在的老人进行批量更新
 
 
-        List temp = new ArrayList();
         Workbook wb0 = new HSSFWorkbook(file.getInputStream());
         //获取Excel文档中的第一个表单
         Sheet sht0 = wb0.getSheetAt(0);
@@ -333,16 +332,20 @@ public class OldmanServiceImpl implements OldmanService {
         ExcelReturnModel excelReturnModel=new ExcelReturnModel();
         int numSuccess=0;//成功导入的数量
         int successUpdate=0;//导入数量中  更新的个数
-        int successAdd=0;//导入数量中  更新的个数
+        int successAdd=0;//导入数量中  增加的个数
 //        int successDel=0;//删除的个数
-        excelReturnModel.setTotal(sht0.getLastRowNum()-1);//一共
+
+
+        int start=2;
+
+        excelReturnModel.setTotal(sht0.getLastRowNum()-(start-1));//一共
 
 
 
         //对Sheet中的每一行进行迭代
         for (Row r : sht0) {
             try {
-                if (r.getRowNum() >= 2) {
+                if (r.getRowNum() >= start) {
                     //遍历 cell  将单元格 格式 全都转换成String 类型
                     Iterator<Cell> cells = r.cellIterator();    //获得第一行的迭代器
                     while (cells.hasNext()) {
@@ -605,7 +608,7 @@ public class OldmanServiceImpl implements OldmanService {
                     }
 
 
-                    Integer oldmanId=checkOldmanExiest(oldman.getPid());
+                    Integer oldmanId=commonService.checkOldmanExiest(oldman.getPid());
                     if(oldmanId!=null && oldmanId!=0){
                         //更新
                         successUpdate++;
@@ -726,7 +729,4 @@ public class OldmanServiceImpl implements OldmanService {
         return new Result(true,excelReturnModel);
     }
 
-    private Integer checkOldmanExiest(String pid) {
-        return oldmanBaseDao.getIdByPid(pid);
-    }
 }

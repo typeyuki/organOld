@@ -7,6 +7,7 @@ import com.organOld.dao.entity.DBInterface;
 import com.organOld.dao.entity.Message;
 import com.organOld.dao.entity.label.LabelRule;
 import com.organOld.dao.repository.MessageDao;
+import com.organOld.dao.repository.OldmanDao;
 import com.organOld.dao.repository.UserDao;
 import com.organOld.dao.util.Page;
 import com.organOld.service.contract.*;
@@ -33,6 +34,8 @@ public class CommonService {
     UserDao userDao;
     @Autowired
     MessageDao messageDao;
+    @Autowired
+    OldmanDao oldmanDao;
 
     public static int birthdayToAge(Date birthday){
         Date date=new Date();
@@ -209,6 +212,10 @@ public class CommonService {
             message.setContent(content);
             messageDao.saveAllMessage(userIds,message);
         }
+    }
+
+    public Integer checkOldmanExiest(String pid) {
+        return oldmanDao.getIdByPid(pid);
     }
 }
 

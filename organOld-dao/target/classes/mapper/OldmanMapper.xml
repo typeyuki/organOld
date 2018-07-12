@@ -418,4 +418,10 @@
         </if>
         and o.disable=0
     </update>
+
+    <update id="updateProp">
+        UPDATE oldman_base
+        SET ${prop}=#{value}
+        WHERE id=#{id}
+    </update>
 </mapper>

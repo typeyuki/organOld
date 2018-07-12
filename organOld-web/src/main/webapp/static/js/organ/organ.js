@@ -4,7 +4,7 @@
 $(document).ready(function(){
     var columns=[];
     var columnDefs=[];
-    if(firType=="oldmanOrgan" || firType=="oldmanCommunity"){
+    if(firType==21 || firType==22){
         columns=[{},{
             data:"id"
         },{
@@ -51,7 +51,7 @@ $(document).ready(function(){
             //不进行排序的列
             { "bSortable": false, "aTargets": [ 0,2 ,3, 4, 5,6,7,8,9,10,11,12,13] }
         ]
-    }else if(firType=="government"){
+    }else if(firType==1){
         columns=[{},{
             data:"id"
         },{
@@ -92,7 +92,7 @@ $(document).ready(function(){
             //不进行排序的列
             { "bSortable": false, "aTargets": [ 0,2 ,3, 4,5,6,7,8,9,10] }
         ]
-    }else if(firType=="society" && status=="2"){
+    }else if(firType==3 && status=="2"){
         columns=[{},{
             data:"id"
         },{
@@ -135,7 +135,7 @@ $(document).ready(function(){
             //不进行排序的列
             { "bSortable": false, "aTargets": [ 0,2 ,3, 4,5,6,7,8,9,10,11] }
         ]
-    }else if(firType=="society" && status=="3"){
+    }else if(firType==3 && status=="3"){
         columns=[{
             data:"id"
         },{

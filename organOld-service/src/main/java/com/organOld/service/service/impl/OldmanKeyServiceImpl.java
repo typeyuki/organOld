@@ -3,14 +3,14 @@ package com.organOld.service.service.impl;
 import com.organOld.dao.entity.oldman.KeyRule;
 import com.organOld.dao.entity.oldman.Oldman;
 import com.organOld.dao.entity.oldman.OldmanKey;
+import com.organOld.dao.entity.oldman.OldmanKeyHandle;
 import com.organOld.dao.repository.KeyRuleDao;
+import com.organOld.dao.repository.OldmanDao;
 import com.organOld.dao.repository.OldmanKeyDao;
+import com.organOld.dao.repository.OldmanKeyHandleDao;
 import com.organOld.dao.util.Page;
 import com.organOld.service.constant.ValueConstant;
-import com.organOld.service.contract.BTableRequest;
-import com.organOld.service.contract.KeyRuleRequest;
-import com.organOld.service.contract.OldmanKeyRequest;
-import com.organOld.service.contract.Result;
+import com.organOld.service.contract.*;
 import com.organOld.service.enumModel.KeyRuleTypeEnum;
 import com.organOld.service.enumModel.KeyStatusEnum;
 import com.organOld.service.model.KeyRuleTypeModel;
@@ -20,10 +20,12 @@ import com.organOld.service.service.CommonService;
 import com.organOld.service.thread.KeyAutoUpdate;
 import com.organOld.service.service.OldmanKeyService;
 import com.organOld.service.thread.KeyUpdate;
+import com.organOld.service.wrapper.Wrapper;
 import com.organOld.service.wrapper.Wrappers;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
@@ -43,6 +45,11 @@ public class OldmanKeyServiceImpl implements OldmanKeyService {
     KeyAutoUpdate keyAutoUpdate;
     @Autowired
     KeyUpdate keyUpdate;
+    @Autowired
+    OldmanKeyHandleDao oldmanKeyHandleDao;
+    @Autowired
+    OldmanDao oldmanDao;
+
 
     public static List<KeyRule> keyRuleList;
 
@@ -68,9 +75,9 @@ public class OldmanKeyServiceImpl implements OldmanKeyService {
         KeyUpdate.finish=false;
         keyUpdate.longPollingExecutor.execute(keyUpdate.updateRunner);
 
-        while (!KeyUpdate.finish){
+//        while (!KeyUpdate.finish){
 //            System.out.println(KeyUpdate.finish.toString());
-        }
+//        }
         if(futureTime!=null && !futureTime.equals("")){
             return new Result(true,"future");
         }else{
@@ -265,5 +272,28 @@ public class OldmanKeyServiceImpl implements OldmanKeyService {
         ValueConstant.OLDMAN_KEY_GOAL_BASE=keyRuleRequest.getBaseGoal();
         List<KeyRule> keyRuleList=Wrappers.oldmanKeyWrapper.unwrapKeyRule(keyRuleRequest);
         keyRuleDao.updateByIds(keyRuleList);
+    }
+
+
+    @Override
+    @Transactional
+    public Result handle(OldmanhKeyHandleRequest oldmanhKeyHandleRequest) {
+        OldmanKeyHandle oldmanKeyHandle= Wrappers.oldmanKeyWrapper.unwrapKeyHandle(oldmanhKeyHandleRequest);
+        if(oldmanhKeyHandleRequest.getHandle().equals("add")) {
+            oldmanKeyHandleDao.save(oldmanKeyHandle);
+            oldmanDao.updateProp("is_handle", "1", oldmanhKeyHandleRequest.getOldmanId());
+        }else if(oldmanhKeyHandleRequest.getHandle().equals("update")){
+            oldmanKeyHandleDao.updateByOldmanId(oldmanKeyHandle);
+        }else{
+            //删除
+            oldmanDao.updateProp("is_handle", "0", oldmanhKeyHandleRequest.getOldmanId());
+            oldmanKeyHandleDao.delByOldmanId(oldmanhKeyHandleRequest.getOldmanId());
+        }
+        return new Result(true);
+    }
+
+    @Override
+    public Result getHandleByOldmanId(int oldmanId) {
+        return new Result(true,Wrappers.oldmanKeyWrapper.wrapHandle(oldmanKeyHandleDao.getByOldmanId(oldmanId)));
     }
 }

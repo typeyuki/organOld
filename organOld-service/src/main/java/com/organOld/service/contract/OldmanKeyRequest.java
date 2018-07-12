@@ -5,7 +5,25 @@ public class OldmanKeyRequest {
     private Integer goalStart;//重点老人 分数  起
     private Integer goalEnd;//重点老人 分数  止
     private String future;//是否查询的是未来的
+    private Integer isActivity;//是否主动进养老院
+    private Integer isHandle;//是否处理
 
+
+    public Integer getIsActivity() {
+        return isActivity;
+    }
+
+    public void setIsActivity(Integer isActivity) {
+        this.isActivity = isActivity;
+    }
+
+    public Integer getIsHandle() {
+        return isHandle;
+    }
+
+    public void setIsHandle(Integer isHandle) {
+        this.isHandle = isHandle;
+    }
 
     public String getFuture() {
         return future;

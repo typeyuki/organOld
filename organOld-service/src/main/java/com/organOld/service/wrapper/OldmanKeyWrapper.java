@@ -3,18 +3,23 @@ package com.organOld.service.wrapper;
 import com.organOld.dao.entity.oldman.KeyRule;
 import com.organOld.dao.entity.oldman.Oldman;
 import com.organOld.dao.entity.oldman.OldmanFamily;
+import com.organOld.dao.entity.oldman.OldmanKeyHandle;
 import com.organOld.service.constant.ValueConstant;
 import com.organOld.service.contract.KeyRuleRequest;
 import com.organOld.service.contract.OldmanFamilyRequest;
 import com.organOld.service.contract.OldmanKeyRequest;
+import com.organOld.service.contract.OldmanhKeyHandleRequest;
 import com.organOld.service.enumModel.KeyRuleTypeEnum;
 import com.organOld.service.model.KeyRuleTypeModel;
 import com.organOld.service.model.OldmanFamilyModel;
+import com.organOld.service.model.OldmanKeyHandleModel;
 import com.organOld.service.model.OldmanKeyModel;
 import com.organOld.service.util.Tool;
+import com.sun.deploy.util.StringUtils;
 import org.springframework.beans.BeanUtils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -26,6 +31,7 @@ public class OldmanKeyWrapper implements Wrapper<Oldman,OldmanKeyModel,OldmanKey
         OldmanKeyModel oldmanKeyModel=new OldmanKeyModel();
         oldmanKeyModel.setOldmanId(oldman.getId());
         oldmanKeyModel.setGoal(oldman.getGoal());
+        oldmanKeyModel.setIsHandle(oldman.getIsHandle());
         oldmanKeyModel.setOldmanNameKeyStatus(oldman.getName()+"#"+oldman.getKeyStatus());
         return oldmanKeyModel;
     }
@@ -35,6 +41,12 @@ public class OldmanKeyWrapper implements Wrapper<Oldman,OldmanKeyModel,OldmanKey
         Oldman oldman=new Oldman();
         oldman.setKeyGoalBase(ValueConstant.OLDMAN_KEY_GOAL_BASE);
         oldman.setFuture(oldmanKeyRequest.getFuture());
+        if(oldmanKeyRequest.getOldmanId()!=null)
+            oldman.setId(oldmanKeyRequest.getOldmanId());
+        oldman.setIsHandle(oldmanKeyRequest.getIsHandle());
+        oldman.setGoalEnd(oldmanKeyRequest.getGoalEnd());
+        oldman.setGoalStart(oldmanKeyRequest.getGoalStart());
+        oldman.setIsActivity(oldmanKeyRequest.getIsActivity());
         return oldman;
     }
 
@@ -63,5 +75,34 @@ public class OldmanKeyWrapper implements Wrapper<Oldman,OldmanKeyModel,OldmanKey
             keyRuleList.add(keyRule);
         }
         return keyRuleList;
+    }
+
+    public OldmanKeyHandle unwrapKeyHandle(OldmanhKeyHandleRequest oldmanhKeyHandleRequest) {
+        OldmanKeyHandle oldmanKeyHandle=new OldmanKeyHandle();
+//        if(oldmanhKeyHandleRequest.getId()!=null)
+//            oldmanKeyHandle.setId(oldmanhKeyHandleRequest.getId());
+        oldmanKeyHandle.setType(oldmanhKeyHandleRequest.getType());
+        oldmanKeyHandle.setOldmanId(oldmanhKeyHandleRequest.getOldmanId());
+        if(oldmanhKeyHandleRequest.getType()==3 ||oldmanhKeyHandleRequest.getType()==4) {
+            if (oldmanhKeyHandleRequest.getHomeFirTypes() != null && oldmanhKeyHandleRequest.getHomeFirTypes().length > 0)
+                oldmanKeyHandle.setHomeFirTypes(String.join("#", oldmanhKeyHandleRequest.getHomeFirTypes()));
+        }
+        if(oldmanhKeyHandleRequest.getType()==1 ||oldmanhKeyHandleRequest.getType()==2 ||oldmanhKeyHandleRequest.getType()==4) {
+            if (oldmanhKeyHandleRequest.getOrganIds() != null && oldmanhKeyHandleRequest.getOrganIds().length > 0)
+                oldmanKeyHandle.setOrganIds(String.join("#", oldmanhKeyHandleRequest.getOrganIds()));
+        }
+
+        return oldmanKeyHandle;
+    }
+
+    public OldmanKeyHandleModel wrapHandle(OldmanKeyHandle oldmanKeyHandle) {
+        OldmanKeyHandleModel oldmanKeyHandleModel=new OldmanKeyHandleModel();
+        oldmanKeyHandleModel.setId(oldmanKeyHandle.getId());
+        oldmanKeyHandleModel.setType(oldmanKeyHandle.getType());
+        if(oldmanKeyHandle.getHomeFirTypes()!=null && !oldmanKeyHandle.equals(""))
+            oldmanKeyHandleModel.setHomeFirTypes(Arrays.asList(oldmanKeyHandle.getHomeFirTypes().split("#")));
+        if(oldmanKeyHandle.getOrganIds()!=null && !oldmanKeyHandle.getOrganIds().equals(""))
+            oldmanKeyHandleModel.setOrganIds(Arrays.asList(oldmanKeyHandle.getOrganIds().split("#")));
+        return oldmanKeyHandleModel;
     }
 }

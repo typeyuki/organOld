@@ -14,11 +14,19 @@ public class Tool {
      * @return
      */
     public static String dateToString(Date date,String format){
+        if(date==null) return "";
         SimpleDateFormat simpleDateFormat=new SimpleDateFormat(format);
         return simpleDateFormat.format(date);
     }
 
     public static Date stringToDate(String str){
+        if(str.contains(".")){
+            str=str.replace(".","-");
+        }
+        if(str.contains("\\")){
+            str=str.replace("\\\\","-");
+        }
+
         if(str.split("-").length<3){
             //年月
             str+="-01";

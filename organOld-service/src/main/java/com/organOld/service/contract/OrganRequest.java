@@ -3,7 +3,7 @@ package com.organOld.service.contract;
 public class OrganRequest {
     private int id;
     private String search;
-    private String type;
+    private int type;
     private String status;
 
     public String getStatus() {
@@ -30,11 +30,11 @@ public class OrganRequest {
         this.search = search;
     }
 
-    public String getType() {
+    public int getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(int type) {
         this.type = type;
     }
 }

@@ -74,7 +74,7 @@ public class OldmanController {
 
 
     /**
-     * 导入的话  已有老人 更新  没有的添加
+     * 导入的话  已有老人更新，没有的添加，去掉的设置为不可用    不能先删除之前的再添加，因为老人表涉及其他多个表 不能单纯的删除
      * @param file
      * @return
      * @throws IOException

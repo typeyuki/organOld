@@ -3,6 +3,7 @@ package com.organOld.dao.repository;
 
 import com.organOld.dao.entity.DBEntity;
 import com.organOld.dao.util.Page;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -16,4 +17,6 @@ public interface BaseDao<T extends DBEntity,ID extends Number> {
     Long getSizeByPage(Page page);
     void updateById(T entity);
     void updateByIds(List<T> list);
+
+    void updateProp(@Param("prop") String prop, @Param("value") String s,@Param("id") int id);
 }

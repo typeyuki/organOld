@@ -23,6 +23,7 @@ public class Oldman extends Man implements DBInterface{
     private Integer keyStatus;
     private Integer xqId;
     private Integer floor;
+    private Integer isHandle;
 
     /**
      * 搜索对象
@@ -30,6 +31,10 @@ public class Oldman extends Man implements DBInterface{
     private Integer organId;//居委ID 或者片区ID
     private Date birthdayStart;//出生年月-起
     private Date birthdayEnd;//出生年月-止
+    private Integer goalStart;
+    private Integer goalEnd;
+    private Integer isActivity;
+
 
     private String censusArray[];//户籍 1非 2户籍 3人户分离
     private String district[];//片区索引
@@ -54,6 +59,38 @@ public class Oldman extends Man implements DBInterface{
     private Xq xq;//小区
     private List<LabelMan> labelManList;
 
+
+    public Integer getIsActivity() {
+        return isActivity;
+    }
+
+    public void setIsActivity(Integer isActivity) {
+        this.isActivity = isActivity;
+    }
+
+    public Integer getGoalStart() {
+        return goalStart;
+    }
+
+    public void setGoalStart(Integer goalStart) {
+        this.goalStart = goalStart;
+    }
+
+    public Integer getGoalEnd() {
+        return goalEnd;
+    }
+
+    public void setGoalEnd(Integer goalEnd) {
+        this.goalEnd = goalEnd;
+    }
+
+    public Integer getIsHandle() {
+        return isHandle;
+    }
+
+    public void setIsHandle(Integer isHandle) {
+        this.isHandle = isHandle;
+    }
 
     public String[] getOldStatus() {
         return oldStatus;

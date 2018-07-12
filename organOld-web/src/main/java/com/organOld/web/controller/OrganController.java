@@ -13,10 +13,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -41,11 +43,11 @@ public class OrganController {
 
     /**
      * 页面
-     * @param type  oldmanOrgan 机构养老  oldmanCommunity 社区养老   government 政府机构  society社会涉老机构
+     * @param type  21 机构养老  22 社区养老   1 政府机构  3社会涉老机构
      * @return
      */
     @RequestMapping(value = "/{type}",method = RequestMethod.GET)
-    public ModelAndView organ(@PathVariable String type, @RequestParam(required = false) String status){
+    public ModelAndView organ(@PathVariable int type, @RequestParam(required = false) String status){
         ModelAndView mv=new ModelAndView("organ/organ");
         mv.addObject("type",type);
         if (!StringUtils.isEmpty(status))
@@ -64,6 +66,42 @@ public class OrganController {
     public String data(OrganRequest organRequest, BTableRequest bTableRequest){
         return organService.getByPage(organRequest,bTableRequest);
     }
+
+    /**
+     * 机构的导入 只能添加
+     * @param file
+     * @param type
+     * @return
+     * @throws IOException
+     */
+    @RequestMapping(value = "/{type}/importExcel",method = RequestMethod.POST)
+    public ModelAndView importExcel(@RequestParam MultipartFile file, @PathVariable int type,HttpServletRequest request,@RequestParam(required = false) String status) throws IOException {
+        ModelAndView mv=new ModelAndView("organ/organ");
+        Result result=organService.importExcel(file,type,request);
+        mv.addObject("result",result);
+        mv.addObject("type",type);
+        if (!StringUtils.isEmpty(status))
+            mv.addObject("status",status.split("\\?")[0]);
+        return mv;
+    }
+
+
+    /**
+     * 机构人员的导入 更新：先删除之前的再添加  先根据 身份证号码 检测该老人是否在系统中 不在的话不添加
+     * @param file
+     * @return
+     * @throws IOException
+     */
+    @RequestMapping(value = "/man/importExcel",method = RequestMethod.POST)
+    public ModelAndView importManExcel(@RequestParam MultipartFile file) throws IOException {
+        ModelAndView mv=new ModelAndView("organ/oldman_man");
+        mv.addObject("single","single");
+        mv.addObject("dataUrl","/organ/oldman/single/man/data");
+        Result result=organService.importManExcel(file);
+        mv.addObject("result",result);
+        return mv;
+    }
+
 
 
     /**

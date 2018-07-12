@@ -24,7 +24,13 @@
         FROM organ_oldman oo,oldman_base o,organ org,organ_type ot,organ jw,auto_value x
         WHERE oo.oldman_id=o.id AND org.id=oo.organ_id AND org.organ_type_id=ot.id AND x.id=o.xq_id AND jw.id=x.parent_index
         <if test="entity.organ!=null and entity.organ.id!=0">
-            and oo.organ_id in (
+            and oo.organ_id=#{entity.organ.id}
+        </if>
+        <if test="entity.firType!=null and entity.firType!=''">
+            AND ot.fir_type=#{entity.firType}
+        </if>
+        <if test="entity!=null and entity.organId!=null and entity.organId!=0">
+            and jw.id in (
             SELECT
             case o.parent
             when 0 then child.id
@@ -33,12 +39,6 @@
             from organ o left join organ child on child.parent=o.id
             WHERE o.id=#{entity.organId}
             )
-        </if>
-        <if test="entity.firType!=null and entity.firType!=''">
-            AND ot.fir_type=#{entity.firType}
-        </if>
-        <if test="entity!=null and entity.organId!=null and entity.organId!=0">
-            and jw.id=#{entity.organId}
         </if>
         <if test="entity!=null and entity.oldman!=null and entity.oldman.id!=null and entity.oldman.id!=0">
             and o.id=#{entity.oldman.id}
@@ -59,7 +59,13 @@
         FROM organ_oldman oo,oldman_base o,organ org,organ_type ot,organ jw,auto_value x
         WHERE oo.oldman_id=o.id AND org.id=oo.organ_id AND org.organ_type_id=ot.id AND x.id=o.xq_id AND jw.id=x.parent_index
         <if test="entity.organ!=null and entity.organ.id!=0">
-            and oo.organ_id in (
+            and oo.organ_id=#{entity.organ.id}
+        </if>
+        <if test="entity.firType!=null and entity.firType!=''">
+            AND ot.fir_type=#{entity.firType}
+        </if>
+        <if test="entity!=null and entity.organId!=null and entity.organId!=0">
+            and jw.id in (
             SELECT
             case o.parent
             when 0 then child.id
@@ -69,12 +75,6 @@
             WHERE o.id=#{entity.organId}
             )
         </if>
-        <if test="entity.firType!=null and entity.firType!=''">
-            AND ot.fir_type=#{entity.firType}
-        </if>
-        <if test="entity!=null and entity.organId!=null and entity.organId!=0">
-            and jw.id=#{entity.organId}
-        </if>
 
     </select>
 
@@ -83,4 +83,16 @@
         SET organ_id=#{organ_id},oldman_id=#{oldman_id},id=#{id},time_in=#{time_in},time_out=#{time_out},time=#{time},num=#{num}
         WHERE id=#{id}
     </update>
+
+    <insert id="saveAll" parameterType="java.util.List">
+        INSERT into organ_oldman(organ_id,oldman_id,time_in,time_out,num)
+        VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.organId},#{item.oldman.id},#{item.timeIn},#{item.timeOut},#{item.num})
+        </foreach>
+    </insert>
+
+    <delete id="delByOrganId">
+        DELETE from organ_oldman where organ_id=#{organId}
+    </delete>
 </mapper>

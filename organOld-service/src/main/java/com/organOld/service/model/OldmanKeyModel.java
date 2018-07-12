@@ -4,6 +4,16 @@ public class OldmanKeyModel {
     private Integer oldmanId;
     private String oldmanNameKeyStatus;//以# 分割
     private Integer goal;
+    private Integer isHandle;
+
+
+    public Integer getIsHandle() {
+        return isHandle;
+    }
+
+    public void setIsHandle(Integer isHandle) {
+        this.isHandle = isHandle;
+    }
 
     public String getOldmanNameKeyStatus() {
         return oldmanNameKeyStatus;
