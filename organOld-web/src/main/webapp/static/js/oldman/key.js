@@ -4,6 +4,13 @@
 var table;
 var obj;
 $(document).ready(function(){
+
+    //这个方法用来启动该页面的ReverseAjax功能
+    dwr.engine.setActiveReverseAjax(true);
+    //设置在页面关闭时，通知服务端销毁会话
+    dwr.engine.setNotifyServerOnPageUnload(true);
+
+
     table =$(".dataTables-example").dataTable(
         {
             "sPaginationType": "full_numbers",
@@ -160,14 +167,14 @@ function update(type) {
         type: 'POST',
         dataType: 'json',
         success: function (result) {
-            alert("更新完成");
+            // alert("更新完成");
             if (result.data=="future"){
                 $("input[name=future]").val("1");
             }else{
                 $("input[name=future]").val("");
             }
             // alert(1);
-            table.fnFilter();
+            // table.fnFilter();
         },
         error:function(XMLHttpRequest, textStatus, errorThrown) {
 
@@ -175,6 +182,11 @@ function update(type) {
     });
 }
 
+
+function finish(data) {
+    alert("更新完成");
+    table.fnFilter();
+}
 
 function handle(id,name,obje,type) {
     obj=obje;

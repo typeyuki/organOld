@@ -1,3 +1,4 @@
+<#assign basePath=request.contextPath />
 <!DOCTYPE html>
 <html>
 
@@ -11,6 +12,11 @@
     <link href="/css/style.min.css?v=4.0.0" rel="stylesheet">
     <link href="/static/css/common_table.css" rel="stylesheet">
     <link href="/static/css/oldman/base.css" rel="stylesheet">
+
+
+    <script type='text/javascript' src="${basePath}/dwr/engine.js"></script>
+    <script type='text/javascript' src="${basePath}/dwr/util.js"></script>
+    <script type='text/javascript' src="${basePath}/dwr/interface/Remote.js"></script>
 </head>
 
 <body class="gray-bg">

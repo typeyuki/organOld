@@ -54,6 +54,7 @@
           <element id="library" level="project" name="Maven: org.apache.poi:poi:3.9" />
           <element id="library" level="project" name="Maven: commons-codec:commons-codec:1.5" />
           <element id="library" level="project" name="Maven: javax.mail:mail:1.4.7" />
+          <element id="library" level="project" name="Maven: org.directwebremoting:dwr:3.0.2-RELEASE" />
         </element>
       </element>
       <element id="directory" name="META-INF">
