@@ -67,7 +67,7 @@ public class OldmanController {
         oldmanRequest.setDistrict(district);
         oldmanRequest.setJw(jw);
         oldmanRequest.setIsHealth(isHealth);
-        oldmanRequest.setOldStatus(oldStatus);
+        oldmanRequest.setOldStatusArray(oldStatus);
 
         return oldmanService.getOldmanByPage(oldmanRequest,bTableRequest,session);
     }

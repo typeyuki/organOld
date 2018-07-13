@@ -10,6 +10,7 @@ import com.organOld.dao.entity.organ.OrganType;
 import com.organOld.dao.repository.*;
 import com.organOld.dao.util.Page;
 import com.organOld.service.contract.*;
+import com.organOld.service.enumModel.AutoValueEnum;
 import com.organOld.service.enumModel.OrganFirEnum;
 import com.organOld.service.model.ExcelReturnModel;
 import com.organOld.service.model.OrganModel;
@@ -55,6 +56,10 @@ public class OrganServiceImpl implements OrganService{
     AutoValueDao autoValueDao;
     @Autowired
     OrganTypeDao organTypeDao;
+    @Autowired
+    OldmanDao oldmanDao;
+    @Autowired
+    UserDao userDao;
 
 
     @Override
@@ -79,17 +84,20 @@ public class OrganServiceImpl implements OrganService{
 
     @Override
     public OrganModel getBySession(HttpSession httpSession) {
-        UserDetails userDetails=(UserDetails) SecurityContextHolder.getContext()
-                .getAuthentication()
-                .getPrincipal();
-        String username=userDetails.getUsername();
-        OrganModel organModel=Wrappers.organWrapper.wrap(organDao.getByUsername(username));
-        return organModel;
+        Integer organId=commonService.getIdBySession();
+        return getById(organId);
     }
 
     @Override
     public OrganModel getById(int organId) {
-        return null;
+        OrganModel organModel=Wrappers.organWrapper.wrap(organDao.getById(organId));
+        List<AutoValue> districtList=autoValueDao.getByType(AutoValueEnum.PQ.getIndex());
+        organModel.setDistrictList(districtList);
+        List<OrganType> organTypeList=organTypeDao.getByFirType(organModel.getOrganFirTypeId());
+        organModel.setOrganTypeList(organTypeList);
+        List<Organ> parentOrganList=organDao.getByType(33);//针对居委
+        organModel.setParentOrganList(parentOrganList);
+        return organModel;
     }
 
     @Override
@@ -120,6 +128,21 @@ public class OrganServiceImpl implements OrganService{
         return new Result(true);
     }
 
+    @Override
+    @Transactional
+    public void cancel(int organId) {
+        OrganReg organReg=organRegDao.getByOrganId(organId);
+        String content=String.format("抱歉您被撤销了");
+        Email.send(organReg.getEmail(),content);
+
+        Organ organ=new Organ();
+        organ.setId(organId);
+        organ.setStatus("4");
+        organDao.updateById(organ);
+
+        userDao.setDisableByOrganId(organId);
+    }
+
     /**
      * 为机构注册新账号
      * @param organId
@@ -129,31 +152,7 @@ public class OrganServiceImpl implements OrganService{
         SysUser user=createUser(organId);
         userService.save(user);
         userService.setUserOrgan(user.getId(),organId);
-
-        Organ auths=organDao.getAuthById(organId);
-        int goal;//商品 1  消费2 签到4     总分 0无特殊权限 1 商品权限 2消费权限 4 签到权限 3商品+消费权限
-
-        goal=auths.getAuthConsume()+auths.getAuthProduct()+auths.getAuthProduct();
-        switch (goal){
-            case 0:
-                userService.setUserRole(user.getId(),3);
-                break;
-            case 1:
-                userService.setUserRole(user.getId(),8);
-                break;
-            case 2:
-                userService.setUserRole(user.getId(),6);
-                break;
-            case 3:
-                userService.setUserRole(user.getId(),9);
-                break;
-            case 4:
-                userService.setUserRole(user.getId(),7);
-                break;
-            default:
-                break;
-        }
-
+        userService.setUserRole(user.getId(),9);
         return user;
     }
 
@@ -181,6 +180,7 @@ public class OrganServiceImpl implements OrganService{
     @Transactional
     public Result reg(OrganRegRequest organRegRequest, HttpServletRequest request) {
         Organ organ=Wrappers.organWrapper.unwrapRegOrgan(organRegRequest,request);
+        organ.setStatus("1");
         OrganReg organReg=Wrappers.organWrapper.unwrapRegOrganReg(organRegRequest);
         organDao.save(organ);
         organReg.setOrganId(organ.getId());
@@ -188,6 +188,12 @@ public class OrganServiceImpl implements OrganService{
         return new Result(true,"注册成功！请等待审核");
     }
 
+    @Override
+    public void addOrUpdate(OrganRegRequest organRegRequest, HttpServletRequest request, String type) {
+        Organ organ=Wrappers.organWrapper.unwrapRegOrgan(organRegRequest,request);
+        if(type.equals("update")) organDao.updateById(organ);
+        else organDao.save(organ);
+    }
 
     @Override
     public Result getRoleOrgan(int type, int typeIndex) {
@@ -354,6 +360,7 @@ public class OrganServiceImpl implements OrganService{
         excelReturnModel.setNumFail(excelReturnModel.getFail().size());
         excelReturnModel.setSuccessAdd(successAdd);
         excelReturnModel.setNumSuccess(numSuccess);
+
         organDao.saveAll(organList);
         return new Result(true,excelReturnModel);
     }
@@ -397,6 +404,14 @@ public class OrganServiceImpl implements OrganService{
         excelReturnModel.setTotal(sht0.getLastRowNum()-(start-1));//一共
 
         Integer organId=commonService.getIdBySession();
+        int oldStatus=0;
+        Organ organ=organDao.getById(organId);
+        if(organ.getOrganFirTypeId()==26){
+            oldStatus=1;
+        }else if(organ.getOrganFirTypeId()==27 || organ.getOrganFirTypeId()==28 || organ.getOrganFirTypeId()==29 || organ.getOrganFirTypeId()==34 || organ.getOrganFirTypeId()==35){
+            oldStatus=2;
+        }
+        List<Oldman> oldmanList=new ArrayList<>();//用于更新老人 养老状态
 
         for (Row r : sht0) {
             try {
@@ -404,6 +419,7 @@ public class OrganServiceImpl implements OrganService{
                     //创建实体类
                     OrganOldman organOldman=new OrganOldman();
                     organOldman.setOrganId(organId);
+
 
                         if (r.getCell(1).getStringCellValue() != null && !r.getCell(1).getStringCellValue().equals("")) {
                         }else{
@@ -414,6 +430,9 @@ public class OrganServiceImpl implements OrganService{
                             if(oldmanId!=null && oldmanId!=0){
                                 Oldman oldman=new Oldman();
                                 oldman.setId(oldmanId);
+                                //TODO 后面用于判断是否是 社区居家养老
+                                oldman.setOldStatus(oldStatus);
+                                oldmanList.add(oldman);
                                 organOldman.setOldman(oldman);
                             }else{
                                 throw new Exception();
@@ -447,6 +466,8 @@ public class OrganServiceImpl implements OrganService{
 
         organOldmanDao.delByOrganId(organId);
         if(organOldmanList.size()>0){
+            // 老人基本信息表  养老状态更新
+            oldmanDao.updateOldStatusByIds(oldmanList);
             organOldmanDao.saveAll(organOldmanList);
         }
         return new Result(true,excelReturnModel);

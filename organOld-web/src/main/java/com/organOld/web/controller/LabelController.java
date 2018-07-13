@@ -3,6 +3,7 @@ package com.organOld.web.controller;
 import com.organOld.dao.entity.label.Label;
 import com.organOld.dao.entity.label.LabelFeedback;
 import com.organOld.service.contract.*;
+import com.organOld.service.service.AutoValueService;
 import com.organOld.service.service.LabelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,6 +23,8 @@ public class LabelController {
 
     @Autowired
     LabelService labelService;
+    @Autowired
+    AutoValueService autoValueService;
 
     /**
      * 人员绑定标签
@@ -31,7 +34,15 @@ public class LabelController {
     public ModelAndView index_bind(){
         ModelAndView mv=new ModelAndView("oldman/label/label_three");
         mv.addObject("type","1");//标志 是人员绑定
+        mv.addObject("firType",autoValueService.getByType(9));//一级标签
         return mv;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/{firType}/getSecLabel",method = RequestMethod.GET)
+    public Result getSecLabel(@PathVariable int firType){
+        Result result=labelService.getSecLabelByFirType(firType);
+        return result;
     }
 
     /**
@@ -42,6 +53,7 @@ public class LabelController {
     public ModelAndView index_rule(){
         ModelAndView mv=new ModelAndView("oldman/label/label_three");
         mv.addObject("type","2");//标志 是规则制定
+        mv.addObject("firType",autoValueService.getByType(9));//一级标签
         return mv;
     }
 

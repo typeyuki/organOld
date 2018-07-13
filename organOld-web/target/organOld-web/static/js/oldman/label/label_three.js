@@ -73,36 +73,36 @@ $(document).ready(function(){
                         if(typeLabel=="1"){
                             //人员绑定
                             if(userType=="居委会"){
-                                var s="<span onclick=newPageBefore("+id+","+name+",'/oldman/label/bind/?/man')>人员</span>";
+                                var s="<span class='btn btn-primary' onclick=newPageBefore("+id+","+name+",'/oldman/label/bind/?/man')>人员</span>";
                                 if(data!=null && data!=0){
-                                    s+="<span onclick=lookfeedback("+id+")>已反馈</span>";
+                                    s+="<span class='btn btn-primary' onclick=lookfeedback("+id+")>已反馈</span>";
                                 }else{
-                                    s+="<span onclick=feedback("+id+")>反馈</span>";
+                                    s+="<span class='btn btn-primary' onclick=feedback("+id+")>反馈</span>";
                                 }
-                                    s+="<span class='edit' id='"+data+"'>修改</span>";
+                                    s+="<span class='btn btn-primary' id='"+data+"'>修改</span>";
                                 return s;
                             }else{
-                                return "<span onclick=newPageBefore("+id+","+name+",'/oldman/label/bind/?/man') >人员</span>" +
-                                    "<span onclick=newPageBefore("+id+","+name+",'/oldman/label/?/feedback')>反馈信息</span>" +
-                                    "<span class='edit' id='"+id+"'>修改</span>";
+                                return "<span class='btn btn-primary' onclick=newPageBefore("+id+","+name+",'/oldman/label/bind/?/man') >人员</span>" +
+                                    "<span class='btn btn-primary' onclick=newPageBefore("+id+","+name+",'/oldman/label/?/feedback')>反馈信息</span>" +
+                                    "<span  class='btn btn-primary' id='"+id+"'>修改</span>";
                             }
                         }else{
                             //规则指定
                             if(userType=="居委会"){
-                                var s="<span onclick=newPageBefore("+id+","+name+",'/oldman/label/rule/?/man')>人员</span>" +
-                                    "<span onclick=newPageBefore("+id+","+name+",'/oldman/label/rule/?')>规则</span>";
+                                var s="<span class='btn btn-primary' onclick=newPageBefore("+id+","+name+",'/oldman/label/rule/?/man')>人员</span>" +
+                                    "<span class='btn btn-primary' onclick=newPageBefore("+id+","+name+",'/oldman/label/rule/?')>规则</span>";
                                 if(data!=null && data!=0){
-                                    s+="<span onclick=lookfeedback("+id+")>已反馈</span>";
+                                    s+="<span class='btn btn-primary' onclick=lookfeedback("+id+")>已反馈</span>";
                                 }else{
-                                    s+="<span onclick=feedback("+id+")>反馈</span>";
+                                    s+="<span class='btn btn-primary' onclick=feedback("+id+")>反馈</span>";
                                 }
-                                s+="<span class='edit' id='"+data+"'>修改</span>";
+                                s+="<span class='btn btn-primary' id='"+data+"'>修改</span>";
                                 return s;
                             }else{
-                                return "<span onclick=newPageBefore("+id+","+name+",'/oldman/label/rule/?/man')>人员</span>" +
-                                    "<span onclick=newPageBefore("+id+","+name+",'/oldman/label/rule/?')>规则</span>" +
-                                    "<span onclick=newPageBefore("+id+","+name+",'/oldman/label/?/feedback')>反馈信息</span>" +
-                                    "<span class='edit' id='"+id+"'>修改</span>";
+                                return "<span class='btn btn-primary' onclick=newPageBefore("+id+","+name+",'/oldman/label/rule/?/man')>人员</span>" +
+                                    "<span class='btn btn-primary' onclick=newPageBefore("+id+","+name+",'/oldman/label/rule/?')>规则</span>" +
+                                    "<span class='btn btn-primary' onclick=newPageBefore("+id+","+name+",'/oldman/label/?/feedback')>反馈信息</span>" +
+                                    "<span class='btn btn-primary' class='edit' id='"+id+"'>修改</span>";
                             }
                         }
                     }

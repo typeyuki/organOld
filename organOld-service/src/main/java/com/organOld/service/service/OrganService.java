@@ -18,7 +18,7 @@ public interface OrganService {
 
     OrganModel getBySession(HttpSession httpSession);
 
-    OrganModel getById(int organId);
+    OrganModel getById(int id);
     Result pass(int organId);
 
     OrganRegInfoModel getRegInfo();
@@ -34,4 +34,8 @@ public interface OrganService {
     Result importExcel(MultipartFile file, int type, HttpServletRequest request) throws IOException;
 
     Result importManExcel(MultipartFile file) throws IOException;
+
+    void addOrUpdate(OrganRegRequest organRegRequest, HttpServletRequest request, String type);
+
+    void cancel(int organId);
 }

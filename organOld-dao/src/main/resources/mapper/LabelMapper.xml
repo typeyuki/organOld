@@ -503,8 +503,8 @@
 
 
     <insert id="save" parameterType="com.organOld.dao.entity.label.Label" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO label(secId,name,rule,content,type,organ_id)
-        VALUES (#{labelSec.id},#{name},#{rule},#{content},#{type},#{organId})
+        INSERT INTO label(secId,name,rule,content,type,organ_id,wh)
+        VALUES (#{labelSec.id},#{name},#{rule},#{content},#{type},#{organId},#{wh})
 
     </insert>
 

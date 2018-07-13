@@ -49,7 +49,8 @@ public class LabelServiceImpl implements LabelService {
     UserDao userDao;
     @Autowired
     MessageDao messageDao;
-
+    @Autowired
+    LabelSecDao labelSecDao;
 
     @Override
     public String getByPage(LabelRequest labelRequest, BTableRequest bTableRequest, HttpSession session) {
@@ -244,5 +245,12 @@ public class LabelServiceImpl implements LabelService {
             return new Result(true);
         }
         return new Result(false);
+    }
+
+
+    @Override
+    public Result getSecLabelByFirType(int firType) {
+        List<LabelSec> labelSecList=labelSecDao.getByFirType(firType);
+        return new Result(true,labelSecList);
     }
 }

@@ -1,5 +1,11 @@
 package com.organOld.service.model;
 
+import com.organOld.dao.entity.AutoValue;
+import com.organOld.dao.entity.organ.Organ;
+import com.organOld.dao.entity.organ.OrganType;
+
+import java.util.List;
+
 public class OrganModel {
     private Integer id;
     private Integer organTypeId;
@@ -19,7 +25,100 @@ public class OrganModel {
     private Integer numRemain;
     private String districtName;//所属片区名称 如果有的话
     private String time;
+    private Integer authConsume;
+    private Integer authProduct;
+    private Integer authSign;
+    private Integer authQueryInfo;
+    private Integer authQueryIntegral;
+    private Integer parent;
 
+    private Integer organFirTypeId;
+
+
+    List<AutoValue> districtList;
+    List<OrganType> organTypeList;
+    List<Organ> parentOrganList;//主要是 片区
+
+
+    public Integer getOrganFirTypeId() {
+        return organFirTypeId;
+    }
+
+    public void setOrganFirTypeId(Integer organFirTypeId) {
+        this.organFirTypeId = organFirTypeId;
+    }
+
+    public Integer getParent() {
+        return parent;
+    }
+
+    public void setParent(Integer parent) {
+        this.parent = parent;
+    }
+
+    public List<Organ> getParentOrganList() {
+        return parentOrganList;
+    }
+
+    public void setParentOrganList(List<Organ> parentOrganList) {
+        this.parentOrganList = parentOrganList;
+    }
+
+    public List<AutoValue> getDistrictList() {
+        return districtList;
+    }
+
+    public void setDistrictList(List<AutoValue> districtList) {
+        this.districtList = districtList;
+    }
+
+    public List<OrganType> getOrganTypeList() {
+        return organTypeList;
+    }
+
+    public void setOrganTypeList(List<OrganType> organTypeList) {
+        this.organTypeList = organTypeList;
+    }
+
+    public Integer getAuthConsume() {
+        return authConsume;
+    }
+
+    public void setAuthConsume(Integer authConsume) {
+        this.authConsume = authConsume;
+    }
+
+    public Integer getAuthProduct() {
+        return authProduct;
+    }
+
+    public void setAuthProduct(Integer authProduct) {
+        this.authProduct = authProduct;
+    }
+
+    public Integer getAuthSign() {
+        return authSign;
+    }
+
+    public void setAuthSign(Integer authSign) {
+        this.authSign = authSign;
+    }
+
+    public Integer getAuthQueryInfo() {
+        return authQueryInfo;
+    }
+
+    public void setAuthQueryInfo(Integer authQueryInfo) {
+        this.authQueryInfo = authQueryInfo;
+    }
+
+    public Integer getAuthQueryIntegral() {
+        return authQueryIntegral;
+    }
+
+    public void setAuthQueryIntegral(Integer authQueryIntegral) {
+        this.authQueryIntegral = authQueryIntegral;
+    }
 
     public Integer getOrganTypeId() {
         return organTypeId;

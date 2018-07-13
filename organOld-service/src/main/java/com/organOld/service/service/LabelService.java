@@ -39,4 +39,6 @@ public interface LabelService {
     Result getFeedbackByLabelId(int labelId);
 
     Result checkCanChange(int labelId);
+
+    Result getSecLabelByFirType(int firType);
 }

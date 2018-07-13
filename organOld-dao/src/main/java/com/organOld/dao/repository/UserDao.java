@@ -31,4 +31,6 @@ public interface UserDao extends BaseDao<SysUser,Number>{
     List<Integer> getJwUserId(Integer organId);
 
     Organ ckeckOrganLogin(SysUser sysUser);
+
+    void setDisableByOrganId(int organId);
 }

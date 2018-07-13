@@ -81,7 +81,7 @@ $(document).ready(function(){
                     "targets": [15], // 目标列位置，下标从0开始
                     "data": "id", // 数据列名
                     "render": function(data, type, full) { // 返回自定义内容
-                        return "<span class='look' id='"+data+"' onclick=newPage("+data+",$(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().prev().text(),'/oldman/"+data+"/info')>查看</span><span class='mod' id='"+data+"'>修改</span>";
+                        return "<button class='btn btn-primary' id='"+data+"' onclick=newPage("+data+",$(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().prev().text(),'/oldman/"+data+"/info')>查看</button><button class='btn btn-primary' id='"+data+"'>修改</button>";
                     }
                 },
                 //不进行排序的列
@@ -108,7 +108,7 @@ $(document).ready(function(){
                 "iSortCol_0" : aoData.iSortCol_0,
                 "sEcho" : aoData.sEcho,
                 "sSortDir_0" : aoData.sSortDir_0,
-                "id" : ($('.id').val()==""?"0":aoData.id),//参数不能是空 400
+                "id" : ($('input[name="id"]').val()==""?"0":$('input[name="id"]').val()),//参数不能是空 400
                 "census_array":$("select[name='census']").val(),
                 "ageStart":$("input[name='ageStart']").val(),
                 "ageEnd":$("input[name='ageEnd']").val(),

@@ -38,15 +38,15 @@
                                 <input type="text" class="form-control" name="phone" />
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">验证码</label>
-                            <div class="col-sm-2">
-                                <input placeholder="请输入收到的验证码" type="text" class="form-control">
-                            </div>
-                            <div class="col-xs-1">
-                                <input type="button" onclick="" class="btn btn-primary" value="获取验证码" id="sendCode">
-                            </div>
-                        </div>
+                        <#--<div class="form-group">-->
+                            <#--<label class="col-sm-2 control-label">验证码</label>-->
+                            <#--<div class="col-sm-2">-->
+                                <#--<input placeholder="请输入收到的验证码" type="text" class="form-control">-->
+                            <#--</div>-->
+                            <#--<div class="col-xs-1">-->
+                                <#--<input type="button" onclick="" class="btn btn-primary" value="获取验证码" id="sendCode">-->
+                            <#--</div>-->
+                        <#--</div>-->
                         <div class="form-group">
                             <label class="col-sm-2 control-label">邮箱</label>
                             <div class="col-sm-5">

@@ -15,19 +15,11 @@
                                         <div class="form-group">
                                             <label class="col-sm-1 control-label">一级菜单</label>
                                             <div class="col-sm-2">
-                                                <select >
-
+                                                <select onchange="firLabelSelect(this)">
                                                     <option></option>
-                                                    <option>老人身份</option>
-                                                    <option>老有所养</option>
-                                                    <option>老有所医</option>
-                                                    <option>老有所为</option>
-                                                    <option>老有所乐</option>
-                                                    <option>老有所学</option>
-
-                                                    <#if (info.fir)??>
-                                                        <#list info.fir as fir>
-                                                            <option value="${fir.id!}" name="xq" > <i></i> ${fir.value!}</option>
+                                                    <#if firType??>
+                                                        <#list firType as list>
+                                                            <option value="${list.id}">${list.value}</option>
                                                         </#list>
                                                     </#if>
                                                 </select>
@@ -35,19 +27,12 @@
                                             <label class="col-sm-1 control-label">二级菜单</label>
                                             <div class="col-sm-2">
                                                 <select name="labelSec.id">
-                                                    <option></option>
-                                                    <option value="1">小区职位</option>
-                                                    <option value="2">养老补贴</option>
-
-                                                <#if (info.sec)??>
-                                                    <#list info.sec as sec>
-                                                        <option value="${sec.id!}" name="xq" > <i></i> ${sec.value!}</option>
-                                                    </#list>
-                                                </#if>
                                             </select>
                                             </div>
+                                        </div>
+                                        <div class="form-group">
                                             <label class="col-sm-1 control-label">名称</label>
-                                            <div class="col-sm-2">
+                                            <div class="col-sm-8">
                                                 <input type="text" class="form-control" name="name"/>
                                             </div>
                                         </div>
@@ -70,7 +55,14 @@
 
                                             </div>
                                         </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-1 control-label">文号</label>
+                                            <div class="col-sm-8">
 
+                                                <input type="text" class="form-control" name="wh"/>
+
+                                            </div>
+                                        </div>
                                     </form>
                                 </div>
                             </div>
@@ -181,3 +173,23 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div>
+
+
+
+<script>
+    function firLabelSelect(obj) {
+        $("select[name='labelSec.id']").html("");
+            $.ajax({
+                url: "/oldman/label/"+$(obj).val()+"/getSecLabel",
+                type: 'GET',
+                success: function (result) {
+                    if(result.success==true){
+                        for(var i=0;i<result.data.length;i++){
+                            var op=$("<option value='"+result.data[i].id+"'>"+result.data[i].secName+"</option>");
+                            $("select[name='labelSec.id']").append(op)
+                        }
+                    }
+                }
+            });
+    }
+</script>

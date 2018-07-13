@@ -127,6 +127,20 @@ public class OrganController {
         return organService.getManByPage(bTableRequest,organOldmanManRequest);
     }
 
+
+    /**
+     * 机构查看
+     * @param organId
+     * @return
+     */
+    @RequestMapping(value = "/{organId}/info",method = RequestMethod.GET)
+    public ModelAndView oldman(@PathVariable int organId){
+        ModelAndView mv=new ModelAndView("organ/organ_single");
+        OrganModel organModel=organService.getById(organId);
+        mv.addObject("organ",organModel);
+        return mv;
+    }
+
     /**
      * 机构账号登陆  管理
      * @return
@@ -136,8 +150,6 @@ public class OrganController {
         ModelAndView mv=new ModelAndView("organ/organ_single");
         OrganModel organModel=organService.getBySession(httpSession);
         mv.addObject("organ",organModel);
-        List<AutoValue> districtList=autoValueService.getByType(AutoValueEnum.PQ.getIndex());
-        mv.addObject("districts",districtList);
         return mv;
     }
 
@@ -187,10 +199,21 @@ public class OrganController {
     }
 
     /**
+     * 第三方机构 撤销
+     * @param organId
+     * @return
+     */
+    @RequestMapping(value = "/{organId}/cancel",method = RequestMethod.GET)
+    public ModelAndView cancel(@PathVariable int organId){
+        ModelAndView mv=new ModelAndView("redirect:/organ/3?status=2");
+        organService.cancel(organId);
+        return mv;
+    }
+
+    /**
      * 机构注册
      * @return
      */
-    @ResponseBody
     @RequestMapping(value = "/reg",method = RequestMethod.POST)
     public ModelAndView reg(OrganRegRequest organRegRequest, HttpServletRequest request){
         ModelAndView mv=new ModelAndView("organ/reg_return");
@@ -198,6 +221,25 @@ public class OrganController {
         mv.addObject("result",result);
         return mv;
     }
+
+    /**
+     * 机构添加或修改
+     * @param type add 添加 update 更新
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/{type}",method = RequestMethod.POST)
+    public ModelAndView organ(OrganRegRequest organRegRequest, HttpServletRequest request,@PathVariable String type){
+        ModelAndView mv;
+        if(type.equals("update")){
+            mv=new ModelAndView("redirect:/organ/"+organRegRequest.getId()+"/info");
+        }else{
+            mv=new ModelAndView("organ/reg_return");
+        }
+        organService.addOrUpdate(organRegRequest,request,type);
+        return mv;
+    }
+
 
     /**
      * 机构注册页面
