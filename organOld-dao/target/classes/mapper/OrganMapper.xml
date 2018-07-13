@@ -51,7 +51,7 @@
 
     <insert id="save" parameterType="com.organOld.dao.entity.organ.Organ" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO organ(
-        organ_type_id,name,intro,work,service_time,address,phone,web_url,img_url,num,auth_consume,auth_product,auth_sign
+        organ_type_id,name,intro,work,service_time,address,phone,web_url,img_url,num,auth_consume,auth_product,auth_sign,auth_query_info,auth_query_integral
         <if test="require!=null and require!=''">
             ,require
         </if>
@@ -72,7 +72,7 @@
         </if>
         )
         VALUES (
-        #{organTypeId},#{name},#{intro},#{work},#{serviceTime},#{address},#{phone},#{webUrl},#{imgUrl},#{num},#{authConsume},#{authProduct},#{authSign}
+        #{organTypeId},#{name},#{intro},#{work},#{serviceTime},#{address},#{phone},#{webUrl},#{imgUrl},#{num},#{authConsume},#{authProduct},#{authSign},#{authQueryInfo},#{authQueryIntegral}
         <if test="require!=null and require!=''">
             ,#{require}
         </if>
@@ -103,6 +103,21 @@
         SET id=#{id}
         <if test="status!=null and status!=''">
             ,status=#{status}
+        </if>
+        <if test="auth_consume!=null and auth_consume!=''">
+            ,auth_consume=#{authConsume}
+        </if>
+        <if test="auth_product!=null and auth_product!=''">
+            ,auth_product=#{authProduct}
+        </if>
+        <if test="auth_sign!=null and auth_sign!=''">
+            ,auth_sign=#{authSign}
+        </if>
+        <if test="auth_query_info!=null and auth_query_info!=''">
+            ,auth_query_info=#{authQueryInfo}
+        </if>
+        <if test="auth_query_integral!=null and auth_query_integral!=''">
+            ,auth_query_integral=#{authQueryIntegral}
         </if>
         WHERE id=#{id}
     </update>

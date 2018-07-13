@@ -36,7 +36,7 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="form-group" id="organ" style="display: none">
+                                        <div class="form-group organ" style="display: none">
                                             <label class="col-sm-3 control-label">对应机构</label>
                                             <div class="col-sm-2">
                                                 <select class="form-control" name="organId">
@@ -44,7 +44,39 @@
                                                 </select>
                                             </div>
                                         </div>
-
+                                        <div class="form-group organ" style="display: none">
+                                            <label class="col-sm-3 control-label">权限升级</label>
+                                            <div class="col-sm-1">
+                                                <div class="checkbox i-checks">
+                                                    <label>
+                                                        <input type="checkbox" value="consume"  name="auth"> <i></i> 消费</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <div class="checkbox i-checks">
+                                                    <label>
+                                                        <input type="checkbox" value="sign"  name="auth" > <i></i> 签到</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <div class="checkbox i-checks">
+                                                    <label>
+                                                        <input type="checkbox" value="product"  name="auth"> <i></i> 商品</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <div class="checkbox i-checks">
+                                                    <label>
+                                                        <input type="checkbox" value="info"  name="auth"> <i></i> 老人信息查询</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <div class="checkbox i-checks">
+                                                    <label>
+                                                        <input type="checkbox" value="integral"  name="auth"> <i></i> 积分查询</label>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </form>
                                 </div>
                             </div>
@@ -68,7 +100,7 @@
         if($("select[name='roleId']").find("option:selected").attr("type")!="0"){
 
             $("select[name='organId']").html("");
-            $("#organ").show();
+            $(".organ").show();
 
             $.ajax({
                 url: "/user/getRoleOrgan",
@@ -89,7 +121,7 @@
             });
         }else{
 
-            $("#organ").hide();
+            $(".organ").hide();
 
         }
     }

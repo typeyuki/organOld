@@ -4,6 +4,7 @@ import com.organOld.dao.entity.SysAuthority;
 import com.organOld.dao.entity.SysRole;
 import com.organOld.dao.entity.oldman.Oldman;
 import com.organOld.dao.entity.organ.Organ;
+import com.organOld.dao.repository.OrganDao;
 import com.organOld.dao.repository.UserDao;
 import com.organOld.dao.entity.SysUser;
 import com.organOld.dao.util.Page;
@@ -22,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -36,6 +38,8 @@ public class UserServiceImpl implements UserService {
     UserDao userDao;
     @Autowired
     CommonService commonService;
+    @Autowired
+    OrganDao organDao;
 
 
     @Override
@@ -105,9 +109,31 @@ public class UserServiceImpl implements UserService {
         sysUser.setPassword(userAddRequest.getPassword());
         userDao.save(sysUser);
         if(userAddRequest.getOrganId()!=null && !userAddRequest.getOrganId().equals(""))
-            userDao.setUserOrgan(sysUser.getId(),Integer.parseInt(userAddRequest.getOrganId()));
+            userDao.setUserOrgan(sysUser.getId(),userAddRequest.getOrganId());
         userDao.setUserRole(sysUser.getId(),Integer.parseInt(userAddRequest.getRoleId()));
-        //TODO 更新organ 的权限
+        // 更新organ 的权限
+        Organ organ=authSet(userAddRequest);
+        organDao.updateById(organ);
+    }
+
+    private Organ authSet(UserAddRequest userAddRequest) {
+        Organ organ=new Organ();
+        organ.setId(userAddRequest.getOrganId());
+        if(userAddRequest.getAuth()!=null && userAddRequest.getAuth().length>0){
+            List<String> auths= Arrays.asList(userAddRequest.getAuth());
+            if(auths.contains("sign"))organ.setAuthSign(1);else organ.setAuthSign(0);
+            if(auths.contains("product"))organ.setAuthProduct(1);else organ.setAuthProduct(0);
+            if(auths.contains("consume"))organ.setAuthConsume(1);else organ.setAuthConsume(0);
+            if(auths.contains("info"))organ.setAuthConsume(1);else organ.setAuthConsume(0);
+            if(auths.contains("integral"))organ.setAuthConsume(1);else organ.setAuthConsume(0);
+        }else{
+            organ.setAuthSign(0);
+            organ.setAuthProduct(0);
+            organ.setAuthConsume(0);
+            organ.setAuthQueryInfo(0);
+            organ.setAuthQueryIntegral(0);
+        }
+        return organ;
     }
 
     @Override

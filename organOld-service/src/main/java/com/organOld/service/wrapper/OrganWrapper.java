@@ -45,10 +45,14 @@ public class OrganWrapper implements Wrapper<Organ,OrganModel,OrganRequest> {
             if(auths.contains("sign"))organ.setAuthSign(1);else organ.setAuthSign(0);
             if(auths.contains("product"))organ.setAuthProduct(1);else organ.setAuthProduct(0);
             if(auths.contains("consume"))organ.setAuthConsume(1);else organ.setAuthConsume(0);
+            if(auths.contains("info"))organ.setAuthConsume(1);else organ.setAuthConsume(0);
+            if(auths.contains("integral"))organ.setAuthConsume(1);else organ.setAuthConsume(0);
         }else{
             organ.setAuthSign(0);
             organ.setAuthProduct(0);
             organ.setAuthConsume(0);
+            organ.setAuthQueryInfo(0);
+            organ.setAuthQueryIntegral(0);
         }
         if(organRegRequest.getPic()!=null){
             try {

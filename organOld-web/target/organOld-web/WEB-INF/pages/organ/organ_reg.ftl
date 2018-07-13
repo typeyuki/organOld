@@ -159,6 +159,18 @@
                                         <input type="checkbox" value="product"  name="auth"> <i></i> 商品</label>
                                 </div>
                             </div>
+                            <div class="col-sm-1">
+                                <div class="checkbox i-checks">
+                                    <label>
+                                        <input type="checkbox" value="info"  name="auth"> <i></i> 老人信息查询</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-1">
+                                <div class="checkbox i-checks">
+                                    <label>
+                                        <input type="checkbox" value="integral"  name="auth"> <i></i> 积分查询</label>
+                                </div>
+                            </div>
                         </div>
                         <div class="hr-line-dashed"></div>
                         <div class="form-group">
