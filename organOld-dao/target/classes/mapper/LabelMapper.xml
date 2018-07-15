@@ -62,13 +62,36 @@
     </resultMap>
 
     <select id="getByPage" parameterType="com.organOld.dao.util.Page" resultMap="label">
-        SELECT l.id,l.wh,l.name,l.content,l.rule,l.time,lt.sec_name sname,f.value fname,o.name oname,lf.id lfid
-        FROM label l LEFT JOIN organ o on o.id=l.organ_id
-        left join label_feedback lf on lf.label_id=l.id and lf.organ_id=#{entity.organId}
+        SELECT l.id,l.wh,l.name,l.content,l.rule,l.time,lt.sec_name sname,f.value fname,o.name oname
+        <if test="entity!=null and entity.organId!=null and entity.organId!=0">
+        ,lf.id lfid
+        </if>
+        FROM label l LEFT JOIN organ o on o.id=l.organ_id left JOIN label_rule lr on lr.label_id=l.id
+        <if test="entity!=null and entity.organId!=null and entity.organId!=0">
+            left join label_feedback lf on lf.label_id=l.id and lf.organ_id=#{entity.organId}
+        </if>
         ,label_type lt,auto_value f
         WHERE l.type=#{entity.type} AND l.secId=lt.id AND lt.fir_index=f.id
         <if test="entity!=null and entity.id!=null and entity.id!=0">
             and l.id=#{entity.id}
+        </if>
+        <if test="entity!=null and entity.wh!=null and entity.wh!=''">
+            and l.wh=#{entity.wh}
+        </if>
+        <if test="entity!=null and entity.ageStart!=null and entity.ageStart!=0">
+            and (lr.age_start &gt;=#{entity.ageStart} or lr.age_start is NUll )
+        </if>
+        <if test="entity!=null and entity.ageEnd!=null and entity.ageEnd!=0">
+            and (lr.age_end &lt;=#{entity.ageEnd} or lr.age_end is NUll)
+        </if>
+        <if test="entity!=null and entity.belongOrgan!=null and entity.belongOrgan!=0">
+            and l.organ_id=#{entity.belongOrgan}
+        </if>
+        <if test="entity!=null and entity.firType!=null and entity.firType!=0">
+            and lt.fir_index=#{entity.firType}
+        </if>
+        <if test="entity!=null and entity.secType!=null and entity.secType!=0">
+            and l.secId=#{entity.secType}
         </if>
         <if test="entity!=null and entity.organId!=null and entity.organId!=0">
             and (
@@ -85,6 +108,83 @@
             WHERE o.id=#{entity.organId}
             )
             )
+        </if>
+        <if test="entity!=null and entity.sex!=null and entity.sex!=0">
+            and lr.sex=#{entity.sex}
+        </if>
+        <if test="entity!=null and entity.isHealth!=null and entity.isHealth.length > 0">
+            and (
+            <foreach collection="entity.isHealth" index="index" item="item" open="(" separator="and" close=")">
+                lr.is_healths  LIKE  concat('%',${item},'%')
+            </foreach>
+            )
+        </if>
+        <if test="entity!=null and entity.family!=null and entity.family.length > 0">
+            and (
+            <foreach collection="entity.family" index="index" item="item" open="(" separator="and" close=")">
+                lr.families  LIKE  concat('%',${item},'%')
+            </foreach>
+            )
+        </if>
+        <if test="entity!=null and entity.intelligence!=null and entity.intelligence.length > 0">
+            and (
+            <foreach collection="entity.intelligence" index="index" item="item" open="(" separator="and" close=")">
+                lr.intelligences  LIKE  concat('%',${item},'%')
+            </foreach>
+            )
+        </if>
+        <if test="entity!=null and entity.eyesight!=null and entity.eyesight.length > 0">
+            and (
+            <foreach collection="entity.eyesight" index="index" item="item" open="(" separator="and" close=")">
+                lr.eyesights  LIKE  concat('%',${item},'%')
+            </foreach>
+            )
+        </if>
+        <if test="entity!=null and entity.economic!=null and entity.economic.length > 0">
+            and (
+            <foreach collection="entity.economic" index="index" item="item" open="(" separator="and" close=")">
+                lr.economics  LIKE  concat('%',${item},'%')
+            </foreach>
+            )
+        </if>
+        <if test="entity!=null and entity.censusArray!=null and entity.censusArray.length > 0">
+            and (
+            <foreach collection="entity.censusArray" index="index" item="item" open="(" separator="and" close=")">
+                lr.censuses  LIKE  concat('%',${item},'%')
+            </foreach>
+            )
+        </if>
+        <if test="entity!=null and entity.oldStatusArray!=null and entity.oldStatusArray.length > 0">
+            and (
+            <foreach collection="entity.oldStatusArray" index="index" item="item" open="(" separator="and" close=")">
+                lr.old_statuses  LIKE  concat('%',${item},'%')
+            </foreach>
+            )
+        </if>
+        <if test="entity!=null and entity.politicalStatusArray!=null and entity.politicalStatusArray.length > 0">
+            and (
+            <foreach collection="entity.politicalStatusArray" index="index" item="item" open="(" separator="and" close=")">
+                lr.political_statuses  LIKE  concat('%',${item},'%')
+            </foreach>
+            )
+        </if>
+        <if test="entity!=null and entity.jw!=null and entity.jw.length > 0">
+            and (
+            <foreach collection="entity.jw" index="index" item="item" open="(" separator="and" close=")">
+                lr.jw_ids  LIKE  concat('%',${item},'%')
+            </foreach>
+            )
+        </if>
+        <if test="entity!=null and entity.district!=null and entity.district.length > 0">
+            and (
+            <foreach collection="entity.district" index="index" item="item" open="(" separator="and" close=")">
+                lr.district_ids  LIKE  concat('%',${item},'%')
+            </foreach>
+            )
+        </if>
+        <if test="entity!=null and entity.search!=null and entity.search!=''">
+            and (l.name LIKE  concat('%',#{entity.search},'%') or l.rule LIKE  concat('%',#{entity.search},'%')
+            or l.content LIKE  concat('%',#{entity.search},'%'))
         </if>
         <if test="sortType!=null and sortType!=''">
             ORDER BY ${sortType}
@@ -100,10 +200,32 @@
 
     <select id="getSizeByPage" parameterType="com.organOld.dao.util.Page" resultType="java.lang.Long">
         SELECT count(1)
-        FROM label l
-        WHERE type=#{entity.type}
+        FROM label l LEFT JOIN organ o on o.id=l.organ_id left JOIN label_rule lr on lr.label_id=l.id
+        <if test="entity!=null and entity.organId!=null and entity.organId!=0">
+            left join label_feedback lf on lf.label_id=l.id and lf.organ_id=#{entity.organId}
+        </if>
+        ,label_type lt,auto_value f
+        WHERE l.type=#{entity.type} AND l.secId=lt.id AND lt.fir_index=f.id
         <if test="entity!=null and entity.id!=null and entity.id!=0">
-            and id=#{entity.id}
+            and l.id=#{entity.id}
+        </if>
+        <if test="entity!=null and entity.wh!=null and entity.wh!=''">
+            and l.wh=#{entity.wh}
+        </if>
+        <if test="entity!=null and entity.ageStart!=null and entity.ageStart!=0">
+            and (lr.age_start &gt;=#{entity.ageStart} or lr.age_start is NUll )
+        </if>
+        <if test="entity!=null and entity.ageEnd!=null and entity.ageEnd!=0">
+            and (lr.age_end &lt;=#{entity.ageEnd} or lr.age_end is NUll)
+        </if>
+        <if test="entity!=null and entity.belongOrgan!=null and entity.belongOrgan!=0">
+            and l.organ_id=#{entity.belongOrgan}
+        </if>
+        <if test="entity!=null and entity.firType!=null and entity.firType!=0">
+            and lt.fir_index=#{entity.firType}
+        </if>
+        <if test="entity!=null and entity.secType!=null and entity.secType!=0">
+            and l.secId=#{entity.secType}
         </if>
         <if test="entity!=null and entity.organId!=null and entity.organId!=0">
             and (
@@ -120,6 +242,83 @@
             WHERE o.id=#{entity.organId}
             )
             )
+        </if>
+        <if test="entity!=null and entity.sex!=null and entity.sex!=0">
+            and lr.sex=#{entity.sex}
+        </if>
+        <if test="entity!=null and entity.isHealth!=null and entity.isHealth.length > 0">
+            and (
+            <foreach collection="entity.isHealth" index="index" item="item" open="(" separator="and" close=")">
+                lr.is_healths  LIKE  concat('%',${item},'%')
+            </foreach>
+            )
+        </if>
+        <if test="entity!=null and entity.family!=null and entity.family.length > 0">
+            and (
+            <foreach collection="entity.family" index="index" item="item" open="(" separator="and" close=")">
+                lr.families  LIKE  concat('%',${item},'%')
+            </foreach>
+            )
+        </if>
+        <if test="entity!=null and entity.intelligence!=null and entity.intelligence.length > 0">
+            and (
+            <foreach collection="entity.intelligence" index="index" item="item" open="(" separator="and" close=")">
+                lr.intelligences  LIKE  concat('%',${item},'%')
+            </foreach>
+            )
+        </if>
+        <if test="entity!=null and entity.eyesight!=null and entity.eyesight.length > 0">
+            and (
+            <foreach collection="entity.eyesight" index="index" item="item" open="(" separator="and" close=")">
+                lr.eyesights  LIKE  concat('%',${item},'%')
+            </foreach>
+            )
+        </if>
+        <if test="entity!=null and entity.economic!=null and entity.economic.length > 0">
+            and (
+            <foreach collection="entity.economic" index="index" item="item" open="(" separator="and" close=")">
+                lr.economics  LIKE  concat('%',${item},'%')
+            </foreach>
+            )
+        </if>
+        <if test="entity!=null and entity.censusArray!=null and entity.censusArray.length > 0">
+            and (
+            <foreach collection="entity.censusArray" index="index" item="item" open="(" separator="and" close=")">
+                lr.censuses  LIKE  concat('%',${item},'%')
+            </foreach>
+            )
+        </if>
+        <if test="entity!=null and entity.oldStatusArray!=null and entity.oldStatusArray.length > 0">
+            and (
+            <foreach collection="entity.oldStatusArray" index="index" item="item" open="(" separator="and" close=")">
+                lr.old_statuses  LIKE  concat('%',${item},'%')
+            </foreach>
+            )
+        </if>
+        <if test="entity!=null and entity.politicalStatusArray!=null and entity.politicalStatusArray.length > 0">
+            and (
+            <foreach collection="entity.politicalStatusArray" index="index" item="item" open="(" separator="and" close=")">
+                lr.political_statuses  LIKE  concat('%',${item},'%')
+            </foreach>
+            )
+        </if>
+        <if test="entity!=null and entity.jw!=null and entity.jw.length > 0">
+            and (
+            <foreach collection="entity.jw" index="index" item="item" open="(" separator="and" close=")">
+                lr.jw_ids  LIKE  concat('%',${item},'%')
+            </foreach>
+            )
+        </if>
+        <if test="entity!=null and entity.district!=null and entity.district.length > 0">
+            and (
+            <foreach collection="entity.district" index="index" item="item" open="(" separator="and" close=")">
+                lr.district_ids  LIKE  concat('%',${item},'%')
+            </foreach>
+            )
+        </if>
+        <if test="entity!=null and entity.search!=null and entity.search!=''">
+            and (l.name LIKE  concat('%',#{entity.search},'%') or l.rule LIKE  concat('%',#{entity.search},'%')
+            or l.content LIKE  concat('%',#{entity.search},'%'))
         </if>
     </select>
 

@@ -18,4 +18,5 @@ public class Wrappers {
     public static VolunteerWrapper volunteerWrapper=new VolunteerWrapper();
     public static LabelManWrapper labelManWrapper=new LabelManWrapper();
     public static RecordWrapper recordWrapper=new RecordWrapper();
+    public static MessageWrapper messageWrapper=new MessageWrapper();
 }

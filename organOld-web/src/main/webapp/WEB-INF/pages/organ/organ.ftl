@@ -9,6 +9,11 @@
 
     <link href="/css/style.min.css?v=4.0.0" rel="stylesheet">
     <link href="/static/css/common_table.css" rel="stylesheet">
+    <style>
+        .noBtn{
+            padding: 5px;
+        }
+    </style>
 </head>
 <body class="gray-bg">
 <div class="wrapper wrapper-content animated fadeInRight">

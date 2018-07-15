@@ -44,5 +44,5 @@ public interface OrganService {
 
     OrganAddModel getAddInfo(int firType);
 
-    Boolean checkHaveAuthByAuthType(int type);
+    Boolean checkHaveAuthByAuthType(int type, Integer organId);
 }

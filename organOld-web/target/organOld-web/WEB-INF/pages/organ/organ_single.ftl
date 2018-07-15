@@ -243,6 +243,14 @@ $("select[name='parent'] option").each(function () {
     }
 });
 </#if>
+
+    <#if look??>
+        $("input").prop("disabled",true);
+        $("select").prop("disabled",true);
+        $("textarea").prop("disabled",true);
+        $("button").hide();
+        $("input[type='file']").hide();
+    </#if>
 </script>
 
 <script src="/js/plugins/iCheck/icheck.min.js"></script>

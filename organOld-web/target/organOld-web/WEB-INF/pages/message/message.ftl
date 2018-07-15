@@ -10,6 +10,14 @@
     <link href="/css/style.min.css?v=4.0.0" rel="stylesheet">
     <link href="/static/css/common_table.css" rel="stylesheet">
     <link href="/static/css/oldman/base.css" rel="stylesheet">
+    <style>
+        .odd{
+            background-color: #f9f9f9!important;
+        }
+        .even{
+            background-color: #fff!important;
+        }
+    </style>
 </head>
 
 <body class="gray-bg">
@@ -41,22 +49,14 @@
                         <thead>
                         <tr>
                             <th><input type='checkbox' /></th>
-                            <th>来源</th>
+                            <th>序号</th>
                             <th>类型</th>
                             <th>消息</th>
+                            <th>针对的机构</th>
                             <th>时间</th>
-                            <th></th>
                         </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td><input type='checkbox' /></td>
-                                <td>市民信箱</td>
-                                <td>举报</td>
-                                <td>某机构服务态度不好</td>
-                                <td>2018-05-12</td>
-                                <th>处理</th>
-                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -66,12 +66,12 @@
 
 </div>
 
-<#--<script src="/js/plugins/jeditable/jquery.jeditable.js"></script>-->
+
 
 <script src="/js/content.min.js?v=1.0.0"></script>
-<script src="/static/js/volunteer/volunteer.js" ></script>
+<script src="/static/js/common.js"></script>
+<script src="/static/js/message/message.js" ></script>
 <script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
 
 </body>
-
 </html>

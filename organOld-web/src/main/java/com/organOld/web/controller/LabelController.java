@@ -77,10 +77,7 @@ public class LabelController {
                        @RequestParam(value = "eyesight_array[]",required = false) String eyesight[],
                        @RequestParam(value = "district_array[]",required = false) String district[],
                        @RequestParam(value = "jw_array[]",required = false) String jw[],
-                       @RequestParam(value = "oldStatus_array[]",required = false) String oldStatus[],
-                       @RequestParam(value = "belongOrgan_array[]",required = false) String belongOrgan[],
-                       @RequestParam(value = "fir_array[]",required = false) String fir[],
-                       @RequestParam(value = "sec_array[]",required = false) String sec[]){
+                       @RequestParam(value = "oldStatus_array[]",required = false) String oldStatus[]){
         labelRequest.setCensusArray(census);
         labelRequest.setFamily(family);
         labelRequest.setEconomic(economic);
@@ -91,9 +88,6 @@ public class LabelController {
         labelRequest.setJw(jw);
         labelRequest.setIsHealth(isHealth);
         labelRequest.setOldStatusArray(oldStatus);
-        labelRequest.setBelongOrgan(belongOrgan);
-        labelRequest.setFirType(fir);
-        labelRequest.setSecType(sec);
         return labelService.getByPage(labelRequest,bTableRequest);
     }
 

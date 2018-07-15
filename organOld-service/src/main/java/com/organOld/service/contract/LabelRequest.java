@@ -9,16 +9,16 @@ public class LabelRequest {
     private int type;
     private String[] censusArray;//户籍
     private String[] district;//片区索引
-    private String ageStart;//年龄段-起
-    private String ageEnd;//年龄段-止
+    private Integer ageStart;//年龄段-起
+    private Integer ageEnd;//年龄段-止
     private String search;//模糊全文 匹配搜索  姓名、身份证、地址、电话
     private String[] jw;//居委索引
     private Integer sex;//1女 2男
     private Integer isKey;
     private String wh;
-    private String[] belongOrgan;
-    private String[] firType;
-    private String[] secType;
+    private Integer belongOrgan;
+    private Integer firType;
+    private Integer secType;
     private String[] politicalStatusArray;//政治面貌
     private String[] family;
     private String[] economic;
@@ -47,19 +47,19 @@ public class LabelRequest {
         this.district = district;
     }
 
-    public String getAgeStart() {
+    public Integer getAgeStart() {
         return ageStart;
     }
 
-    public void setAgeStart(String ageStart) {
+    public void setAgeStart(Integer ageStart) {
         this.ageStart = ageStart;
     }
 
-    public String getAgeEnd() {
+    public Integer getAgeEnd() {
         return ageEnd;
     }
 
-    public void setAgeEnd(String ageEnd) {
+    public void setAgeEnd(Integer ageEnd) {
         this.ageEnd = ageEnd;
     }
 
@@ -103,27 +103,27 @@ public class LabelRequest {
         this.wh = wh;
     }
 
-    public String[] getBelongOrgan() {
+    public Integer getBelongOrgan() {
         return belongOrgan;
     }
 
-    public void setBelongOrgan(String[] belongOrgan) {
+    public void setBelongOrgan(Integer belongOrgan) {
         this.belongOrgan = belongOrgan;
     }
 
-    public String[] getFirType() {
+    public Integer getFirType() {
         return firType;
     }
 
-    public void setFirType(String[] firType) {
+    public void setFirType(Integer firType) {
         this.firType = firType;
     }
 
-    public String[] getSecType() {
+    public Integer getSecType() {
         return secType;
     }
 
-    public void setSecType(String[] secType) {
+    public void setSecType(Integer secType) {
         this.secType = secType;
     }
 

@@ -136,10 +136,12 @@ public class OrganController {
      * @return
      */
     @RequestMapping(value = "/{organId}/info",method = RequestMethod.GET)
-    public ModelAndView oldman(@PathVariable int organId){
+    public ModelAndView oldman(@PathVariable int organId,@RequestParam(required = false)String look){
         ModelAndView mv=new ModelAndView("organ/organ_single");
         OrganModel organModel=organService.getById(organId);
         mv.addObject("organ",organModel);
+        if(look!=null && !look.equals(""))
+            mv.addObject("look",look);
         return mv;
     }
 

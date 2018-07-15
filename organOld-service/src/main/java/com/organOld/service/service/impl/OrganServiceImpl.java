@@ -490,8 +490,13 @@ public class OrganServiceImpl implements OrganService{
 
 
     @Override
-    public Boolean checkHaveAuthByAuthType(int type) {
-        Integer organId=commonService.getIdBySession();
+    public Boolean checkHaveAuthByAuthType(int type, Integer organId) {
+        if(organId==null || organId==0){
+            organId=commonService.getIdBySession();
+        }
+        if(organId==null || organId==0){
+            return true;
+        }
         Organ organ=organDao.getAuthById(organId);
         switch (type){
             case 1:if(organ.getAuthConsume()==1) return true;break;

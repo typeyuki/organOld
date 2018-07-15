@@ -2,10 +2,8 @@ package com.organOld.service.service;
 
 import com.alibaba.fastjson.JSONObject;
 
-import com.organOld.dao.entity.AutoValue;
 import com.organOld.dao.entity.DBInterface;
 import com.organOld.dao.entity.Message;
-import com.organOld.dao.entity.label.LabelRule;
 import com.organOld.dao.repository.MessageDao;
 import com.organOld.dao.repository.OldmanDao;
 import com.organOld.dao.repository.UserDao;
@@ -19,7 +17,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import javax.servlet.http.HttpSession;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -66,6 +63,9 @@ public class CommonService {
                     case 11:
                         return "time";
                 }
+                return "id";
+            case "message":
+                return "init";
              default:
                  return "id";
         }
@@ -132,6 +132,7 @@ public class CommonService {
                 break;
             case "organ_reg":
                 typeList.add(AutoValueEnum.PQ.getIndex());
+                break;
             default:
         }
         return typeList;
@@ -140,11 +141,7 @@ public class CommonService {
 
     public Integer getIdBySession() {
         try {
-            UserDetails userDetails=(UserDetails) SecurityContextHolder.getContext()
-                    .getAuthentication()
-                    .getPrincipal();
-            String username=userDetails.getUsername();
-            Integer organId= userDao.getOrganIdByUsername(username);
+            Integer organId= userDao.getOrganIdByUsername(getUserNameBySession());
             return organId;
         }catch (Exception e){
             return 0;
@@ -226,6 +223,18 @@ public class CommonService {
 
     public Integer checkOldmanExiest(String pid) {
         return oldmanDao.getIdByPid(pid);
+    }
+
+    public String getUserNameBySession() {
+        try {
+            UserDetails userDetails=(UserDetails) SecurityContextHolder.getContext()
+                    .getAuthentication()
+                    .getPrincipal();
+            String username=userDetails.getUsername();
+            return username;
+        }catch (Exception e){
+            return "";
+        }
     }
 }
 

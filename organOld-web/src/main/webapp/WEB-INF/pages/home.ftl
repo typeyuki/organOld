@@ -69,7 +69,7 @@
                             <a class="J_menuItem" href="${menu.url}">
                                 <i class="fa ${menu.icon}"></i>
                                 <span class="nav-label">${menu.name}</span>
-                                <span class="label label-warning pull-right">16</span>
+                                <span class="label label-warning pull-right">${messageNum!0}</span>
                             </a>
                             </#if>
                         <#if (menu.children)??  && (menu.children)?size gt 0>
@@ -110,7 +110,7 @@
                 <ul class="nav navbar-top-links navbar-right">
                     <li class="dropdown">
                         <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
-                            <i class="fa fa-envelope"></i> <span class="label label-warning">16</span>
+                            <i class="fa fa-envelope"></i> <span class="label label-warning">${messageNum!0}</span>
                         </a>
                         <ul class="dropdown-menu dropdown-messages">
                             <li class="m-t-xs">

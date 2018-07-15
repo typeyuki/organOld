@@ -166,20 +166,22 @@
                                     </select>
 
                                 </div>
+                            </div>
+                            <div class="row">
                                 <div class="col-sm-3">
                                     <label> 所属机构：</label>
-                                    <select  name="belongOrgan" class="selectpicker bla bla bli" multiple data-live-search="true">
+                                    <select  name="belongOrgan" >
+                                        <option></option>
                                         <#list rule.belongOrgan as organ>
                                             <option value="${organ.id!}"> ${organ.name!}</option>
                                         </#list>
                                     </select>
                                 </div>
-                            </div>
-                            <div class="row">
                                 <div class="col-sm-3">
 
                                     <label >一级标签：</label>
-                                    <select name="fir" class="selectpicker bla bla bli" multiple data-live-search="true">
+                                    <select name="fir">
+                                        <option></option>
                                         <#list rule.firLabel as list>
                                             <option  value="${list.id!}" > ${list.value!}</option>
                                         </#list>
@@ -187,7 +189,8 @@
                                 </div>
                                 <div class="col-sm-3">
                                     <label >二级标签：</label>
-                                    <select  name="sec" class="selectpicker bla bla bli" multiple data-live-search="true">
+                                    <select  name="sec">
+                                        <option></option>
                                         <#list rule.secLabel as list>
                                             <option value="${list.id!}"> ${list.secName!}</option>
                                         </#list>
@@ -207,7 +210,8 @@
                                 <div class="row">
                                     <div class="col-sm-3">
                                         <label> 所属机构：</label>
-                                        <select  name="belongOrgan" class="selectpicker bla bla bli" multiple data-live-search="true">
+                                        <select  name="belongOrgan" >
+                                            <option></option>
                                             <#list rule.belongOrgan as organ>
                                                 <option value="${organ.id!}"> ${organ.name!}</option>
                                             </#list>
@@ -216,7 +220,8 @@
                                     <div class="col-sm-3">
 
                                         <label >一级标签：</label>
-                                        <select name="fir" class="selectpicker bla bla bli" multiple data-live-search="true">
+                                        <select name="fir">
+                                            <option></option>
                                             <#list rule.firLabel as list>
                                                 <option  value="${list.id!}" > ${list.value!}</option>
                                             </#list>
@@ -224,7 +229,8 @@
                                     </div>
                                     <div class="col-sm-3">
                                         <label >二级标签：</label>
-                                        <select  name="sec" class="selectpicker bla bla bli" multiple data-live-search="true">
+                                        <select  name="sec">
+                                            <option></option>
                                             <#list rule.secLabel as list>
                                                 <option value="${list.id!}"> ${list.secName!}</option>
                                             </#list>

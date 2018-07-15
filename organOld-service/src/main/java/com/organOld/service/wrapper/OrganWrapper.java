@@ -23,13 +23,17 @@ public class OrganWrapper implements Wrapper<Organ,OrganModel,OrganRequest> {
         BeanUtils.copyProperties(organ,organModel);
         if(organ.getTime()!=null)
         organModel.setTime(Tool.dateToString(organ.getTime(), TimeConstant.DATA_FORMAT_YMD));
+
+        Organ o=new Organ();
         if(organ.getStatus()!=null && organ.getStatus().equals("3")){
             organModel.setStatusDesc("审核不通过");
+            o.setStatus(organ.getStatus());
         }
         if(organ.getStatus()!=null && organ.getStatus().equals("4")){
             organModel.setStatusDesc("被撤销");
+            o.setStatus(organ.getStatus());
         }
-        Organ o=new Organ();
+
         o.setId(organ.getId());
         o.setAuthQueryIntegral(organ.getAuthQueryIntegral());
         o.setAuthQueryInfo(organ.getAuthQueryInfo());

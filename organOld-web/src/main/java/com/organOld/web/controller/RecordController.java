@@ -33,11 +33,8 @@ public class RecordController {
     @RequestMapping(value = "/{type}",method = RequestMethod.GET)
     public ModelAndView index(@RequestParam(required = false) Integer organId, @PathVariable int type){
         ModelAndView mv;
-        Boolean result=true;
-        if(organId==null || organId==0){
-            //机构账号登陆的
-            result=organService.checkHaveAuthByAuthType(type);
-        }
+        Boolean result=organService.checkHaveAuthByAuthType(type,organId);
+
         if(result) {
             mv = new ModelAndView("record/record");
             mv.addObject("organId", organId);
