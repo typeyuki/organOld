@@ -3,6 +3,7 @@ package com.organOld.web.controller;
 import com.organOld.dao.entity.label.Label;
 import com.organOld.dao.entity.label.LabelFeedback;
 import com.organOld.service.contract.*;
+import com.organOld.service.service.AutoValueService;
 import com.organOld.service.service.LabelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,6 +23,8 @@ public class LabelController {
 
     @Autowired
     LabelService labelService;
+    @Autowired
+    AutoValueService autoValueService;
 
     /**
      * 人员绑定标签
@@ -31,7 +34,15 @@ public class LabelController {
     public ModelAndView index_bind(){
         ModelAndView mv=new ModelAndView("oldman/label/label_three");
         mv.addObject("type","1");//标志 是人员绑定
+        mv.addObject("rule",labelService.getFilterLabelRule(1));
         return mv;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/{firType}/getSecLabel",method = RequestMethod.GET)
+    public Result getSecLabel(@PathVariable int firType){
+        Result result=labelService.getSecLabelByFirType(firType);
+        return result;
     }
 
     /**
@@ -42,6 +53,7 @@ public class LabelController {
     public ModelAndView index_rule(){
         ModelAndView mv=new ModelAndView("oldman/label/label_three");
         mv.addObject("type","2");//标志 是规则制定
+        mv.addObject("rule",labelService.getFilterLabelRule(2));
         return mv;
     }
 
@@ -55,8 +67,34 @@ public class LabelController {
      */
     @ResponseBody
     @RequestMapping(value = "/data",method = RequestMethod.POST)
-    public String data(BTableRequest bTableRequest, LabelRequest labelRequest, HttpSession session){
-        return labelService.getByPage(labelRequest,bTableRequest,session);
+    public String data(BTableRequest bTableRequest, LabelRequest labelRequest,
+                       @RequestParam(value = "census_array[]",required = false) String census[],
+                       @RequestParam(value = "family_array[]",required = false) String family[],
+                       @RequestParam(value = "economic_array[]",required = false) String economic[],
+                       @RequestParam(value = "politicalStatus_array[]",required = false) String politicalStatus[],
+                       @RequestParam(value = "isHealth_array[]",required = false) String isHealth[],
+                       @RequestParam(value = "intelligence_array[]",required = false) String intelligence[],
+                       @RequestParam(value = "eyesight_array[]",required = false) String eyesight[],
+                       @RequestParam(value = "district_array[]",required = false) String district[],
+                       @RequestParam(value = "jw_array[]",required = false) String jw[],
+                       @RequestParam(value = "oldStatus_array[]",required = false) String oldStatus[],
+                       @RequestParam(value = "belongOrgan_array[]",required = false) String belongOrgan[],
+                       @RequestParam(value = "fir_array[]",required = false) String fir[],
+                       @RequestParam(value = "sec_array[]",required = false) String sec[]){
+        labelRequest.setCensusArray(census);
+        labelRequest.setFamily(family);
+        labelRequest.setEconomic(economic);
+        labelRequest.setPoliticalStatusArray(politicalStatus);
+        labelRequest.setIntelligence(intelligence);
+        labelRequest.setEyesight(eyesight);
+        labelRequest.setDistrict(district);
+        labelRequest.setJw(jw);
+        labelRequest.setIsHealth(isHealth);
+        labelRequest.setOldStatusArray(oldStatus);
+        labelRequest.setBelongOrgan(belongOrgan);
+        labelRequest.setFirType(fir);
+        labelRequest.setSecType(sec);
+        return labelService.getByPage(labelRequest,bTableRequest);
     }
 
     /**

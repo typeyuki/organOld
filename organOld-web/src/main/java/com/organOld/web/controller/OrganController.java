@@ -2,9 +2,11 @@ package com.organOld.web.controller;
 
 import com.organOld.dao.entity.AutoValue;
 import com.organOld.dao.entity.organ.OrganReg;
+import com.organOld.dao.entity.organ.OrganType;
 import com.organOld.service.contract.*;
 import com.organOld.service.enumModel.AutoValueEnum;
 import com.organOld.service.enumModel.HomeEnum;
+import com.organOld.service.model.OrganAddModel;
 import com.organOld.service.model.OrganModel;
 import com.organOld.service.service.AutoValueService;
 import com.organOld.service.service.CommonService;
@@ -127,6 +129,33 @@ public class OrganController {
         return organService.getManByPage(bTableRequest,organOldmanManRequest);
     }
 
+
+    /**
+     * 机构查看
+     * @param organId
+     * @return
+     */
+    @RequestMapping(value = "/{organId}/info",method = RequestMethod.GET)
+    public ModelAndView oldman(@PathVariable int organId){
+        ModelAndView mv=new ModelAndView("organ/organ_single");
+        OrganModel organModel=organService.getById(organId);
+        mv.addObject("organ",organModel);
+        return mv;
+    }
+
+    /**
+     * 机构添加
+     * @param firType
+     * @return
+     */
+    @RequestMapping(value = "/{firType}/add",method = RequestMethod.GET)
+    public ModelAndView add(@PathVariable int firType){
+        ModelAndView mv=new ModelAndView("organ/organ_single");
+        OrganAddModel organAddModel=organService.getAddInfo(firType);
+        mv.addObject("organ",organAddModel);
+        return mv;
+    }
+
     /**
      * 机构账号登陆  管理
      * @return
@@ -136,8 +165,6 @@ public class OrganController {
         ModelAndView mv=new ModelAndView("organ/organ_single");
         OrganModel organModel=organService.getBySession(httpSession);
         mv.addObject("organ",organModel);
-        List<AutoValue> districtList=autoValueService.getByType(AutoValueEnum.PQ.getIndex());
-        mv.addObject("districts",districtList);
         return mv;
     }
 
@@ -187,10 +214,21 @@ public class OrganController {
     }
 
     /**
+     * 第三方机构 撤销
+     * @param organId
+     * @return
+     */
+    @RequestMapping(value = "/{organId}/cancel",method = RequestMethod.GET)
+    public ModelAndView cancel(@PathVariable int organId){
+        ModelAndView mv=new ModelAndView("redirect:/organ/3?status=2");
+        organService.cancel(organId);
+        return mv;
+    }
+
+    /**
      * 机构注册
      * @return
      */
-    @ResponseBody
     @RequestMapping(value = "/reg",method = RequestMethod.POST)
     public ModelAndView reg(OrganRegRequest organRegRequest, HttpServletRequest request){
         ModelAndView mv=new ModelAndView("organ/reg_return");
@@ -198,6 +236,21 @@ public class OrganController {
         mv.addObject("result",result);
         return mv;
     }
+
+    /**
+     * 机构添加或修改
+     * @param type add 添加 update 更新
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/{type}",method = RequestMethod.POST)
+    public ModelAndView organ(OrganRegRequest organRegRequest, HttpServletRequest request,@PathVariable String type){
+        ModelAndView mv;
+        Integer organId=organService.addOrUpdate(organRegRequest,request,type);
+        mv=new ModelAndView("redirect:/organ/"+organId+"/info");
+        return mv;
+    }
+
 
     /**
      * 机构注册页面

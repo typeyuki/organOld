@@ -14,13 +14,25 @@ public class OldmanModel extends ManModel{
     private String xName;//小区名称
     private String jName;//居委名称
     private String dName;//片区名称
+    private String oldStatus;
 
     private List<LabelManInfoModel> labelManInfoModelList;
 
 
+    public String getOldStatus() {
+        return oldStatus;
+    }
+
+    public void setOldStatus(String oldStatus) {
+        this.oldStatus = oldStatus;
+    }
+
     public List<LabelManInfoModel> getLabelManInfoModelList() {
         return labelManInfoModelList;
     }
+
+
+
 
     public void setLabelManInfoModelList(List<LabelManInfoModel> labelManInfoModelList) {
         this.labelManInfoModelList = labelManInfoModelList;

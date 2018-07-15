@@ -26,6 +26,11 @@ public class Label extends DBEntity implements DBInterface{
     private Integer isFeedback;//针对某居委会 是否反馈
 
 
+
+
+
+
+
     public Integer getIsFeedback() {
         return isFeedback;
     }

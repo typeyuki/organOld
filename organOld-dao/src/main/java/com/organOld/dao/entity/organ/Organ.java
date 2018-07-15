@@ -26,6 +26,7 @@ public class Organ extends DBEntity {
     private String districtId;//所属片区 如果有的话
     private String districtName;//所属片区名称 如果有的话
     private String status;
+    private Integer parent;
 
     private Integer authConsume;
     private Integer authProduct;
@@ -41,6 +42,13 @@ public class Organ extends DBEntity {
     private String search;//模糊搜索
     private Integer oldmanId;
 
+    public Integer getParent() {
+        return parent;
+    }
+
+    public void setParent(Integer parent) {
+        this.parent = parent;
+    }
 
     public Integer getAuthQueryInfo() {
         return authQueryInfo;

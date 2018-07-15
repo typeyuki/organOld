@@ -53,7 +53,7 @@ $(document).ready(function(){
             "targets": [8], // 目标列位置，下标从0开始
             "data": "oldmanId", // 数据列名
             "render": function(data, type, full) { // 返回自定义内容
-                return "<span class='look' id='"+data+"'>查看</span>";
+                return "<button class='btn btn-primary' id='"+data+"' onclick=newPage("+data+",$(this).parent().prev().prev().prev().prev().prev().prev().prev().text(),'/oldman/"+data+"/info')>查看</button>";
             }
         },
         //不进行排序的列
@@ -139,7 +139,7 @@ function look(organId,obj,url) {
     ) {
         var s='<a href="javascript:;" class="active J_menuTab" data-id="'+t+'">'+i+' <i class="fa fa-times-circle"></i></a>';
         jq(".J_menuTab").removeClass("active");
-        var r='<iframe class="J_iframe" name="iframe'+a+'" width="100%" height="100%" src="'+t+'?v=4.0" frameborder="0" data-id="'+t+'" seamless></iframe>';
+        var r='<iframe class="J_iframe" name="iframe'+a+'" width="100%" height="100%" src="'+t+'" frameborder="0" data-id="'+t+'" seamless></iframe>';
         jq(".J_mainContent").find("iframe.J_iframe").hide().parents(".J_mainContent").append(r);
         jq(".J_mainContent iframe:visible").load(function(){layer.close(o)});
         jq(".J_menuTabs .page-tabs-content").append(s);

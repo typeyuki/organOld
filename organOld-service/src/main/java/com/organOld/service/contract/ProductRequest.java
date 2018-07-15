@@ -1,13 +1,13 @@
 package com.organOld.service.contract;
 
 public class ProductRequest {
-    private int organId;
+    private Integer organId;
 
-    public int getOrganId() {
+    public Integer getOrganId() {
         return organId;
     }
 
-    public void setOrganId(int organId) {
+    public void setOrganId(Integer organId) {
         this.organId = organId;
     }
 }

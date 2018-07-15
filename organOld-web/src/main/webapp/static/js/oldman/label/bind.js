@@ -75,9 +75,9 @@ $(document).ready(function(){
                 "data": "isImplement", // 数据列名
                 "render": function(data, type, full) { // 返回自定义内容
                     if(data==0){
-                        return "<span class='look'>查看</span><button class='btn btn-primary' onclick='implement($(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().text(),this)'>落实</button>";
+                        return "<span class='btn btn-primary'>查看</span><button class='btn btn-primary' onclick='implement($(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().text(),this)'>落实</button>";
                     }else{
-                        return "<span class='look' >查看</span><button class='btn'>已落实</button>";
+                        return "<span class='btn btn-primary' >查看</span><button class='btn'>已落实</button>";
                     }
                 }
             },
@@ -137,9 +137,9 @@ $(document).ready(function(){
                 "data": "isImplement", // 数据列名
                 "render": function(data, type, full) { // 返回自定义内容
                     if(data==0){
-                        return "<span class='look'>查看</span><button class='btn btn-primary' onclick='implement($(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().text(),this)'>落实</button>";
+                        return "<span class='btn btn-primary'>查看</span><button class='btn btn-primary' onclick='implement($(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().text(),this)'>落实</button>";
                     }else{
-                        return "<span class='look' >查看</span><button class='btn'>已落实</button>";
+                        return "<span class='btn btn-primary' >查看</span><button class='btn'>已落实</button>";
                     }
                 }
             },
@@ -152,7 +152,7 @@ $(document).ready(function(){
             "sPaginationType": "full_numbers",
             "bPaginite": true,
             "bInfo": true,
-            "bSort": true,
+            "bSort":false,
             "bFilter": false, //搜索栏
             "bStateSave": true,
             "bProcessing": true, //加载数据时显示正在加载信息
@@ -260,7 +260,7 @@ $(document).ready(function(){
                         "targets": [11], // 目标列位置，下标从0开始
                         "data": "id", // 数据列名
                         "render": function(data, type, full) { // 返回自定义内容
-                            return "<span class='look' id='"+data+"'>查看</span>";
+                            return "<span class='btn btn-primary' id='"+data+"'>查看</span>";
                         }
                     },
                     //不进行排序的列

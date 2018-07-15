@@ -15,14 +15,14 @@ public class OldmanRequest {
     private String[] isHealth;
     private String[] intelligence;
     private String[] eyesight;
-    private String[] oldStatus;
+    private String[] oldStatusArray;
 
-    public String[] getOldStatus() {
-        return oldStatus;
+    public String[] getOldStatusArray() {
+        return oldStatusArray;
     }
 
-    public void setOldStatus(String[] oldStatus) {
-        this.oldStatus = oldStatus;
+    public void setOldStatusArray(String[] oldStatusArray) {
+        this.oldStatusArray = oldStatusArray;
     }
 
     public String[] getIsHealth() {

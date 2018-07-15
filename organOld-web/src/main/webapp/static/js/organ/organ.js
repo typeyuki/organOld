@@ -27,7 +27,7 @@ $(document).ready(function(){
             data:"phone"
         },{
             data:"districtName"
-        },{
+        },{},{
             data:"time"
         }
         ];
@@ -40,16 +40,43 @@ $(document).ready(function(){
                     return"<input type='checkbox' />"
                 }
             },
+            {
+                "targets": [12], // 目标列位置，下标从0开始
+                "data": "organ", // 数据列名
+                "render": function(data, type, full) { // 返回自定义内容
+                    var btn="";
+                    if(data.authConsume==1){
+                        btn+="<span class='btn btn-primary' onclick=>消费记录</span>";
+                    }
+                    if(data.authProduct==1){
+                        btn+="<span class='btn btn-primary' onclick=>商品列表</span>";
+                    }
+                    if(data.authProduct==1){
+                        btn+="<span class='btn btn-primary' onclick=>商品预定记录</span>";
+                    }
+                    if(data.authSign==1){
+                        btn+="<span class='btn btn-primary' onclick=>签到记录</span>";
+                    }
+                    if(data.authQueryInfo==1){
+                        btn+="<span class='btn btn-primary' onclick=>老人信息查询记录</span>";
+                    }
+                    if(data.authQueryIntegral==1){
+                        btn+="<span class='btn btn-primary' onclick=>老人积分查询记录</span>";
+                    }
+                    return btn;
+                }
+            },
             // 增加一列，包括删除和修改，同时将我们需要传递的数据传递到链接中
             {
-                "targets": [13], // 目标列位置，下标从0开始
+                "targets": [14], // 目标列位置，下标从0开始
                 "data": "id", // 数据列名
                 "render": function(data, type, full) { // 返回自定义内容
-                    return "<span onclick=newPage("+data+",$(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().text(),'/organ/oldman/"+data+"/man') class='look' id='"+data+"'>人员</span><span class='look' id='"+data+"'>查看</span><span class='mod' id='"+data+"'>修改</span>";
+                    return "<span class='btn btn-primary' onclick=newPage("+data+",$(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().text(),'/organ/oldman/"+data+"/man')>人员</span>" +
+                        "<span class='btn btn-primary' onclick=newPage("+data+",$(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().text(),'/organ/"+data+"/info')>查看</span>";
                 }
             },
             //不进行排序的列
-            { "bSortable": false, "aTargets": [ 0,2 ,3, 4, 5,6,7,8,9,10,11,12,13] }
+            { "bSortable": false, "aTargets": [ 0,2 ,3, 4, 5,6,7,8,9,10,11,12,13,14] }
         ]
     }else if(firType==1){
         columns=[{},{
@@ -68,7 +95,7 @@ $(document).ready(function(){
             data:"phone"
         },{
             data:"districtName"
-        },{
+        },{},{
             data:"time"
         }
         ];
@@ -81,16 +108,43 @@ $(document).ready(function(){
                     return"<input type='checkbox' />"
                 }
             },
+            {
+                "targets": [9], // 目标列位置，下标从0开始
+                "data": "organ", // 数据列名
+                "render": function(data, type, full) { // 返回自定义内容
+                    var btn="";
+                    if(data.authConsume==1){
+                        btn+="<span class='btn btn-primary' onclick=>消费记录</span>";
+                    }
+                    if(data.authProduct==1){
+                        btn+="<span class='btn btn-primary' onclick=>商品列表</span>";
+                    }
+                    if(data.authProduct==1){
+                        btn+="<span class='btn btn-primary' onclick=>商品预定记录</span>";
+                    }
+                    if(data.authSign==1){
+                        btn+="<span class='btn btn-primary' onclick=>签到记录</span>";
+                    }
+                    if(data.authQueryInfo==1){
+                        btn+="<span class='btn btn-primary' onclick=>老人信息查询记录</span>";
+                    }
+                    if(data.authQueryIntegral==1){
+                        btn+="<span class='btn btn-primary' onclick=>老人积分查询记录</span>";
+                    }
+                    return btn;
+                }
+            },
             // 增加一列，包括删除和修改，同时将我们需要传递的数据传递到链接中
             {
-                "targets": [10], // 目标列位置，下标从0开始
+                "targets": [11], // 目标列位置，下标从0开始
                 "data": "id", // 数据列名
                 "render": function(data, type, full) { // 返回自定义内容
-                    return "<span class='look' id='"+data+"'>查看</span><span class='mod' id='"+data+"'>修改</span>";
+                    return "<span class='btn btn-primary' onclick=newPage("+data+",$(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().text(),'/organ/oldman/"+data+"/man')>人员</span>" +
+                        "<span class='btn btn-primary' onclick=newPage("+data+",$(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().text(),'/organ/"+data+"/info')>查看</span>";
                 }
             },
             //不进行排序的列
-            { "bSortable": false, "aTargets": [ 0,2 ,3, 4,5,6,7,8,9,10] }
+            { "bSortable": false, "aTargets": [ 0,2 ,3, 4,5,6,7,8,9,11] }
         ]
     }else if(firType==3 && status=="2"){
         columns=[{},{
@@ -111,7 +165,7 @@ $(document).ready(function(){
             data:"phone"
         },{
             data:"districtName"
-        },{
+        },{},{
             data:"time"
         }
         ];
@@ -124,18 +178,45 @@ $(document).ready(function(){
                     return"<input type='checkbox' />"
                 }
             },
+            {
+                "targets": [10], // 目标列位置，下标从0开始
+                "data": "organ", // 数据列名
+                "render": function(data, type, full) { // 返回自定义内容
+                    var btn="";
+                    if(data.authConsume==1){
+                        btn+="<span class='btn btn-primary' onclick=newPage("+data.id+",$(this).parent().prev().prev().prev().prev().prev().prev().prev().text(),'/record/1?organId="+data.id+"')>消费记录</span>";
+                    }
+                    if(data.authProduct==1){
+                        btn+="<span class='btn btn-primary' onclick=newPage("+data.id+",$(this).parent().prev().prev().prev().prev().prev().prev().prev().text(),'/product?organId="+data.id+"')>商品列表</span>";
+                    }
+                    if(data.authProduct==1){
+                        btn+="<span class='btn btn-primary' onclick=newPage("+data.id+",$(this).parent().prev().prev().prev().prev().prev().prev().prev().text(),'/product/book?organId="+data.id+"')>商品预定记录</span>";
+                    }
+                    if(data.authSign==1){
+                        btn+="<span class='btn btn-primary' onclick=newPage("+data.id+",$(this).parent().prev().prev().prev().prev().prev().prev().prev().text(),'/record/2?organId="+data.id+"')>签到记录</span>";
+                    }
+                    if(data.authQueryInfo==1){
+                        btn+="<span class='btn btn-primary' onclick=newPage("+data.id+",$(this).parent().prev().prev().prev().prev().prev().prev().prev().text(),'/record/3?organId="+data.id+"')>老人信息查询记录</span>";
+                    }
+                    if(data.authQueryIntegral==1){
+                        btn+="<span class='btn btn-primary' onclick=newPage("+data.id+",$(this).parent().prev().prev().prev().prev().prev().prev().prev().text(),'/record/4?organId="+data.id+"')>老人积分查询记录</span>";
+                    }
+                    return btn;
+                }
+            },
             // 增加一列，包括删除和修改，同时将我们需要传递的数据传递到链接中
             {
-                "targets": [11], // 目标列位置，下标从0开始
+                "targets": [12], // 目标列位置，下标从0开始
                 "data": "id", // 数据列名
                 "render": function(data, type, full) { // 返回自定义内容
-                    return "<span class='look' id='"+data+"'>查看</span>";
+                    return "<span class='btn btn-primary' onclick=newPage("+data+",$(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().prev().text(),'/organ/"+data+"/info')>查看</span>" +
+                        "<span class='btn btn-danger' onclick=location.href='/organ/"+data+"/cancel'>撤销</span>";
                 }
             },
             //不进行排序的列
-            { "bSortable": false, "aTargets": [ 0,2 ,3, 4,5,6,7,8,9,10,11] }
+            { "bSortable": false, "aTargets": [ 0,2 ,3, 4,5,6,7,8,9,10,11,12] }
         ]
-    }else if(firType==3 && status=="3"){
+    }else if(firType==3 && (status=="3" || status=="4")){
         columns=[{
             data:"id"
         },{
@@ -155,20 +236,47 @@ $(document).ready(function(){
         },{
             data:"districtName"
         },{
+            data:"statusDesc"
+        },{}
+        ,{
             data:"time"
         }
         ];
         columnDefs= [
-            // 增加一列，包括删除和修改，同时将我们需要传递的数据传递到链接中
+
             {
                 "targets": [10], // 目标列位置，下标从0开始
+                "data": "organ", // 数据列名
+                "render": function(data, type, full) { // 返回自定义内容
+                    var btn="";
+                    if(data.authConsume==1){
+                        btn+="<span class='btn btn-primary' onclick=>消费</span>";
+                    }
+                    if(data.authProduct==1){
+                        btn+="<span class='btn btn-primary' onclick=>商品</span>";
+                    }
+                    if(data.authSign==1){
+                        btn+="<span class='btn btn-primary' onclick=>签到</span>";
+                    }
+                    if(data.authQueryInfo==1){
+                        btn+="<span class='btn btn-primary' onclick=>老人信息查询</span>";
+                    }
+                    if(data.authQueryIntegral==1){
+                        btn+="<span class='btn btn-primary' onclick=>老人积分查询</span>";
+                    }
+                    return btn;
+                }
+            },
+            // 增加一列，包括删除和修改，同时将我们需要传递的数据传递到链接中
+            {
+                "targets": [12], // 目标列位置，下标从0开始
                 "data": "id", // 数据列名
                 "render": function(data, type, full) { // 返回自定义内容
-                    return "<span class='look' id='"+data+"'>查看</span>";
+                    return "<span class='btn btn-primary' onclick=newPage("+data+",$(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().text(),'/organ/"+data+"/info')>查看</span>";
                 }
             },
             //不进行排序的列
-            { "bSortable": false, "aTargets": [ 0,2 ,3, 4,5,6,7,8,9,10] }
+            { "bSortable": false, "aTargets": [ 0,2 ,3, 4,5,6,7,8,9,10,12] }
         ]
     }else {
         columns=[{
@@ -189,22 +297,46 @@ $(document).ready(function(){
             data:"phone"
         },{
             data:"districtName"
-        },{
+        },{},{
             data:"time"
         }
         ];
         columnDefs= [
             // 列样式
+            {
+                "targets": [9], // 目标列位置，下标从0开始
+                "data": "organ", // 数据列名
+                "render": function(data, type, full) { // 返回自定义内容
+                    var btn="";
+                    if(data.authConsume==1){
+                        btn+="<span class='btn btn-primary' onclick=>消费</span>";
+                    }
+                    if(data.authProduct==1){
+                        btn+="<span class='btn btn-primary' onclick=>商品</span>";
+                    }
+                    if(data.authSign==1){
+                        btn+="<span class='btn btn-primary' onclick=>签到</span>";
+                    }
+                    if(data.authQueryInfo==1){
+                        btn+="<span class='btn btn-primary' onclick=>老人信息查询</span>";
+                    }
+                    if(data.authQueryIntegral==1){
+                        btn+="<span class='btn btn-primary' onclick=>老人积分查询</span>";
+                    }
+                    return btn;
+                }
+            },
             // 增加一列，包括删除和修改，同时将我们需要传递的数据传递到链接中
             {
-                "targets": [10], // 目标列位置，下标从0开始
+                "targets": [11], // 目标列位置，下标从0开始
                 "data": "id", // 数据列名
                 "render": function(data, type, full) { // 返回自定义内容
-                    return "<span class='look' id='"+data+"'>查看</span><span class='mod' onclick=opera("+data+",'pass') id='"+data+"'>通过</span><span class='mod' onclick=opera("+data+",'reject') id='"+data+"'>不通过</span>";
+                    return "<span class='btn btn-primary' onclick=newPage("+data+",$(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().prev().text(),'/organ/"+data+"/info')>查看</span>" +
+                        "<span class='btn btn-primary' onclick=opera("+data+",'pass') id='"+data+"'>通过</span><span class='btn btn-danger' onclick=opera("+data+",'reject') id='"+data+"'>不通过</span>";
                 }
             },
             //不进行排序的列
-            { "bSortable": false, "aTargets": [ 1,2 ,3, 4,5,6,7,8,9,10] }
+            { "bSortable": false, "aTargets": [ 1,2 ,3, 4,5,6,7,8,9,10,11] }
         ]
     }
 

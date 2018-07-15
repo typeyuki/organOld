@@ -30,7 +30,7 @@ function newPage(id,name,url) {
     ) {
         var s='<a href="javascript:;" class="active J_menuTab" data-id="'+t+'">'+i+' <i class="fa fa-times-circle"></i></a>';
         jq(".J_menuTab").removeClass("active");
-        var r='<iframe class="J_iframe" name="iframe'+a+'" width="100%" height="100%" src="'+t+'?v=4.0" frameborder="0" data-id="'+t+'" seamless></iframe>';
+        var r='<iframe class="J_iframe" name="iframe'+a+'" width="100%" height="100%" src="'+t+'" frameborder="0" data-id="'+t+'" seamless></iframe>';
         jq(".J_mainContent").find("iframe.J_iframe").hide().parents(".J_mainContent").append(r);
         jq(".J_mainContent iframe:visible").load(function(){layer.close(o)});
         jq(".J_menuTabs .page-tabs-content").append(s);

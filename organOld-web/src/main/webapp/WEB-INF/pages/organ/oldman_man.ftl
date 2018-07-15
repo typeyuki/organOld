@@ -32,6 +32,12 @@
                         <div>
                             <a onclick="" href="javascript:void(0);" class="btn btn-primary ">添加</a>
                             <a onclick="" href="javascript:void(0);" class="btn btn-primary ">删除</a>
+                        <#if single??>
+                            <form action="/organ/man/importExcel" method="post" enctype="multipart/form-data" id="importForm" style="display: inline-block;margin-left: 200px">
+                                <input type="file" name="file" style="display:inline">
+                                <input type="button" style="display:inline" class="btn btn-primary" onclick="$('.wrapper').hide();$('#process').show();$('#importForm').submit()" value="导入">
+                            </form>
+                        </#if>
                         </div>
                     </#if>
                     <div>
@@ -39,12 +45,6 @@
                         <input class="time" type="text" placeholder="模糊匹配">
                         <button id="search">搜索</button>
                     </div>
-                    <#if single??>
-                        <form action="/organ/man/importExcel" method="post" enctype="multipart/form-data" id="importForm">
-                            <input type="file" name="file">
-                            <input type="button" onclick="$('.wrapper').hide();$('#process').show();$('#importForm').submit()" value="导入">
-                        </form>
-                    </#if>
                     <table class="table table-striped table-bordered table-hover dataTables-example">
                         <thead>
                         <tr>

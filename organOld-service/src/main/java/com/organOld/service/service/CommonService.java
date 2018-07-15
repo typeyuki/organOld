@@ -110,6 +110,16 @@ public class CommonService {
                 typeList.add(AutoValueEnum.SL.getIndex());
                 typeList.add(AutoValueEnum.SZ.getIndex());
                 break;
+            case "labelFilter":
+                typeList.add(AutoValueEnum.PQ.getIndex());
+                typeList.add(AutoValueEnum.ZZMM.getIndex());
+                typeList.add(AutoValueEnum.HJ.getIndex());
+                typeList.add(AutoValueEnum.JJJG.getIndex());
+                typeList.add(AutoValueEnum.JJTJ.getIndex());
+                typeList.add(AutoValueEnum.SL.getIndex());
+                typeList.add(AutoValueEnum.SZ.getIndex());
+                typeList.add(AutoValueEnum.YJBQ.getIndex());
+                break;
             case "oldman_add":
                 typeList.add(AutoValueEnum.PQ.getIndex());
                 typeList.add(AutoValueEnum.ZZMM.getIndex());

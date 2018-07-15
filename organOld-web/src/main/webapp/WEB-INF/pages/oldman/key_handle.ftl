@@ -49,7 +49,7 @@
                                             </div>
                                         </div>
                                         <div class="form-group" id="no" style="display: none">
-                                            <button class="col-sm-1 btn btn-primary" onclick="handleSubmit('delete')">设置为未处理</button>
+                                            <button class="col-sm-2 btn btn-primary" onclick="handleSubmit('delete')">设置为未处理</button>
                                         </div>
                                     </form>
                                 </div>
@@ -108,12 +108,12 @@
                 if(type=="add"){
                     $(obj).html("已处理");
                     var click=$(obj).attr("onclick");
-                    click.replace("no","yes");
+                    click=click.replace("no","yes");
                     $(obj).attr("onclick",click).attr("class","btn btn-default");
                 }else if(type=="delete"){
                     $(obj).html("未处理");
                     var click=$(obj).attr("onclick");
-                    click.replace("yes","no");
+                    click=click.replace("yes","no");
                     $(obj).attr("onclick",click).attr("class","btn btn-primary");
                 }
             }

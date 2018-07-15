@@ -15,6 +15,8 @@ public class SysUser extends DBEntity implements UserDetails,Serializable{
     private String username;
     private String password;
 
+    private String organName;//对应的机构名
+
     private String desc;
 
     Collection<GrantedAuthority> authorities;
@@ -56,6 +58,13 @@ public class SysUser extends DBEntity implements UserDetails,Serializable{
         this.password = password;
     }
 
+    public String getOrganName() {
+        return organName;
+    }
+
+    public void setOrganName(String organName) {
+        this.organName = organName;
+    }
 
     @Override
     public Collection<GrantedAuthority> getAuthorities() {

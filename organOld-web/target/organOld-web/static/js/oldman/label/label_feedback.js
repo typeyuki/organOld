@@ -7,7 +7,7 @@ $(document).ready(function(){
             "sPaginationType": "full_numbers",
             "bPaginite": true,
             "bInfo": true,
-            "bSort": true,
+            "bSort": false,
             "bFilter": false, //搜索栏
             "bStateSave": true,
             "bProcessing": true, //加载数据时显示正在加载信息
@@ -25,11 +25,6 @@ $(document).ready(function(){
             },{
                 data:"time"
             }
-            ],
-            "order":[[0,"asc"]],
-            "columnDefs": [
-                //不进行排序的列
-                { "bSortable": false, "aTargets": [ 0,1,2,] }
             ],
             "sAjaxSource": "/oldman/label/feedback",//这个是请求的地址
             "fnServerData": retrieveData

@@ -55,7 +55,9 @@
 </div>
 
 <#--<#include "add_product.ftl" />-->
-
+<script>
+    var organId=${organId!0};
+</script>
 <script src="/js/content.min.js?v=1.0.0"></script>
 <script src="/static/js/common.js" ></script>
 <script src="/static/js/product/product_book.js" ></script>

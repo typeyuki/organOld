@@ -62,7 +62,7 @@ $(document).ready(function(){
                     "targets": [4], // 目标列位置，下标从0开始
                     "data": "oldmanId", // 数据列名
                     "render": function(data, type, full) { // 返回自定义内容
-                        return "<span class='look' id='"+data+"'>查看</span>";
+                        return "<button class='btn btn-primary' id='"+data+"' onclick=newPage("+data+",$(this).parent().prev().prev().prev().text(),'/oldman/"+data+"/info')>查看</button>";
                     }
                 },
                 //不进行排序的列

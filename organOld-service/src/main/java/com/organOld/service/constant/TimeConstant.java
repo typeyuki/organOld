@@ -5,4 +5,5 @@ package com.organOld.service.constant;
  */
 public class TimeConstant {
     public static final String DATA_FORMAT_YMD="yyyy-MM-dd";
+    public static final String DATA_FORMAT_YMDHMS="yyyy-MM-dd HH:mm:ss";
 }

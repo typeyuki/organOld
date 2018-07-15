@@ -25,6 +25,7 @@ public class Oldman extends Man implements DBInterface{
     private Integer floor;
     private Integer isHandle;
     private Integer integral;
+    private Integer oldStatus;
     /**
      * 搜索对象
      */
@@ -46,7 +47,7 @@ public class Oldman extends Man implements DBInterface{
     private String isHealth[];
     private String intelligence[];
     private String eyesight[];
-    private String oldStatus[];
+    private String oldStatusArray[];
 
 
     private String future;//是否是查询未来的重点老人得分
@@ -100,12 +101,20 @@ public class Oldman extends Man implements DBInterface{
         this.isHandle = isHandle;
     }
 
-    public String[] getOldStatus() {
+    public Integer getOldStatus() {
         return oldStatus;
     }
 
-    public void setOldStatus(String[] oldStatus) {
+    public void setOldStatus(Integer oldStatus) {
         this.oldStatus = oldStatus;
+    }
+
+    public String[] getOldStatusArray() {
+        return oldStatusArray;
+    }
+
+    public void setOldStatusArray(String[] oldStatusArray) {
+        this.oldStatusArray = oldStatusArray;
     }
 
     public List<LabelMan> getLabelManList() {

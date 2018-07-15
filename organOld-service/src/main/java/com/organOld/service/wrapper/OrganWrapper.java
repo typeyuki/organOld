@@ -23,6 +23,20 @@ public class OrganWrapper implements Wrapper<Organ,OrganModel,OrganRequest> {
         BeanUtils.copyProperties(organ,organModel);
         if(organ.getTime()!=null)
         organModel.setTime(Tool.dateToString(organ.getTime(), TimeConstant.DATA_FORMAT_YMD));
+        if(organ.getStatus()!=null && organ.getStatus().equals("3")){
+            organModel.setStatusDesc("审核不通过");
+        }
+        if(organ.getStatus()!=null && organ.getStatus().equals("4")){
+            organModel.setStatusDesc("被撤销");
+        }
+        Organ o=new Organ();
+        o.setId(organ.getId());
+        o.setAuthQueryIntegral(organ.getAuthQueryIntegral());
+        o.setAuthQueryInfo(organ.getAuthQueryInfo());
+        o.setAuthConsume(organ.getAuthConsume());
+        o.setAuthProduct(organ.getAuthProduct());
+        o.setAuthSign(organ.getAuthSign());
+        organModel.setOrgan(o);
         return organModel;
     }
 
@@ -38,15 +52,13 @@ public class OrganWrapper implements Wrapper<Organ,OrganModel,OrganRequest> {
     public Organ unwrapRegOrgan(OrganRegRequest organRegRequest, HttpServletRequest request) {
         Organ organ=new Organ();
         BeanUtils.copyProperties(organRegRequest,organ);
-        organ.setPhone(organRegRequest.getOrgPhone());
-        organ.setStatus("1");
         if(organRegRequest.getAuth()!=null && organRegRequest.getAuth().length>0){
             List<String> auths= Arrays.asList(organRegRequest.getAuth());
             if(auths.contains("sign"))organ.setAuthSign(1);else organ.setAuthSign(0);
             if(auths.contains("product"))organ.setAuthProduct(1);else organ.setAuthProduct(0);
             if(auths.contains("consume"))organ.setAuthConsume(1);else organ.setAuthConsume(0);
-            if(auths.contains("info"))organ.setAuthConsume(1);else organ.setAuthConsume(0);
-            if(auths.contains("integral"))organ.setAuthConsume(1);else organ.setAuthConsume(0);
+            if(auths.contains("info"))organ.setAuthQueryInfo(1);else organ.setAuthQueryInfo(0);
+            if(auths.contains("integral"))organ.setAuthQueryIntegral(1);else organ.setAuthQueryIntegral(0);
         }else{
             organ.setAuthSign(0);
             organ.setAuthProduct(0);
@@ -54,7 +66,7 @@ public class OrganWrapper implements Wrapper<Organ,OrganModel,OrganRequest> {
             organ.setAuthQueryInfo(0);
             organ.setAuthQueryIntegral(0);
         }
-        if(organRegRequest.getPic()!=null){
+        if(!organRegRequest.getPic().isEmpty()){
             try {
                 String path= ImgUpload.uploadFile(organRegRequest.getPic(), request,"organ");
                 int index = path.indexOf("img");
@@ -71,6 +83,7 @@ public class OrganWrapper implements Wrapper<Organ,OrganModel,OrganRequest> {
     public OrganReg unwrapRegOrganReg(OrganRegRequest organRegRequest) {
         OrganReg organReg=new OrganReg();
         BeanUtils.copyProperties(organRegRequest,organReg);
+        organReg.setPhone(organRegRequest.getPersonPhone());
         return organReg;
     }
 }

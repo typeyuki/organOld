@@ -73,36 +73,36 @@ $(document).ready(function(){
                         if(typeLabel=="1"){
                             //人员绑定
                             if(userType=="居委会"){
-                                var s="<span onclick=newPageBefore("+id+","+name+",'/oldman/label/bind/?/man')>人员</span>";
+                                var s="<span class='btn btn-primary' onclick=newPageBefore("+id+","+name+",'/oldman/label/bind/?/man')>人员</span>";
                                 if(data!=null && data!=0){
-                                    s+="<span onclick=lookfeedback("+id+")>已反馈</span>";
+                                    s+="<span class='btn btn-primary' onclick=lookfeedback("+id+")>已反馈</span>";
                                 }else{
-                                    s+="<span onclick=feedback("+id+")>反馈</span>";
+                                    s+="<span class='btn btn-primary' onclick=feedback("+id+")>反馈</span>";
                                 }
-                                    s+="<span class='edit' id='"+data+"'>修改</span>";
+                                    s+="<span class='btn btn-primary' id='"+data+"'>修改</span>";
                                 return s;
                             }else{
-                                return "<span onclick=newPageBefore("+id+","+name+",'/oldman/label/bind/?/man') >人员</span>" +
-                                    "<span onclick=newPageBefore("+id+","+name+",'/oldman/label/?/feedback')>反馈信息</span>" +
-                                    "<span class='edit' id='"+id+"'>修改</span>";
+                                return "<span class='btn btn-primary' onclick=newPageBefore("+id+","+name+",'/oldman/label/bind/?/man') >人员</span>" +
+                                    "<span class='btn btn-primary' onclick=newPageBefore("+id+","+name+",'/oldman/label/?/feedback')>反馈信息</span>" +
+                                    "<span  class='btn btn-primary' id='"+id+"'>修改</span>";
                             }
                         }else{
                             //规则指定
                             if(userType=="居委会"){
-                                var s="<span onclick=newPageBefore("+id+","+name+",'/oldman/label/rule/?/man')>人员</span>" +
-                                    "<span onclick=newPageBefore("+id+","+name+",'/oldman/label/rule/?')>规则</span>";
+                                var s="<span class='btn btn-primary' onclick=newPageBefore("+id+","+name+",'/oldman/label/rule/?/man')>人员</span>" +
+                                    "<span class='btn btn-primary' onclick=newPageBefore("+id+","+name+",'/oldman/label/rule/?')>规则</span>";
                                 if(data!=null && data!=0){
-                                    s+="<span onclick=lookfeedback("+id+")>已反馈</span>";
+                                    s+="<span class='btn btn-primary' onclick=lookfeedback("+id+")>已反馈</span>";
                                 }else{
-                                    s+="<span onclick=feedback("+id+")>反馈</span>";
+                                    s+="<span class='btn btn-primary' onclick=feedback("+id+")>反馈</span>";
                                 }
-                                s+="<span class='edit' id='"+data+"'>修改</span>";
+                                s+="<span class='btn btn-primary' id='"+data+"'>修改</span>";
                                 return s;
                             }else{
-                                return "<span onclick=newPageBefore("+id+","+name+",'/oldman/label/rule/?/man')>人员</span>" +
-                                    "<span onclick=newPageBefore("+id+","+name+",'/oldman/label/rule/?')>规则</span>" +
-                                    "<span onclick=newPageBefore("+id+","+name+",'/oldman/label/?/feedback')>反馈信息</span>" +
-                                    "<span class='edit' id='"+id+"'>修改</span>";
+                                return "<span class='btn btn-primary' onclick=newPageBefore("+id+","+name+",'/oldman/label/rule/?/man')>人员</span>" +
+                                    "<span class='btn btn-primary' onclick=newPageBefore("+id+","+name+",'/oldman/label/rule/?')>规则</span>" +
+                                    "<span class='btn btn-primary' onclick=newPageBefore("+id+","+name+",'/oldman/label/?/feedback')>反馈信息</span>" +
+                                    "<span class='btn btn-primary' class='edit' id='"+id+"'>修改</span>";
                             }
                         }
                     }
@@ -122,8 +122,25 @@ $(document).ready(function(){
                 "iSortCol_0" : aoData.iSortCol_0,
                 "sEcho" : aoData.sEcho,
                 "sSortDir_0" : aoData.sSortDir_0,
-                "id" : ($('.id').val()==""?"0":$('.id').val()),//参数不能是空 400
-                "type":typeLabel
+                "id" :  ($('input[name="id"]').val()==""?"0":$('input[name="id"]').val()),//参数不能是空 400
+                "type":typeLabel,
+                "census_array":$("select[name='census']").val(),
+                "ageStart":$("input[name='ageStart']").val(),
+                "ageEnd":$("input[name='ageEnd']").val(),
+                "family_array":$("select[name='familyIndex']").val(),
+                "economic_array":$("select[name='economicIndex']").val(),
+                "sex":$("select[name='sex']").val(),
+                "search":$("input[name='search']").val(),
+                "politicalStatus_array":$("select[name='politicalStatuses']").val(),
+                "isHealth_array":$("select[name='isHealth']").val(),
+                "intelligence_array":$("select[name='intelligence']").val(),
+                "eyesight_array":$("select[name='eyesight']").val(),
+                "district_array":$("select[name='district']").val(),
+                "jw_array":$("select[name='jw']").val(),
+                "oldStatus_array":$("select[name='oldStatus']").val(),
+                "belongOrgan_array":$("select[name='belongOrgan']").val(),
+                "fir_array":$("select[name='fir']").val(),
+                "sec_array":$("select[name='sec']").val()
             },
             type: 'POST',
             dataType: 'json',

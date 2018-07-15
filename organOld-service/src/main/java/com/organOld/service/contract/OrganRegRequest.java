@@ -3,22 +3,87 @@ package com.organOld.service.contract;
 import org.springframework.web.multipart.MultipartFile;
 
 public class OrganRegRequest {
+    private Integer organFirType;
+    private int id;
     private Integer organTypeId;
     private String name;
     private String intro;
     private String work;
     private String serviceTime;
     private String address;
-    private String orgPhone;
+    private String phone;
     private String webUrl;
     private MultipartFile pic;
     private Integer num;
     private String districtId;//所属片区名称 如果有的话
     private String[] auth;
+    private String require;
+    private String insitution;
+    private Integer numIn;
+    private Integer numRemain;
+    private Integer parent;
 
-    private String phone;
+    /**
+     * 机构注册  注册人信息
+     */
+    private String personPhone;
     private String email;
 
+    public Integer getOrganFirType() {
+        return organFirType;
+    }
+
+    public void setOrganFirType(Integer organFirType) {
+        this.organFirType = organFirType;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getRequire() {
+        return require;
+    }
+
+    public void setRequire(String require) {
+        this.require = require;
+    }
+
+    public String getInsitution() {
+        return insitution;
+    }
+
+    public void setInsitution(String insitution) {
+        this.insitution = insitution;
+    }
+
+    public Integer getNumIn() {
+        return numIn;
+    }
+
+    public void setNumIn(Integer numIn) {
+        this.numIn = numIn;
+    }
+
+    public Integer getParent() {
+        return parent;
+    }
+
+    public void setParent(Integer parent) {
+        this.parent = parent;
+    }
+
+    public Integer getNumRemain() {
+        return numRemain;
+    }
+
+    public void setNumRemain(Integer numRemain) {
+        this.numRemain = numRemain;
+    }
 
     public String[] getAuth() {
         return auth;
@@ -76,12 +141,12 @@ public class OrganRegRequest {
         this.address = address;
     }
 
-    public String getOrgPhone() {
-        return orgPhone;
+    public String getPersonPhone() {
+        return personPhone;
     }
 
-    public void setOrgPhone(String orgPhone) {
-        this.orgPhone = orgPhone;
+    public void setPersonPhone(String personPhone) {
+        this.personPhone = personPhone;
     }
 
     public String getWebUrl() {

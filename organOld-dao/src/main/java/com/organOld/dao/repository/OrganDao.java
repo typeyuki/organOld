@@ -16,4 +16,8 @@ public interface OrganDao extends BaseDao<Organ,Integer>{
     Organ getAuthById(int organId);
 
     List<Organ> getRoleOrgan(@Param("type") int type, @Param("typeIndex") int typeIndex);
+
+    List<Organ> getByType(int type);
+
+    List<Organ> getByTypes(List<Integer> typeIds);
 }

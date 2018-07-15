@@ -49,6 +49,8 @@ public class OldmanWrapper implements Wrapper<Oldman,OldmanModel,OldmanRequest> 
         oldmanModel.setdName(oldman.getXq().getDistrictName());
         oldmanModel.setxName(oldman.getXq().getName());
         oldmanModel.setPoliticalStatus(oldman.getPoliticalStatus());
+        if(oldman.getOldStatus()!=null && oldman.getOldStatus()!=0)
+            oldmanModel.setOldStatus(OldStatusEnum.getValue(oldman.getOldStatus()));
 
         oldmanModel.setLabelManInfoModelList(oldman.getLabelManList().stream().map(Wrappers.labelWrapper::wrapManInfo).collect(Collectors.toList()));
         return oldmanModel;

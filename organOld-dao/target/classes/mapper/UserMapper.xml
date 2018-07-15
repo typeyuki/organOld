@@ -36,8 +36,8 @@
 
 
     <select id="getByPage" parameterType="com.organOld.dao.util.Page" resultType="com.organOld.dao.entity.SysUser">
-        SELECT u.id,u.username,u.password,r.desc,u.time
-        FROM sysuser u,sysrole r,user_role ur
+        SELECT u.id,u.username,u.password,r.desc,u.time,o.name organ_name
+        FROM sysuser u left join user_organ uo on uo.user_id=u.id left join organ o on o.id=uo.organ_id,sysrole r,user_role ur
         WHERE u.id=ur.user_id and r.id=ur.role_id
         <if test="sortType!=null and sortType!=''">
             ORDER BY ${sortType}
@@ -72,6 +72,11 @@
     <select id="ckeckOrganLogin" resultType="com.organOld.dao.entity.organ.Organ">
         SELECT o.id,o.auth_consume,o.auth_sign,o.auth_query_info,o.auth_query_integral
         FROM organ o,sysuser u,user_organ uo
-        WHERE u.username=#{username} and password=#{password} and o.id=uo.organ_id and u.id=uo.user_id
+        WHERE u.username=#{username} and password=#{password} and o.id=uo.organ_id and u.id=uo.user_id and u.disable=0
     </select>
+
+    <update id="setDisableByOrganId">
+        UPDATE sysuser u,user_organ uo set u.disable=1
+        WHERE uo.organ_id=#{organId} and u.id=uo.user_id
+    </update>
 </mapper>

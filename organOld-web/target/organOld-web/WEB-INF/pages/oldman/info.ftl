@@ -52,7 +52,7 @@
                             <label class="col-sm-2 control-label">电话：${info.oldman.phone!}</label>
                             <label class="col-sm-2 control-label">政治面貌：${info.oldman.politicalStatus!}</label>
                             <label class="col-sm-2 control-label">户籍：${info.oldman.census!}</label>
-                            <label class="col-sm-2 control-label">身份证号码：${info.oldman.pid!}</label>
+                            <label class="col-sm-3 control-label">身份证号码：${info.oldman.pid!}</label>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">片区：${info.oldman.dName!}</label>
@@ -158,7 +158,7 @@
                         </div>
                         <div class="hr-line-dashed"></div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label label_title">养老状态</label>
+                            <label class="col-sm-2 control-label label_title">养老状态&nbsp;&nbsp;&nbsp;${info.oldman.oldStatus!}</label>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">机构养老</label>
