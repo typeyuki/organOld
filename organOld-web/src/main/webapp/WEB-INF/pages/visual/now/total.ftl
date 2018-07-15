@@ -88,7 +88,7 @@
     //片区人数分布
     legend_data="";
     title_text='片区老年人口分布柱状';
-    yAxis_data=['东兰','古龙','平南','平阳','平吉','古美'];
+    xAxis_data=['东兰','古龙','平南','平阳','平吉','古美'];
     series=[
         {
             name: '',
@@ -97,7 +97,7 @@
             label: {
                 normal: {
                     show: true,
-                    position: 'right',
+                    position: 'top',
                     textStyle:{
                         fontSize:series_lebel_fontSize
                     }
@@ -112,7 +112,7 @@
             data: [131,163,214,234,334,467]
         }
     ];
-    var total_option_pq_bar=chartBar(title_text,legend_data,yAxis_data,series);
+    var total_option_pq_bar=chartBarHei(title_text,legend_data,yAxis_data,series);
 
     //养老状态
     title_text="养老状态分布饼图";

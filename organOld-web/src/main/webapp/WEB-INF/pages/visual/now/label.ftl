@@ -82,7 +82,7 @@
             <div class="zz"></div>
             <div class="row" style="border-bottom: 1px solid white;margin: 0!important;">
                 <div class="col-lg-5">
-                    <p class="title" style="margin-top: 15%;">老 人 身 份</p>
+                    <p class="title" style="margin-top: 15%;" onclick="showHeatMap()">老 人 身 份</p>
                 </div>
                 <div class="col-lg-7" >
                     <div class="row">
@@ -99,7 +99,7 @@
             </div>
             <div class="row" style="border-bottom: 1px solid white;margin: 0!important;">
                 <div class="col-lg-5">
-                    <p class="title" style="margin-top: 20%;">老 有 所 养</p>
+                    <p class="title" style="margin-top: 20%;" onclick="picChange(1)">老 有 所 养</p>
                 </div>
                 <div class="col-lg-7">
                     <div class="row">
@@ -121,7 +121,7 @@
             </div>
             <div class="row" style="border-bottom: 1px solid white;margin: 0!important;">
                 <div class="col-lg-5">
-                    <p class="title" style="margin-top: 50%;" >老 有 所 医</p>
+                    <p class="title" style="margin-top: 50%;" onclick="picChange(2)">老 有 所 医</p>
                 </div>
                 <div class="col-lg-7">
                     <div class="row">
@@ -154,7 +154,7 @@
             </div>
             <div class="row" style="border-bottom: 1px solid white;margin: 0!important;">
                 <div class="col-lg-5">
-                    <p class="title" style="margin-top: 5%;">老 有 所 为</p>
+                    <p class="title" style="margin-top: 5%;" onclick="picChange(3)">老 有 所 为</p>
                 </div>
                 <div class="col-lg-7">
                     <div class="row">
@@ -167,7 +167,7 @@
             </div>
             <div class="row" style="border-bottom: 1px solid white;margin: 0!important;">
                 <div class="col-lg-5">
-                    <p class="title" style="margin-top: 5%;">老 有 所 学</p>
+                    <p class="title" style="margin-top: 5%;" onclick="picChange(4)">老 有 所 学</p>
                 </div>
                 <div class="col-lg-7">
                     <div class="row">
@@ -180,7 +180,7 @@
             </div>
             <div class="row" style="margin: 0!important;">
                 <div class="col-lg-5">
-                    <p class="title" style="margin-top: 5%;">老 有 所 乐</p>
+                    <p class="title" style="margin-top: 5%;" onclick="picChange(5)">老 有 所 乐</p>
                 </div>
                 <div class="col-lg-7">
                     <div class="row">
@@ -511,11 +511,81 @@
 
  <script>
 
+
+
+     function picChange(index){
+         for(var i=0;i<markerArr.length;i++){
+             var json = markerArr[i];
+             var p0 = json.point.split("|")[0];
+             var p1 = json.point.split("|")[1];
+             var point = new BMap.Point(p0,p1);
+             var iconImg = createIcon(json.icon);
+             var marker = new BMap.Marker(point,{icon:iconImg});
+             var iw = createInfoWindow(i);
+             var label = new BMap.Label(json.title,{"offset":new BMap.Size(json.icon.lb-json.icon.x+10,-20)});
+             marker.setLabel(label);
+             map.addOverlay(marker);
+             label.setStyle({
+                 borderColor:"#808080",
+                 color:"#333",
+                 cursor:"pointer",
+                 maxWidth:"none"
+             });
+
+             (function(){
+                 var index = i;
+                 var _iw = createInfoWindow(i);
+                 var _marker = marker;
+                 _marker.addEventListener("click",function(){
+                     this.openInfoWindow(_iw);
+                 });
+                 _iw.addEventListener("open",function(){
+                     _marker.getLabel().hide();
+                 })
+                 _iw.addEventListener("close",function(){
+                     _marker.getLabel().show();
+                 })
+                 label.addEventListener("click",function(){
+                     _marker.openInfoWindow(_iw);
+                 })
+                 if(!!json.isOpen){
+                     label.hide();
+                     _marker.openInfoWindow(_iw);
+                 }
+             })()
+         }
+         var allOverlay = map.getOverlays();
+         var len = map.getOverlays().length;
+         var str = null;
+         if(index == 1) str="养老院";//老有所养
+         else if(index == 2) str="社区卫生站";//所医
+         else if(index == 3) str="助餐点";//所为
+         else if(index == 4) str="老年人学校";//所学
+         else if(index == 5) str="社区卫生站";//所乐
+         for (var i = len; i >0; i--){
+             if (allOverlay[i] instanceof BMap.Marker)
+                 if(allOverlay[i].getLabel().content.indexOf(str) == -1)
+                 {
+                     map.removeOverlay(map.getOverlays()[i]);
+
+                 }
+
+         }
+
+     }
+
+     function showHeatMap(){
+         document.getElementById("dituContent").style.display="none";
+         document.getElementById("container").style.display="";
+     }
+
      function label3Show(index) {
+
          $("#label1").hide();
          $(".aa").css("display","none");
          $("#label3").show();
          $("#label3"+index).show();
+
      }
 
      function butt() {
