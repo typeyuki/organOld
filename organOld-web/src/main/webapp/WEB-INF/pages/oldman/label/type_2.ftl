@@ -31,7 +31,7 @@
                 </div>
                 <div class="ibox-content">
                     <div>
-                        <a href="javascript:void(0);" class="btn btn-primary ">添加</a>
+                        <a href="javascript:void(0);" class="btn btn-primary " onclick="add()">添加</a>
                         <a  href="javascript:void(0);" class="btn btn-primary ">删除</a>
                         <a  href="javascript:void(0);" id="search" class="btn btn-primary ">搜索</a>
                     </div>
@@ -60,7 +60,7 @@
 
 </div>
 
-<#--<script src="/js/plugins/jeditable/jquery.jeditable.js"></script>-->
+<#include "add_label_type.ftl"/>
 
 <script src="/js/content.min.js?v=1.0.0"></script>
 <script src="/static/js/common.js"></script>

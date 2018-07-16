@@ -1,6 +1,7 @@
 package com.organOld.service.service.impl;
 
 import com.organOld.dao.entity.AutoValue;
+import com.organOld.dao.entity.Card;
 import com.organOld.dao.entity.DBEntity;
 import com.organOld.dao.entity.home.HomeOldman;
 import com.organOld.dao.entity.oldman.*;
@@ -74,6 +75,8 @@ public class OldmanServiceImpl implements OldmanService {
     HealthSelectManDao healthSelectManDao;
     @Autowired
     VolunteerDao volunteerDao;
+    @Autowired
+    HealthSelectDao healthSelectDao;
 
     @Override
     public String getOldmanByPage(OldmanRequest oldmanRequest, BTableRequest bTableRequest, HttpSession session) {
@@ -96,6 +99,24 @@ public class OldmanServiceImpl implements OldmanService {
         List<OldmanHealthModel> oldmanHealthModelList=oldmanHealthDao.getByPage(page).stream().map(Wrappers.oldmanHealthWrapper::wrap).collect(Collectors.toList());
         Long size=oldmanHealthDao.getSizeByPage(page);
         return commonService.tableReturn(bTableRequest.getsEcho(),size,oldmanHealthModelList);
+    }
+
+    @Override
+    public String getHealthSelectByPage(HealthSelectRequest healthSelectRequest, BTableRequest bTableRequest) {
+        Page<HealthSelect> page=commonService.getPage(bTableRequest,"health_select");
+        HealthSelect healthSelect=Wrappers.oldmanHealthWrapper.unwrapHealthSelect(healthSelectRequest);
+        page.setEntity(healthSelect);
+        List<HealthSelectModel> healthSelectModelList=healthSelectDao.getByPage(page).stream().map(Wrappers.oldmanHealthWrapper::wrapHealthSelect).collect(Collectors.toList());
+        Long size=healthSelectDao.getSizeByPage(page);
+        return commonService.tableReturn(bTableRequest.getsEcho(),size,healthSelectModelList);
+    }
+
+    @Override
+    public void addOrUpdateHealthSelect(HealthSelect healthSelect, String type) {
+        if(type.equals("add"))
+            healthSelectDao.save(healthSelect);
+        else
+            healthSelectDao.updateById(healthSelect);
     }
 
     @Override
@@ -316,6 +337,8 @@ public class OldmanServiceImpl implements OldmanService {
         List<HealthSelectMan> healthSelectManList_add=new ArrayList<>();
         List<HealthAdd> healthAddList_add=new ArrayList<>();
         List<Volunteer> volunteerList=new ArrayList<>();
+        //TODO 一卡通
+        List<Card> cardList_add=new ArrayList<>();
 
         //批量更新
         List<OldmanEconomic> economicList_update=new ArrayList<>();
@@ -323,6 +346,7 @@ public class OldmanServiceImpl implements OldmanService {
         List<Linkman> linkmanList_update=new ArrayList<>();
         List<OldmanHealth> healthList_update=new ArrayList<>();
         List<Oldman> oldmanList_update=new ArrayList<>();//对已存在的老人进行批量更新
+
 
 
         Workbook wb0 = new HSSFWorkbook(file.getInputStream());

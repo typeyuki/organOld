@@ -1,6 +1,7 @@
 package com.organOld.service.service;
 
 
+import com.organOld.dao.entity.oldman.HealthSelect;
 import com.organOld.service.contract.*;
 import com.organOld.service.model.OldmanAddInfoModel;
 import com.organOld.service.model.OldmanAllInfoModel;
@@ -48,4 +49,8 @@ public interface OldmanService {
     Result importExcel(MultipartFile file, HttpSession session) throws IOException;
 
     Result getIntegralByOldmanId(int oldmanId);
+
+    String getHealthSelectByPage(HealthSelectRequest healthSelectRequest, BTableRequest bTableRequest);
+
+    void addOrUpdateHealthSelect(HealthSelect healthSelect, String type);
 }

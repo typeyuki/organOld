@@ -36,6 +36,9 @@
                 </div>
                 <div class="ibox-content">
                     <div>
+                        <a onclick=newPage("134","健康管理",'/oldman/health/select') href="javascript:void(0);" class="btn btn-primary ">管理</a>
+                    </div>
+                    <div>
                         <input class="oldmanId" type="text" placeholder="老人序号">
                         <input class="search" type="text" placeholder="模糊匹配">
                         <button id="search">搜索</button>

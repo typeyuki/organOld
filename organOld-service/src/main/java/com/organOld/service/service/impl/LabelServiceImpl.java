@@ -296,4 +296,21 @@ public class LabelServiceImpl implements LabelService {
         }
         return labelFilterModel;
     }
+
+    @Override
+    public void addOrUpdateFirType(AutoValue firType, String type) {
+        if(type.equals("add"))
+            autoValueDao.save(firType);
+        else
+            autoValueDao.updateById(firType);
+    }
+
+
+    @Override
+    public void addOrUpdateSecType(LabelSec labelSec, String type) {
+        if(type.equals("add"))
+            labelSecDao.save(labelSec);
+        else
+            labelSecDao.updateById(labelSec);
+    }
 }

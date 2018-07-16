@@ -1,7 +1,9 @@
 package com.organOld.web.controller;
 
+import com.organOld.dao.entity.AutoValue;
 import com.organOld.dao.entity.label.Label;
 import com.organOld.dao.entity.label.LabelFeedback;
+import com.organOld.dao.entity.label.LabelSec;
 import com.organOld.service.contract.*;
 import com.organOld.service.service.AutoValueService;
 import com.organOld.service.service.LabelService;
@@ -294,6 +296,7 @@ public class LabelController {
     public ModelAndView type(@PathVariable int index){
         ModelAndView mv=new ModelAndView("oldman/label/type_"+index);
         mv.addObject("index",index);
+        mv.addObject("fir",autoValueService.getByType(9));//一级标签
         return mv;
     }
 
@@ -302,5 +305,31 @@ public class LabelController {
     @RequestMapping(value = "/type/{index}/data",method = RequestMethod.POST)
     public String type_data(@PathVariable int index,BTableRequest bTableRequest,LabelTypeRequest labelTypeRequest){
         return labelService.getTypeByPage(index,labelTypeRequest,bTableRequest);
+    }
+
+    /**
+     * 一级标签 添加、更新
+     * @param firType
+     * @param type add添加 update修改
+     * @return
+     */
+    @RequestMapping(value = "/type/1/{type}",method = RequestMethod.POST)
+    public ModelAndView type_add(AutoValue firType, @PathVariable String type){
+        ModelAndView mv=new ModelAndView("redirect:/oldman/label/type/1");
+        labelService.addOrUpdateFirType(firType,type);
+        return mv;
+    }
+
+    /**
+     * 二级标签 添加、更新
+     * @param labelSec
+     * @param type add添加 update修改
+     * @return
+     */
+    @RequestMapping(value = "/type/2/{type}",method = RequestMethod.POST)
+    public ModelAndView type_add_2(LabelSec labelSec, @PathVariable String type){
+        ModelAndView mv=new ModelAndView("redirect:/oldman/label/type/2");
+        labelService.addOrUpdateSecType(labelSec,type);
+        return mv;
     }
 }

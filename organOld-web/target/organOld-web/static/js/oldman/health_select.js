@@ -41,7 +41,7 @@ $(document).ready(function(){
                 //不进行排序的列
                 { "bSortable": false, "aTargets": [ 0,2,3,4,5] }
             ],
-            "sAjaxSource": "/oldman/label/type/2/data",//这个是请求的地址
+            "sAjaxSource": "/oldman/health/select/data",//这个是请求的地址
             "fnServerData": retrieveData
         });
     function retrieveData(url, aoData, fnCallback) {
@@ -80,22 +80,22 @@ $(document).ready(function(){
 
 
 function add() {
-    $("#secModal form").attr("action","/oldman/label/type/2/add");
-    $("#secModal h5").html("二级标签<small>添加</small>");
-    $("#secModal .firSub").html("添加");
-    $("#secModal").modal();
+    $("#healthModal form").attr("action","/oldman/health/select/add");
+    $("#healthModal small").html("添加");
+    $("#healthModal .sub").html("添加");
+    $("#healthModal").modal();
 }
 
 function edit(id,obj) {
-    $("#secModal input[name='id']").val(id);
-    $("#secModal select[name='firIndex'] option").each(function () {
+    $("#healthModal input[name='id']").val(id);
+    $("#healthModal select[name='firType'] option").each(function () {
         if($(this).text().trim()==$(obj).parent().prev().prev().prev().text().trim()){
             $(this).prop("selected",true)
         }
     });
-    $("#secModal input[name='secName']").val($(obj).parent().prev().prev().text());
-    $("#secModal form").attr("action","/oldman/label/type/2/update");
-    $("#secModal h5").html("二级标签<small>修改</small>");
-    $("#secModal .firSub").html("修改");
-    $("#secModal").modal();
+    $("#healthModal input[name='secTypeName']").val($(obj).parent().prev().prev().text());
+    $("#healthModal form").attr("action","/oldman/health/select/update");
+    $("#healthModal small").html("修改");
+    $("#healthModal .sub").html("修改");
+    $("#healthModal").modal();
 }

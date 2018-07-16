@@ -282,8 +282,8 @@
     </delete>
 
     <insert id="save" parameterType="com.organOld.dao.entity.oldman.Oldman" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO oldman_base(name,sex,birthday,pid,address,xq_id,census,political_status,phone,lou_num,floor)
-        VALUE (#{name},#{sex},#{birthday},#{pid},#{address},#{xqId},#{census},#{politicalStatus},#{phone},#{louNum},#{floor})
+        INSERT INTO oldman_base(name,sex,birthday,pid,address,xq_id,census,political_status,phone,lou_num,floor,disable)
+        VALUE (#{name},#{sex},#{birthday},#{pid},#{address},#{xqId},#{census},#{politicalStatus},#{phone},#{louNum},#{floor},0)
     </insert>
 
     <update id="updateById" parameterType="com.organOld.dao.entity.oldman.Oldman">

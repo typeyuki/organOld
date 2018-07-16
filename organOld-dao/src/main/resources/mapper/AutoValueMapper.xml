@@ -33,4 +33,16 @@
         </if>
         and type=#{index}
     </select>
+
+
+    <insert id="save" parameterType="com.organOld.dao.entity.AutoValue">
+        INSERT into auto_value(type,value)
+        VALUES (#{type},#{value})
+    </insert>
+
+    <update id="updateById" parameterType="com.organOld.dao.entity.AutoValue">
+        UPDATE auto_value
+        set value=#{value}
+        where id=#{id}
+    </update>
 </mapper>

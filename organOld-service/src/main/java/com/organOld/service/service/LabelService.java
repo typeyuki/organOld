@@ -1,7 +1,9 @@
 package com.organOld.service.service;
 
 
+import com.organOld.dao.entity.AutoValue;
 import com.organOld.dao.entity.label.Label;
+import com.organOld.dao.entity.label.LabelSec;
 import com.organOld.service.contract.*;
 import com.organOld.service.model.LabelAllRuleModel;
 import com.organOld.service.model.LabelFilterModel;
@@ -45,4 +47,8 @@ public interface LabelService {
     LabelFilterModel getFilterLabelRule(int i);
 
     String getTypeByPage(int index, LabelTypeRequest labelTypeRequest, BTableRequest bTableRequest);
+
+    void addOrUpdateFirType(AutoValue firType, String type);
+
+    void addOrUpdateSecType(LabelSec labelSec, String type);
 }

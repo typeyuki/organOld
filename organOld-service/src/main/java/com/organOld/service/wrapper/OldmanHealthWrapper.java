@@ -6,6 +6,7 @@ import com.organOld.dao.entity.oldman.HealthSelect;
 import com.organOld.dao.entity.oldman.OldmanHealth;
 import com.organOld.service.constant.TimeConstant;
 import com.organOld.service.enumModel.HealthEnum;
+import com.organOld.service.model.HealthSelectModel;
 import com.organOld.service.model.OldmanHealthModel;
 import com.organOld.service.contract.*;
 import com.organOld.service.util.Tool;
@@ -66,4 +67,18 @@ public class OldmanHealthWrapper implements Wrapper<OldmanHealth,OldmanHealthMod
     }
 
 
+    public HealthSelect unwrapHealthSelect(HealthSelectRequest healthSelectRequest) {
+        HealthSelect healthSelect=new HealthSelect();
+        BeanUtils.copyProperties(healthSelectRequest,healthSelect);
+        return healthSelect;
+    }
+
+    public HealthSelectModel wrapHealthSelect(HealthSelect healthSelect) {
+        HealthSelectModel healthSelectModel=new HealthSelectModel();
+        healthSelectModel.setId(healthSelect.getId());
+        healthSelectModel.setSecName(healthSelect.getSecTypeName());
+        healthSelectModel.setTime(Tool.dateToString(healthSelect.getTime(),TimeConstant.DATA_FORMAT_YMD));
+        healthSelectModel.setFirName(HealthEnum.getValue(healthSelect.getFirType()));
+        return healthSelectModel;
+    }
 }

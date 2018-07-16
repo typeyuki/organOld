@@ -33,7 +33,7 @@ $(document).ready(function(){
                     "targets": [4], // 目标列位置，下标从0开始
                     "data": "id", // 数据列名
                     "render": function (data, type, full) { // 返回自定义内容
-                        return "<button class='btn btn-primary' id='" + data + "'>修改</button>";
+                        return "<button class='btn btn-primary' onclick=edit('"+data+"',this)>修改</button>";
                     }
                 },
                 //不进行排序的列
@@ -73,4 +73,22 @@ $(document).ready(function(){
         "submitdata":function(value,settings){return{"row_id":this.parentNode.getAttribute("id"),
             "column":oTable.fnGetPosition(this)[2]}},"width":"90%","height":"100%"});
 
+
+
 });
+
+function add() {
+    $("#firModal form").attr("action","/oldman/label/type/1/add");
+    $("#firModal h5").html("一级标签<small>添加</small>");
+    $("#firModal .firSub").html("添加");
+    $("#firModal").modal();
+}
+
+function edit(id,obj) {
+    $("#firModal input[name='id']").val(id);
+    $("#firModal input[name='value']").val($(obj).parent().prev().prev().text());
+    $("#firModal form").attr("action","/oldman/label/type/1/update");
+    $("#firModal h5").html("一级标签<small>修改</small>");
+    $("#firModal .firSub").html("修改");
+    $("#firModal").modal();
+}

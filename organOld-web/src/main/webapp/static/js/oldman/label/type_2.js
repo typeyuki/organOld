@@ -35,7 +35,7 @@ $(document).ready(function(){
                     "targets": [5], // 目标列位置，下标从0开始
                     "data": "id", // 数据列名
                     "render": function (data, type, full) { // 返回自定义内容
-                        return "<button class='btn btn-primary' id='" + data + "'>修改</button>";
+                        return "<button class='btn btn-primary' onclick=edit('"+data+"',this)>修改</button>";
                     }
                 },
                 //不进行排序的列
@@ -76,3 +76,26 @@ $(document).ready(function(){
             "column":oTable.fnGetPosition(this)[2]}},"width":"90%","height":"100%"});
 
 });
+
+
+
+function add() {
+    $("#secModal form").attr("action","/oldman/label/type/2/add");
+    $("#secModal h5").html("二级标签<small>添加</small>");
+    $("#secModal .firSub").html("添加");
+    $("#secModal").modal();
+}
+
+function edit(id,obj) {
+    $("#secModal input[name='id']").val(id);
+    $("#secModal select[name='firIndex'] option").each(function () {
+        if($(this).text().trim()==$(obj).parent().prev().prev().prev().text().trim()){
+            $(this).prop("selected",true)
+        }
+    });
+    $("#secModal input[name='secName']").val($(obj).parent().prev().prev().text());
+    $("#secModal form").attr("action","/oldman/label/type/2/update");
+    $("#secModal h5").html("二级标签<small>修改</small>");
+    $("#secModal .firSub").html("修改");
+    $("#secModal").modal();
+}

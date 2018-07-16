@@ -1,5 +1,6 @@
 package com.organOld.web.controller;
 
+import com.organOld.dao.entity.oldman.HealthSelect;
 import com.organOld.service.contract.*;
 import com.organOld.service.model.Model;
 import com.organOld.service.service.OldmanService;
@@ -159,6 +160,35 @@ public class OldmanController {
         return oldmanService.getHealthByPage(oldmanHealthRequest,bTableRequest,session);
     }
 
+    /**
+     * 健康档案 系统管理页面
+     * @return
+     */
+    @RequestMapping(value = "/health/select",method = RequestMethod.GET)
+    public ModelAndView select(){
+        ModelAndView mv=new ModelAndView("oldman/health_select");
+        return mv;
+    }
+
+
+    @ResponseBody
+    @RequestMapping(value = "/health/select/data",method = RequestMethod.POST)
+    public String type_data(BTableRequest bTableRequest,HealthSelectRequest healthSelectRequest){
+        return oldmanService.getHealthSelectByPage(healthSelectRequest,bTableRequest);
+    }
+
+    /**
+     * 一级标签 添加、更新
+     * @param healthSelect
+     * @param type add添加 update修改
+     * @return
+     */
+    @RequestMapping(value = "/health/select/{type}",method = RequestMethod.POST)
+    public ModelAndView type_add(HealthSelect healthSelect, @PathVariable String type){
+        ModelAndView mv=new ModelAndView("redirect:/oldman/health/select");
+        oldmanService.addOrUpdateHealthSelect(healthSelect,type);
+        return mv;
+    }
 
     /**
      *

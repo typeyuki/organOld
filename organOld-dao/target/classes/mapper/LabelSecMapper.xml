@@ -31,4 +31,16 @@
         FROM label_type lt,auto_value f
         WHERE lt.fir_index=f.id
     </select>
+
+
+    <insert id="save" parameterType="com.organOld.dao.entity.label.LabelSec">
+        INSERT into label_type(fir_index,sec_name)
+        VALUES (#{firIndex},#{secName})
+    </insert>
+
+    <update id="updateById" parameterType="com.organOld.dao.entity.label.LabelSec">
+        UPDATE label_type
+        set fir_index=#{firIndex},sec_name=#{secName}
+        where id=#{id}
+    </update>
 </mapper>
