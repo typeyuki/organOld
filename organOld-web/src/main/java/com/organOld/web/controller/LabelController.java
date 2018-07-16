@@ -284,4 +284,23 @@ public class LabelController {
         Result result=labelService.checkCanChange(labelId);
         return result;
     }
+
+    /**
+     * 标签类型
+     * @param index  1一级  2 二级
+     * @return
+     */
+    @RequestMapping(value = "/type/{index}",method = RequestMethod.GET)
+    public ModelAndView type(@PathVariable int index){
+        ModelAndView mv=new ModelAndView("oldman/label/type_"+index);
+        mv.addObject("index",index);
+        return mv;
+    }
+
+
+    @ResponseBody
+    @RequestMapping(value = "/type/{index}/data",method = RequestMethod.POST)
+    public String type_data(@PathVariable int index,BTableRequest bTableRequest,LabelTypeRequest labelTypeRequest){
+        return labelService.getTypeByPage(index,labelTypeRequest,bTableRequest);
+    }
 }

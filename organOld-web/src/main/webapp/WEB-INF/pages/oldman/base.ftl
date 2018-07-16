@@ -202,6 +202,7 @@
 
 </div>
 <#include  "../spinner.ftl"/>
+<#include  "edit_base.ftl"/>
 <#--<script src="/js/plugins/jeditable/jquery.jeditable.js"></script>-->
 
 <script>

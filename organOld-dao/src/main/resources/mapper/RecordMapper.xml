@@ -43,4 +43,9 @@
         </if>
     </select>
 
+
+    <insert id="save" parameterType="com.organOld.dao.entity.record.Record">
+        INSERT into record(organ_id,oldman_id,`type`,`data`)
+        VALUES (#{organId},#{oldmanId},#{type},#{data})
+    </insert>
 </mapper>

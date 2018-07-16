@@ -7,6 +7,7 @@ import com.organOld.dao.entity.oldman.Oldman;
 import com.organOld.dao.entity.organ.Organ;
 import com.organOld.dao.repository.*;
 import com.organOld.dao.util.Page;
+import com.organOld.service.enumModel.AutoValueEnum;
 import com.organOld.service.model.*;
 import com.organOld.service.service.CommonService;
 import com.organOld.service.service.LabelService;
@@ -59,6 +60,23 @@ public class LabelServiceImpl implements LabelService {
         List<LabelModel> labelList=labelDao.getByPage(page).stream().map(Wrappers.labelWrapper::wrap).collect(Collectors.toList());
         Long size=labelDao.getSizeByPage(page);
         return commonService.tableReturn(bTableRequest.getsEcho(),size,labelList);
+    }
+
+    @Override
+    public String getTypeByPage(int index, LabelTypeRequest labelTypeRequest, BTableRequest bTableRequest) {
+        if(index==1){
+            List<AutoValue> autoValueList=autoValueDao.getByType(AutoValueEnum.YJBQ.getIndex());
+            Long size=(long)autoValueList.size();
+            return commonService.tableReturn(bTableRequest.getsEcho(),size,autoValueList);
+        }else{
+            Page<LabelSec> page=commonService.getPage(bTableRequest,"label_type");
+            Label label= Wrappers.labelWrapper.unwrap(labelRequest);
+            commonService.checkIsOrgan(label);
+            page.setEntity(label);
+            List<LabelModel> labelList=labelDao.getByPage(page).stream().map(Wrappers.labelWrapper::wrap).collect(Collectors.toList());
+            Long size=labelDao.getSizeByPage(page);
+            return commonService.tableReturn(bTableRequest.getsEcho(),size,labelList);
+        }
     }
 
     @Override

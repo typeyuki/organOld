@@ -3,10 +3,12 @@ package com.organOld.web.controller;
 import com.organOld.dao.entity.SysUser;
 import com.organOld.service.contract.CardConsumeRequest;
 import com.organOld.service.contract.Result;
+import com.organOld.service.enumModel.RecordTypeEnum;
 import com.organOld.service.model.OldmanAllInfoModel;
 import com.organOld.service.model.OrganQueryIntegralModel;
 import com.organOld.service.service.CardService;
 import com.organOld.service.service.OldmanService;
+import com.organOld.service.service.RecordService;
 import com.organOld.service.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,6 +31,8 @@ public class CardController {
     UserService userService;
     @Autowired
     OldmanService oldmanService;
+    @Autowired
+    RecordService recordService;
 
     @ResponseBody
     @RequestMapping(value = "",method = RequestMethod.GET)
@@ -60,8 +64,9 @@ public class CardController {
      */
     @ResponseBody
     @RequestMapping(value = "/info",method = RequestMethod.GET)
-    public Result info(int oldmanId){
+    public Result info(@RequestParam int oldmanId,@RequestParam int organId){
         OldmanAllInfoModel oldmanAllInfoModel =oldmanService.getOldmanInfo(oldmanId);
+        recordService.save(oldmanId,organId, RecordTypeEnum.INFO.getIndex());
         if(oldmanAllInfoModel.getOldman()==null) return new Result(false,"找不到");
         else  return new Result(true,oldmanAllInfoModel);
     }
@@ -74,16 +79,18 @@ public class CardController {
      */
     @ResponseBody
     @RequestMapping(value = "/integral",method = RequestMethod.GET)
-    public Result integral(int oldmanId){
+    public Result integral(@RequestParam int oldmanId,@RequestParam int organId){
         Result result=oldmanService.getIntegralByOldmanId(oldmanId);
+        recordService.save(oldmanId,organId, RecordTypeEnum.IN.getIndex());
         return result;
     }
 
 
     @ResponseBody
     @RequestMapping(value = "/sign",method = RequestMethod.GET)
-    public Result integral(@RequestParam int oldmanId,@RequestParam int organId){
+    public Result sign(@RequestParam int oldmanId,@RequestParam int organId){
         Result result=new Result(true,"签到成功");
+        recordService.save(oldmanId,organId, RecordTypeEnum.SIGN.getIndex());
         return result;
     }
 }

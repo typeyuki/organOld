@@ -9,8 +9,18 @@ public class Record extends DBEntity implements DBInterface{
     private String data;
     private Oldman oldman;
     private Integer organId;
+    private Integer oldmanId;
     private Integer type;
     private Organ organ;
+
+
+    public Integer getOldmanId() {
+        return oldmanId;
+    }
+
+    public void setOldmanId(Integer oldmanId) {
+        this.oldmanId = oldmanId;
+    }
 
     public Organ getOrgan() {
         return organ;

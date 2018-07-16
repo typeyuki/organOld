@@ -47,6 +47,12 @@ public class RecordServiceImpl implements RecordService {
         return commonService.tableReturn(bTableRequest.getsEcho(),size,productModelList);
     }
 
-
-
+    @Override
+    public void save(int oldmanId, int organId, int type) {
+        Record record=new Record();
+        record.setOrganId(organId);
+        record.setType(type);
+        record.setOrganId(organId);
+        recordDao.save(record);
+    }
 }

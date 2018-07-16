@@ -44,4 +44,6 @@ public interface LabelService {
     Result getSecLabelByFirType(int firType);
 
     LabelFilterModel getFilterLabelRule(int i);
+
+    String getTypeByPage(int index, LabelTypeRequest labelTypeRequest, BTableRequest bTableRequest);
 }
