@@ -36,9 +36,11 @@ public class OrganModel {
 
     private Organ organ;//主要记录 id和权限
 
+
     List<AutoValue> districtList;
     List<OrganType> organTypeList;
     List<Organ> parentOrganList;//主要是 片区
+
     private String statusDesc;
 
 
@@ -69,6 +71,7 @@ public class OrganModel {
     public Integer getParent() {
         return parent;
     }
+
 
     public void setParent(Integer parent) {
         this.parent = parent;

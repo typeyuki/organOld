@@ -42,7 +42,6 @@ public interface LabelService {
     Result checkCanChange(int labelId);
 
     Result getSecLabelByFirType(int firType);
-
     LabelFilterModel getFilterLabelRule(int i);
 
     String getTypeByPage(int index, LabelTypeRequest labelTypeRequest, BTableRequest bTableRequest);

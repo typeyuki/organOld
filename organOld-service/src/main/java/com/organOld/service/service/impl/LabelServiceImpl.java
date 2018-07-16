@@ -70,9 +70,9 @@ public class LabelServiceImpl implements LabelService {
             return commonService.tableReturn(bTableRequest.getsEcho(),size,autoValueList);
         }else{
             Page<LabelSec> page=commonService.getPage(bTableRequest,"label_type");
-            Label label= Wrappers.labelWrapper.unwrap(labelRequest);
-            commonService.checkIsOrgan(label);
-            page.setEntity(label);
+//            Label label= Wrappers.labelWrapper.unwrap(labelRequest);
+//            commonService.checkIsOrgan(label);
+//            page.setEntity(label);
             List<LabelModel> labelList=labelDao.getByPage(page).stream().map(Wrappers.labelWrapper::wrap).collect(Collectors.toList());
             Long size=labelDao.getSizeByPage(page);
             return commonService.tableReturn(bTableRequest.getsEcho(),size,labelList);

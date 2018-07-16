@@ -31,6 +31,7 @@
                 <div class="ibox-content">
                     <form method="post" action="/organ/${(organ.id??)?string("update","add")}"  class="form-horizontal" enctype="multipart/form-data">
                         <input type="hidden" name="id" value="${organ.id!0}">
+
                         <input type="hidden" name="organFirType" value="${organ.organFirTypeId!}">
                         <div class="hr-line-dashed"></div>
                         <div class="form-group">
@@ -162,6 +163,7 @@
                         <div class="hr-line-dashed"></div>
                         <#if organ.organType?? && organ.organType!="居委会">
                         <#else >
+
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">父机构</label>
                                 <div class="col-sm-5">
@@ -183,30 +185,35 @@
                                 <div class="checkbox i-checks">
                                     <label>
                                         <input type="checkbox" value="consume"  name="auth" ${(organ.authConsume?? && organ.authConsume==1)?string("checked","")}> <i></i> 消费</label>
+
                                 </div>
                             </div>
                             <div class="col-sm-1">
                                 <div class="checkbox i-checks">
                                     <label>
                                         <input type="checkbox" value="sign"  name="auth" ${(organ.authSign?? && organ.authSign==1)?string("checked","")}> <i></i> 签到</label>
+
                                 </div>
                             </div>
                             <div class="col-sm-1">
                                 <div class="checkbox i-checks">
                                     <label>
                                         <input type="checkbox" value="product"  name="auth" ${(organ.authProduct?? && organ.authProduct==1)?string("checked","")}> <i></i> 商品</label>
+
                                 </div>
                             </div>
                             <div class="col-sm-1">
                                 <div class="checkbox i-checks">
                                     <label>
                                         <input type="checkbox" value="info"  name="auth" ${(organ.authQueryInfo?? && organ.authQueryInfo==1)?string("checked","")}> <i></i> 老人信息查询</label>
+
                                 </div>
                             </div>
                             <div class="col-sm-1">
                                 <div class="checkbox i-checks">
                                     <label>
                                         <input type="checkbox" value="integral"  name="auth" ${(organ.authQueryIntegral?? &&organ.authQueryIntegral==1)?string("checked","")}> <i></i> 积分查询</label>
+
                                 </div>
                             </div>
                         </div>
@@ -243,7 +250,6 @@ $("select[name='parent'] option").each(function () {
     }
 });
 </#if>
-
     <#if look??>
         $("input").prop("disabled",true);
         $("select").prop("disabled",true);

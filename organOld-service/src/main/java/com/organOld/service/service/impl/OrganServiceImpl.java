@@ -94,6 +94,7 @@ public class OrganServiceImpl implements OrganService{
         List<Organ> parentOrganList=organDao.getByType(33);//针对居委
         organModel.setParentOrganList(parentOrganList);
         return organModel;
+
     }
 
     @Override
@@ -425,6 +426,7 @@ public class OrganServiceImpl implements OrganService{
             oldStatus= OldStatusEnum.JG.getIndex();
         }else if(organ.getOrganFirTypeId()==27 || organ.getOrganFirTypeId()==28 || organ.getOrganFirTypeId()==29 || organ.getOrganFirTypeId()==34 || organ.getOrganFirTypeId()==35){
             oldStatus=OldStatusEnum.SQ.getIndex();
+
         }
         List<Oldman> oldmanList=new ArrayList<>();//用于更新老人 养老状态
 

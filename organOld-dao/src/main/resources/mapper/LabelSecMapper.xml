@@ -3,6 +3,7 @@
 <mapper namespace="com.organOld.dao.repository.LabelSecDao">
 
     <select id="getByFirType" resultType="com.organOld.dao.entity.label.LabelSec">
+
         SELECT * from label_type WHERE 1=1
         <if test="type!=0">
             and fir_index=#{type}
