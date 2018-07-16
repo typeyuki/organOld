@@ -79,12 +79,12 @@ $(document).ready(function(){
                                 }else{
                                     s+="<span class='btn btn-primary' onclick=feedback("+id+")>反馈</span>";
                                 }
-                                    s+="<span class='btn btn-primary' id='"+data+"'>修改</span>";
+                                    s+="<span class='btn btn-primary hide' id='"+data+"'>修改</span>";
                                 return s;
                             }else{
                                 return "<span class='btn btn-primary' onclick=newPageBefore("+id+","+name+",'/oldman/label/bind/?/man') >人员</span>" +
                                     "<span class='btn btn-primary' onclick=newPageBefore("+id+","+name+",'/oldman/label/?/feedback')>反馈信息</span>" +
-                                    "<span  class='btn btn-primary' id='"+id+"'>修改</span>";
+                                    "<span  class='btn btn-primary hide' id='"+id+"'>修改</span>";
                             }
                         }else{
                             //规则指定
@@ -96,13 +96,13 @@ $(document).ready(function(){
                                 }else{
                                     s+="<span class='btn btn-primary' onclick=feedback("+id+")>反馈</span>";
                                 }
-                                s+="<span class='btn btn-primary' id='"+data+"'>修改</span>";
+                                s+="<span class='btn btn-primary hide' id='"+data+"'>修改</span>";
                                 return s;
                             }else{
                                 return "<span class='btn btn-primary' onclick=newPageBefore("+id+","+name+",'/oldman/label/rule/?/man')>人员</span>" +
                                     "<span class='btn btn-primary' onclick=newPageBefore("+id+","+name+",'/oldman/label/rule/?')>规则</span>" +
                                     "<span class='btn btn-primary' onclick=newPageBefore("+id+","+name+",'/oldman/label/?/feedback')>反馈信息</span>" +
-                                    "<span class='btn btn-primary' class='edit' id='"+id+"'>修改</span>";
+                                    "<span class='btn btn-primary hide' class='edit' id='"+id+"'>修改</span>";
                             }
                         }
                     }

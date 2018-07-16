@@ -3,6 +3,7 @@ package com.organOld.service.service.impl;
 import com.organOld.dao.entity.product.Product;
 import com.organOld.dao.entity.product.ProductBook;
 import com.organOld.dao.entity.record.Record;
+import com.organOld.dao.repository.OldmanDao;
 import com.organOld.dao.repository.ProductBookDao;
 import com.organOld.dao.repository.ProductDao;
 import com.organOld.dao.repository.RecordDao;
@@ -11,6 +12,7 @@ import com.organOld.service.contract.BTableRequest;
 import com.organOld.service.contract.ProductBookRequest;
 import com.organOld.service.contract.ProductRequest;
 import com.organOld.service.contract.RecordRequest;
+import com.organOld.service.enumModel.RecordTypeEnum;
 import com.organOld.service.model.ProductBookModel;
 import com.organOld.service.model.ProductModel;
 import com.organOld.service.model.RecordModel;
@@ -32,6 +34,8 @@ public class RecordServiceImpl implements RecordService {
     CommonService commonService;
     @Autowired
     RecordDao recordDao;
+    @Autowired
+    OldmanDao oldmanDao;
 
     @Override
     public String getByPage(RecordRequest recordRequest, BTableRequest bTableRequest) {
@@ -49,6 +53,11 @@ public class RecordServiceImpl implements RecordService {
 
     @Override
     public void save(int oldmanId, int organId, int type) {
+        if(type== RecordTypeEnum.SIGN.getIndex()){
+            //签到 增加积分
+            int integral=1;
+            oldmanDao.addInregral(oldmanId,integral);
+        }
         Record record=new Record();
         record.setOrganId(organId);
         record.setType(type);

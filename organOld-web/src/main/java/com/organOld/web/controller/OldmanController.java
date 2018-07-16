@@ -358,4 +358,25 @@ public class OldmanController {
         return mv;
     }
 
+
+
+    /**
+     * 积分管理
+     * @return
+     */
+    @RequestMapping(value = "/integral",method = RequestMethod.GET)
+    public ModelAndView integral(){
+        return new ModelAndView("oldman/integral");
+    }
+
+    /**
+     * 获取积分 分页
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/integralData",method = RequestMethod.POST)
+    public String integral_data(OldmanIntegralRequest oldmanIntegralRequest, BTableRequest bTableRequest){
+        return oldmanService.getIntegralByPage(oldmanIntegralRequest,bTableRequest);
+    }
+
 }

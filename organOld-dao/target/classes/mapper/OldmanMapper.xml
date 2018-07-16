@@ -440,4 +440,54 @@
         </foreach>
         END
     </update>
+
+    <select id="getIntegralByPage" parameterType="com.organOld.dao.util.Page" resultMap="oldman">
+        select o.id,o.name,o.integral
+        FROM oldman_base o,organ org,auto_value x
+        WHERE o.disable=0 and x.id=o.xq_id AND org.id=x.parent_index
+        <if test="entity!=null and entity.organId!=null and entity.organId!=0">
+            and org.id in (
+            SELECT
+            case o.parent
+            when 0 then child.id
+            else o.id
+            end id
+            from organ o left join organ child on child.parent=o.id
+            WHERE o.id=#{entity.organId}
+            )
+        </if>
+        <if test="sortType!=null and sortType!=''">
+            ORDER BY ${sortType}
+        </if>
+        <if test="sort!=null and sort!=''">
+            ${sort}
+        </if>
+        <if test="length!=null and length!=0">
+            limit #{start},#{length}
+        </if>
+    </select>
+
+
+    <select id="getIntegralSizeByPage" parameterType="com.organOld.dao.util.Page" resultType="java.lang.Long">
+        select count(1)
+        FROM oldman_base o,organ org,auto_value x
+        WHERE o.disable=0 and x.id=o.xq_id AND org.id=x.parent_index
+        <if test="entity!=null and entity.organId!=null and entity.organId!=0">
+            and org.id in (
+            SELECT
+            case o.parent
+            when 0 then child.id
+            else o.id
+            end id
+            from organ o left join organ child on child.parent=o.id
+            WHERE o.id=#{entity.organId}
+            )
+        </if>
+    </select>
+
+    <update id="addInregral">
+        UPDATE oldman_base
+        set integral = integral+${integral}
+        WHERE id=#{oldmanId}
+    </update>
 </mapper>

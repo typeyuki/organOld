@@ -12,11 +12,13 @@ import com.organOld.service.model.ProductBookModel;
 import com.organOld.service.model.ProductModel;
 import com.organOld.service.service.CommonService;
 import com.organOld.service.service.ProductService;
+import com.organOld.service.util.ImgUpload;
 import com.organOld.service.wrapper.Wrappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -71,5 +73,27 @@ public class ProductServiceImpl implements ProductService {
         }
 
         return commonService.tableReturn(bTableRequest.getsEcho(),size,productBookModelList);
+    }
+
+
+    @Override
+    public void addOrUpdate(ProductRequest productRequest, String type, HttpServletRequest request) {
+        Product product=Wrappers.productWrapper.unwrap(productRequest);
+        if(!productRequest.getPic().isEmpty()){
+            try {
+                String path= ImgUpload.uploadFile(productRequest.getPic(), request,"product");
+                int index = path.indexOf("img");
+                String picUrl= path.substring(index, path.length());
+                product.setImgUrl(picUrl);
+            }catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        Integer organId=commonService.getIdBySession();
+        product.setOrganId(organId);
+        if(type.equals("add"))
+            productDao.save(product);
+        else
+            productDao.updateById(product);
     }
 }

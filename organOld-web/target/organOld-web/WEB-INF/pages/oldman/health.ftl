@@ -35,7 +35,7 @@
                     </div>
                 </div>
                 <div class="ibox-content">
-                    <div>
+                    <div class="jw">
                         <a onclick=newPage("134","健康管理",'/oldman/health/select') href="javascript:void(0);" class="btn btn-primary ">管理</a>
                     </div>
                     <div>
@@ -43,6 +43,19 @@
                         <input class="search" type="text" placeholder="模糊匹配">
                         <button id="search">搜索</button>
                     </div>
+                    <script>
+                        $.ajax({
+                            url: "/user/checkUserOrganType",
+                            type: "get",
+                            success: function (data) {
+                                if (data.success == true) {
+                                    if(data.data=="居委会" || data.data=="片区"){
+                                        $(".jw").hide();
+                                    }
+                                }
+                            }
+                        });
+                    </script>
                     <table class="table table-striped table-bordered table-hover dataTables-example">
                         <thead>
                         <tr>

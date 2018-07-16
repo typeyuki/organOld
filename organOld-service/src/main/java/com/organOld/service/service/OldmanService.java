@@ -53,4 +53,6 @@ public interface OldmanService {
     String getHealthSelectByPage(HealthSelectRequest healthSelectRequest, BTableRequest bTableRequest);
 
     void addOrUpdateHealthSelect(HealthSelect healthSelect, String type);
+
+    String getIntegralByPage(OldmanIntegralRequest oldmanIntegralRequest, BTableRequest bTableRequest);
 }

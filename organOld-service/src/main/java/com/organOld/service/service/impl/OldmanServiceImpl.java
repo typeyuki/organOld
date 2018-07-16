@@ -130,6 +130,18 @@ public class OldmanServiceImpl implements OldmanService {
         return commonService.tableReturn(bTableRequest.getsEcho(),size,economicModelList);
     }
 
+
+    @Override
+    public String getIntegralByPage(OldmanIntegralRequest oldmanIntegralRequest, BTableRequest bTableRequest) {
+        Page<OldmanIntegral> page=commonService.getPage(bTableRequest,"oldman_integral");
+        OldmanIntegral integral=Wrappers.oldmanWrapper.unwrapIntegral(oldmanIntegralRequest);
+        commonService.checkIsOrgan(integral);
+        page.setEntity(integral);
+        List<OldmanIntegralModel> oldmanIntegralModelList=oldmanBaseDao.getIntegralByPage(page).stream().map(Wrappers.oldmanWrapper::wrapIntegral).collect(Collectors.toList());
+        Long size=oldmanBaseDao.getIntegralSizeByPage(page);
+        return commonService.tableReturn(bTableRequest.getsEcho(),size,oldmanIntegralModelList);
+    }
+
     @Override
     public String getFamilyByPage(OldmanFamilyRequest familyRequest, BTableRequest bTableRequest, HttpSession session) {
         Page<OldmanFamily> page=commonService.getPage(bTableRequest,"oldman_family");

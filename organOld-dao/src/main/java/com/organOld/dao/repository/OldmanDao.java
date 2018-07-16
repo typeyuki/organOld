@@ -2,6 +2,8 @@ package com.organOld.dao.repository;
 
 
 import com.organOld.dao.entity.oldman.Oldman;
+import com.organOld.dao.entity.oldman.OldmanIntegral;
+import com.organOld.dao.util.Page;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -23,4 +25,10 @@ public interface OldmanDao extends BaseDao<Oldman,Integer>{
     Oldman getIntegralByOldmanId(int oldmanId);
 
     void updateOldStatusByIds(List<Oldman> oldmanList);
+
+    List<Oldman> getIntegralByPage(Page<OldmanIntegral> page);
+
+    Long getIntegralSizeByPage(Page<OldmanIntegral> page);
+
+    void addInregral(@Param("oldmanId") int oldmanId,@Param("integral") int integral);
 }

@@ -35,13 +35,22 @@ $(document).ready(function(){
                     "render": function(data, type, full) { // 返回自定义内容
                         return"<input type='checkbox' />"
                     }
+                },{
+                    "targets": [5], // 目标列位置，下标从0开始
+                    "data": "imgUrl", // 数据列名
+                    "render": function(data, type, full) { // 返回自定义内容
+                        if(data!=null && data!='')
+                            return"<img src="+data+" width='100px'/>";
+                        else
+                            return "";
+                    }
                 },
                 // 增加一列，包括删除和修改，同时将我们需要传递的数据传递到链接中
                 {
                     "targets": [7], // 目标列位置，下标从0开始
                     "data": "id", // 数据列名
                     "render": function(data, type, full) { // 返回自定义内容
-                        return "<span class='mod' id='"+data+"'>修改</span>";
+                        return "<span class='btn btn-primary' onclick='edit("+data+",this)'>修改</span>";
                     }
                 },
                 //不进行排序的列
@@ -85,3 +94,22 @@ $(document).ready(function(){
 
 });
 
+function add() {
+    $("#productModal form").attr("action","/product/add");
+    $("#productModal small").html("添加");
+    $("#productModal .sub").html("添加");
+    $("#productModal").modal();
+}
+
+function edit(id,obj) {
+    $("#productModal input[name='id']").val(id);
+    $("#productModal input[name='name']").val($(obj).parent().prev().prev().prev().prev().prev().text());
+    $("#productModal input[name='price']").val($(obj).parent().prev().prev().prev().prev().text());
+    $("#productModal textarea[name='intro']").html($(obj).parent().prev().prev().prev().text());
+
+    $("#productModal img").attr("src",($(obj).parent().prev().prev().find("img").attr("src")));
+    $("#productModal form").attr("action","/product/update");
+    $("#productModal small").html("修改");
+    $("#productModal .sub").html("修改");
+    $("#productModal").modal();
+}

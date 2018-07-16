@@ -4,8 +4,11 @@ import com.organOld.dao.entity.product.Product;
 import com.organOld.service.constant.TimeConstant;
 import com.organOld.service.contract.ProductRequest;
 import com.organOld.service.model.ProductModel;
+import com.organOld.service.util.ImgUpload;
 import com.organOld.service.util.Tool;
 import org.springframework.beans.BeanUtils;
+
+import java.io.IOException;
 
 
 public class ProductWrapper implements Wrapper<Product,ProductModel,ProductRequest> {
@@ -21,7 +24,12 @@ public class ProductWrapper implements Wrapper<Product,ProductModel,ProductReque
     @Override
     public Product unwrap(ProductRequest productRequest) {
         Product product=new Product();
-        BeanUtils.copyProperties(productRequest,product);
+        if(productRequest.getPrice()!=null && !productRequest.getPrice().equals(""))
+            product.setPrice(Double.parseDouble(productRequest.getPrice()));
+        product.setIntro(productRequest.getIntro());
+        if(productRequest.getId()!=null)
+        product.setId(productRequest.getId());
+        product.setName(productRequest.getName());
         return product;
     }
 }

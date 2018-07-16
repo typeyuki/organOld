@@ -2,6 +2,7 @@ package com.organOld.dao.entity.product;
 
 import com.organOld.dao.entity.DBEntity;
 import com.organOld.dao.entity.DBInterface;
+import org.springframework.web.multipart.MultipartFile;
 
 public class Product extends DBEntity implements DBInterface {
     private Integer organId;
@@ -9,6 +10,7 @@ public class Product extends DBEntity implements DBInterface {
     private double price;
     private String intro;
     private String imgUrl;
+
 
 
     public Integer getOrganId() {

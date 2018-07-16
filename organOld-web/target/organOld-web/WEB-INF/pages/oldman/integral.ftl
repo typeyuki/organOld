@@ -6,6 +6,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <#include "../common/head.ftl" />
+
+<#--<link href="/css/animate.min.css" rel="stylesheet">-->
     <link href="/css/style.min.css?v=4.0.0" rel="stylesheet">
     <link href="/static/css/common_table.css" rel="stylesheet">
     <link href="/static/css/oldman/base.css" rel="stylesheet">
@@ -17,7 +19,7 @@
         <div class="col-sm-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>商品管理 <small></small></h5>
+                    <h5>老人积分 <small>信息</small></h5>
                     <div class="ibox-tools">
                         <a class="collapse-link">
                             <i class="fa fa-chevron-up"></i>
@@ -28,28 +30,17 @@
                     </div>
                 </div>
                 <div class="ibox-content">
-                    <#--<#if organId?? && organId!=0>-->
-                    <#--<#else >-->
-                        <div>
-                            <a onclick="add()" href="javascript:void(0);" class="btn btn-primary ">添加</a>
-                            <a onclick="" href="javascript:void(0);" class="btn btn-primary ">删除</a>
-                        </div>
-                    <#--</#if>-->
                     <div>
-                        <input class="id" type="text" placeholder="序号">
-                        <input class="id" type="text" placeholder="模糊搜索">
+                        <input class="id" type="text" placeholder="老人序号">
+                        <input class="time" type="text" placeholder="模糊匹配">
                         <button id="search">搜索</button>
                     </div>
                     <table class="table table-striped table-bordered table-hover dataTables-example">
                         <thead>
                         <tr>
-                            <th><input type='checkbox' /></th>
-                            <th>序号</th>
-                            <th>名称</th>
-                            <th>价格</th>
-                            <th>描述</th>
-                            <th>图片</th>
-                            <th>更新时间</th>
+                            <th>老人序号</th>
+                            <th>老人姓名</th>
+                            <th>积分</th>
                             <th></th>
                         </tr>
                         </thead>
@@ -64,12 +55,9 @@
 
 </div>
 
-<#include "product_add.ftl" />
-<script>
-    var organId=${organId!0};
-</script>
 <script src="/js/content.min.js?v=1.0.0"></script>
-<script src="/static/js/product/product.js" ></script>
+<script src="/static/js/common.js"></script>
+<script src="/static/js/oldman/integral.js" ></script>
 <script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
 
 </body>

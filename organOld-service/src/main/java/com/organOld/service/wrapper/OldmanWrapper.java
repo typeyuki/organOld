@@ -3,13 +3,11 @@ package com.organOld.service.wrapper;
 import com.organOld.dao.entity.AutoValue;
 import com.organOld.dao.entity.oldman.HealthSelect;
 import com.organOld.dao.entity.oldman.Oldman;
+import com.organOld.dao.entity.oldman.OldmanIntegral;
 import com.organOld.dao.entity.organ.Organ;
 import com.organOld.service.constant.TimeConstant;
 import com.organOld.service.enumModel.*;
-import com.organOld.service.model.LabelAllRuleModel;
-import com.organOld.service.model.OldmanAddInfoModel;
-import com.organOld.service.model.OldmanModel;
-import com.organOld.service.model.OrganQueryIntegralModel;
+import com.organOld.service.model.*;
 import com.organOld.service.service.CommonService;
 import com.organOld.service.util.Tool;
 import com.organOld.service.contract.*;
@@ -51,8 +49,8 @@ public class OldmanWrapper implements Wrapper<Oldman,OldmanModel,OldmanRequest> 
         oldmanModel.setPoliticalStatus(oldman.getPoliticalStatus());
         if(oldman.getOldStatus()!=null && oldman.getOldStatus()!=0)
             oldmanModel.setOldStatus(OldStatusEnum.getValue(oldman.getOldStatus()));
-
-        oldmanModel.setLabelManInfoModelList(oldman.getLabelManList().stream().map(Wrappers.labelWrapper::wrapManInfo).collect(Collectors.toList()));
+        if(oldman.getLabelManList()!=null && oldman.getLabelManList().size()>0)
+            oldmanModel.setLabelManInfoModelList(oldman.getLabelManList().stream().map(Wrappers.labelWrapper::wrapManInfo).collect(Collectors.toList()));
         return oldmanModel;
     }
 
@@ -136,5 +134,18 @@ public class OldmanWrapper implements Wrapper<Oldman,OldmanModel,OldmanRequest> 
             return organQueryIntegralModel;
         }
         return null;
+    }
+
+    public OldmanIntegral unwrapIntegral(OldmanIntegralRequest oldmanIntegralRequest) {
+        OldmanIntegral oldmanIntegral=new OldmanIntegral();
+        return oldmanIntegral;
+    }
+
+    public OldmanIntegralModel wrapIntegral(Oldman oldman) {
+        OldmanIntegralModel oldmanIntegralModel=new OldmanIntegralModel();
+        oldmanIntegralModel.setOldmanId(oldman.getId());
+        oldmanIntegralModel.setIntegral(oldman.getIntegral());
+        oldmanIntegralModel.setOldmanName(oldman.getName());
+        return oldmanIntegralModel;
     }
 }

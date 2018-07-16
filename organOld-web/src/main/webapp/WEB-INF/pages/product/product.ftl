@@ -31,7 +31,7 @@
                     <#--<#if organId?? && organId!=0>-->
                     <#--<#else >-->
                         <div>
-                            <a onclick="$('#selectModal').modal()" href="javascript:void(0);" class="btn btn-primary ">添加</a>
+                            <a onclick="add()" href="javascript:void(0);" class="btn btn-primary ">添加</a>
                             <a onclick="" href="javascript:void(0);" class="btn btn-primary ">删除</a>
                         </div>
                     <#--</#if>-->
@@ -64,7 +64,7 @@
 
 </div>
 
-<#--<#include "add_product.ftl" />-->
+<#include "product_add.ftl" />
 <script>
     var organId=${organId!0};
 </script>

@@ -637,7 +637,7 @@
         ,auto_value x,auto_value d,organ org
         WHERE x.id=o.xq_id AND org.id=x.parent_index AND d.id=org.district_id
               AND o.id NOT IN (SELECT oldman_id FROM label_oldman WHERE label_id=#{labelId}) and o.disable=0
-        <if test="entity!=null and entity.organId!=null and entity.organId!=0">
+        <if test="page.entity!=null and page.entity.organId!=null and page.entity.organId!=0">
             and org.id in (
             SELECT
             case o.parent
@@ -645,7 +645,7 @@
             else o.id
             end id
             from organ o left join organ child on child.parent=o.id
-            WHERE o.id=#{entity.organId}
+            WHERE o.id=#{page.entity.organId}
             )
         </if>
         ORDER BY ${page.sortType} ${page.sort}

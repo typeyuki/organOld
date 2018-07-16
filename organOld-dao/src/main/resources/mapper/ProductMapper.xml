@@ -28,4 +28,19 @@
     <select id="getById" resultType="com.organOld.dao.entity.product.Product">
         SELECT * FROM product WHERE id=#{id}
     </select>
+
+
+    <insert id="save" parameterType="com.organOld.dao.entity.product.Product">
+        INSERT into product(name,price,intro,img_url,organ_id)
+        VALUES (#{name},#{price},#{intro},#{imgUrl},#{organId})
+    </insert>
+
+    <update id="updateById" parameterType="com.organOld.dao.entity.product.Product">
+        UPDATE product
+        set name=#{name},price=#{price},intro=#{intro}
+        <if test="imgUrl!=null and imgUrl!=''">
+            ,img_url=#{imgUrl}
+        </if>
+        where id=#{id}
+    </update>
 </mapper>
