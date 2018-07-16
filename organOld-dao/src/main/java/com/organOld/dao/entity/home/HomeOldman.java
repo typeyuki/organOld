@@ -3,6 +3,7 @@ package com.organOld.dao.entity.home;
 import com.organOld.dao.entity.DBEntity;
 import com.organOld.dao.entity.DBInterface;
 import com.organOld.dao.entity.oldman.Oldman;
+import com.organOld.dao.entity.organ.Organ;
 import sun.dc.pr.PRError;
 
 import java.util.Date;
@@ -13,10 +14,19 @@ public class HomeOldman extends DBEntity implements DBInterface{
     private Date timeIn;
     private Date timeOut;
     private int isService;
+    private Organ organ;
 
     private Home home;
 
     private Integer organId;//居委ID
+
+    public Organ getOrgan() {
+        return organ;
+    }
+
+    public void setOrgan(Organ organ) {
+        this.organ = organ;
+    }
 
     public int getIsService() {
         return isService;

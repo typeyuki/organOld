@@ -17,7 +17,7 @@
     <select id="getByPage" parameterType="com.organOld.dao.util.Page" resultMap="oldmanEconomic">
         SELECT oe.id,ob.id oid,e.value economic,oe.time,ob.name
         FROM oldman_economic oe left join auto_value e on e.id=oe.economic_index,oldman_base ob,organ org,auto_value x
-        WHERE ob.id=oe.oldman_id AND x.id=ob.xq_id AND org.id=x.parent_index
+        WHERE ob.id=oe.oldman_id AND x.id=ob.xq_id AND org.id=x.parent_index and ob.disable=0
         <if test="entity!=null and entity.organId!=null and entity.organId!=0">
             and org.id in (
             SELECT
@@ -46,7 +46,7 @@
     <select id="getSizeByPage" parameterType="com.organOld.dao.util.Page" resultType="java.lang.Long">
         SELECT count(1)
         FROM oldman_economic oe,oldman_base ob,organ org,auto_value x
-        WHERE oe.oldman_id=ob.id AND x.id=ob.xq_id AND org.id=x.parent_index
+        WHERE oe.oldman_id=ob.id AND x.id=ob.xq_id AND org.id=x.parent_index and ob.disable=0
         <if test="entity!=null and entity.organId!=null and entity.organId!=0">
             and org.id in (
             SELECT

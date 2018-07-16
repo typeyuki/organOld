@@ -32,7 +32,7 @@ public class HomeOldmanWrapper implements Wrapper<HomeOldman,HomeOldmanModel,Hom
             homeOldmanModel.setTimeOut(Tool.dateToString(homeOldman.getTimeOut(),"yyyy-MM-dd"));
         }
         homeOldmanModel.setTime(Tool.dateToString(homeOldman.getTime(),"yyyy-MM-dd"));
-
+        homeOldmanModel.setOrgan(homeOldman.getOrgan());
         return homeOldmanModel;
     }
 

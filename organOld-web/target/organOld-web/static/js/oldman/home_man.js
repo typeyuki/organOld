@@ -17,7 +17,7 @@ $(document).ready(function(){
         data:"timeOut"
     },{
         data:"isService"
-    },{
+    },{},{
         data:"time"
     }
     ];
@@ -47,17 +47,24 @@ $(document).ready(function(){
                 if(data!=null) return data;
                 else return "";
             }
+        },{
+            "targets": [7], // 目标列位置，下标从0开始
+            "data": "organ", // 数据列名
+            "render": function(data, type, full) { // 返回自定义内容
+                if(data!=null) return "<button class='btn btn-primary' onclick=newPage("+data.id+",'"+data.name+"','/organ/"+data.id+"/info?look=true')>"+data.name+"</button>";
+                else return "";
+            }
         },
         // 增加一列，包括删除和修改，同时将我们需要传递的数据传递到链接中
         {
-            "targets": [8], // 目标列位置，下标从0开始
+            "targets": [9], // 目标列位置，下标从0开始
             "data": "oldmanId", // 数据列名
             "render": function(data, type, full) { // 返回自定义内容
                 return "<button class='btn btn-primary' id='"+data+"' onclick=newPage("+data+",$(this).parent().prev().prev().prev().prev().prev().prev().prev().text(),'/oldman/"+data+"/info')>查看</button>";
             }
         },
         //不进行排序的列
-        { "bSortable": false, "aTargets": [ 1,2 ,3, 4,5,6,7,8] }
+        { "bSortable": false, "aTargets": [ 1,2 ,3, 4,5,6,7,9,8] }
     ];
 
     var table =$(".dataTables-example").dataTable(

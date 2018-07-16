@@ -26,6 +26,7 @@ public class HomeWrapper implements Wrapper<Home,HomeModel,HomeRequest> {
         if(home.getOrgan()!=null){
             homeModel.setOrganName(home.getOrgan().getName());
         }
+        homeModel.setOrgan(home.getOrgan());
         return homeModel;
     }
 

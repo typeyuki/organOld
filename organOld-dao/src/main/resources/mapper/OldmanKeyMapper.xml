@@ -29,7 +29,7 @@
             ob.goal,ob.key_status
         </if>
         FROM oldman_base ob left join organ_oldman oo on oo.oldman_id=ob.id,organ org,auto_value x
-        WHERE x.id=ob.xq_id AND org.id=x.parent_index
+        WHERE x.id=ob.xq_id AND org.id=x.parent_index and ob.disable=0
 
         <if test="entity!=null and entity.future!=null and entity.future!=''">
             and (ob.future_key_status =2 or ob.future_key_status =3 or ob.future_key_status =4)
@@ -90,7 +90,7 @@
     <select id="getSizeByPage" parameterType="com.organOld.dao.util.Page" resultType="java.lang.Long">
         SELECT count(1)
         FROM oldman_base ob left join organ_oldman oo on oo.oldman_id=ob.id,organ org,auto_value x
-        WHERE x.id=ob.xq_id AND org.id=x.parent_index
+        WHERE x.id=ob.xq_id AND org.id=x.parent_index and ob.disable=0
         <if test="entity!=null and entity.future!=null and entity.future!=''">
             and (ob.future_key_status =2 or ob.future_key_status =3 or ob.future_key_status =4)
             <if test="entity!=null and  entity.goalStart!=null and entity.goalStart!=0">
@@ -146,7 +146,7 @@
 		  left join health_select_oldman hso on hso.oldman_id=ob.id left join health_select hs on hs.id=hso.health_select_id and hs.fir_type in (1,2)
 		  left join organ_oldman oo on oo.oldman_id=ob.id left join organ org on org.id=oo.organ_id left join organ_type ot on ot.id=org.organ_type_id and ot.fir_type=21,
 		  oldman_economic oe,oldman_family oldf,oldman_health_base ohb
-        where ob.id=oe.oldman_id and ob.id=oldf.oldman_id and ob.id=ohb.oldman_id
+        where ob.id=oe.oldman_id and ob.id=oldf.oldman_id and ob.id=ohb.oldman_id and ob.disable=0
     </select>
 
 
@@ -166,5 +166,6 @@
         select a.id from
         (select oo.id from oldman_base oo where oo.id>${current} limit 0,#{round} ) as a
         )
+        and ob.disable=0
     </select>
 </mapper>

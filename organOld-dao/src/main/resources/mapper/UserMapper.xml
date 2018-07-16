@@ -3,7 +3,7 @@
 <mapper namespace="com.organOld.dao.repository.UserDao">
 
     <select id="getByUsername" resultType="com.organOld.dao.entity.SysUser">
-      SELECT id,username,password FROM sysuser WHERE username=#{username}
+      SELECT id,username,password FROM sysuser WHERE username=#{username} and disable=0
     </select>
 
     <select id="getSysAuthoritiesByUsername" resultType="com.organOld.dao.entity.SysAuthority">

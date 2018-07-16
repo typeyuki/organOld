@@ -18,7 +18,7 @@
     <select id="getByPage" parameterType="com.organOld.dao.util.Page" resultMap="linkman">
         SELECT l.id,l.name,l.phone,l.relation,l.time,o.id oid,o.name oname
         FROM linkman l,oldman_base o,organ org,auto_value x
-        WHERE l.oldman_id=o.id AND x.id=o.xq_id AND org.id=x.parent_index
+        WHERE l.oldman_id=o.id AND x.id=o.xq_id AND org.id=x.parent_index and o.disable=0
         <if test="entity!=null and entity.id!=null and entity.id!=0">
             and id=#{entity.id}
         </if>
@@ -50,7 +50,7 @@
     <select id="getSizeByPage" parameterType="com.organOld.dao.util.Page" resultType="java.lang.Long">
         SELECT count(1)
         FROM linkman l,oldman_base o,organ org,auto_value x
-        WHERE l.oldman_id=o.id AND x.id=o.xq_id AND org.id=x.parent_index
+        WHERE l.oldman_id=o.id AND x.id=o.xq_id AND org.id=x.parent_index and o.disable=0
         <if test="entity!=null and entity.id!=null and entity.id!=0">
             and id=#{entity.id}
         </if>

@@ -36,7 +36,7 @@
         left join auto_value p on o.political_status=p.id
         left join label_oldman lo on lo.oldman_id=o.id left join label l on lo.label_id=l.id,
         auto_value x,auto_value d,organ org
-        WHERE  x.id=o.xq_id AND org.id=x.parent_index AND d.id=org.district_id
+        WHERE  x.id=o.xq_id AND org.id=x.parent_index AND d.id=org.district_id and o.disable=0
 
         <if test="length!=null and length!=0">
             and o.id in(
@@ -167,7 +167,7 @@
         FROM oldman_base o left join auto_value c on o.census=c.id
         left join auto_value p on o.political_status=p.id,
         auto_value x,auto_value d,organ org,oldman_family ofa,oldman_economic oe,oldman_health_base ohb
-        WHERE  x.id=o.xq_id AND org.id=x.parent_index AND d.id=org.district_id and ofa.oldman_id=o.id and oe.oldman_id=o.id AND ohb.oldman_id=o.id
+        WHERE  x.id=o.xq_id AND org.id=x.parent_index AND d.id=org.district_id and ofa.oldman_id=o.id and oe.oldman_id=o.id AND ohb.oldman_id=o.id and o.disable=0
         <if test="entity.birthdayStart!=null">
             <![CDATA[
             and DATE_FORMAT(o.birthday,'%Y') >= DATE_FORMAT(#{entity.birthdayStart},'%Y')

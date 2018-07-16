@@ -328,7 +328,7 @@
         FROM oldman_base o left join auto_value c on o.census=c.id left join auto_value p on o.political_status=p.id
 		  ,auto_value x,auto_value d,organ org,label_oldman lo
         WHERE x.id=o.xq_id AND org.id=x.parent_index AND d.id=org.district_id
-              AND lo.label_id=#{entity.labelId} AND o.id=lo.oldman_id
+              AND lo.label_id=#{entity.labelId} AND o.id=lo.oldman_id and o.disable=0
         <if test="entity!=null and entity.organId!=null and entity.organId!=0">
             and org.id in (
             SELECT
@@ -348,7 +348,7 @@
     <select id="getBindManSizeByPage" parameterType="com.organOld.dao.util.Page" resultType="java.lang.Long">
         SELECT count(1)
         FROM oldman_base o,label_oldman lo,auto_value x,organ org
-        WHERE lo.label_id=#{entity.labelId} AND o.id=lo.oldman_id and x.id=o.xq_id AND org.id=x.parent_index
+        WHERE lo.label_id=#{entity.labelId} AND o.id=lo.oldman_id and x.id=o.xq_id AND org.id=x.parent_index and o.disable=0
         <if test="entity!=null and entity.organId!=null and entity.organId!=0">
             and org.id in (
             SELECT
@@ -367,7 +367,7 @@
         SELECT o.id oldman_id
         FROM oldman_base o left join home_oldman ho on ho.oldman_id=o.id left join home h on h.id=ho.home_id
         ,auto_value x,auto_value d,organ org,oldman_family oldf, oldman_economic oe, oldman_health_base ohb
-        WHERE x.id=o.xq_id AND org.id=x.parent_index AND d.id=org.district_id  AND oe.oldman_id=o.id AND oldf.oldman_id=o.id AND ohb.oldman_id=o.id
+        WHERE x.id=o.xq_id AND org.id=x.parent_index AND d.id=org.district_id  AND oe.oldman_id=o.id AND oldf.oldman_id=o.id AND ohb.oldman_id=o.id and o.disable=0
         <if test="rule.birStart!=null">
             <![CDATA[
             and DATE_FORMAT(o.birthday,'%Y') >= DATE_FORMAT(#{rule.birStart},'%Y')
@@ -486,7 +486,7 @@
         left join auto_value hbe on  hbe.id=ohb.eyesight
         WHERE x.id=o.xq_id AND org.id=x.parent_index AND d.id=org.district_id
         AND oe.oldman_id=o.id AND oldf.oldman_id=o.id
-        AND ohb.oldman_id=o.id
+        AND ohb.oldman_id=o.id and o.disable=0
         <if test="rule.birStart!=null">
             <![CDATA[
             and DATE_FORMAT(o.birthday,'%Y') >= DATE_FORMAT(#{rule.birStart},'%Y')
@@ -599,7 +599,7 @@
     <select id="getRuleManSizeByPage" parameterType="com.organOld.dao.util.Page" resultType="java.lang.Long">
         SELECT count(1)
         FROM oldman_base o,oldman_family oldf
-        WHERE oldf.oldman_id=o.id
+        WHERE oldf.oldman_id=o.id and o.disable=0
         <if test="rule.birStart!=null">
             <![CDATA[
             and DATE_FORMAT(o.birthday,'%Y') >= DATE_FORMAT(#{rule.birStart},'%Y')
@@ -636,7 +636,7 @@
         FROM oldman_base o left join auto_value c on o.census=c.id left join auto_value p on o.political_status=p.id
         ,auto_value x,auto_value d,organ org
         WHERE x.id=o.xq_id AND org.id=x.parent_index AND d.id=org.district_id
-              AND o.id NOT IN (SELECT oldman_id FROM label_oldman WHERE label_id=#{labelId})
+              AND o.id NOT IN (SELECT oldman_id FROM label_oldman WHERE label_id=#{labelId}) and o.disable=0
         <if test="entity!=null and entity.organId!=null and entity.organId!=0">
             and org.id in (
             SELECT
@@ -656,7 +656,7 @@
     <select id="getNoSelectManDataSizeByPage" parameterType="com.organOld.dao.util.Page" resultType="java.lang.Long">
         SELECT count(1)
         FROM oldman_base o
-        WHERE o.id NOT IN (SELECT oldman_id FROM label_oldman WHERE label_id=#{labelId})
+        WHERE o.id NOT IN (SELECT oldman_id FROM label_oldman WHERE label_id=#{labelId}) and o.disable=0
     </select>
 
 

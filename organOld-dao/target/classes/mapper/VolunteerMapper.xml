@@ -32,7 +32,7 @@
     <select id="getByPage" parameterType="com.organOld.dao.util.Page" resultMap="volunteer">
         SELECT v.id,ob.id oid,ob.name,v.time
         FROM volunteer v,oldman_base ob,organ org,auto_value x
-        WHERE ob.id=v.oldman_id AND x.id=ob.xq_id AND org.id=x.parent_index
+        WHERE ob.id=v.oldman_id AND x.id=ob.xq_id AND org.id=x.parent_index and ob.disable=0
         <if test="entity!=null and entity.organId!=null and entity.organId!=0">
             and org.id in (
             SELECT
@@ -58,7 +58,7 @@
     <select id="getSizeByPage" parameterType="com.organOld.dao.util.Page" resultType="java.lang.Long">
         SELECT count(1)
         FROM volunteer v,oldman_base ob,organ org,auto_value x
-        WHERE ob.id=v.oldman_id AND x.id=ob.xq_id AND org.id=x.parent_index
+        WHERE ob.id=v.oldman_id AND x.id=ob.xq_id AND org.id=x.parent_index and ob.disable=0
         <if test="entity!=null and entity.organId!=null and entity.organId!=0">
             and org.id in (
             SELECT

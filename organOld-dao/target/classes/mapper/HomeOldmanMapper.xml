@@ -12,6 +12,10 @@
             <id property="id" column="oid" />
             <result property="name" column="name"/>
         </association>
+        <association property="organ" javaType="com.organOld.dao.entity.organ.Organ">
+            <id property="id" column="orgid" />
+            <result property="name" column="orgname"/>
+        </association>
         <association property="home" javaType="com.organOld.dao.entity.home.Home">
             <id property="id" column="hid" />
             <result property="firType" column="fir_type"/>
@@ -21,15 +25,16 @@
 
 
     <select id="getByPage" parameterType="com.organOld.dao.util.Page" resultMap="homeOldman">
-        SELECT ho.id,ho.time_in,ho.time_out,ho.is_service,o.id oid,o.name,h.id hid,ho.time,h.fir_type,
+        SELECT ho.id,ho.time_in,ho.time_out,ho.is_service,o.id oid,o.name,h.id hid,ho.time,orgDy.id orgid,orgDy.name orgname,h.fir_type,
         case h.fir_type
         when 2 then c.level
         when 4 then hd.name
         when 5 then org.name
         else h.sec_type
         end sec_type
-        FROM home_oldman ho,oldman_base o,organ jw,auto_value x,home h left join chx c on c.id=h.sec_type left join organ org on org.id=h.sec_type left join home_doctor hd on hd.id=h.sec_type
-        WHERE ho.oldman_id=o.id AND x.id=o.xq_id AND jw.id=x.parent_index and ho.home_id=h.id
+        FROM home_oldman ho left join organ orgDy on ho.organ_id=orgDy.id
+        ,oldman_base o,organ jw,auto_value x,home h left join chx c on c.id=h.sec_type left join organ org on org.id=h.sec_type left join home_doctor hd on hd.id=h.sec_type
+        WHERE ho.oldman_id=o.id AND x.id=o.xq_id AND jw.id=x.parent_index and ho.home_id=h.id and o.disable=0
         <if test="entity!=null and entity.oldman!=null and entity.oldman.id!=null and entity.oldman.id!=0">
             and o.id=#{entity.oldman.id}
         </if>
@@ -61,7 +66,7 @@
     <select id="getSizeByPage" parameterType="com.organOld.dao.util.Page" resultType="java.lang.Long">
         SELECT count(1)
         FROM home_oldman ho,oldman_base o,organ jw,auto_value x
-        WHERE ho.oldman_id=o.id AND x.id=o.xq_id AND jw.id=x.parent_index
+        WHERE ho.oldman_id=o.id AND x.id=o.xq_id AND jw.id=x.parent_index and o.disable=0
         <if test="entity!=null and entity.organId!=null and entity.organId!=0">
             and jw.id in (
             SELECT

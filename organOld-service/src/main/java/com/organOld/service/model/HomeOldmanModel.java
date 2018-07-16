@@ -1,5 +1,7 @@
 package com.organOld.service.model;
 
+import com.organOld.dao.entity.organ.Organ;
+
 public class HomeOldmanModel {
     private int id;
     private int oldmanId;
@@ -10,6 +12,15 @@ public class HomeOldmanModel {
     private String homeType;
     private String homeName;
     private String isService;
+    private Organ organ;
+
+    public Organ getOrgan() {
+        return organ;
+    }
+
+    public void setOrgan(Organ organ) {
+        this.organ = organ;
+    }
 
     public String getIsService() {
         return isService;
