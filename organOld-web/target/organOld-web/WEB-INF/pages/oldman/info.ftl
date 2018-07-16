@@ -47,13 +47,12 @@
                             <label class="col-sm-2 control-label">姓名：${info.oldman.name!}</label>
                             <label class="col-sm-2 control-label">性别：${info.oldman.sex!}</label>
                             <label class="col-sm-2 control-label">年龄：${info.oldman.age!}</label>
-                            <label class="col-sm-2 control-label">政治面貌：${info.oldman.politicalStatus!}</label>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">电话：${info.oldman.phone!}</label>
                             <label class="col-sm-2 control-label">政治面貌：${info.oldman.politicalStatus!}</label>
                             <label class="col-sm-2 control-label">户籍：${info.oldman.census!}</label>
-                            <label class="col-sm-2 control-label">身份证号码：${info.oldman.pid!}</label>
+                            <label class="col-sm-3 control-label">身份证号码：${info.oldman.pid!}</label>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">片区：${info.oldman.dName!}</label>
@@ -200,12 +199,20 @@
                                         <label class="col-sm-2 control-label">居家养老</label>
                                         <label class="col-sm-2 control-label">${list.homeName}</label>
                                         <label class="col-sm-2 control-label">类型：${list.homeType}</label>
-                                        <label class="col-sm-2 control-label">服务时间：${list.timeIn}-${list.timeOut}</label>
+                                        <#if list.homeType=="长护险">
+                                            <label class="col-sm-2 control-label">是否已获得服务：${list.isService}</label>
+                                        <#else >
+                                            <label class="col-sm-2 control-label">服务时间：${list.timeIn}-${list.timeOut}</label>
+                                        </#if>
                                     <#else >
                                         <label class="col-sm-2 control-label"></label>
                                         <label class="col-sm-2 control-label">${list.homeName}</label>
                                         <label class="col-sm-2 control-label">类型：${list.homeType}</label>
-                                        <label class="col-sm-2 control-label">服务时间：${list.timeIn}-${list.timeOut}</label>
+                                        <#if list.homeType=="长护险">
+                                            <label class="col-sm-2 control-label">是否已获得服务：${list.isService}</label>
+                                        <#else >
+                                            <label class="col-sm-2 control-label">服务时间：${list.timeIn}-${list.timeOut}</label>
+                                        </#if>
                                     </#if>
                                 </div>
                             </#list>
@@ -237,7 +244,7 @@
         success: function (result) {
             if(result.success==true){
                 for(var i=0;i<result.data.length;i++){
-                    var l=$("<label style='margin: 5px'>"+result.data[i]+"</label>已落实<br>");
+                    var l=$("<label style='margin: 5px'>"+result.data[i].labelName+"</label>"+result.data[i].isImplement+"<br>");
                     $("#label").append(l);
                 }
             }

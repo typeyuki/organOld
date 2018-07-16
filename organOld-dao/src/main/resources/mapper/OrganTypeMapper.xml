@@ -3,7 +3,13 @@
 <mapper namespace="com.organOld.dao.repository.OrganTypeDao">
 
     <select id="getByFirType" resultType="com.organOld.dao.entity.organ.OrganType">
-      SELECT * FROM organ_type WHERE fir_type=#{firType}
+      SELECT * FROM organ_type WHERE
+            fir_type=#{firType}
+
+    </select>
+
+    <select id="getAllOldmanType" resultType="com.organOld.dao.entity.organ.OrganType">
+        SELECT * from organ_type WHERE fir_type=21 or fir_type=22
     </select>
 
 </mapper>

@@ -16,6 +16,11 @@
         FROM user_organ uo,sysuser u
         WHERE uo.user_id=u.id AND u.username=#{username}
     </select>
+    <select id="getOrganTypeByUsername" resultType="java.lang.String">
+        SELECT ot.sec_type
+        FROM user_organ uo,sysuser u,organ o,organ_type ot
+        WHERE uo.user_id=u.id AND u.username=#{username} and uo.organ_id=o.id AND o.organ_type_id=ot.id
+    </select>
 
     <insert id="save" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO sysuser(username,password) VALUE (#{username},#{password})
@@ -53,4 +58,25 @@
     <select id="getAllRole" resultType="com.organOld.dao.entity.SysRole">
         SELECT  * from sysrole
     </select>
+
+    <select id="getJwUserId" resultType="java.lang.Integer">
+        SELECT u.id
+        FROM sysuser u,organ o,user_organ uo
+        WHERE (o.organ_type_id=2 or o.organ_type_id=33) and u.id=uo.user_id and uo.organ_id=o.id
+        <if test="organId!=null and organId!=0">
+            and o.parent=#{organId}
+        </if>
+    </select>
+
+
+    <select id="ckeckOrganLogin" resultType="com.organOld.dao.entity.organ.Organ">
+        SELECT o.id,o.auth_consume,o.auth_sign,o.auth_query_info,o.auth_query_integral
+        FROM organ o,sysuser u,user_organ uo
+        WHERE u.username=#{username} and password=#{password} and o.id=uo.organ_id and u.id=uo.user_id and u.disable=0
+    </select>
+
+    <update id="setDisableByOrganId">
+        UPDATE sysuser u,user_organ uo set u.disable=1
+        WHERE uo.organ_id=#{organId} and u.id=uo.user_id
+    </update>
 </mapper>

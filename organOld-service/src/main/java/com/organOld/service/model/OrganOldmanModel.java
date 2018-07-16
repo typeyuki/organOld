@@ -7,7 +7,7 @@ public class OrganOldmanModel extends Model {
     private String organName;
     private String timeIn;
     private String timeOut;
-    private int num;
+    private String num;
 
 
     public String getOrganName() {
@@ -58,11 +58,11 @@ public class OrganOldmanModel extends Model {
         this.timeOut = timeOut;
     }
 
-    public int getNum() {
+    public String getNum() {
         return num;
     }
 
-    public void setNum(int num) {
+    public void setNum(String num) {
         this.num = num;
     }
 }

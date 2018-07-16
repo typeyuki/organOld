@@ -2,8 +2,10 @@ package com.organOld.dao.entity.oldman;
 
 
 import com.organOld.dao.entity.DBInterface;
+import com.organOld.dao.entity.label.LabelMan;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * 老人
@@ -21,13 +23,18 @@ public class Oldman extends Man implements DBInterface{
     private Integer keyStatus;
     private Integer xqId;
     private Integer floor;
-
+    private Integer isHandle;
+    private Integer integral;
+    private Integer oldStatus;
     /**
      * 搜索对象
      */
     private Integer organId;//居委ID 或者片区ID
     private Date birthdayStart;//出生年月-起
     private Date birthdayEnd;//出生年月-止
+    private Integer goalStart;
+    private Integer goalEnd;
+    private Integer isActivity;
 
 
     private String censusArray[];//户籍 1非 2户籍 3人户分离
@@ -40,9 +47,7 @@ public class Oldman extends Man implements DBInterface{
     private String isHealth[];
     private String intelligence[];
     private String eyesight[];
-
-
-
+    private String oldStatusArray[];
 
 
     private String future;//是否是查询未来的重点老人得分
@@ -53,7 +58,72 @@ public class Oldman extends Man implements DBInterface{
      * @return
      */
     private Xq xq;//小区
+    private List<LabelMan> labelManList;
 
+
+    public Integer getIntegral() {
+        return integral;
+    }
+
+    public void setIntegral(Integer integral) {
+        this.integral = integral;
+    }
+
+    public Integer getIsActivity() {
+        return isActivity;
+    }
+
+    public void setIsActivity(Integer isActivity) {
+        this.isActivity = isActivity;
+    }
+
+    public Integer getGoalStart() {
+        return goalStart;
+    }
+
+    public void setGoalStart(Integer goalStart) {
+        this.goalStart = goalStart;
+    }
+
+    public Integer getGoalEnd() {
+        return goalEnd;
+    }
+
+    public void setGoalEnd(Integer goalEnd) {
+        this.goalEnd = goalEnd;
+    }
+
+    public Integer getIsHandle() {
+        return isHandle;
+    }
+
+    public void setIsHandle(Integer isHandle) {
+        this.isHandle = isHandle;
+    }
+
+    public Integer getOldStatus() {
+        return oldStatus;
+    }
+
+    public void setOldStatus(Integer oldStatus) {
+        this.oldStatus = oldStatus;
+    }
+
+    public String[] getOldStatusArray() {
+        return oldStatusArray;
+    }
+
+    public void setOldStatusArray(String[] oldStatusArray) {
+        this.oldStatusArray = oldStatusArray;
+    }
+
+    public List<LabelMan> getLabelManList() {
+        return labelManList;
+    }
+
+    public void setLabelManList(List<LabelMan> labelManList) {
+        this.labelManList = labelManList;
+    }
 
     public String[] getIsHealth() {
         return isHealth;

@@ -19,7 +19,15 @@
         FROM oldman_economic oe left join auto_value e on e.id=oe.economic_index,oldman_base ob,organ org,auto_value x
         WHERE ob.id=oe.oldman_id AND x.id=ob.xq_id AND org.id=x.parent_index
         <if test="entity!=null and entity.organId!=null and entity.organId!=0">
-            and org.id=#{entity.organId}
+            and org.id in (
+            SELECT
+            case o.parent
+            when 0 then child.id
+            else o.id
+            end id
+            from organ o left join organ child on child.parent=o.id
+            WHERE o.id=#{entity.organId}
+            )
         </if>
         <if test="entity!=null and entity.oldman!=null and entity.oldman.id!=null and entity.oldman.id!=0">
             and ob.id=#{entity.oldman.id}
@@ -40,7 +48,15 @@
         FROM oldman_economic oe,oldman_base ob,organ org,auto_value x
         WHERE oe.oldman_id=ob.id AND x.id=ob.xq_id AND org.id=x.parent_index
         <if test="entity!=null and entity.organId!=null and entity.organId!=0">
-            and org.id=#{entity.organId}
+            and org.id in (
+            SELECT
+            case o.parent
+            when 0 then child.id
+            else o.id
+            end id
+            from organ o left join organ child on child.parent=o.id
+            WHERE o.id=#{entity.organId}
+            )
         </if>
         <if test="entity!=null and entity.oldman!=null and entity.oldman.id!=null and entity.oldman.id!=0">
             and o.oldman_id=#{entity.oldman.id}

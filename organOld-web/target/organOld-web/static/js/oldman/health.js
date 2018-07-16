@@ -81,7 +81,7 @@ $(document).ready(function(){
                         if(data!=undefined && data.length>0){
                             var s="";
                             for(var i=0;i<data.length;i++){
-                                s+="<p class='add'>" + data[i].desc + "</p>";
+                                s+="<p class='add'>" +(i+1)+"."+ data[i].desc + "</p>";
                             }
                             return s;
                         }else{
@@ -95,7 +95,7 @@ $(document).ready(function(){
                         if(data!=undefined && data.length>0){
                             var s="";
                             for(var i=0;i<data.length;i++){
-                                s+="<p class='add'>" + data[i].desc + "</p>";
+                                s+="<p class='add'>" +(i+1)+"."+ data[i].desc + "</p>";
                             }
                             return s;
                         }else{
@@ -109,7 +109,7 @@ $(document).ready(function(){
                         if(data!=undefined && data.length>0){
                             var s="";
                             for(var i=0;i<data.length;i++){
-                                s+="<p class='add'>" + data[i].desc + "</p>";
+                                s+="<p class='add'>" +(i+1)+"."+ data[i].desc + "</p>";
                             }
                             return s;
                         }else{
@@ -122,7 +122,7 @@ $(document).ready(function(){
                     "targets": [12], // 目标列位置，下标从0开始
                     "data": "oldmanId", // 数据列名
                     "render": function(data, type, full) { // 返回自定义内容
-                        return "<span class='mod' id='"+data+"'>修改</span>";
+                        return "<button class='btn btn-primary' id='"+data+"' onclick=newPage("+data+",$(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().text(),'/oldman/"+data+"/info')>查看</button><button class='btn btn-primary' id='"+data+"'>修改</button>";
                     }
                 },
                 //不进行排序的列

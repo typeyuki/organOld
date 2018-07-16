@@ -3,8 +3,17 @@ package com.organOld.service.contract;
 public class UserAddRequest {
     private String username;
     private String password;
-    private String organId;
+    private Integer organId;
     private String roleId;
+    private String[] auth;
+
+    public String[] getAuth() {
+        return auth;
+    }
+
+    public void setAuth(String[] auth) {
+        this.auth = auth;
+    }
 
     public String getUsername() {
         return username;
@@ -22,11 +31,11 @@ public class UserAddRequest {
         this.password = password;
     }
 
-    public String getOrganId() {
+    public Integer getOrganId() {
         return organId;
     }
 
-    public void setOrganId(String organId) {
+    public void setOrganId(Integer organId) {
         this.organId = organId;
     }
 

@@ -24,7 +24,13 @@ $(document).ready(function(){
                 data:"name"
             },{
                 data:"rule"
-            },{},{},{}
+            },{
+                data:"content"
+            },{
+                data:"wh"
+            },{
+                data:"time"
+            }
             ],
             "order":[[1,"asc"]],
             "columnDefs": [
@@ -37,45 +43,72 @@ $(document).ready(function(){
                 },
                 {
                     "targets": [2], // 目标列位置，下标从0开始
-                    "data": "content", // 数据列名
+                    "data": "organName", // 数据列名
                     "render": function(data, type, full) { // 返回自定义内容
-                        if(data==null){
-                            return "";
-                        }else{
+                        if(data!=null){
                             return data;
+                        }else{
+                            return "";
                         }
-                    }
-                },
-                {
-                    "targets": [7], // 目标列位置，下标从0开始
-                    "data": "content", // 数据列名
-                    "render": function(data, type, full) { // 返回自定义内容
-                        return data;
                     }
                 },
                 {
                     "targets": [8], // 目标列位置，下标从0开始
-                    "data": "time", // 数据列名
+                    "data": "wh", // 数据列名
                     "render": function(data, type, full) { // 返回自定义内容
-                        return data;
+                        if(data!=null){
+                            return data;
+                        }else{
+                            return "";
+                        }
                     }
                 },
                 // 增加一列，包括删除和修改，同时将我们需要传递的数据传递到链接中
                 {
-                    "targets": [9], // 目标列位置，下标从0开始
-                    "data": "id", // 数据列名
+                    "targets": [10], // 目标列位置，下标从0开始
+                    "data": "isFeedback", // 数据列名
                     "render": function(data, type, full) { // 返回自定义内容
+                        var name="$(this).parent().prev().prev().prev().prev().prev().text()";
+                        var id="$(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().prev().text()";
                         if(typeLabel=="1"){
                             //人员绑定
-                            return "<span onclick=newPage("+data+",$(this).parent().prev().prev().prev().prev().text(),'/oldman/label/bind/"+typeLabel+"/man') id='"+data+"'>人员</span><span class='edit' id='"+data+"'>修改</span>";
+                            if(userType=="居委会"){
+                                var s="<span class='btn btn-primary' onclick=newPageBefore("+id+","+name+",'/oldman/label/bind/?/man')>人员</span>";
+                                if(data!=null && data!=0){
+                                    s+="<span class='btn btn-primary' onclick=lookfeedback("+id+")>已反馈</span>";
+                                }else{
+                                    s+="<span class='btn btn-primary' onclick=feedback("+id+")>反馈</span>";
+                                }
+                                    s+="<span class='btn btn-primary' id='"+data+"'>修改</span>";
+                                return s;
+                            }else{
+                                return "<span class='btn btn-primary' onclick=newPageBefore("+id+","+name+",'/oldman/label/bind/?/man') >人员</span>" +
+                                    "<span class='btn btn-primary' onclick=newPageBefore("+id+","+name+",'/oldman/label/?/feedback')>反馈信息</span>" +
+                                    "<span  class='btn btn-primary' id='"+id+"'>修改</span>";
+                            }
                         }else{
                             //规则指定
-                            return "<span onclick=newPage("+data+",$(this).parent().prev().prev().prev().prev().text(),'/oldman/label/rule/"+data+"/man')>人员</span><span onclick=newPage("+data+",$(this).parent().prev().prev().prev().prev().text(),'/oldman/label/rule/"+data+"')>规则</span><span class='edit' id='"+data+"'>修改</span>";
+                            if(userType=="居委会"){
+                                var s="<span class='btn btn-primary' onclick=newPageBefore("+id+","+name+",'/oldman/label/rule/?/man')>人员</span>" +
+                                    "<span class='btn btn-primary' onclick=newPageBefore("+id+","+name+",'/oldman/label/rule/?')>规则</span>";
+                                if(data!=null && data!=0){
+                                    s+="<span class='btn btn-primary' onclick=lookfeedback("+id+")>已反馈</span>";
+                                }else{
+                                    s+="<span class='btn btn-primary' onclick=feedback("+id+")>反馈</span>";
+                                }
+                                s+="<span class='btn btn-primary' id='"+data+"'>修改</span>";
+                                return s;
+                            }else{
+                                return "<span class='btn btn-primary' onclick=newPageBefore("+id+","+name+",'/oldman/label/rule/?/man')>人员</span>" +
+                                    "<span class='btn btn-primary' onclick=newPageBefore("+id+","+name+",'/oldman/label/rule/?')>规则</span>" +
+                                    "<span class='btn btn-primary' onclick=newPageBefore("+id+","+name+",'/oldman/label/?/feedback')>反馈信息</span>" +
+                                    "<span class='btn btn-primary' class='edit' id='"+id+"'>修改</span>";
+                            }
                         }
                     }
                 },
                 //不进行排序的列
-                { "bSortable": false, "aTargets": [0,2,3,4,5,6,7,8,9] }
+                { "bSortable": false, "aTargets": [0,2,3,4,5,6,7,8,9,10] }
             ],
             "sAjaxSource": "/oldman/label/data",//这个是请求的地址
             "fnServerData": retrieveData
@@ -116,3 +149,24 @@ $(document).ready(function(){
 
 });
 
+function newPageBefore(id,name,url) {
+    var url_new=url.replace("?",id);
+    newPage(id,name,url_new);
+}
+
+function feedback(id) {
+    $("#feedbackModal").modal();
+    $("#feedbackModal input[name='labelId']").val(id);
+}
+
+function lookfeedback(id) {
+    $("#lookfeedbackModal").modal();
+    $.ajax({
+        url: "/oldman/label/feedback/"+id+"/look",//这个就是请求地址对应sAjaxSource
+        type: 'GET',
+        success: function (result) {
+            $("#remark").html(result.data.remark);
+            $("#isFinish").html(result.data.isFinish);
+        }
+    });
+}

@@ -3,13 +3,14 @@ package com.organOld.service.wrapper;
 import com.organOld.dao.entity.AutoValue;
 import com.organOld.dao.entity.home.Chx;
 import com.organOld.dao.entity.label.Label;
+import com.organOld.dao.entity.label.LabelFeedback;
+import com.organOld.dao.entity.label.LabelMan;
 import com.organOld.dao.entity.label.LabelRule;
 import com.organOld.dao.entity.organ.Organ;
 import com.organOld.service.constant.TimeConstant;
 import com.organOld.service.enumModel.*;
-import com.organOld.service.model.LabelModel;
-import com.organOld.service.model.LabelAllRuleModel;
-import com.organOld.service.model.LabelRuleModel;
+import com.organOld.service.model.*;
+import com.organOld.service.service.CommonService;
 import com.organOld.service.util.Tool;
 import com.organOld.service.contract.*;
 import org.springframework.beans.BeanUtils;
@@ -27,9 +28,11 @@ public class LabelWrapper implements Wrapper<Label,LabelModel,LabelRequest> {
         labelModel.setId(label.getId());
         labelModel.setName(label.getName());
         labelModel.setRule(label.getRule());
+        labelModel.setWh(label.getWh());
         if(label.getOrgan()!=null)
         labelModel.setOrganName(label.getOrgan().getName());
         labelModel.setTime(Tool.dateToString(label.getTime(), TimeConstant.DATA_FORMAT_YMD));
+        labelModel.setIsFeedback(label.getIsFeedback());
         return labelModel;
     }
 
@@ -68,6 +71,7 @@ public class LabelWrapper implements Wrapper<Label,LabelModel,LabelRequest> {
         oldStatus.put(OldStatusEnum.SQ.getIndex(),OldStatusEnum.SQ.getName());
         oldStatus.put(OldStatusEnum.JG.getIndex(),OldStatusEnum.JG.getName());
         oldStatus.put(OldStatusEnum.JJ.getIndex(),OldStatusEnum.JJ.getName());
+        oldStatus.put(OldStatusEnum.SJ.getIndex(),OldStatusEnum.SJ.getName());
         labelRuleModel.setOldStatus(oldStatus);
 
         for(AutoValue autoValue:autoValueList){
@@ -133,7 +137,7 @@ public class LabelWrapper implements Wrapper<Label,LabelModel,LabelRequest> {
 
     public LabelRule unwrapLabelRule(LabelRuleRequest labelRuleRequest) {
         LabelRule labelRule=new LabelRule();
-        labelRule.setId(labelRuleRequest.getLabelId());
+        labelRule.setLabelId(labelRuleRequest.getLabelId());
         if(labelRuleRequest.getAgeEnd()!=null && !labelRuleRequest.getAgeEnd().equals(""))
             labelRule.setAgeEnd(Integer.parseInt(labelRuleRequest.getAgeEnd()));
         if(labelRuleRequest.getAgeStart()!=null && !labelRuleRequest.getAgeStart().equals(""))
@@ -169,5 +173,39 @@ public class LabelWrapper implements Wrapper<Label,LabelModel,LabelRequest> {
             labelRule.setJwIds(String.join("#", labelRuleRequest.getOrgan()));
 
         return labelRule;
+    }
+
+    public LabelManInfoModel wrapManInfo(LabelMan labelMan) {
+        LabelManInfoModel labelManInfoModel=new LabelManInfoModel();
+        labelManInfoModel.setLabelName(labelMan.getLabelName());
+        labelManInfoModel.setIsImplement(labelMan.getIsImplement()==0?"未落实":"已落实");
+        return labelManInfoModel;
+    }
+
+    public LabelFeedback unwrapFeedback(LabelFeedbackRequest labelFeedbackRequest) {
+        LabelFeedback labelFeedback=new LabelFeedback();
+        labelFeedback.setLabelId(labelFeedbackRequest.getLabelId());
+        return labelFeedback;
+    }
+
+    public LabelFeedbackModel wrapFeedback(LabelFeedback labelFeedback) {
+        LabelFeedbackModel labelFeedbackModel=new LabelFeedbackModel();
+        if(labelFeedback.getOrgan()!=null){
+            labelFeedbackModel.setDistrictName(labelFeedback.getOrgan().getDistrictName());
+            labelFeedbackModel.setOrganId(labelFeedback.getOrgan().getId());
+            labelFeedbackModel.setOrganName(labelFeedback.getOrgan().getName());
+        }
+        if(labelFeedback.getIsFinish()!=null)
+        labelFeedbackModel.setIsFinish(labelFeedback.getIsFinish()==0?"未完成":"已完成");
+        labelFeedbackModel.setRemark(labelFeedback.getRemark());
+        return labelFeedbackModel;
+    }
+
+    public LabelFeedback unwrapFeedbackAdd(LabelFeedbackAddRequest labelFeedbackAddRequest) {
+        LabelFeedback labelFeedback=new LabelFeedback();
+        labelFeedback.setIsFinish(labelFeedbackAddRequest.getIsFinish());
+        labelFeedback.setLabelId(labelFeedbackAddRequest.getLabelId());
+        labelFeedback.setRemark(labelFeedbackAddRequest.getRemark());
+        return labelFeedback;
     }
 }

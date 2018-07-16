@@ -148,8 +148,7 @@
 
 
     //60岁老人占比
-    title.text="老人\n\n比例";
-    title.link="javascript: change('child_total','child_base')";
+    title_text="老人\n\n比例";
     legend_data=[{name:'老人',textStyle:{color:legend_color,fontSize:legand_fontSize}},{name:'非老人',textStyle:{color:legend_color,fontSize:legand_fontSize}}];
     series=[
         {

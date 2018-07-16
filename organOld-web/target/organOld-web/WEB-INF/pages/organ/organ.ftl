@@ -32,21 +32,20 @@
                         <#else >
                             <a onclick="" href="javascript:void(0);" class="btn btn-primary ">添加</a>
                             <a onclick="" href="javascript:void(0);" class="btn btn-primary ">删除</a>
+                            <a  href="javascript:void(0);" id="search" class="btn btn-primary ">搜索</a>
+                        </#if>
+                        <#if status?? && (status=="1" || status=="3")>
+                        <#else >
+                            <form action="/organ/${type}/importExcel" method="post" enctype="multipart/form-data" id="importForm" style="display: inline-block;margin-left: 200px">
+                                <input type="file" name="file" style="display:inline">
+                                <input type="hidden" name="pType" value="oldman">
+                                <input type="button" style="display:inline" class="btn btn-primary" onclick="$('.wrapper').hide();$('#process').show();$('#importForm').submit()" value="导入">
+                            </form>
                         </#if>
                     </div>
                     <div>
                         <input class="id" type="text" placeholder="序号">
                         <input class="time" type="text" placeholder="模糊匹配">
-                        <button id="search">搜索</button>
-                        <#if status?? && status=="1">
-                        <#else >
-                            <form action="/importExcel" method="post" enctype="multipart/form-data">
-                                <input type="file" name="file">
-                                <input type="hidden" name="pType" value="oldman">
-                                <input type="hidden" name="cType" value="base">
-                                <input type="submit" value="导入">
-                            </form>
-                        </#if>
                     </div>
                     <table class="table table-striped table-bordered table-hover dataTables-example">
                         <thead>
@@ -59,10 +58,10 @@
                             <th>类型</th>
                             <th>名称</th>
                             <th>简介</th>
-                            <#if type=="oldmanOrgan" || type=="oldmanCommunity" || type=="society">
+                            <#if type==21 || type==22 || type==3>
                                 <th>床（席）位数</th>
                             </#if>
-                            <#if type=="oldmanOrgan" || type=="oldmanCommunity" >
+                            <#if type==21 || type==22 >
                                 <th>入住数</th>
                                 <th>剩余床数</th>
                             </#if>
@@ -84,9 +83,15 @@
     </div>
 
 </div>
+
+<#include  "../spinner.ftl"/>
 <script>
-    var firType="${type}";
+    var firType=${type};
     var status="${status!}";
+    <#if result??>
+    alert("录入数据：${result.data.total}\n其中成功导入数据：${result.data.numSuccess}\n包括添加：${result.data.successAdd}\n更新：${result.data.successUpdate}\n删除：${result.data.successDel}\n失败：${result.data.numFail}");
+    </#if>
+
 </script>
 <script src="/js/content.min.js?v=1.0.0"></script>
 <script src="/static/js/common.js"></script>

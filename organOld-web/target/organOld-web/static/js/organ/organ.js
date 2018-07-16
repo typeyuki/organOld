@@ -4,7 +4,7 @@
 $(document).ready(function(){
     var columns=[];
     var columnDefs=[];
-    if(firType=="oldmanOrgan" || firType=="oldmanCommunity"){
+    if(firType==21 || firType==22){
         columns=[{},{
             data:"id"
         },{
@@ -45,13 +45,14 @@ $(document).ready(function(){
                 "targets": [13], // 目标列位置，下标从0开始
                 "data": "id", // 数据列名
                 "render": function(data, type, full) { // 返回自定义内容
-                    return "<span onclick=newPage("+data+",$(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().text(),'/organ/oldman/"+data+"/man') class='look' id='"+data+"'>人员</span><span class='look' id='"+data+"'>查看</span><span class='mod' id='"+data+"'>修改</span>";
+                    return "<span class='btn btn-primary' onclick=newPage("+data+",$(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().text(),'/organ/oldman/"+data+"/man')>人员</span>" +
+                        "<span class='btn btn-primary' onclick=newPage("+data+",$(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().text(),'/organ/"+data+"/info')>查看</span>";
                 }
             },
             //不进行排序的列
             { "bSortable": false, "aTargets": [ 0,2 ,3, 4, 5,6,7,8,9,10,11,12,13] }
         ]
-    }else if(firType=="government"){
+    }else if(firType==1){
         columns=[{},{
             data:"id"
         },{
@@ -86,13 +87,14 @@ $(document).ready(function(){
                 "targets": [10], // 目标列位置，下标从0开始
                 "data": "id", // 数据列名
                 "render": function(data, type, full) { // 返回自定义内容
-                    return "<span class='look' id='"+data+"'>查看</span><span class='mod' id='"+data+"'>修改</span>";
+                    return "<span class='btn btn-primary' onclick=newPage("+data+",$(this).parent().prev().prev().prev().prev().prev().prev().prev().text(),'/organ/oldman/"+data+"/man')>人员</span>" +
+                        "<span class='btn btn-primary' onclick=newPage("+data+",$(this).parent().prev().prev().prev().prev().prev().prev().prev().text(),'/organ/"+data+"/info')>查看</span>";
                 }
             },
             //不进行排序的列
             { "bSortable": false, "aTargets": [ 0,2 ,3, 4,5,6,7,8,9,10] }
         ]
-    }else if(firType=="society" && status=="2"){
+    }else if(firType==3 && status=="2"){
         columns=[{},{
             data:"id"
         },{
@@ -129,13 +131,14 @@ $(document).ready(function(){
                 "targets": [11], // 目标列位置，下标从0开始
                 "data": "id", // 数据列名
                 "render": function(data, type, full) { // 返回自定义内容
-                    return "<span class='look' id='"+data+"'>查看</span>";
+                    return "<span class='btn btn-primary' onclick=newPage("+data+",$(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().text(),'/organ/"+data+"/info')>查看</span>" +
+                        "<span class='btn btn-danger' onclick=location.href='/organ/"+data+"/cancel'>撤销</span>";
                 }
             },
             //不进行排序的列
             { "bSortable": false, "aTargets": [ 0,2 ,3, 4,5,6,7,8,9,10,11] }
         ]
-    }else if(firType=="society" && status=="3"){
+    }else if(firType==3 && (status=="3" || status=="4")){
         columns=[{
             data:"id"
         },{
@@ -164,7 +167,7 @@ $(document).ready(function(){
                 "targets": [10], // 目标列位置，下标从0开始
                 "data": "id", // 数据列名
                 "render": function(data, type, full) { // 返回自定义内容
-                    return "<span class='look' id='"+data+"'>查看</span>";
+                    return "<span class='btn btn-primary' onclick=newPage("+data+",$(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().text(),'/organ/"+data+"/info')>查看</span>";
                 }
             },
             //不进行排序的列
@@ -200,7 +203,8 @@ $(document).ready(function(){
                 "targets": [10], // 目标列位置，下标从0开始
                 "data": "id", // 数据列名
                 "render": function(data, type, full) { // 返回自定义内容
-                    return "<span class='look' id='"+data+"'>查看</span><span class='mod' onclick=opera("+data+",'pass') id='"+data+"'>通过</span><span class='mod' onclick=opera("+data+",'reject') id='"+data+"'>不通过</span>";
+                    return "<span class='btn btn-primary' onclick=newPage("+data+",$(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().text(),'/organ/"+data+"/info')>查看</span>" +
+                        "<span class='mod' onclick=opera("+data+",'pass') id='"+data+"'>通过</span><span class='mod' onclick=opera("+data+",'reject') id='"+data+"'>不通过</span>";
                 }
             },
             //不进行排序的列

@@ -4,6 +4,7 @@ package com.organOld.web.controller;
 import com.organOld.service.contract.*;
 
 import com.organOld.service.model.Model;
+import com.organOld.service.service.CommonService;
 import com.organOld.service.service.OrganService;
 import com.organOld.service.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,9 @@ public class UserController {
     UserService userService;
     @Autowired
     OrganService organService;
+    @Autowired
+    CommonService commonService;
+
 
     @RequestMapping(value = "",method = RequestMethod.GET)
     public ModelAndView user(HttpSession session){
@@ -66,5 +70,16 @@ public class UserController {
         ModelAndView mv=new ModelAndView("redirect:/user");
         userService.save(userAddRequest);
         return mv;
+    }
+
+    /**
+     * 检测 账号对应的 机构的 类型
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/checkUserOrganType",method = RequestMethod.GET)
+    public Result checkUserOrganType(){
+        Result result=commonService.checkUserOrganType();
+        return result;
     }
 }

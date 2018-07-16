@@ -1,12 +1,18 @@
 package com.organOld.web.controller;
 
+import com.organOld.dao.entity.SysUser;
 import com.organOld.service.contract.CardConsumeRequest;
 import com.organOld.service.contract.Result;
+import com.organOld.service.model.OldmanAllInfoModel;
+import com.organOld.service.model.OrganQueryIntegralModel;
 import com.organOld.service.service.CardService;
+import com.organOld.service.service.OldmanService;
+import com.organOld.service.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
@@ -19,6 +25,10 @@ public class CardController {
 
     @Autowired
     CardService cardService;
+    @Autowired
+    UserService userService;
+    @Autowired
+    OldmanService oldmanService;
 
     @ResponseBody
     @RequestMapping(value = "",method = RequestMethod.GET)
@@ -27,6 +37,53 @@ public class CardController {
 
         System.out.println(cardConsumeRequest.toString());
         Result result=new Result(true,"成功");
+        return result;
+    }
+
+
+    /**
+     * 登陆验证  返回具有的权限
+     * @param sysUser
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/login",method = RequestMethod.GET)
+    public Result login(SysUser sysUser){
+        Result result=userService.ckeckOrganLogin(sysUser);
+        return result;
+    }
+
+    /**
+     * 老人信息查询
+     * @param oldmanId
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/info",method = RequestMethod.GET)
+    public Result info(int oldmanId){
+        OldmanAllInfoModel oldmanAllInfoModel =oldmanService.getOldmanInfo(oldmanId);
+        if(oldmanAllInfoModel.getOldman()==null) return new Result(false,"找不到");
+        else  return new Result(true,oldmanAllInfoModel);
+    }
+
+
+    /**
+     * 积分查询
+     * @param oldmanId
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/integral",method = RequestMethod.GET)
+    public Result integral(int oldmanId){
+        Result result=oldmanService.getIntegralByOldmanId(oldmanId);
+        return result;
+    }
+
+
+    @ResponseBody
+    @RequestMapping(value = "/sign",method = RequestMethod.GET)
+    public Result integral(@RequestParam int oldmanId,@RequestParam int organId){
+        Result result=new Result(true,"签到成功");
         return result;
     }
 }

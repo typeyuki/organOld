@@ -19,4 +19,8 @@ public interface OldmanDao extends BaseDao<Oldman,Integer>{
     Integer getIdByPid(String pid);
 
     int setDisabled(@Param("list") List<Integer> existOldmanIds,@Param("organId") Integer organId);
+
+    Oldman getIntegralByOldmanId(int oldmanId);
+
+    void updateOldStatusByIds(List<Oldman> oldmanList);
 }

@@ -33,45 +33,59 @@
                     <div>
                         <a onclick=newPage("132","用户添加",'/oldman/add') href="javascript:void(0);" class="btn btn-primary ">添加</a>
                         <a  href="javascript:void(0);" class="btn btn-primary ">删除</a>
+                        <a  href="javascript:void(0);" id="search" class="btn btn-primary ">搜索</a>
+                        <form action="/oldman/importExcel" method="post" enctype="multipart/form-data" id="importForm" style="display: inline-block;margin-left: 200px">
+                            <input type="file" name="file" style="display:inline">
+                            <input type="button" style="display:inline" class="btn btn-primary" onclick="$('.wrapper').hide();$('#process').show();$('#importForm').submit()" value="导入">
+                        </form>
                     </div>
-                    <div class="row">
-                        <div class="col-sm-10">
-                            <input class="id" name="id" type="text" placeholder="序号">
+                    <div class="row" style="margin-top: 10px;margin-bottom: 10px">
+                        <div class="col-sm-1">
+                            <input class="id" style="width: 100%" name="id" type="text" placeholder="序号">
+                        </div>
+                        <div class="col-sm-1">
                             <label >性别</label>
-                            <select name="sex">
+                            <select name="sex" style="width:60%;">
                                 <option></option>
                                 <#list (info.sex)?keys as key>
                                     <option  value="${key!}"> ${(info.sex)?values[key_index]!}</option>
                                 </#list>
                             </select>
-                            <input class="age" name="ageStart" type="text" placeholder="年龄段-起">
-                            <input class="age" name="ageEnd" type="text" placeholder="年龄段-止">
-                            <input class="" type="text" placeholder="模糊匹配">
                         </div>
                         <div class="col-sm-2">
-                            <button id="search">搜索</button>
+                            <input class="age" style="width: 48%" name="ageStart" type="text" placeholder="年龄段-起">-
+                            <input class="age" style="width: 48%" name="ageEnd" type="text" placeholder="年龄段-止">
+                        </div>
+                        <div class="col-sm-4">
+                            <input name="search" style="width:100%;" type="text" placeholder="模糊匹配">
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-sm-10">
-                            <label >户籍：</label>
+                        <div class="col-sm-3">
+                            <label >户<span style="color: white">填充</span>籍：</label>
                             <select name="census"  class="selectpicker bla bla bli" multiple data-live-search="true">
                                 <#list info.census as census>
                                     <option type="checkbox" value="${census.id!}" >${census.value!}</option>
                                 </#list>
                             </select>
+                        </div>
+                        <div class="col-sm-3">
                             <label >政治面貌：</label>
                             <select name="politicalStatuses" class="selectpicker bla bla bli" multiple data-live-search="true">
                                 <#list info.politicalStatuses as politicalStatuses>
                                     <option value="${politicalStatuses.id!}">${politicalStatuses.value!}</option>
                                 </#list>
                             </select>
+                        </div>
+                        <div class="col-sm-3">
                             <label>家庭结构：</label>
                             <select name="familyIndex"  class="selectpicker bla bla bli" multiple data-live-search="true">
                                 <#list info.family as family>
                                     <option value="${family.id!}"> <i></i> ${family.value!}</option>
                                 </#list>
                             </select>
+                        </div>
+                        <div class="col-sm-3">
                             <label >经济条件：</label>
                             <select name="economicIndex" class="selectpicker bla bla bli" multiple data-live-search="true">
                                 <#list info.economic as economic>
@@ -81,7 +95,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-sm-10">
+                    <div class="col-sm-3">
                             <label >健康状况：</label>
                             <select name="isHealth" class="selectpicker bla bla bli" multiple data-live-search="true">
                                 <option value="1">有慢病</option>
@@ -91,46 +105,71 @@
                                 <option value="5">有骨折史</option>
                                 <option value="6">有残疾史</option>
                             </select>
-                            <label >智力：</label>
+                    </div>
+                        <div class="col-sm-3">
+                            <label >智<span style="color: white">填充</span>力：</label>
                             <select name="intelligence" class="selectpicker bla bla bli" multiple data-live-search="true">
                                 <#list info.intelligence as intelligence>
                                     <option value="${intelligence.id!}" > ${intelligence.value!}</option>
                                 </#list>
                             </select>
-                            <label>视力：</label>
+                        </div>
+                        <div class="col-sm-3">
+                            <label>视<span style="color: white">填充</span>力：</label>
                             <select name="eyesight" class="selectpicker bla bla bli" multiple data-live-search="true">
                                 <#list info.eyesight as eyesight>
                                     <option value="${eyesight.id!}"> ${eyesight.value!}</option>
                                 </#list>
                             </select>
                         </div>
+                        <div class="col-sm-3">
+                            <label>养老状态：</label>
+                            <select name="oldStatus" class="selectpicker bla bla bli" multiple data-live-search="true">
+                                <#list (info.oldStatus)?keys as key>
+                                    <option  value="${key!}"> ${(info.oldStatus)?values[key_index]!}</option>
+                                </#list>
+                            </select>
+                        </div>
                     </div>
-                        <div class="row">
-                            <div class="col-sm-10">
-                                <label >片区：</label>
-                                <select name="district" class="selectpicker bla bla bli" multiple data-live-search="true">
+                    <div class="row" id="jw">
+                            <div class="col-sm-3">
+
+                                <label class="pq">片<span style="color: white">填充</span>区：</label>
+                                <select name="district" class="selectpicker bla bla bli pq" multiple data-live-search="true">
                                     <#list info.district as district>
                                         <option  value="${district.id!}" > ${district.value!}</option>
                                     </#list>
                                 </select>
-                                <label >居委：</label>
-                                <select name="jw" class="selectpicker bla bla bli" multiple data-live-search="true">
+                            </div>
+                        <div class="col-sm-3">
+                                <label >居<span style="color: white">填充</span>委：</label>
+                                <select  name="jw" class="selectpicker bla bla bli" multiple data-live-search="true">
+
                                     <#list info.organ as organ>
                                         <option value="${organ.id!}"> ${organ.name!}</option>
                                     </#list>
                                 </select>
+
                             </div>
                             <script>
                                 $('.selectpicker').selectpicker({
                                     'selectedText': 'cat'
                                 });
+                                $.ajax({
+                                    url: "/user/checkUserOrganType",
+                                    type: "get",
+                                    success: function (data) {
+                                        if (data.success == true) {
+                                            if(data.data=="居委会"){
+                                                $("#jw").hide();
+                                            }else if(data.data=="片区"){
+                                                $(".pq").hide();
+                                            }
+                                        }
+                                    }
+                                });
                             </script>
                     </div>
-
-                        <form action="/oldman/importExcel" method="post" enctype="multipart/form-data">
-                            <input type="file" name="file">
-                            <input type="submit" value="导入">
-                        </form>
                     <table class="table table-striped table-bordered table-hover dataTables-example">
                         <thead>
                         <tr>
@@ -162,7 +201,7 @@
     </div>
 
 </div>
-
+<#include  "../spinner.ftl"/>
 <#--<script src="/js/plugins/jeditable/jquery.jeditable.js"></script>-->
 
 <script>

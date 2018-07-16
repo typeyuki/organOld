@@ -8,4 +8,5 @@ public interface HomeService {
     String getByPage(HomeRequest homeRequest, BTableRequest bTableRequest);
 
     String getManByPage(HomeOldmanRequest homeOldmanRequest, BTableRequest bTableRequest);
+
 }

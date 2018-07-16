@@ -33,6 +33,10 @@
                         <input class="time" type="text" placeholder="模糊匹配">
                         <button id="search">搜索</button>
                     </div>
+                    <form action="/oldman/importExcel" method="post" enctype="multipart/form-data">
+                        <input type="file" name="file">
+                        <input type="submit" value="导入">
+                    </form>
                     <table class="table table-striped table-bordered table-hover dataTables-example">
                         <thead>
                         <tr>
@@ -42,6 +46,7 @@
                             <th>名称</th>
                             <th>服务开始时间</th>
                             <th>服务结束时间</th>
+                            <th>是否已获得服务</th>
                             <th>更新时间</th>
                             <th></th>
                         </tr>
@@ -57,6 +62,7 @@
 
 </div>
 <script src="/js/content.min.js?v=1.0.0"></script>
+<script src="/static/js/common.js"></script>
 <script src="/static/js/oldman/home_man.js" ></script>
 <script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
 

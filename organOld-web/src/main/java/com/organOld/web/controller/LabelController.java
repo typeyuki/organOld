@@ -1,14 +1,13 @@
 package com.organOld.web.controller;
 
 import com.organOld.dao.entity.label.Label;
+import com.organOld.dao.entity.label.LabelFeedback;
 import com.organOld.service.contract.*;
+import com.organOld.service.service.AutoValueService;
 import com.organOld.service.service.LabelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
@@ -24,6 +23,8 @@ public class LabelController {
 
     @Autowired
     LabelService labelService;
+    @Autowired
+    AutoValueService autoValueService;
 
     /**
      * 人员绑定标签
@@ -33,7 +34,15 @@ public class LabelController {
     public ModelAndView index_bind(){
         ModelAndView mv=new ModelAndView("oldman/label/label_three");
         mv.addObject("type","1");//标志 是人员绑定
+        mv.addObject("firType",autoValueService.getByType(9));//一级标签
         return mv;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/{firType}/getSecLabel",method = RequestMethod.GET)
+    public Result getSecLabel(@PathVariable int firType){
+        Result result=labelService.getSecLabelByFirType(firType);
+        return result;
     }
 
     /**
@@ -44,6 +53,7 @@ public class LabelController {
     public ModelAndView index_rule(){
         ModelAndView mv=new ModelAndView("oldman/label/label_three");
         mv.addObject("type","2");//标志 是规则制定
+        mv.addObject("firType",autoValueService.getByType(9));//一级标签
         return mv;
     }
 
@@ -93,7 +103,7 @@ public class LabelController {
     @RequestMapping(value = "/rule/save",method = RequestMethod.POST)
     public ModelAndView rule_save(LabelRuleRequest labelRuleRequest){
         ModelAndView mv=new ModelAndView("redirect:/oldman/label/rule/"+labelRuleRequest.getLabelId());
-        labelService.save(labelRuleRequest);
+        labelService.saveRule(labelRuleRequest);
         return mv;
     }
 
@@ -115,14 +125,13 @@ public class LabelController {
     /**
      * 获取人员绑定标签的人员 分页数据
      * @param bTableRequest
-     * @param oldmanRequest
-     * @param type  bind 人员绑定  rule规则制定
+     * @param labelManRequest
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/{type}/{labelId}/manData",method = RequestMethod.POST)
-    public String bind_man_data(BTableRequest bTableRequest, OldmanRequest oldmanRequest, @PathVariable int labelId, @PathVariable String type){
-        return labelService.getBindManByPage(oldmanRequest,bTableRequest,labelId,type);
+    @RequestMapping(value = "/manData",method = RequestMethod.POST)
+    public String bind_man_data(BTableRequest bTableRequest, LabelManRequest labelManRequest){
+        return labelService.getBindManByPage(labelManRequest,bTableRequest);
     }
 
     /**
@@ -140,6 +149,32 @@ public class LabelController {
 
 
     /**
+     * 添加 标签的老人  人员绑定标签
+     * @param labelId
+     * @param oldmanIds
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/{labelId}/saveMan",method = RequestMethod.POST)
+    public Result saveLabelMan(@PathVariable int labelId, @RequestParam("oldmanId[]") int[] oldmanIds){
+        Result result=labelService.saveLabelMan(labelId,oldmanIds);
+        return result;
+    }
+
+
+    /**
+     * 落实
+     * @param id
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/implement",method = RequestMethod.POST)
+    public Result implement(@RequestParam int id){
+        Result result=labelService.implement(id);
+        return result;
+    }
+
+    /**
      * 获得某个老人的全部标签
      * @param oldmanId
      * @return
@@ -154,14 +189,79 @@ public class LabelController {
     /**
      * 标签添加
      * @param label
-     * @param session
      * @return
      */
     @RequestMapping(value = "/add",method = RequestMethod.POST)
-    public ModelAndView add(Label label, HttpSession session){
-        ModelAndView mv=new ModelAndView("redirect:/oldman/label/"+((label.getType()==1)?"bind":"rule"));
-        labelService.save(label,session);
+    public ModelAndView add(Label label){
+        ModelAndView mv;
+        labelService.save(label);
+        if(label.getType()==1){
+            mv=new ModelAndView("redirect:/oldman/label/bind");
+        }else{
+            mv=new ModelAndView("redirect:/oldman/label/rule/"+label.getId());
+        }
         return mv;
     }
 
+
+    /**
+     * 标签反馈 管理
+     * @param labelId
+     * @return
+     */
+    @RequestMapping(value = "/{labelId}/feedback",method = RequestMethod.GET)
+    public ModelAndView feedback(@PathVariable int labelId){
+        ModelAndView mv=new ModelAndView("oldman/label/label_feedback");
+        mv.addObject("labelId",labelId);
+        return mv;
+    }
+
+    /**
+     * 查看某一标签的反馈信息
+     * @param bTableRequest
+     * @param labelFeedbackRequest
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/feedback",method = RequestMethod.POST)
+    public String data(BTableRequest bTableRequest, LabelFeedbackRequest labelFeedbackRequest){
+        return labelService.getFeedbackByPage(labelFeedbackRequest,bTableRequest);
+    }
+
+    /**
+     * 反馈添加
+     * @param labelFeedbackAddRequest
+     * @return
+     */
+    @RequestMapping(value = "/feedback/add",method = RequestMethod.POST)
+    public ModelAndView feedback_add(LabelFeedbackAddRequest labelFeedbackAddRequest){
+        ModelAndView mv=new ModelAndView("redirect:/oldman/label/"+(labelFeedbackAddRequest.getType().equals("2")?"rule":"bind"));
+        labelService.feedbackAdd(labelFeedbackAddRequest);
+        return mv;
+    }
+
+    /**
+     * 查看 某一反馈
+     * @param labelId
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/feedback/{labelId}/look",method = RequestMethod.GET)
+    public Result feedback_look(@PathVariable int labelId){
+        Result result=labelService.getFeedbackByLabelId(labelId);
+        return result;
+    }
+
+
+    /**
+     * 检测 该角色能够修改标签规则
+     * @param labelId
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/{labelId}/checkCanChange",method = RequestMethod.GET)
+    public Result checkCanChange(@PathVariable int labelId){
+        Result result=labelService.checkCanChange(labelId);
+        return result;
+    }
 }

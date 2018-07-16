@@ -8,4 +8,6 @@ import com.organOld.dao.entity.organ.OrganOldman;
  */
 public interface OrganOldmanDao extends BaseDao<OrganOldman,Integer>{
     void delByOid(int id);
+
+    void delByOrganId(int organId);
 }

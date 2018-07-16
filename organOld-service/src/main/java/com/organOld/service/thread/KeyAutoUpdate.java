@@ -266,6 +266,7 @@ public class KeyAutoUpdate implements FullUpdater{
 //            System.out.println(oldman.toString());
 //        }
         oldmanDao.updateKeyOldman(updatedData);
+        commonService.informJwAndPq("重点老人进行了更新");
     }
 
 

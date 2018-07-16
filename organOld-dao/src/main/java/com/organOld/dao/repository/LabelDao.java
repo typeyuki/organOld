@@ -2,6 +2,7 @@ package com.organOld.dao.repository;
 
 
 import com.organOld.dao.entity.label.Label;
+import com.organOld.dao.entity.label.LabelMan;
 import com.organOld.dao.entity.label.LabelRule;
 import com.organOld.dao.entity.label.LabelRuleToDBSelectMan;
 import com.organOld.dao.entity.oldman.Oldman;
@@ -15,9 +16,9 @@ import java.util.List;
  * Created by netlab606 on 2018/6/7.
  */
 public interface LabelDao extends BaseDao<Label,Integer> {
-    List<Oldman> getBindManByPage(@Param("page") Page<Oldman> page, @Param("labelId") int labelId);
+    List<LabelMan> getBindManByPage(Page<LabelMan> page);
 
-    Long getBindManSizeByPage(@Param("page") Page<Oldman> page, @Param("labelId") int labelId);
+    Long getBindManSizeByPage(Page<LabelMan> page);
 
     List<Oldman>getNoSelectManDataByPage(@Param("page") Page<Oldman> page, @Param("labelId") int labelId);
 
@@ -34,11 +35,17 @@ public interface LabelDao extends BaseDao<Label,Integer> {
     void saveLabelRule(LabelRule labelRule);
 
     //对应的人员绑定标签
-    List<Label> getManLabelByOldmanId(int oldmanId);
+    List<LabelMan> getManLabelByOldmanId(int oldmanId);
 
-    List<Integer> getRuleManIds(@Param("rule") LabelRuleToDBSelectMan labelRuleToDB);
+    List<LabelMan> getRuleManIds(@Param("rule") LabelRuleToDBSelectMan labelRuleToDB);
 
     String getLabelNameByLabelRuleId(int id);
 
     void addLabelRule(int id);
+
+    void deleteLableManByLabelId(int labelId);
+
+    void implement(int id);
+
+    void saveLabelMan(@Param("labelId") int labelId,@Param("oldmanIds") int[] oldmanIds);
 }

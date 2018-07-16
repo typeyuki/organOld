@@ -5,12 +5,11 @@
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <#include "../common/head.ftl" />
-
-    <#--<link href="/css/animate.min.css" rel="stylesheet">-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/css/bootstrap.min.css?v=3.3.5" rel="stylesheet">
+    <link href="/css/font-awesome.min.css?v=4.4.0" rel="stylesheet">
+    <link href="/css/plugins/iCheck/custom.css" rel="stylesheet">
     <link href="/css/style.min.css?v=4.0.0" rel="stylesheet">
-    <link href="/static/css/common_table.css" rel="stylesheet">
-    <link href="/static/css/oldman/base.css" rel="stylesheet">
 </head>
 
 <body class="gray-bg">
@@ -30,13 +29,18 @@
                     </div>
                 </div>
                 <div class="ibox-content">
-                    <form method="get" class="form-horizontal">
+                    <form method="post" action="/organ/update"  class="form-horizontal" enctype="multipart/form-data">
                         <input type="hidden" name="id" value="${organ.id!}">
+                        <input type="hidden" name="organFirType" value="${organ.organFirTypeId!}">
                         <div class="hr-line-dashed"></div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">类型</label>
                             <div class="col-sm-5">
-                                <input type="text" class="form-control" value="${organ.organType!}" />
+                                <select class="form-control" name="organTypeId">
+                                    <#list organ.organTypeList as list>
+                                        <option value="${list.id}">${list.secType}</option>
+                                    </#list>
+                                </select>
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>
@@ -50,7 +54,7 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label">简介</label>
                             <div class="col-sm-5">
-                                <textarea name="intro" class="form-control" value="${organ.intro!}"  ></textarea>
+                                <textarea name="intro"  class="form-control" >${organ.intro!}</textarea>
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>
@@ -58,7 +62,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">席位数</label>
                                 <div class="col-sm-5">
-                                    <input type="text" class="form-control" value="${organ.num!}"  />
+                                    <input type="text" name="num" class="form-control" value="${organ.num!}"  />
                                 </div>
                             </div>
                             <div class="hr-line-dashed"></div>
@@ -67,28 +71,28 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">入住数</label>
                                 <div class="col-sm-5">
-                                    <input type="text" class="form-control" value="${organ.numIn!}"  />
+                                    <input type="text" name="numIn" class="form-control" value="${organ.numIn!}"  />
                                 </div>
                             </div>
                             <div class="hr-line-dashed"></div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">剩余床数</label>
                                 <div class="col-sm-5">
-                                    <input type="text" class="form-control" value="${organ.numRemain!}"  />
+                                    <input type="text" name="numRemain" class="form-control" value="${organ.numRemain!}"  />
                                 </div>
                             </div>
                             <div class="hr-line-dashed"></div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">设施情况</label>
                                 <div class="col-sm-5">
-                                    <textarea class="form-control" value="${organ.insitution!}"   ></textarea>
+                                    <textarea class="form-control" name="insitution">${organ.insitution!}</textarea>
                                 </div>
                             </div>
                             <div class="hr-line-dashed"></div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">入住要求</label>
                                 <div class="col-sm-5">
-                                    <textarea class="form-control" value="${organ.require!}" ></textarea>
+                                    <textarea class="form-control" name="require" >${organ.require!}</textarea>
                                 </div>
                             </div>
                             <div class="hr-line-dashed"></div>
@@ -96,35 +100,35 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label">服务内容</label>
                             <div class="col-sm-5">
-                                <textarea class="form-control" value="${organ.work!}"  ></textarea>
+                                <textarea class="form-control" name="work">${organ.work!}</textarea>
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">工作时间</label>
                             <div class="col-sm-5">
-                                <textarea class="form-control"  value="${organ.serviceTime!}" ></textarea>
+                                <textarea class="form-control" name="serviceTime" >${organ.serviceTime!}</textarea>
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">地址</label>
                             <div class="col-sm-5">
-                                <textarea t class="form-control" value="${organ.address!}" ></textarea>
+                                <textarea class="form-control" name="address" >${organ.address!}</textarea>
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">联系方式</label>
                             <div class="col-sm-5">
-                                <input type="text" class="form-control" value="${organ.phone!}" />
+                                <input type="text" class="form-control" name="phone" value="${organ.phone!}" />
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">网站</label>
                             <div class="col-sm-5">
-                                <input type="text" class="form-control" value="${organ.webUrl!}" />
+                                <input type="text" class="form-control" name="webUrl" value="${organ.webUrl!}" />
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>
@@ -132,11 +136,11 @@
                             <label class="col-sm-2 control-label">照片</label>
                             <div class="col-sm-3">
                             <#if organ.imgUrl??>
-                                <img src="${organ.imgUrl}">
+                                <img width="200" src="/${organ.imgUrl}">
                             </#if>
                             </div>
                             <div class="col-sm-2">
-                                <input type="file" class="form-control"  />
+                                <input type="file" name="pic" class="form-control"  />
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>
@@ -145,7 +149,7 @@
                             <div class="col-sm-5">
                                 <select name="districtId">
                                     <option value="">无</option>
-                                    <#list districts as district>
+                                    <#list organ.districtList as district>
                                         <#if organ.districtName?? && organ.districtName==district.value>
                                             <option value="${district.id}" selected>${district.value}</option>
                                         <#else >
@@ -153,6 +157,56 @@
                                         </#if>
                                     </#list>
                                 </select>
+                            </div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+                        <#if organ.organType=="居委会">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">父机构</label>
+                                <div class="col-sm-5">
+                                    <select name="parent">
+                                        <option value="">无</option>
+                                        <#if organ.parentOrganList??>
+                                            <#list organ.parentOrganList as list>
+                                                    <option value="${list.id}" selected>${list.name}</option>
+                                            </#list>
+                                        </#if>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                        </#if>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">权限升级</label>
+                            <div class="col-sm-1">
+                                <div class="checkbox i-checks">
+                                    <label>
+                                        <input type="checkbox" value="consume"  name="auth" ${(organ.authConsume==1)?string("checked","")}> <i></i> 消费</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-1">
+                                <div class="checkbox i-checks">
+                                    <label>
+                                        <input type="checkbox" value="sign"  name="auth" ${(organ.authSign==1)?string("checked","")}> <i></i> 签到</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-1">
+                                <div class="checkbox i-checks">
+                                    <label>
+                                        <input type="checkbox" value="product"  name="auth" ${(organ.authProduct==1)?string("checked","")}> <i></i> 商品</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-1">
+                                <div class="checkbox i-checks">
+                                    <label>
+                                        <input type="checkbox" value="info"  name="auth" ${(organ.authQueryInfo==1)?string("checked","")}> <i></i> 老人信息查询</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-1">
+                                <div class="checkbox i-checks">
+                                    <label>
+                                        <input type="checkbox" value="integral"  name="auth" ${(organ.authQueryIntegral==1)?string("checked","")}> <i></i> 积分查询</label>
+                                </div>
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>
@@ -168,6 +222,29 @@
     </div>
 
 </div>
+
+<script src="/js/jquery.min.js?v=2.1.4"></script>
+<script src="/js/bootstrap.min.js?v=3.3.5"></script>
+
+<script>
+    $("select[name='organTypeId'] option").each(function () {
+        if($(this).val()==${organ.organTypeId}){
+            $(this).prop("selected",true);
+            return;
+        }
+                });
+
+<#if organ.parentOrganList??>
+$("select[name='parent'] option").each(function () {
+    if($(this).val()==${organ.parent}){
+        $(this).prop("selected",true);
+        return;
+    }
+});
+</#if>
+</script>
+
+<script src="/js/plugins/iCheck/icheck.min.js"></script>
 <script type="text/javascript" src="/static/js/organ/organ_simple.js"></script>
 <script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
 

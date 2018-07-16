@@ -1,11 +1,16 @@
 package com.organOld.service.thread;
 
+import com.organOld.dao.entity.Message;
 import com.organOld.dao.entity.oldman.HealthSelect;
 import com.organOld.dao.entity.oldman.Oldman;
 import com.organOld.dao.entity.oldman.OldmanKey;
 import com.organOld.dao.repository.OldmanDao;
 import com.organOld.dao.repository.OldmanKeyDao;
+import com.organOld.service.contract.Result;
+import com.organOld.service.dwr.Remote;
 import com.organOld.service.enumModel.HealthEnum;
+import com.organOld.service.enumModel.MessageTypeEnum;
+import com.organOld.service.model.DwrData;
 import com.organOld.service.service.CommonService;
 import com.organOld.service.service.OldmanKeyService;
 import com.organOld.service.util.Cache;
@@ -174,6 +179,7 @@ public class KeyUpdate{
                 }
                 finish=true;
                 log.info("finish!!!");
+                Remote.noticeNewOrder(new DwrData());
                 return false;
             }
             return true;
@@ -275,6 +281,7 @@ public class KeyUpdate{
             oldmanDao.updateKeyOldmanFuture(updatedData);
         }else{
             oldmanDao.updateKeyOldman(updatedData);
+            commonService.informJwAndPq("重点老人进行了更新");
         }
     }
 

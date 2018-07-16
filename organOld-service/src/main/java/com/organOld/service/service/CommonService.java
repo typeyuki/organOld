@@ -4,11 +4,15 @@ import com.alibaba.fastjson.JSONObject;
 
 import com.organOld.dao.entity.AutoValue;
 import com.organOld.dao.entity.DBInterface;
+import com.organOld.dao.entity.Message;
 import com.organOld.dao.entity.label.LabelRule;
+import com.organOld.dao.repository.MessageDao;
+import com.organOld.dao.repository.OldmanDao;
 import com.organOld.dao.repository.UserDao;
 import com.organOld.dao.util.Page;
 import com.organOld.service.contract.*;
 import com.organOld.service.enumModel.AutoValueEnum;
+import com.organOld.service.enumModel.MessageTypeEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -28,6 +32,10 @@ public class CommonService {
 
     @Autowired
     UserDao userDao;
+    @Autowired
+    MessageDao messageDao;
+    @Autowired
+    OldmanDao oldmanDao;
 
     public static int birthdayToAge(Date birthday){
         Date date=new Date();
@@ -120,20 +128,21 @@ public class CommonService {
     }
 
 
-    public Integer getIdBySession(HttpSession session) {
+    public Integer getIdBySession() {
         try {
             UserDetails userDetails=(UserDetails) SecurityContextHolder.getContext()
                     .getAuthentication()
                     .getPrincipal();
             String username=userDetails.getUsername();
-            return userDao.getOrganIdByUsername(username);
+            Integer organId= userDao.getOrganIdByUsername(username);
+            return organId;
         }catch (Exception e){
             return 0;
         }
     }
 
-    public void checkIsOrgan(HttpSession session, DBInterface dbInterface) {
-        Integer organId=getIdBySession(session);
+    public void checkIsOrgan(DBInterface dbInterface) {
+        Integer organId=getIdBySession();
         if (organId!=null && organId!=0){
             dbInterface.setOrganId(organId);
         }
@@ -163,14 +172,50 @@ public class CommonService {
 
         int age = yearNow - yearBirth;
 
-        if (monthNow <= monthBirth) {
-            if (monthNow == monthBirth) {
-                if (dayOfMonthNow < dayOfMonthBirth) age--;
-            }else{
-                age--;
-            }
-        }
+        //只比较 年  不比较月
+//        if (monthNow <= monthBirth) {
+//            if (monthNow == monthBirth) {
+//                if (dayOfMonthNow < dayOfMonthBirth) age--;
+//            }else{
+//                age--;
+//            }
+//        }
         return age;
+    }
+
+    public Result checkUserOrganType() {
+        Result result;
+        try {
+            UserDetails userDetails=(UserDetails) SecurityContextHolder.getContext()
+                    .getAuthentication()
+                    .getPrincipal();
+            String username=userDetails.getUsername();
+            String type=userDao.getOrganTypeByUsername(username);
+            if(type!=null &&!type.equals("")){
+                result=new Result(true,type);
+            }else{
+                result=new Result(false);
+            }
+        }catch (Exception e){
+            result=new Result(false);
+        }
+        return result;
+    }
+
+    public void informJwAndPq(String content) {
+        Result result=checkUserOrganType();
+        if(result.isSuccess()==false || result.getData().equals("片区")){
+            Integer organId=getIdBySession();
+            List<Integer> userIds=userDao.getJwUserId(organId);
+            Message message=new Message();
+            message.setType(MessageTypeEnum.XT.getIndex());
+            message.setContent(content);
+            messageDao.saveAllMessage(userIds,message);
+        }
+    }
+
+    public Integer checkOldmanExiest(String pid) {
+        return oldmanDao.getIdByPid(pid);
     }
 }
 

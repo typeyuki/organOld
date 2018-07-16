@@ -30,7 +30,7 @@ public class VolunteerServiceImpl implements VolunteerService{
     public String getByPage(VolunteerRequest volunteerRequest, BTableRequest bTableRequest, HttpSession session) {
         Page<Volunteer> page=commonService.getPage(bTableRequest,"volunteer");
         Volunteer volunteer= Wrappers.volunteerWrapper.unwrap(volunteerRequest);
-        commonService.checkIsOrgan(session,volunteer);
+        commonService.checkIsOrgan(volunteer);
         page.setEntity(volunteer);
         List<VolunteerModel> volunteerModelList=volunteerDao.getByPage(page).stream().map(Wrappers.volunteerWrapper::wrap).collect(Collectors.toList());
         Long size=volunteerDao.getSizeByPage(page);

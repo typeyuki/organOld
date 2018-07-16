@@ -9,6 +9,7 @@ import com.organOld.service.enumModel.*;
 import com.organOld.service.model.LabelAllRuleModel;
 import com.organOld.service.model.OldmanAddInfoModel;
 import com.organOld.service.model.OldmanModel;
+import com.organOld.service.model.OrganQueryIntegralModel;
 import com.organOld.service.service.CommonService;
 import com.organOld.service.util.Tool;
 import com.organOld.service.contract.*;
@@ -18,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class OldmanWrapper implements Wrapper<Oldman,OldmanModel,OldmanRequest> {
 
@@ -47,6 +49,8 @@ public class OldmanWrapper implements Wrapper<Oldman,OldmanModel,OldmanRequest> 
         oldmanModel.setdName(oldman.getXq().getDistrictName());
         oldmanModel.setxName(oldman.getXq().getName());
         oldmanModel.setPoliticalStatus(oldman.getPoliticalStatus());
+
+        oldmanModel.setLabelManInfoModelList(oldman.getLabelManList().stream().map(Wrappers.labelWrapper::wrapManInfo).collect(Collectors.toList()));
         return oldmanModel;
     }
 
@@ -58,8 +62,6 @@ public class OldmanWrapper implements Wrapper<Oldman,OldmanModel,OldmanRequest> 
             oldman.setBirthdayEnd(commonService.AgeTobirthday(Integer.parseInt(oldmanRequest.getAgeStart())));
         if(oldmanRequest.getAgeEnd()!=null && !oldmanRequest.getAgeEnd().equals(""))
             oldman.setBirthdayStart(commonService.AgeTobirthday(Integer.parseInt(oldmanRequest.getAgeEnd())));
-
-
 
         return oldman;
     }
@@ -74,6 +76,13 @@ public class OldmanWrapper implements Wrapper<Oldman,OldmanModel,OldmanRequest> 
         sexMap.put(SexEnum.MAN.getIndex(),SexEnum.MAN.getName());
         sexMap.put(SexEnum.WOMAN.getIndex(),SexEnum.WOMAN.getName());
         oldmanAddInfoModel.setSex(sexMap);
+
+        Map<Integer,String> oldStatus=new HashMap<>();
+        oldStatus.put(OldStatusEnum.SQ.getIndex(),OldStatusEnum.SQ.getName());
+        oldStatus.put(OldStatusEnum.JG.getIndex(),OldStatusEnum.JG.getName());
+        oldStatus.put(OldStatusEnum.JJ.getIndex(),OldStatusEnum.JJ.getName());
+        oldStatus.put(OldStatusEnum.SJ.getIndex(),OldStatusEnum.SJ.getName());
+        oldmanAddInfoModel.setOldStatus(oldStatus);
 
         for(AutoValue autoValue:autoValueList){
             if (autoValue.getType()== AutoValueEnum.HJ.getIndex()){
@@ -115,5 +124,15 @@ public class OldmanWrapper implements Wrapper<Oldman,OldmanModel,OldmanRequest> 
         }
 
         return oldmanAddInfoModel;
+    }
+
+    public OrganQueryIntegralModel wrapInregral(Oldman oldman) {
+        if(oldman!=null) {
+            OrganQueryIntegralModel organQueryIntegralModel = new OrganQueryIntegralModel();
+            organQueryIntegralModel.setIntegral(oldman.getIntegral());
+            organQueryIntegralModel.setOldmanName(oldman.getName());
+            return organQueryIntegralModel;
+        }
+        return null;
     }
 }

@@ -4,7 +4,7 @@
 $(document).ready(function(){
     var columns=[];
     var columnDefs=[];
-    if(type==1 || type==3){
+    if(typeHome==1 || typeHome==3){
         columns=[{},{
             data:"id"
         },{
@@ -27,11 +27,11 @@ $(document).ready(function(){
                 "targets": [4], // 目标列位置，下标从0开始
                 "data": "id", // 数据列名
                 "render": function(data, type, full) { // 返回自定义内容
-                    return "<span onclick=newPage("+data+",$(this).parent().prev().prev().text(),'/home/"+data+"/man') class='look' id='"+data+"'>人员</span><span class='mod' id='"+data+"'>修改</span>";
+                    return "<span onclick=newPage("+data+",$(this).parent().prev().prev().text(),'/home/"+typeHome+"/"+data+"/man') class='look' id='"+data+"'>人员</span><span class='mod' id='"+data+"'>修改</span>";
                 }
             }
         ]
-    }else if(type==4){
+    }else if(typeHome==4){
         columns=[{},{
             data:"id"
         },{
@@ -56,11 +56,11 @@ $(document).ready(function(){
                 "targets": [5], // 目标列位置，下标从0开始
                 "data": "id", // 数据列名
                 "render": function(data, type, full) { // 返回自定义内容
-                    return "<span onclick=newPage("+data+",$(this).parent().prev().prev().prev().text(),'/home/"+data+"/man') class='look' id='"+data+"'>人员</span><span class='mod' id='"+data+"'>修改</span>";
+                    return "<span onclick=newPage("+data+",$(this).parent().prev().prev().prev().text(),'/home/"+typeHome+"/"+data+"/man') class='look' id='"+data+"'>人员</span><span class='mod' id='"+data+"'>修改</span>";
                 }
             }
         ]
-    }else if(type==2){
+    }else if(typeHome==2){
         columns=[{},{
             data:"id"
         },{
@@ -85,11 +85,11 @@ $(document).ready(function(){
                 "targets": [5], // 目标列位置，下标从0开始
                 "data": "id", // 数据列名
                 "render": function(data, type, full) { // 返回自定义内容
-                    return "<span onclick=newPage("+data+",$(this).parent().prev().prev().prev().text(),'/home/"+data+"/man') class='look' id='"+data+"'>人员</span><span class='mod' id='"+data+"'>修改</span>";
+                    return "<span onclick=newPage("+data+",$(this).parent().prev().prev().prev().text(),'/home/"+typeHome+"/"+data+"/man') class='look' id='"+data+"'>人员</span><span class='mod' id='"+data+"'>修改</span>";
                 }
             }
         ]
-    }else if(type==5){
+    }else if(typeHome==5){
         columns=[{},{
             data:"id"
         },{
@@ -112,7 +112,7 @@ $(document).ready(function(){
                 "targets": [4], // 目标列位置，下标从0开始
                 "data": "id", // 数据列名
                 "render": function(data, type, full) { // 返回自定义内容
-                    return "<span onclick=newPage("+data+",$(this).parent().prev().prev().text(),'/home/"+data+"/man') class='look' id='"+data+"'>人员</span><span class='mod' id='"+data+"'>修改</span>";
+                    return "<span onclick=newPage("+data+",$(this).parent().prev().prev().text(),'/home/"+typeHome+"/"+data+"/man') class='look' id='"+data+"'>人员</span><span class='mod' id='"+data+"'>修改</span>";
                 }
             }
         ]
@@ -142,7 +142,7 @@ $(document).ready(function(){
                 "iSortCol_0" : aoData.iSortCol_0,
                 "sEcho" : aoData.sEcho,
                 "sSortDir_0" : aoData.sSortDir_0,
-                "firType" : type,
+                "firType" : typeHome,
                 "status":status
             },
             type: 'POST',

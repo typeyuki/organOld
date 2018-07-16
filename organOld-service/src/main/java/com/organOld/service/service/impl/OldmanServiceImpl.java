@@ -79,7 +79,7 @@ public class OldmanServiceImpl implements OldmanService {
     public String getOldmanByPage(OldmanRequest oldmanRequest, BTableRequest bTableRequest, HttpSession session) {
         Page<Oldman> page=commonService.getPage(bTableRequest,"oldman_base");
         Oldman oldman= Wrappers.oldmanWrapper.unwrap(oldmanRequest);
-        commonService.checkIsOrgan(session,oldman);
+        commonService.checkIsOrgan(oldman);
         page.setEntity(oldman);
         List<OldmanModel> oldmanList=oldmanBaseDao.getByPage(page).stream().map(Wrappers.oldmanWrapper::wrap).collect(Collectors.toList());
         Long size=oldmanBaseDao.getSizeByPage(page);
@@ -91,7 +91,7 @@ public class OldmanServiceImpl implements OldmanService {
     public String getHealthByPage(OldmanHealthRequest oldmanHealthRequest, BTableRequest bTableRequest, HttpSession session) {
         Page<OldmanHealth> page=commonService.getPage(bTableRequest,"oldman_health");
         OldmanHealth oldmanHealth=Wrappers.oldmanHealthWrapper.unwrap(oldmanHealthRequest);
-        commonService.checkIsOrgan(session,oldmanHealth);
+        commonService.checkIsOrgan(oldmanHealth);
         page.setEntity(oldmanHealth);
         List<OldmanHealthModel> oldmanHealthModelList=oldmanHealthDao.getByPage(page).stream().map(Wrappers.oldmanHealthWrapper::wrap).collect(Collectors.toList());
         Long size=oldmanHealthDao.getSizeByPage(page);
@@ -102,7 +102,7 @@ public class OldmanServiceImpl implements OldmanService {
     public String getEconomyByPage(OldmanEconomicRequest economicRequest, BTableRequest bTableRequest, HttpSession session) {
         Page<OldmanEconomic> page=commonService.getPage(bTableRequest,"oldman_economy");
         OldmanEconomic economic=Wrappers.economicWrapper.unwrap(economicRequest);
-        commonService.checkIsOrgan(session,economic);
+        commonService.checkIsOrgan(economic);
         page.setEntity(economic);
         List<OldmanEconomicModel> economicModelList=economicDao.getByPage(page).stream().map(Wrappers.economicWrapper::wrap).collect(Collectors.toList());
         Long size=economicDao.getSizeByPage(page);
@@ -113,7 +113,7 @@ public class OldmanServiceImpl implements OldmanService {
     public String getFamilyByPage(OldmanFamilyRequest familyRequest, BTableRequest bTableRequest, HttpSession session) {
         Page<OldmanFamily> page=commonService.getPage(bTableRequest,"oldman_family");
         OldmanFamily family=Wrappers.familyWrapper.unwrap(familyRequest);
-        commonService.checkIsOrgan(session,family);
+        commonService.checkIsOrgan(family);
         page.setEntity(family);
         List<OldmanFamilyModel> familyModelList=familyDao.getByPage(page).stream().map(Wrappers.familyWrapper::wrap).collect(Collectors.toList());
         Long size=familyDao.getSizeByPage(page);
@@ -124,7 +124,7 @@ public class OldmanServiceImpl implements OldmanService {
     public String getOrganOldmanByPage(OrganOldmanRequest organOldmanRequest, BTableRequest bTableRequest, HttpSession session) {
         Page<OrganOldman> page=commonService.getPage(bTableRequest,"oldman_organOldman");
         OrganOldman organOldman=Wrappers.organOldmanWrapper.unwrap(organOldmanRequest);
-        commonService.checkIsOrgan(session,organOldman);
+        commonService.checkIsOrgan(organOldman);
         page.setEntity(organOldman);
         List<OrganOldmanModel> organOldmanModelList=organOldmanDao.getByPage(page).stream().map(Wrappers.organOldmanWrapper::wrap).collect(Collectors.toList());
         Long size=organOldmanDao.getSizeByPage(page);
@@ -135,7 +135,7 @@ public class OldmanServiceImpl implements OldmanService {
     public String getLinkmanByPage(LinkmanRequest linkmanRequest, BTableRequest bTableRequest, HttpSession session) {
         Page<Linkman> page=commonService.getPage(bTableRequest,"oldman_linkman");
         Linkman linkman=Wrappers.linkmanWrapper.unwrap(linkmanRequest);
-        commonService.checkIsOrgan(session,linkman);
+        commonService.checkIsOrgan(linkman);
         page.setEntity(linkman);
         List<LinkmanModel> linkmanModelList=linkmanDao.getByPage(page).stream().map(Wrappers.linkmanWrapper::wrap).collect(Collectors.toList());
         Long size=linkmanDao.getSizeByPage(page);
@@ -202,7 +202,8 @@ public class OldmanServiceImpl implements OldmanService {
     public OldmanAddInfoModel getAddInfo() {
         List<Integer> typeList=commonService.getAutoValueTypes("oldman_add");
         List<AutoValue> autoValueList=autoValueDao.getByTypeList(typeList);
-        List<Organ> jwList=organDao.getSimpleByType(2);
+        Integer organId=commonService.getIdBySession();
+        List<Organ> jwList=organDao.getSimpleByType(2,organId);
         List<HealthSelect> healthSelectList=oldmanHealthDao.getAllHealthSelect();
         OldmanAddInfoModel oldmanAddInfoModel=Wrappers.oldmanWrapper.wrapAddInfo(autoValueList,jwList,healthSelectList);
         return oldmanAddInfoModel;
@@ -213,7 +214,7 @@ public class OldmanServiceImpl implements OldmanService {
     public String getHomeOldmanByPage(HomeOldmanRequest homeOldmanRequest, BTableRequest bTableRequest, HttpSession session) {
         Page<HomeOldman> page=commonService.getPage(bTableRequest,"oldman_homeOldman");
         HomeOldman homeOldman=Wrappers.homeOldmanWrapper.unwrap(homeOldmanRequest);
-        commonService.checkIsOrgan(session,homeOldman);
+        commonService.checkIsOrgan(homeOldman);
         page.setEntity(homeOldman);
         List<HomeOldmanModel> organOldmanModelList=homeOldmanDao.getByPage(page).stream().map(Wrappers.homeOldmanWrapper::wrap).collect(Collectors.toList());
         Long size=homeOldmanDao.getSizeByPage(page);
@@ -226,6 +227,8 @@ public class OldmanServiceImpl implements OldmanService {
         Page<DBEntity> page=new Page<>();
         page.setSortType("id");
         page.setSort("asc");
+        page.setLength(1);
+        page.setStart(0);
 
         Oldman oldman=new Oldman();
         oldman.setId(oldmanId);
@@ -292,12 +295,13 @@ public class OldmanServiceImpl implements OldmanService {
     }
 
 
+    //TODO 标签 绑定人员更新
     @Override
     @Transactional
     public Result importExcel(MultipartFile file, HttpSession session) throws IOException {
 
         Oldman o=new Oldman();
-        commonService.checkIsOrgan(session,o);
+        commonService.checkIsOrgan(o);
         Integer organId=o.getOrganId();
 
         //导入规则  已有的则进行更新 没有的今天添加   数据库有的 表没有的  则“删除” 设置老人状态为不可用
@@ -321,7 +325,6 @@ public class OldmanServiceImpl implements OldmanService {
         List<Oldman> oldmanList_update=new ArrayList<>();//对已存在的老人进行批量更新
 
 
-        List temp = new ArrayList();
         Workbook wb0 = new HSSFWorkbook(file.getInputStream());
         //获取Excel文档中的第一个表单
         Sheet sht0 = wb0.getSheetAt(0);
@@ -329,16 +332,20 @@ public class OldmanServiceImpl implements OldmanService {
         ExcelReturnModel excelReturnModel=new ExcelReturnModel();
         int numSuccess=0;//成功导入的数量
         int successUpdate=0;//导入数量中  更新的个数
-        int successAdd=0;//导入数量中  更新的个数
-        int successDel=0;//删除的个数
-        excelReturnModel.setTotal(sht0.getLastRowNum()-1);//一共
+        int successAdd=0;//导入数量中  增加的个数
+//        int successDel=0;//删除的个数
+
+
+        int start=2;
+
+        excelReturnModel.setTotal(sht0.getLastRowNum()-(start-1));//一共
 
 
 
         //对Sheet中的每一行进行迭代
         for (Row r : sht0) {
             try {
-                if (r.getRowNum() >= 2) {
+                if (r.getRowNum() >= start) {
                     //遍历 cell  将单元格 格式 全都转换成String 类型
                     Iterator<Cell> cells = r.cellIterator();    //获得第一行的迭代器
                     while (cells.hasNext()) {
@@ -601,7 +608,7 @@ public class OldmanServiceImpl implements OldmanService {
                     }
 
 
-                    Integer oldmanId=checkOldmanExiest(oldman.getPid());
+                    Integer oldmanId=commonService.checkOldmanExiest(oldman.getPid());
                     if(oldmanId!=null && oldmanId!=0){
                         //更新
                         successUpdate++;
@@ -710,7 +717,7 @@ public class OldmanServiceImpl implements OldmanService {
 
 
 
-        //老人不可用
+        //老人不可用  机构范围
         excelReturnModel.setSuccessDel(oldmanBaseDao.setDisabled(existOldmanIds,organId));
 
         excelReturnModel.setNumSuccess(numSuccess);
@@ -722,7 +729,12 @@ public class OldmanServiceImpl implements OldmanService {
         return new Result(true,excelReturnModel);
     }
 
-    private Integer checkOldmanExiest(String pid) {
-        return oldmanBaseDao.getIdByPid(pid);
+
+    @Override
+    public Result getIntegralByOldmanId(int oldmanId) {
+        OrganQueryIntegralModel organQueryIntegralModel=Wrappers.oldmanWrapper.wrapInregral(oldmanBaseDao.getIntegralByOldmanId(oldmanId));
+        if(organQueryIntegralModel!=null)
+            return new Result(true,organQueryIntegralModel);
+        else return new Result(false,"找不到");
     }
 }

@@ -65,10 +65,11 @@ public class HomeController {
      * @param hid
      * @return
      */
-    @RequestMapping(value = "/{hid}/man",method = RequestMethod.GET)
-    public ModelAndView man(@PathVariable int hid){
+    @RequestMapping(value = "/{type}/{hid}/man",method = RequestMethod.GET)
+    public ModelAndView man(@PathVariable int hid,@PathVariable int type){
         ModelAndView mv=new ModelAndView("home/home_man");
         mv.addObject("hid",hid);
+        mv.addObject("type",type);
         return mv;
     }
 

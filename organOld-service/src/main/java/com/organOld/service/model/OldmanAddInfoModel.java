@@ -27,6 +27,16 @@ public class OldmanAddInfoModel {
     private List<HealthSelect> sn =new ArrayList<>();//失能
     private List<HealthSelect> ywfy =new ArrayList<>();//药物反应
 
+    private Map<Integer,String> oldStatus;
+
+
+    public Map<Integer, String> getOldStatus() {
+        return oldStatus;
+    }
+
+    public void setOldStatus(Map<Integer, String> oldStatus) {
+        this.oldStatus = oldStatus;
+    }
 
     public List<AutoValue> getXq() {
         return xq;

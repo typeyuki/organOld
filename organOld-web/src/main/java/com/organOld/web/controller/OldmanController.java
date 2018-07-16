@@ -56,7 +56,8 @@ public class OldmanController {
                        @RequestParam(value = "intelligence_array[]",required = false) String intelligence[],
                        @RequestParam(value = "eyesight_array[]",required = false) String eyesight[],
                        @RequestParam(value = "district_array[]",required = false) String district[],
-                       @RequestParam(value = "jw_array[]",required = false) String jw[]){
+                       @RequestParam(value = "jw_array[]",required = false) String jw[],
+                       @RequestParam(value = "oldStatus_array[]",required = false) String oldStatus[]){
         oldmanRequest.setCensusArray(census);
         oldmanRequest.setFamily(family);
         oldmanRequest.setEconomic(economic);
@@ -66,13 +67,14 @@ public class OldmanController {
         oldmanRequest.setDistrict(district);
         oldmanRequest.setJw(jw);
         oldmanRequest.setIsHealth(isHealth);
+        oldmanRequest.setOldStatusArray(oldStatus);
 
         return oldmanService.getOldmanByPage(oldmanRequest,bTableRequest,session);
     }
 
 
     /**
-     * 导入的话  已有老人 更新  没有的添加
+     * 导入的话  已有老人更新，没有的添加，去掉的设置为不可用    不能先删除之前的再添加，因为老人表涉及其他多个表 不能单纯的删除
      * @param file
      * @return
      * @throws IOException

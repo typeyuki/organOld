@@ -46,12 +46,13 @@
                         <tr>
                             <th><input type='checkbox' /></th>
                             <th>序号</th>
-                            <th>所属居委</th>
+                            <th>所属机构</th>
                             <th>一级菜单</th>
                             <th>二级菜单</th>
                             <th>名称</th>
                             <th>条件</th>
                             <th>内容</th>
+                            <th>文号</th>
                             <th>更新时间</th>
                             <th></th>
                         </tr>
@@ -68,6 +69,17 @@
 </div>
 <script>
     var typeLabel="${type}";
+    var userType;
+    $.ajax({
+        url: "/user/checkUserOrganType",
+        type: "get",
+        async:false,
+        success: function (data) {
+            if (data.success == true) {
+                userType=data.data;
+            }
+        }
+    });
 </script>
 <#include "add_label.ftl" />
 <script src="/js/content.min.js?v=1.0.0"></script>

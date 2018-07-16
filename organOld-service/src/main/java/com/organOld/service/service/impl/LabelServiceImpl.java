@@ -1,21 +1,15 @@
 package com.organOld.service.service.impl;
 
 import com.organOld.dao.entity.AutoValue;
+import com.organOld.dao.entity.Message;
 import com.organOld.dao.entity.home.Chx;
-import com.organOld.dao.entity.label.Label;
-import com.organOld.dao.entity.label.LabelRule;
-import com.organOld.dao.entity.label.LabelRuleToDBSelectMan;
+import com.organOld.dao.entity.label.*;
 import com.organOld.dao.entity.oldman.Oldman;
 import com.organOld.dao.entity.organ.Organ;
-import com.organOld.dao.repository.AutoValueDao;
-import com.organOld.dao.repository.ChxDao;
-import com.organOld.dao.repository.LabelDao;
-import com.organOld.dao.repository.OrganDao;
+import com.organOld.dao.repository.*;
 import com.organOld.dao.util.Page;
-import com.organOld.service.model.LabelModel;
-import com.organOld.service.model.LabelAllRuleModel;
-import com.organOld.service.model.LabelRuleModel;
-import com.organOld.service.model.OldmanModel;
+import com.organOld.service.enumModel.MessageTypeEnum;
+import com.organOld.service.model.*;
 import com.organOld.service.service.CommonService;
 import com.organOld.service.service.LabelService;
 import com.organOld.service.wrapper.Wrappers;
@@ -47,13 +41,22 @@ public class LabelServiceImpl implements LabelService {
     OrganDao organDao;
     @Autowired
     ChxDao chxDao;
-
+    @Autowired
+    LabelManDao labelManDao;
+    @Autowired
+    LabelFeedbackDao labelFeedbackDao;
+    @Autowired
+    UserDao userDao;
+    @Autowired
+    MessageDao messageDao;
+    @Autowired
+    LabelSecDao labelSecDao;
 
     @Override
     public String getByPage(LabelRequest labelRequest, BTableRequest bTableRequest, HttpSession session) {
         Page<Label> page=commonService.getPage(bTableRequest,"label");
         Label label= Wrappers.labelWrapper.unwrap(labelRequest);
-        commonService.checkIsOrgan(session,label);
+        commonService.checkIsOrgan(label);
         page.setEntity(label);
         List<LabelModel> labelList=labelDao.getByPage(page).stream().map(Wrappers.labelWrapper::wrap).collect(Collectors.toList());
         Long size=labelDao.getSizeByPage(page);
@@ -61,22 +64,14 @@ public class LabelServiceImpl implements LabelService {
     }
 
     @Override
-    public String getBindManByPage(OldmanRequest oldmanRequest, BTableRequest bTableRequest, int labelId, String type) {
-        Page<Oldman> page=commonService.getPage(bTableRequest,"oldman_base");
-        Oldman oldman= Wrappers.oldmanWrapper.unwrap(oldmanRequest);
-        page.setEntity(oldman);
-        List<OldmanModel> oldmanModelList;
-        Long size;
-        if(type.equals("bind")) {
-            oldmanModelList = labelDao.getBindManByPage(page, labelId).stream().map(Wrappers.oldmanWrapper::wrap).collect(Collectors.toList());
-            size=labelDao.getBindManSizeByPage(page,labelId);
-        }else{
-            LabelRule labelRule=labelDao.getLabelRuleByLid(labelId);
-            LabelRuleToDBSelectMan labelRuleToDB=getLabelRuleToDB(labelRule);
-            oldmanModelList = labelDao.getRuleManByPage(page, labelRuleToDB).stream().map(Wrappers.oldmanWrapper::wrap).collect(Collectors.toList());
-            size=labelDao.getRuleManSizeByPage(page,labelRuleToDB);
-        }
-        return commonService.tableReturn(bTableRequest.getsEcho(),size,oldmanModelList);
+    public String getBindManByPage(LabelManRequest labelManRequest, BTableRequest bTableRequest) {
+        Page<LabelMan> page=commonService.getPage(bTableRequest,"label_man");
+        LabelMan labelMan=Wrappers.labelManWrapper.unwrap(labelManRequest);
+        commonService.checkIsOrgan(labelMan);
+        page.setEntity(labelMan);
+        List<LabelManModel> labelManModelList= labelDao.getBindManByPage(page).stream().map(Wrappers.labelManWrapper::wrap).collect(Collectors.toList());
+        Long size=labelDao.getBindManSizeByPage(page);
+        return commonService.tableReturn(bTableRequest.getsEcho(),size,labelManModelList);
     }
 
     private LabelRuleToDBSelectMan getLabelRuleToDB(LabelRule labelRule) {
@@ -114,6 +109,7 @@ public class LabelServiceImpl implements LabelService {
     public String getNoSelectManDataByPage(OldmanRequest oldmanRequest, BTableRequest bTableRequest, int labelId) {
         Page<Oldman> page=commonService.getPage(bTableRequest,"oldman_base");
         Oldman oldman= Wrappers.oldmanWrapper.unwrap(oldmanRequest);
+        commonService.checkIsOrgan(oldman);
         page.setEntity(oldman);
         List<OldmanModel> oldmanModelList=labelDao.getNoSelectManDataByPage(page,labelId).stream().map(Wrappers.oldmanWrapper::wrap).collect(Collectors.toList());
         Long size=labelDao.getNoSelectManDataSizeByPage(page,labelId);
@@ -124,8 +120,8 @@ public class LabelServiceImpl implements LabelService {
     public LabelAllRuleModel getLabelRule() {
         List<Integer> typeList=commonService.getAutoValueTypes("label");
         List<AutoValue> autoValueList=autoValueDao.getByTypeList(typeList);
-
-        List<Organ> jwList=organDao.getSimpleByType(2);
+        Integer organId=commonService.getIdBySession();
+        List<Organ> jwList=organDao.getSimpleByType(2, organId);
 
         List<Chx> chxList=chxDao.getSimple();
 
@@ -140,39 +136,121 @@ public class LabelServiceImpl implements LabelService {
     }
 
     @Override
-    public void save(LabelRuleRequest labelRuleRequest) {
+    @Transactional
+    public void saveRule(LabelRuleRequest labelRuleRequest) {
         LabelRule labelRule=Wrappers.labelWrapper.unwrapLabelRule(labelRuleRequest);
         labelDao.saveLabelRule(labelRule);
+//        LabelRule labelRule=labelDao.getLabelRuleByLid(labelId);
+        labelDao.deleteLableManByLabelId(labelRule.getLabelId());
+        LabelRuleToDBSelectMan labelRuleToDB=getLabelRuleToDB(labelRule);
+        List<LabelMan> labelManList= labelDao.getRuleManIds(labelRuleToDB);
+        labelManList.stream().forEach(r->r.setLabelId(labelRule.getLabelId()));
+        labelManDao.saveAll(labelManList);
+
+        labelFeedbackDao.deleteByLabelId(labelRule.getLabelId());
+
+        //通知 居委
+        Label label=labelDao.getById(labelRule.getLabelId());
+        commonService.informJwAndPq("您有新的人员绑定标签："+label.getName());
+
     }
+
+
 
     @Override
     public Result getByOldmanId(int oldmanId) {
-        List<String> labelNames=new ArrayList<>();
-        //人员绑定标签
-        labelDao.getManLabelByOldmanId(oldmanId).forEach(r->labelNames.add(r.getName()));
+        List<LabelManInfoModel> labels=labelDao.getManLabelByOldmanId(oldmanId).stream().map(Wrappers.labelWrapper::wrapManInfo).collect(Collectors.toList());
 
         //规则制定标签
-        List<LabelRule> labelRuleList=labelDao.getLabelRules();
-        for(LabelRule labelRule:labelRuleList){
-            LabelRuleToDBSelectMan labelRuleToDB=getLabelRuleToDB(labelRule);
-            List<Integer> oldmanIdList = labelDao.getRuleManIds(labelRuleToDB);
-            if(oldmanIdList.contains(oldmanId)){
-                labelNames.add(labelDao.getLabelNameByLabelRuleId(labelRule.getId()));
-            }
-        }
+//        List<LabelRule> labelRuleList=labelDao.getLabelRules();
+//        for(LabelRule labelRule:labelRuleList){
+//            LabelRuleToDBSelectMan labelRuleToDB=getLabelRuleToDB(labelRule);
+//            List<Integer> oldmanIdList = labelDao.getRuleManIds(labelRuleToDB);
+//            if(oldmanIdList.contains(oldmanId)){
+//                labelNames.add(labelDao.getLabelNameByLabelRuleId(labelRule.getId()));
+//            }
+//        }
 
-        return new Result(true,labelNames);
+        return new Result(true,labels);
     }
 
+    /**
+     * 如果是人员绑定标签 则直接通知  居委会
+     * 如果是规则制定标签  则提交规则时再通知 居委会
+     * @param label
+     */
     @Override
     @Transactional
-    public void save(Label label, HttpSession session) {
+    public void save(Label label) {
         label.setOrganId(0);
-        commonService.checkIsOrgan(session,label);
+        commonService.checkIsOrgan(label);
         labelDao.save(label);
         if(label.getType()==2){
             //规则制定
             labelDao.addLabelRule(label.getId());
+        }else{
+            //人员绑定
+            commonService.informJwAndPq("您有新的人员绑定标签："+label.getName());
         }
+    }
+
+    @Override
+    public Result saveLabelMan(int labelId, int[] oldmanIds) {
+        Result result;
+        labelDao.saveLabelMan(labelId,oldmanIds);
+        result=new Result(true);
+        return result;
+    }
+
+    @Override
+    public Result implement(int id) {
+        Result result;
+        labelDao.implement(id);
+        result=new Result(true);
+        return result;
+    }
+
+    @Override
+    public String getFeedbackByPage(LabelFeedbackRequest labelFeedbackRequest, BTableRequest bTableRequest) {
+        Page<LabelFeedback> page=commonService.getPage(bTableRequest,"label_feedback");
+        LabelFeedback labelFeedback= Wrappers.labelWrapper.unwrapFeedback(labelFeedbackRequest);
+        commonService.checkIsOrgan(labelFeedback);
+        Label label=labelDao.getById(labelFeedback.getLabelId());
+        labelFeedback.setLabelOrganId(label.getOrganId());
+        page.setEntity(labelFeedback);
+        List<LabelFeedbackModel> labelFeedbackModelList=labelFeedbackDao.getByPage(page).stream().map(Wrappers.labelWrapper::wrapFeedback).collect(Collectors.toList());
+        Long size=labelFeedbackDao.getSizeByPage(page);
+        return commonService.tableReturn(bTableRequest.getsEcho(),size,labelFeedbackModelList);
+    }
+
+    @Override
+    public void feedbackAdd(LabelFeedbackAddRequest labelFeedbackAddRequest) {
+        LabelFeedback labelFeedback=Wrappers.labelWrapper.unwrapFeedbackAdd(labelFeedbackAddRequest);
+        labelFeedback.setOrganId(commonService.getIdBySession());
+        labelFeedbackDao.save(labelFeedback);
+    }
+
+    @Override
+    public Result getFeedbackByLabelId(int labelId) {
+        Integer organId=commonService.getIdBySession();
+        return new Result(true,Wrappers.labelWrapper.wrapFeedback(labelFeedbackDao.getByLabelIdOrganId(labelId,organId)));
+    }
+
+
+    @Override
+    public Result checkCanChange(int labelId) {
+        Label label=labelDao.getById(labelId);
+        Integer organId=commonService.getIdBySession();
+        if(organId==label.getOrganId()){
+            return new Result(true);
+        }
+        return new Result(false);
+    }
+
+
+    @Override
+    public Result getSecLabelByFirType(int firType) {
+        List<LabelSec> labelSecList=labelSecDao.getByFirType(firType);
+        return new Result(true,labelSecList);
     }
 }

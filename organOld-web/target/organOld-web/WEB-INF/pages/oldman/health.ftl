@@ -11,6 +11,11 @@
     <link href="/css/style.min.css?v=4.0.0" rel="stylesheet">
     <link href="/static/css/common_table.css" rel="stylesheet">
     <link href="/static/css/oldman/base.css" rel="stylesheet">
+    <style>
+        .select{
+            margin-left: 5px;
+        }
+    </style>
 </head>
 
 <body class="gray-bg">
@@ -65,6 +70,7 @@
 </div>
 
 <script src="/js/content.min.js?v=1.0.0"></script>
+<script src="/static/js/common.js"></script>
 <script src="/static/js/oldman/health.js" ></script>
 <script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
 
