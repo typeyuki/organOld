@@ -1,17 +1,18 @@
 package com.organOld.service.service.impl;
 
 import com.organOld.dao.entity.AutoValue;
-import com.organOld.dao.entity.Message;
 import com.organOld.dao.entity.home.Chx;
 import com.organOld.dao.entity.label.*;
 import com.organOld.dao.entity.oldman.Oldman;
 import com.organOld.dao.entity.organ.Organ;
 import com.organOld.dao.repository.*;
 import com.organOld.dao.util.Page;
-import com.organOld.service.enumModel.MessageTypeEnum;
+import com.organOld.service.constant.TimeConstant;
+import com.organOld.service.enumModel.AutoValueEnum;
 import com.organOld.service.model.*;
 import com.organOld.service.service.CommonService;
 import com.organOld.service.service.LabelService;
+import com.organOld.service.util.Tool;
 import com.organOld.service.wrapper.Wrappers;
 import com.organOld.service.contract.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,7 +54,7 @@ public class LabelServiceImpl implements LabelService {
     LabelSecDao labelSecDao;
 
     @Override
-    public String getByPage(LabelRequest labelRequest, BTableRequest bTableRequest, HttpSession session) {
+    public String getByPage(LabelRequest labelRequest, BTableRequest bTableRequest) {
         Page<Label> page=commonService.getPage(bTableRequest,"label");
         Label label= Wrappers.labelWrapper.unwrap(labelRequest);
         commonService.checkIsOrgan(label);
@@ -61,6 +62,23 @@ public class LabelServiceImpl implements LabelService {
         List<LabelModel> labelList=labelDao.getByPage(page).stream().map(Wrappers.labelWrapper::wrap).collect(Collectors.toList());
         Long size=labelDao.getSizeByPage(page);
         return commonService.tableReturn(bTableRequest.getsEcho(),size,labelList);
+    }
+
+    @Override
+    public String getTypeByPage(int index, LabelTypeRequest labelTypeRequest, BTableRequest bTableRequest) {
+        if(index==1){
+            List<AutoValue> autoValueList=autoValueDao.getByType(AutoValueEnum.YJBQ.getIndex());
+            autoValueList.forEach(s->s.setTimeFormat(Tool.dateToString(s.getTime(), TimeConstant.DATA_FORMAT_YMD)));
+            Long size=(long)autoValueList.size();
+            return commonService.tableReturn(bTableRequest.getsEcho(),size,autoValueList);
+        }else{
+            Page<LabelSec> page=commonService.getPage(bTableRequest,"label_type");
+            LabelSec labelSec=Wrappers.labelWrapper.unwrapType(labelTypeRequest);
+            page.setEntity(labelSec);
+            List<LabelSecModel> labelList=labelSecDao.getByPage(page).stream().map(Wrappers.labelWrapper::wrapType).collect(Collectors.toList());
+            Long size=labelSecDao.getSizeByPage(page);
+            return commonService.tableReturn(bTableRequest.getsEcho(),size,labelList);
+        }
     }
 
     @Override
@@ -252,5 +270,30 @@ public class LabelServiceImpl implements LabelService {
     public Result getSecLabelByFirType(int firType) {
         List<LabelSec> labelSecList=labelSecDao.getByFirType(firType);
         return new Result(true,labelSecList);
+    }
+
+    //1 是 人员绑定  2是规则制定
+    @Override
+    public LabelFilterModel getFilterLabelRule(int i) {
+        LabelFilterModel labelFilterModel;
+        List<Integer> typeIds = new ArrayList<>();
+        typeIds.add(33);
+        typeIds.add(2);
+        List<Organ> belongOrgan = organDao.getByTypes(typeIds);
+        List<LabelSec> labelSecList = labelSecDao.getByFirType(0);
+        if(i==2) {
+            List<Integer> typeList = commonService.getAutoValueTypes("labelFilter");
+            List<AutoValue> autoValueList = autoValueDao.getByTypeList(typeList);
+            Integer organId = commonService.getIdBySession();
+            List<Organ> jwList = organDao.getSimpleByType(2, organId);
+            List<Chx> chxList = chxDao.getSimple();
+            labelFilterModel = Wrappers.labelWrapper.wrapFilterLabelRule(autoValueList, jwList, chxList, belongOrgan, labelSecList);
+        }else{
+            labelFilterModel=new LabelFilterModel();
+            labelFilterModel.setBelongOrgan(belongOrgan);
+            labelFilterModel.setSecLabel(labelSecList);
+            labelFilterModel.setFirLabel(autoValueDao.getByType(9));
+        }
+        return labelFilterModel;
     }
 }

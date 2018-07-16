@@ -34,7 +34,7 @@ public class LabelController {
     public ModelAndView index_bind(){
         ModelAndView mv=new ModelAndView("oldman/label/label_three");
         mv.addObject("type","1");//标志 是人员绑定
-        mv.addObject("firType",autoValueService.getByType(9));//一级标签
+        mv.addObject("rule",labelService.getFilterLabelRule(1));
         return mv;
     }
 
@@ -53,7 +53,7 @@ public class LabelController {
     public ModelAndView index_rule(){
         ModelAndView mv=new ModelAndView("oldman/label/label_three");
         mv.addObject("type","2");//标志 是规则制定
-        mv.addObject("firType",autoValueService.getByType(9));//一级标签
+        mv.addObject("rule",labelService.getFilterLabelRule(2));
         return mv;
     }
 
@@ -67,8 +67,28 @@ public class LabelController {
      */
     @ResponseBody
     @RequestMapping(value = "/data",method = RequestMethod.POST)
-    public String data(BTableRequest bTableRequest, LabelRequest labelRequest, HttpSession session){
-        return labelService.getByPage(labelRequest,bTableRequest,session);
+    public String data(BTableRequest bTableRequest, LabelRequest labelRequest,
+                       @RequestParam(value = "census_array[]",required = false) String census[],
+                       @RequestParam(value = "family_array[]",required = false) String family[],
+                       @RequestParam(value = "economic_array[]",required = false) String economic[],
+                       @RequestParam(value = "politicalStatus_array[]",required = false) String politicalStatus[],
+                       @RequestParam(value = "isHealth_array[]",required = false) String isHealth[],
+                       @RequestParam(value = "intelligence_array[]",required = false) String intelligence[],
+                       @RequestParam(value = "eyesight_array[]",required = false) String eyesight[],
+                       @RequestParam(value = "district_array[]",required = false) String district[],
+                       @RequestParam(value = "jw_array[]",required = false) String jw[],
+                       @RequestParam(value = "oldStatus_array[]",required = false) String oldStatus[]){
+        labelRequest.setCensusArray(census);
+        labelRequest.setFamily(family);
+        labelRequest.setEconomic(economic);
+        labelRequest.setPoliticalStatusArray(politicalStatus);
+        labelRequest.setIntelligence(intelligence);
+        labelRequest.setEyesight(eyesight);
+        labelRequest.setDistrict(district);
+        labelRequest.setJw(jw);
+        labelRequest.setIsHealth(isHealth);
+        labelRequest.setOldStatusArray(oldStatus);
+        return labelService.getByPage(labelRequest,bTableRequest);
     }
 
     /**
@@ -263,5 +283,24 @@ public class LabelController {
     public Result checkCanChange(@PathVariable int labelId){
         Result result=labelService.checkCanChange(labelId);
         return result;
+    }
+
+    /**
+     * 标签类型
+     * @param index  1一级  2 二级
+     * @return
+     */
+    @RequestMapping(value = "/type/{index}",method = RequestMethod.GET)
+    public ModelAndView type(@PathVariable int index){
+        ModelAndView mv=new ModelAndView("oldman/label/type_"+index);
+        mv.addObject("index",index);
+        return mv;
+    }
+
+
+    @ResponseBody
+    @RequestMapping(value = "/type/{index}/data",method = RequestMethod.POST)
+    public String type_data(@PathVariable int index,BTableRequest bTableRequest,LabelTypeRequest labelTypeRequest){
+        return labelService.getTypeByPage(index,labelTypeRequest,bTableRequest);
     }
 }

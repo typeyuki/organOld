@@ -2,9 +2,11 @@ package com.organOld.web.controller;
 
 import com.organOld.dao.entity.AutoValue;
 import com.organOld.dao.entity.organ.OrganReg;
+import com.organOld.dao.entity.organ.OrganType;
 import com.organOld.service.contract.*;
 import com.organOld.service.enumModel.AutoValueEnum;
 import com.organOld.service.enumModel.HomeEnum;
+import com.organOld.service.model.OrganAddModel;
 import com.organOld.service.model.OrganModel;
 import com.organOld.service.service.AutoValueService;
 import com.organOld.service.service.CommonService;
@@ -134,10 +136,25 @@ public class OrganController {
      * @return
      */
     @RequestMapping(value = "/{organId}/info",method = RequestMethod.GET)
-    public ModelAndView oldman(@PathVariable int organId){
+    public ModelAndView oldman(@PathVariable int organId,@RequestParam(required = false)String look){
         ModelAndView mv=new ModelAndView("organ/organ_single");
         OrganModel organModel=organService.getById(organId);
         mv.addObject("organ",organModel);
+        if(look!=null && !look.equals(""))
+            mv.addObject("look",look);
+        return mv;
+    }
+
+    /**
+     * 机构添加
+     * @param firType
+     * @return
+     */
+    @RequestMapping(value = "/{firType}/add",method = RequestMethod.GET)
+    public ModelAndView add(@PathVariable int firType){
+        ModelAndView mv=new ModelAndView("organ/organ_single");
+        OrganAddModel organAddModel=organService.getAddInfo(firType);
+        mv.addObject("organ",organAddModel);
         return mv;
     }
 
@@ -231,12 +248,8 @@ public class OrganController {
     @RequestMapping(value = "/{type}",method = RequestMethod.POST)
     public ModelAndView organ(OrganRegRequest organRegRequest, HttpServletRequest request,@PathVariable String type){
         ModelAndView mv;
-        if(type.equals("update")){
-            mv=new ModelAndView("redirect:/organ/"+organRegRequest.getId()+"/info");
-        }else{
-            mv=new ModelAndView("organ/reg_return");
-        }
-        organService.addOrUpdate(organRegRequest,request,type);
+        Integer organId=organService.addOrUpdate(organRegRequest,request,type);
+        mv=new ModelAndView("redirect:/organ/"+organId+"/info");
         return mv;
     }
 

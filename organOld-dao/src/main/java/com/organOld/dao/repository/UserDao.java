@@ -28,7 +28,7 @@ public interface UserDao extends BaseDao<SysUser,Number>{
 
     String getOrganTypeByUsername(String username);
 
-    List<Integer> getJwUserId(Integer organId);
+    List<Integer> getJwUserId(@Param("organId") Integer organId);
 
     Organ ckeckOrganLogin(SysUser sysUser);
 

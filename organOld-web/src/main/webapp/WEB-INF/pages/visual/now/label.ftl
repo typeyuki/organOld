@@ -1,5 +1,5 @@
 <style>
-    @media only screen and (min-width: 6000px){
+    @media only screen and (min-width: 1000px){
         #label .title{
             text-align: center;
             font-size: 35px;

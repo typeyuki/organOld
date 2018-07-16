@@ -4,9 +4,17 @@ public class UserModel {
     private int id;
     private String username;
     private String password;
-
+    private String organName;
     private String roleDesc;
     private String time;
+
+    public String getOrganName() {
+        return organName;
+    }
+
+    public void setOrganName(String organName) {
+        this.organName = organName;
+    }
 
     public int getId() {
         return id;

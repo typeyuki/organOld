@@ -13,11 +13,13 @@
     </select>
 
     <select id="getByPage" parameterType="com.organOld.dao.util.Page" resultType="com.organOld.dao.entity.organ.Organ">
-        SELECT o.id,o.name,o.intro,o.address,o.phone,o.service_time,o.num,o.num_in,o.num_remain,o.status,ot.sec_type organType,d.value districtName,o.time
+        SELECT o.id,o.name,o.intro,o.address,o.phone,o.service_time,o.num,o.num_in,o.num_remain,o.status,ot.sec_type organType,d.value districtName,o.time,o.auth_consume,o.auth_product,o.auth_sign,o.auth_query_info,o.auth_query_integral
         FROM organ o LEFT JOIN auto_value d on d.id=o.district_id,organ_type ot
         WHERE o.organ_type_id=ot.id AND ot.fir_type=#{entity.organFirTypeId}
-
-        <if test="entity.status!=null and entity.status!=''">
+        <if test="entity.status!=null and entity.status=='3'.toString()">
+                AND (o.status=3 or o.status=4)
+        </if>
+        <if test="entity.status!=null and entity.status!='' and entity.status!='3'.toString()">
             AND o.status=#{entity.status}
         </if>
         <if test="sortType!=null and sortType!=''">
@@ -35,7 +37,10 @@
         SELECT count(1)
         FROM organ o,organ_type ot
         WHERE o.organ_type_id=ot.id AND ot.fir_type=#{entity.organFirTypeId}
-        <if test="entity.status!=null and entity.status!=''">
+        <if test="entity.status!=null and entity.status=='3'.toString()">
+            AND (o.status=3 or o.status=4)
+        </if>
+        <if test="entity.status!=null and entity.status!='' and entity.status!='3'.toString()">
             AND o.status=#{entity.status}
         </if>
     </select>
@@ -51,7 +56,7 @@
 
     <insert id="save" parameterType="com.organOld.dao.entity.organ.Organ" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO organ(
-        organ_type_id,name,intro,work,service_time,address,phone,web_url,img_url,num,auth_consume,auth_product,auth_sign,auth_query_info,auth_query_integral,parent
+        organ_type_id,name,intro,work,service_time,address,phone,web_url,img_url,num,auth_consume,auth_product,auth_sign,auth_query_info,auth_query_integral
         <if test="require!=null and require!=''">
             ,require
         </if>
@@ -70,9 +75,12 @@
         <if test="districtId!=null and districtId!=''">
             ,district_id
         </if>
+        <if test="parent!=null and parent!=0">
+            ,parent
+        </if>
         )
         VALUES (
-        #{organTypeId},#{name},#{intro},#{work},#{serviceTime},#{address},#{phone},#{webUrl},#{imgUrl},#{num},#{authConsume},#{authProduct},#{authSign},#{authQueryInfo},#{authQueryIntegral,#{parent}
+        #{organTypeId},#{name},#{intro},#{work},#{serviceTime},#{address},#{phone},#{webUrl},#{imgUrl},#{num},#{authConsume},#{authProduct},#{authSign},#{authQueryInfo},#{authQueryIntegral}
         <if test="require!=null and require!=''">
             ,#{require}
         </if>
@@ -91,11 +99,14 @@
         <if test="districtId!=null and districtId!=''">
             ,#{districtId}
         </if>
+        <if test="parent!=null and parent!=0">
+            ,#{parent}
+        </if>
         )
     </insert>
 
     <select id="getAuthById" resultType="com.organOld.dao.entity.organ.Organ">
-        SELECT auth_consume,auth_product,auth_sign from organ WHERE id=#{organId}
+        SELECT auth_consume,auth_product,auth_sign,auth_query_info,auth_query_integral from organ WHERE id=#{organId}
     </select>
 
     <update id="updateById" parameterType="com.organOld.dao.entity.organ.Organ">
@@ -217,5 +228,13 @@
 
     <select id="getByType" resultType="com.organOld.dao.entity.organ.Organ">
         SELECT * from organ where organ_type_id=#{type}
+    </select>
+
+    <select id="getByTypes" resultType="com.organOld.dao.entity.organ.Organ">
+        select id,name from organ WHERE
+        organ_type_id in
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+            ${item}
+        </foreach>
     </select>
 </mapper>

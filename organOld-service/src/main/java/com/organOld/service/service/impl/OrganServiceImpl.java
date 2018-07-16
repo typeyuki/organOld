@@ -11,11 +11,9 @@ import com.organOld.dao.repository.*;
 import com.organOld.dao.util.Page;
 import com.organOld.service.contract.*;
 import com.organOld.service.enumModel.AutoValueEnum;
+import com.organOld.service.enumModel.OldStatusEnum;
 import com.organOld.service.enumModel.OrganFirEnum;
-import com.organOld.service.model.ExcelReturnModel;
-import com.organOld.service.model.OrganModel;
-import com.organOld.service.model.OrganOldmanModel;
-import com.organOld.service.model.OrganRegInfoModel;
+import com.organOld.service.model.*;
 import com.organOld.service.service.CommonService;
 import com.organOld.service.service.OrganService;
 import com.organOld.service.service.UserService;
@@ -26,8 +24,6 @@ import com.organOld.service.wrapper.Wrappers;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -98,6 +94,20 @@ public class OrganServiceImpl implements OrganService{
         List<Organ> parentOrganList=organDao.getByType(33);//针对居委
         organModel.setParentOrganList(parentOrganList);
         return organModel;
+
+    }
+
+    @Override
+    public OrganAddModel getAddInfo(int firType) {
+        OrganAddModel organAddModel=new OrganAddModel();
+        List<AutoValue> districtList=autoValueDao.getByType(AutoValueEnum.PQ.getIndex());
+        organAddModel.setDistrictList(districtList);
+        List<OrganType> organTypeList=organTypeDao.getByFirType(firType);
+        organAddModel.setOrganTypeList(organTypeList);
+        List<Organ> parentOrganList=organDao.getByType(33);//针对居委
+        organAddModel.setParentOrganList(parentOrganList);
+        organAddModel.setOrganTypeId(firType);
+        return organAddModel;
     }
 
     @Override
@@ -189,10 +199,11 @@ public class OrganServiceImpl implements OrganService{
     }
 
     @Override
-    public void addOrUpdate(OrganRegRequest organRegRequest, HttpServletRequest request, String type) {
+    public Integer addOrUpdate(OrganRegRequest organRegRequest, HttpServletRequest request, String type) {
         Organ organ=Wrappers.organWrapper.unwrapRegOrgan(organRegRequest,request);
         if(type.equals("update")) organDao.updateById(organ);
         else organDao.save(organ);
+        return organ.getId();
     }
 
     @Override
@@ -205,6 +216,11 @@ public class OrganServiceImpl implements OrganService{
         return organTypeDao.getAllOldmanType();
     }
 
+
+    @Override
+    public List<OrganType> getByFirType(int firType) {
+        return organTypeDao.getByFirType(firType);
+    }
 
     @Override
     public Result importExcel(MultipartFile file, int type, HttpServletRequest request) throws IOException {
@@ -404,12 +420,13 @@ public class OrganServiceImpl implements OrganService{
         excelReturnModel.setTotal(sht0.getLastRowNum()-(start-1));//一共
 
         Integer organId=commonService.getIdBySession();
-        int oldStatus=0;
+        int oldStatus=0;;//养老状态
         Organ organ=organDao.getById(organId);
         if(organ.getOrganFirTypeId()==26){
-            oldStatus=1;
+            oldStatus= OldStatusEnum.JG.getIndex();
         }else if(organ.getOrganFirTypeId()==27 || organ.getOrganFirTypeId()==28 || organ.getOrganFirTypeId()==29 || organ.getOrganFirTypeId()==34 || organ.getOrganFirTypeId()==35){
-            oldStatus=2;
+            oldStatus=OldStatusEnum.SQ.getIndex();
+
         }
         List<Oldman> oldmanList=new ArrayList<>();//用于更新老人 养老状态
 
@@ -471,5 +488,24 @@ public class OrganServiceImpl implements OrganService{
             organOldmanDao.saveAll(organOldmanList);
         }
         return new Result(true,excelReturnModel);
+    }
+
+
+    @Override
+    public Boolean checkHaveAuthByAuthType(int type, Integer organId) {
+        if(organId==null || organId==0){
+            organId=commonService.getIdBySession();
+        }
+        if(organId==null || organId==0){
+            return true;
+        }
+        Organ organ=organDao.getAuthById(organId);
+        switch (type){
+            case 1:if(organ.getAuthConsume()==1) return true;break;
+            case 2:if(organ.getAuthSign()==1) return true;break;
+            case 3:if(organ.getAuthQueryInfo()==1) return true;break;
+            case 4:if(organ.getAuthQueryIntegral()==1) return true;break;
+        }
+        return false;
     }
 }

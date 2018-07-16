@@ -51,18 +51,8 @@
 
 <script>
 
-    var title_oldman_1={
-        text: "老人比例1",
-        link:"javascript: change('child_oldman','child_base')",
-        target: "self",
-        textStyle:{
-            color:title_color,
-            fontSize:title_fontSize,
-            fontWeight:100
-        },
-        x:'0%',
-        y:'0%'
-    };
+    title.text="重点老人比例";
+    title.link="javascript: change('child_oldman','child_key')";
     legend_data=[{name:'老人',textStyle:{color:legend_color,fontSize:18}},{name:'非老人',textStyle:{color:legend_color,fontSize:18}}];
     series=[
         {
@@ -85,23 +75,12 @@
             ]
         }
     ];
-    var oldman_option_zb_pie = chartPieClick(title_oldman_1,legend_data,series);
+    var oldman_option_zb_pie = chartPieClick(title,legend_data,series);
     oldman_zbPie.setOption(oldman_option_zb_pie);
 
-    var title_oldman_2={
-        text: "家庭结构分布饼图",
-        link:"javascript: change('child_oldman','child_family')",
-        target: "self",
-        textStyle:{
-            color:title_color,
-            fontSize:title_fontSize,
-            fontWeight:100
-        },
-        x:'0%',
-        y:'0%'
-    };
-
     //家庭结构
+    title.text="家庭结构分布饼图";
+    title.link="javascript: change('child_oldman','child_family')";
     legend_data=[{name:'纯老',textStyle:{color:legend_color,fontSize:18}},{name:'独居',textStyle:{color:legend_color,fontSize:18}}
         ,{name:'失独',textStyle:{color:legend_color,fontSize:18}},{name:'一老养一老',textStyle:{color:legend_color,fontSize:18}},
         {name:'孤老',textStyle:{color:legend_color,fontSize:18}},{name:'三支人员',textStyle:{color:legend_color,fontSize:18}},{name:'其他',textStyle:{color:legend_color,fontSize:18}}];
@@ -136,22 +115,12 @@
             }
         }
     }];
-    var oldman_option_family_pie = chartPieClick(title_oldman_2,legend_data,series);
+    var oldman_option_family_pie = chartPieClick(title,legend_data,series);
     oldman_familyPie.setOption(oldman_option_family_pie);
 
     //健康状态
-    var title_oldman_3={
-        text: "健康状态分布饼图",
-        link:"javascript: change('child_oldman','child_health')",
-        target: "self",
-        textStyle:{
-            color:title_color,
-            fontSize:title_fontSize,
-            fontWeight:100
-        },
-        x:'0%',
-        y:'0%'
-    };
+    title.text="健康状态分布饼图";
+    title.link="javascript: change('child_oldman','child_health')";
     legend_data=[{name:'失能',textStyle:{color:legend_color,fontSize:18}},{name:'慢病',textStyle:{color:legend_color,fontSize:18}}
         ,{name:'肿瘤史',textStyle:{color:legend_color,fontSize:18}},{name:'骨折史',textStyle:{color:legend_color,fontSize:18}},
         {name:'失智',textStyle:{color:legend_color,fontSize:18}},{name:'长护险评级',textStyle:{color:legend_color,fontSize:18}},{name:'其他',textStyle:{color:legend_color,fontSize:18}}];
@@ -187,23 +156,13 @@
             }
         }
     }];
-    var oldman_option_health_pie = chartPieClick(title_oldman_3,legend_data,series);
+    var oldman_option_health_pie = chartPieClick(title,legend_data,series);
     oldman_healthPie.setOption(oldman_option_health_pie);
 
 
     //经济条件
-    var title_oldman_4={
-        text: "经济条件分布饼图",
-        link:"javascript: change('child_oldman','child_economic')",
-        target: "self",
-        textStyle:{
-            color:title_color,
-            fontSize:title_fontSize,
-            fontWeight:100
-        },
-        x:'0%',
-        y:'0%'
-    };
+    title.text="经济条件分布饼图";
+    title.link="javascript: change('child_oldman','child_economic')";
     legend_data=[{name:'帮困',textStyle:{color:legend_color,fontSize:18}},{name:'低保',textStyle:{color:legend_color,fontSize:18}}
         ,{name:'养老保险',textStyle:{color:legend_color,fontSize:18}},{name:'医疗救助金',textStyle:{color:legend_color,fontSize:18}},
         {name:'城镇医保',textStyle:{color:legend_color,fontSize:18}},{name:'其他',textStyle:{color:legend_color,fontSize:18}}];
@@ -237,6 +196,6 @@
             }
         }
     }];
-    var oldman_option_econmic_pie = chartPieClick(title_oldman_4,legend_data,series);
+    var oldman_option_econmic_pie = chartPieClick(title,legend_data,series);
     oldman_econmicPie.setOption(oldman_option_econmic_pie);
 </script>

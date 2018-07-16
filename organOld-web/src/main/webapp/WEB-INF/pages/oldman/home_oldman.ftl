@@ -28,15 +28,17 @@
                 </div>
                 <div class="ibox-content">
                     <div>
+                        <form action="/oldman/importExcel" method="post" enctype="multipart/form-data" id="importForm">
+                            <input type="file" name="file" style="display:inline">
+                            <input type="button" style="display:inline" class="btn btn-primary" onclick="$('.wrapper').hide();$('#process').show();$('#importForm').submit()" value="导入">
+                        </form>
+                    </div>
+                    <div>
                         <input class="id" type="text" placeholder="老人序号">
                         <input class="id" type="text" placeholder="类型">
                         <input class="time" type="text" placeholder="模糊匹配">
                         <button id="search">搜索</button>
                     </div>
-                    <form action="/oldman/importExcel" method="post" enctype="multipart/form-data">
-                        <input type="file" name="file">
-                        <input type="submit" value="导入">
-                    </form>
                     <table class="table table-striped table-bordered table-hover dataTables-example">
                         <thead>
                         <tr>

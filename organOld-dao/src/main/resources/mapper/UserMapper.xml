@@ -36,8 +36,8 @@
 
 
     <select id="getByPage" parameterType="com.organOld.dao.util.Page" resultType="com.organOld.dao.entity.SysUser">
-        SELECT u.id,u.username,u.password,r.desc,u.time
-        FROM sysuser u,sysrole r,user_role ur
+        SELECT u.id,u.username,u.password,r.desc,u.time,o.name organ_name
+        FROM sysuser u left join user_organ uo on uo.user_id=u.id left join organ o on o.id=uo.organ_id,sysrole r,user_role ur
         WHERE u.id=ur.user_id and r.id=ur.role_id
         <if test="sortType!=null and sortType!=''">
             ORDER BY ${sortType}

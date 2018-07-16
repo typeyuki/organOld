@@ -10,6 +10,17 @@ public class LabelSec extends DBEntity{
     private String firName;
     private String secName;
 
+    private Integer firIndex;
+
+
+    public Integer getFirIndex() {
+        return firIndex;
+    }
+
+    public void setFirIndex(Integer firIndex) {
+        this.firIndex = firIndex;
+    }
+
     public String getFirName() {
         return firName;
     }

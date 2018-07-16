@@ -1,6 +1,7 @@
 package com.organOld.web.controller;
 
 
+import com.organOld.service.service.MessageService;
 import com.organOld.service.service.SystemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,6 +23,8 @@ public class SystemController {
 
     @Autowired
     SystemService systemService;
+    @Autowired
+    MessageService messageService;
 
     /**
      * 主页
@@ -31,6 +34,7 @@ public class SystemController {
     public ModelAndView home(HttpSession session){
         ModelAndView mv=new ModelAndView("home");
         mv.addObject("menus",systemService.getMenu(session));
+        mv.addObject("messageNum",messageService.getNoReadNum());
         return mv;
     }
 

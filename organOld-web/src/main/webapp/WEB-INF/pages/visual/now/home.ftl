@@ -3,8 +3,8 @@
 
 <head>
 <#include "../head.ftl" />
-    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=Ww7qXViYG0v5YUnWwOQ6uMMxLYmL5WPf"></script>
-
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=Ww7qXViYG0v5YUnWwOQ6uMMxLYmL5WPf"></script>
+<script type="text/javascript" src="../../../static/js/echarts.min.js"></script>
 </head>
 
 <body>

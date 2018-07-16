@@ -27,7 +27,7 @@ $(document).ready(function(){
                 "targets": [4], // 目标列位置，下标从0开始
                 "data": "id", // 数据列名
                 "render": function(data, type, full) { // 返回自定义内容
-                    return "<span onclick=newPage("+data+",$(this).parent().prev().prev().text(),'/home/"+typeHome+"/"+data+"/man') class='look' id='"+data+"'>人员</span><span class='mod' id='"+data+"'>修改</span>";
+                    return "<span class='btn btn-primary' onclick=newPage("+data+",$(this).parent().prev().prev().text(),'/home/"+typeHome+"/"+data+"/man')  id='"+data+"'>人员</span><span class='btn btn-primary' id='"+data+"'>修改</span>";
                 }
             }
         ]

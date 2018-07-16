@@ -23,6 +23,24 @@ public class OrganWrapper implements Wrapper<Organ,OrganModel,OrganRequest> {
         BeanUtils.copyProperties(organ,organModel);
         if(organ.getTime()!=null)
         organModel.setTime(Tool.dateToString(organ.getTime(), TimeConstant.DATA_FORMAT_YMD));
+
+        Organ o=new Organ();
+        if(organ.getStatus()!=null && organ.getStatus().equals("3")){
+            organModel.setStatusDesc("审核不通过");
+            o.setStatus(organ.getStatus());
+        }
+        if(organ.getStatus()!=null && organ.getStatus().equals("4")){
+            organModel.setStatusDesc("被撤销");
+            o.setStatus(organ.getStatus());
+        }
+
+        o.setId(organ.getId());
+        o.setAuthQueryIntegral(organ.getAuthQueryIntegral());
+        o.setAuthQueryInfo(organ.getAuthQueryInfo());
+        o.setAuthConsume(organ.getAuthConsume());
+        o.setAuthProduct(organ.getAuthProduct());
+        o.setAuthSign(organ.getAuthSign());
+        organModel.setOrgan(o);
         return organModel;
     }
 
@@ -52,7 +70,7 @@ public class OrganWrapper implements Wrapper<Organ,OrganModel,OrganRequest> {
             organ.setAuthQueryInfo(0);
             organ.setAuthQueryIntegral(0);
         }
-        if(organRegRequest.getPic()!=null){
+        if(!organRegRequest.getPic().isEmpty()){
             try {
                 String path= ImgUpload.uploadFile(organRegRequest.getPic(), request,"organ");
                 int index = path.indexOf("img");

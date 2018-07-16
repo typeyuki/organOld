@@ -17,11 +17,9 @@
                                             <div class="col-sm-2">
                                                 <select onchange="firLabelSelect(this)">
                                                     <option></option>
-                                                    <#if firType??>
-                                                        <#list firType as list>
-                                                            <option value="${list.id}">${list.value}</option>
-                                                        </#list>
-                                                    </#if>
+                                                    <#list rule.firLabel as list>
+                                                        <option  value="${list.id!}" > ${list.value!}</option>
+                                                    </#list>
                                                 </select>
                                             </div>
                                             <label class="col-sm-1 control-label">二级菜单</label>

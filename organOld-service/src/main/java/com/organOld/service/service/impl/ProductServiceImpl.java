@@ -32,10 +32,13 @@ public class ProductServiceImpl implements ProductService {
     ProductBookDao productBookDao;
 
     @Override
-    public String getByPage(ProductRequest productRequest, BTableRequest bTableRequest, HttpSession session) {
+    public String getByPage(ProductRequest productRequest, BTableRequest bTableRequest) {
         Page<Product> page=commonService.getPage(bTableRequest,"product");
         Product product= Wrappers.productWrapper.unwrap(productRequest);
-        commonService.checkIsOrgan(product);
+        if(product.getOrganId()==null || product.getOrganId()==0){
+            //机构账号页面
+            commonService.checkIsOrgan(product);
+        }
         page.setEntity(product);
         List<ProductModel> productModelList=productDao.getByPage(page).stream().map(Wrappers.productWrapper::wrap).collect(Collectors.toList());
         Long size=productDao.getSizeByPage(page);
@@ -43,16 +46,20 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public String getBookByPage(ProductBookRequest productBookRequest, BTableRequest bTableRequest, HttpSession session) {
+    public String getBookByPage(ProductBookRequest productBookRequest, BTableRequest bTableRequest) {
         Page<ProductBook> page=commonService.getPage(bTableRequest,"product_book");
         ProductBook productBook= Wrappers.productBookWrapper.unwrap(productBookRequest);
+        if(productBook.getOrganId()==null || productBook.getOrganId()==0){
+            //机构账号页面
+            commonService.checkIsOrgan(productBook);
+        }
         commonService.checkIsOrgan(productBook);
         page.setEntity(productBook);
         List<ProductBookModel> productBookModelList=productBookDao.getByPage(page).stream().map(Wrappers.productBookWrapper::wrap).collect(Collectors.toList());
         Long size=productBookDao.getSizeByPage(page);
 
 
-        //TODO  先获得 改机构所有的 商品 做缓存  减少查询次数
+        //TODO  先获得 该机构所有的 商品 做缓存  减少查询次数
         for(ProductBookModel book:productBookModelList){
             String[] ids=book.getIds().split("#");
             List<Product> productList=new ArrayList<>();

@@ -2,10 +2,7 @@ package com.organOld.service.wrapper;
 
 import com.organOld.dao.entity.AutoValue;
 import com.organOld.dao.entity.home.Chx;
-import com.organOld.dao.entity.label.Label;
-import com.organOld.dao.entity.label.LabelFeedback;
-import com.organOld.dao.entity.label.LabelMan;
-import com.organOld.dao.entity.label.LabelRule;
+import com.organOld.dao.entity.label.*;
 import com.organOld.dao.entity.organ.Organ;
 import com.organOld.service.constant.TimeConstant;
 import com.organOld.service.enumModel.*;
@@ -207,5 +204,84 @@ public class LabelWrapper implements Wrapper<Label,LabelModel,LabelRequest> {
         labelFeedback.setLabelId(labelFeedbackAddRequest.getLabelId());
         labelFeedback.setRemark(labelFeedbackAddRequest.getRemark());
         return labelFeedback;
+    }
+
+    public LabelFilterModel wrapFilterLabelRule(List<AutoValue> autoValueList, List<Organ> jwList, List<Chx> chxList, List<Organ> belongOrgan, List<LabelSec> labelSecList) {
+        LabelFilterModel labelFilterModel=new LabelFilterModel();
+        labelFilterModel.setOrgan(jwList);
+        labelFilterModel.setChx(chxList);
+
+        Map<Integer,String> sexMap=new HashMap<>();
+        sexMap.put(SexEnum.MAN.getIndex(),SexEnum.MAN.getName());
+        sexMap.put(SexEnum.WOMAN.getIndex(),SexEnum.WOMAN.getName());
+        labelFilterModel.setSex(sexMap);
+
+        Map<Integer,String> isKey=new HashMap<>();
+        isKey.put(IsEnum.NO.getIndex(),IsEnum.NO.getName());
+        isKey.put(IsEnum.YES.getIndex(),IsEnum.YES.getName());
+        labelFilterModel.setIsKey(isKey);
+
+        Map<Integer,String> isHealth=new HashMap<>();
+        isHealth.put(HealthEnum.CJQK.getIndex(),HealthEnum.CJQK.getName());
+        isHealth.put(HealthEnum.GZ.getIndex(),HealthEnum.GZ.getName());
+        isHealth.put(HealthEnum.EXZL.getIndex(),HealthEnum.EXZL.getName());
+        isHealth.put(HealthEnum.SN.getIndex(),HealthEnum.SN.getName());
+        isHealth.put(HealthEnum.YW.getIndex(),HealthEnum.YW.getName());
+        isHealth.put(HealthEnum.MB.getIndex(),HealthEnum.MB.getName());
+        labelFilterModel.setIsHealth(isHealth);
+
+        Map<Integer,String> oldStatus=new HashMap<>();
+        oldStatus.put(OldStatusEnum.SQ.getIndex(),OldStatusEnum.SQ.getName());
+        oldStatus.put(OldStatusEnum.JG.getIndex(),OldStatusEnum.JG.getName());
+        oldStatus.put(OldStatusEnum.JJ.getIndex(),OldStatusEnum.JJ.getName());
+        oldStatus.put(OldStatusEnum.SJ.getIndex(),OldStatusEnum.SJ.getName());
+        labelFilterModel.setOldStatus(oldStatus);
+
+        for(AutoValue autoValue:autoValueList){
+            if (autoValue.getType()== AutoValueEnum.HJ.getIndex()){
+                labelFilterModel.getCensus().add(autoValue);
+            }
+            if (autoValue.getType()== AutoValueEnum.ZZMM.getIndex()){
+                labelFilterModel.getPoliticalStatuses().add(autoValue);
+            }
+            if (autoValue.getType()== AutoValueEnum.SZ.getIndex()){
+                labelFilterModel.getIntelligence().add(autoValue);
+            }
+            if (autoValue.getType()== AutoValueEnum.SL.getIndex()){
+                labelFilterModel.getEyesight().add(autoValue);
+            }
+            if (autoValue.getType()== AutoValueEnum.JJJG.getIndex()){
+                labelFilterModel.getFamily().add(autoValue);
+            }
+            if (autoValue.getType()== AutoValueEnum.JJTJ.getIndex()){
+                labelFilterModel.getEconomic().add(autoValue);
+            }
+            if (autoValue.getType()== AutoValueEnum.PQ.getIndex()){
+                labelFilterModel.getDistrict().add(autoValue);
+            }
+            if (autoValue.getType()== AutoValueEnum.YJBQ.getIndex()){
+                labelFilterModel.getFirLabel().add(autoValue);
+            }
+        }
+
+        labelFilterModel.setBelongOrgan(belongOrgan);
+        labelFilterModel.setSecLabel(labelSecList);
+
+        return labelFilterModel;
+    }
+
+    public LabelSec unwrapType(LabelTypeRequest labelTypeRequest) {
+        LabelSec labelSec=new LabelSec();
+        BeanUtils.copyProperties(labelTypeRequest,labelSec);
+        return labelSec;
+    }
+
+    public LabelSecModel wrapType(LabelSec labelSec) {
+        LabelSecModel labelSecModel=new LabelSecModel();
+        labelSecModel.setId(labelSec.getId());
+        labelSecModel.setFirName(labelSec.getFirName());
+        labelSecModel.setSecName(labelSec.getSecName());
+        labelSecModel.setTime(Tool.dateToString(labelSec.getTime(),TimeConstant.DATA_FORMAT_YMD));
+        return labelSecModel;
     }
 }

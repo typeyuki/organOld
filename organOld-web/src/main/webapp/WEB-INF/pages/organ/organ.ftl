@@ -9,6 +9,11 @@
 
     <link href="/css/style.min.css?v=4.0.0" rel="stylesheet">
     <link href="/static/css/common_table.css" rel="stylesheet">
+    <style>
+        .noBtn{
+            padding: 5px;
+        }
+    </style>
 </head>
 <body class="gray-bg">
 <div class="wrapper wrapper-content animated fadeInRight">
@@ -30,7 +35,7 @@
                     <div>
                         <#if status?? && (status=="1" || status=="3")>
                         <#else >
-                            <a onclick="" href="javascript:void(0);" class="btn btn-primary ">添加</a>
+                            <a onclick=newPage("951","机构添加",'/organ/${type}/add') href="javascript:void(0);" class="btn btn-primary ">添加</a>
                             <a onclick="" href="javascript:void(0);" class="btn btn-primary ">删除</a>
                             <a  href="javascript:void(0);" id="search" class="btn btn-primary ">搜索</a>
                         </#if>
@@ -69,6 +74,10 @@
                             <th>地址</th>
                             <th>联系方式</th>
                             <th>所属片区</th>
+                            <#if status?? && (status=="3" )>
+                            <th>被拒绝状态</th>
+                            </#if>
+                            <th>权限</th>
                             <th>更新时间</th>
                             <th></th>
                         </tr>

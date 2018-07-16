@@ -158,7 +158,7 @@
                         </div>
                         <div class="hr-line-dashed"></div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label label_title">养老状态</label>
+                            <label class="col-sm-2 control-label label_title">养老状态&nbsp;&nbsp;&nbsp;${info.oldman.oldStatus!}</label>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">机构养老</label>

@@ -2,6 +2,7 @@ package com.organOld.service.service;
 
 import com.organOld.dao.entity.organ.OrganType;
 import com.organOld.service.contract.*;
+import com.organOld.service.model.OrganAddModel;
 import com.organOld.service.model.OrganModel;
 import com.organOld.service.model.OrganRegInfoModel;
 import org.springframework.web.multipart.MultipartFile;
@@ -35,7 +36,13 @@ public interface OrganService {
 
     Result importManExcel(MultipartFile file) throws IOException;
 
-    void addOrUpdate(OrganRegRequest organRegRequest, HttpServletRequest request, String type);
+    Integer addOrUpdate(OrganRegRequest organRegRequest, HttpServletRequest request, String type);
 
     void cancel(int organId);
+
+    List<OrganType> getByFirType(int firType);
+
+    OrganAddModel getAddInfo(int firType);
+
+    Boolean checkHaveAuthByAuthType(int type, Integer organId);
 }

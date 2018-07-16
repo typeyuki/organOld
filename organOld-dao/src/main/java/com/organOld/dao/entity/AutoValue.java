@@ -8,6 +8,17 @@ public class AutoValue extends DBEntity {
     private int type;
 
 
+    private String timeFormat;//传给前端的时间格式
+
+
+    public String getTimeFormat() {
+        return timeFormat;
+    }
+
+    public void setTimeFormat(String timeFormat) {
+        this.timeFormat = timeFormat;
+    }
+
     public int getType() {
         return type;
     }

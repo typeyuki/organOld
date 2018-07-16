@@ -34,11 +34,31 @@ public class OrganModel {
 
     private Integer organFirTypeId;
 
+    private Organ organ;//主要记录 id和权限
+
 
     List<AutoValue> districtList;
     List<OrganType> organTypeList;
     List<Organ> parentOrganList;//主要是 片区
 
+    private String statusDesc;
+
+
+    public Organ getOrgan() {
+        return organ;
+    }
+
+    public void setOrgan(Organ organ) {
+        this.organ = organ;
+    }
+
+    public String getStatusDesc() {
+        return statusDesc;
+    }
+
+    public void setStatusDesc(String statusDesc) {
+        this.statusDesc = statusDesc;
+    }
 
     public Integer getOrganFirTypeId() {
         return organFirTypeId;
@@ -51,6 +71,7 @@ public class OrganModel {
     public Integer getParent() {
         return parent;
     }
+
 
     public void setParent(Integer parent) {
         this.parent = parent;

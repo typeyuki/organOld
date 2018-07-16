@@ -4,7 +4,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class OrganRegRequest {
     private Integer organFirType;
-    private Integer id;
+
+    private int id;
     private Integer organTypeId;
     private String name;
     private String intro;
@@ -37,11 +38,12 @@ public class OrganRegRequest {
         this.organFirType = organFirType;
     }
 
-    public Integer getId() {
+
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 

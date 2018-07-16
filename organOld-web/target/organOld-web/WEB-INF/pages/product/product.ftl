@@ -28,10 +28,13 @@
                     </div>
                 </div>
                 <div class="ibox-content">
-                    <div>
-                        <a onclick="$('#selectModal').modal()" href="javascript:void(0);" class="btn btn-primary ">添加</a>
-                        <a onclick="" href="javascript:void(0);" class="btn btn-primary ">删除</a>
-                    </div>
+                    <#--<#if organId?? && organId!=0>-->
+                    <#--<#else >-->
+                        <div>
+                            <a onclick="$('#selectModal').modal()" href="javascript:void(0);" class="btn btn-primary ">添加</a>
+                            <a onclick="" href="javascript:void(0);" class="btn btn-primary ">删除</a>
+                        </div>
+                    <#--</#if>-->
                     <div>
                         <input class="id" type="text" placeholder="序号">
                         <input class="id" type="text" placeholder="模糊搜索">
@@ -62,7 +65,9 @@
 </div>
 
 <#--<#include "add_product.ftl" />-->
-
+<script>
+    var organId=${organId!0};
+</script>
 <script src="/js/content.min.js?v=1.0.0"></script>
 <script src="/static/js/product/product.js" ></script>
 <script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.organOld.dao.repository.RecordDao">
+
+    <resultMap id="record" type="com.organOld.dao.entity.record.Record">
+        <id property="id" column="id" />
+        <result property="data" column="data"/>
+        <result property="type" column="type"/>
+        <result property="time" column="time" />
+        <association property="oldman" javaType="com.organOld.dao.entity.oldman.Oldman">
+            <id property="id" column="oid" />
+            <result property="name" column="name"/>
+        </association>
+        <association property="organ" javaType="com.organOld.dao.entity.organ.Organ">
+            <id property="id" column="orgid" />
+            <result property="name" column="orgname"/>
+        </association>
+    </resultMap>
+    <select id="getByPage" parameterType="com.organOld.dao.util.Page" resultMap="record">
+        SELECT r.id,r.data,r.time,r.type,o.id oid,o.name,org.id orgid,org.name orgname
+        FROM record r,oldman_base o,organ org
+        WHERE r.oldman_id=o.id and type=#{entity.type} AND org.id=r.organ_id
+        <if test="entity.organId!=null and entity.organId!=0">
+            and r.organ_id=#{entity.organId}
+        </if>
+        <if test="sortType!=null and sortType!=''">
+            ORDER BY o.${sortType}
+        </if>
+        <if test="sort!=null and sort!=''">
+            ${sort}
+        </if>
+        <if test="length!=null and length!=0">
+            limit #{start},#{length}
+        </if>
+    </select>
+
+    <select id="getSizeByPage" parameterType="com.organOld.dao.util.Page" resultType="java.lang.Long">
+        SELECT count(1)
+        FROM record
+        WHERE 1=1
+        <if test="entity.organId!=null and entity.organId!=0">
+            and organ_id=#{entity.organId}
+        </if>
+    </select>
+
+
+    <insert id="save" parameterType="com.organOld.dao.entity.record.Record">
+        INSERT into record(organ_id,oldman_id,`type`,`data`)
+        VALUES (#{organId},#{oldmanId},#{type},#{data})
+    </insert>
+</mapper>
