@@ -9,6 +9,6 @@
         </create>
 
         <!--传给前端的对象类型-->
-        <convert converter="bean" match="com.organOld.service.model.DwrData"/>
+        <convert converter="bean" match="com.organOld.service.dwr.DwrData"/>
     </allow>
 </dwr>

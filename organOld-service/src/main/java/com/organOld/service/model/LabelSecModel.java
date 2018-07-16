@@ -1,24 +1,17 @@
-package com.organOld.dao.entity.label;
+package com.organOld.service.model;
 
-import com.organOld.dao.entity.DBEntity;
-
-/**
- * 一级 二级 标签
- * Created by netlab606 on 2018/6/16.
- */
-public class LabelSec extends DBEntity{
+public class LabelSecModel {
+    private int id;
     private String firName;
     private String secName;
+    private String time;
 
-    private Integer firIndex;
-
-
-    public Integer getFirIndex() {
-        return firIndex;
+    public int getId() {
+        return id;
     }
 
-    public void setFirIndex(Integer firIndex) {
-        this.firIndex = firIndex;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getFirName() {
@@ -35,5 +28,13 @@ public class LabelSec extends DBEntity{
 
     public void setSecName(String secName) {
         this.secName = secName;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 }

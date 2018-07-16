@@ -1,6 +1,5 @@
 package com.organOld.service.dwr;
 
-import com.organOld.service.model.DwrData;
 import org.directwebremoting.Browser;
 import org.directwebremoting.ScriptBuffer;
 import org.directwebremoting.ScriptSession;

@@ -7,7 +7,7 @@ import com.organOld.dao.repository.OldmanDao;
 import com.organOld.dao.repository.OldmanKeyDao;
 import com.organOld.service.dwr.Remote;
 import com.organOld.service.enumModel.HealthEnum;
-import com.organOld.service.model.DwrData;
+import com.organOld.service.dwr.DwrData;
 import com.organOld.service.service.CommonService;
 import com.organOld.service.service.OldmanKeyService;
 import com.organOld.service.util.Cache;

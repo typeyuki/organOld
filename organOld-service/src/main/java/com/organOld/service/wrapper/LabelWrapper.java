@@ -269,4 +269,19 @@ public class LabelWrapper implements Wrapper<Label,LabelModel,LabelRequest> {
 
         return labelFilterModel;
     }
+
+    public LabelSec unwrapType(LabelTypeRequest labelTypeRequest) {
+        LabelSec labelSec=new LabelSec();
+        BeanUtils.copyProperties(labelTypeRequest,labelSec);
+        return labelSec;
+    }
+
+    public LabelSecModel wrapType(LabelSec labelSec) {
+        LabelSecModel labelSecModel=new LabelSecModel();
+        labelSecModel.setId(labelSec.getId());
+        labelSecModel.setFirName(labelSec.getFirName());
+        labelSecModel.setSecName(labelSec.getSecName());
+        labelSecModel.setTime(Tool.dateToString(labelSec.getTime(),TimeConstant.DATA_FORMAT_YMD));
+        return labelSecModel;
+    }
 }

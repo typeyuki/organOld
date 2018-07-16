@@ -32,8 +32,8 @@
                 <div class="ibox-content">
                     <div>
                         <a onclick="$('#selectModal').modal()" href="javascript:void(0);" class="btn btn-primary ">添加</a>
-                        <a onclick=newPage("133","标签类型",'/oldman/label/type/1') href="javascript:void(0);" class="btn btn-primary ">一级标签</a>
-                        <a onclick=newPage("133","标签类型",'/oldman/label/type/2') href="javascript:void(0);" class="btn btn-primary ">二级标签</a>
+                        <a onclick=newPage("133","一级标签",'/oldman/label/type/1') href="javascript:void(0);" class="btn btn-primary ">一级标签</a>
+                        <a onclick=newPage("133","二级标签",'/oldman/label/type/2') href="javascript:void(0);" class="btn btn-primary ">二级标签</a>
                         <a  href="javascript:void(0);" class="btn btn-primary ">删除</a>
                         <a  href="javascript:void(0);" id="search" class="btn btn-primary ">搜索</a>
                     </div>
