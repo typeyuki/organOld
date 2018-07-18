@@ -17,10 +17,10 @@
                                             <div class="col-sm-2">
                                                 <select name="type" onchange="handleTypeSelect(this)">
                                                     <option selected></option>
-                                                    <option value="1">机构养老</option>
-                                                    <option value="2">社区养老</option>
-                                                    <option value="3">居家养老</option>
-                                                    <option value="4">社区居家养老</option>
+                                                    <option value="1" class="21">机构养老</option>
+                                                    <option value="2" class="22">社区养老</option>
+                                                    <option value="3" class="0">居家养老</option>
+                                                    <option value="4" class="22">社区居家养老</option>
                                                 </select>
                                             </div>
 
@@ -30,9 +30,7 @@
                                             <label class="col-sm-1 control-label">机构</label>
                                             <div class="col-sm-8">
                                                 <select name="organIds" class="selectpicker bla bla bli" multiple data-live-search="true">
-                                                <#list organ as list>
-                                                    <option value="${list.id!}" > ${list.secType!}</option>
-                                                </#list>
+
                                                 </select>
                                             </div>
                                         </div>
@@ -47,9 +45,6 @@
                                                     <option value="5">家庭病床</option>
                                                 </select>
                                             </div>
-                                        </div>
-                                        <div class="form-group" id="no" style="display: none">
-                                            <button class="col-sm-2 btn btn-primary" onclick="handleSubmit('delete')">设置为未处理</button>
                                         </div>
                                     </form>
                                 </div>
@@ -75,9 +70,26 @@
     });
     function handleTypeSelect(obj) {
         var val=$(obj).val();
+        var type=$(obj).find("option:selected").attr("class");
         $("#organ").val("");
         $("#home").val("");
         if(val==1 || val==2){
+            $("select[name='organIds']").html("");
+            $.ajax({
+                url: "/organ/getByFirType",
+                data : {
+                    "firType":type
+                },
+                type: 'POST',
+                dataType: 'json',
+                success: function (result) {
+                    for(var i=0;i<result.data.length;i++){
+                        var $option=$("<option value='"+result.data[i].id+"'>"+result.data[i].name+"</option>");
+                        $("select[name='organIds']").append($option);
+                    }
+                    $("select[name='organIds']").selectpicker('refresh');
+                }
+            });
             $("#organ").show();
             $("#home").hide();
         }
@@ -106,10 +118,7 @@
             success: function (result) {
                 $("#handleModal").modal('hide');
                 if(type=="add"){
-                    $(obj).html("已处理");
-                    var click=$(obj).attr("onclick");
-                    click=click.replace("no","yes");
-                    $(obj).attr("onclick",click).attr("class","btn btn-default");
+                    table.fnFilter();
                 }else if(type=="delete"){
                     $(obj).html("未处理");
                     var click=$(obj).attr("onclick");

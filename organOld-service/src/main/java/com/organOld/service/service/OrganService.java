@@ -1,5 +1,6 @@
 package com.organOld.service.service;
 
+import com.organOld.dao.entity.organ.Organ;
 import com.organOld.dao.entity.organ.OrganType;
 import com.organOld.service.contract.*;
 import com.organOld.service.model.OrganAddModel;
@@ -45,4 +46,6 @@ public interface OrganService {
     OrganAddModel getAddInfo(int firType);
 
     Boolean checkHaveAuthByAuthType(int type, Integer organId);
+
+    List<Organ> getByOrganFirType(int firType);
 }

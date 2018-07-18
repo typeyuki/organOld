@@ -58,18 +58,8 @@
 </script>
 <script>
     //健康状态
-    var title_health_1={
-        text: "健康状态分布饼图",
-        link:"javascript: change('child_health','child_oldman')",
-        target: "self",
-        textStyle:{
-            color:title_color,
-            fontSize:title_fontSize,
-            fontWeight:100
-        },
-        x:'0%',
-        y:'0%'
-    };
+    title.text="健康状态分布饼图";
+    title.link="javascript: change('child_health','child_oldman')";
 //    title_text="健康状态分布饼图";
     legend_data=[{name:'失能',textStyle:{color:legend_color,fontSize:18}},{name:'慢病',textStyle:{color:legend_color,fontSize:18}}
         ,{name:'肿瘤史',textStyle:{color:legend_color,fontSize:18}},{name:'骨折史',textStyle:{color:legend_color,fontSize:18}},
@@ -106,7 +96,7 @@
             }
         }
     }];
-    var health_option_health_pie = chartPieClick(title_health_1,legend_data,series);
+    var health_option_health_pie = chartPieClick(title,legend_data,series);
     //家庭结构增长趋势图
     title_text='健康状态变化趋势图';
     xAxis_data=['2月','3月','4月','今天','6月','7月','8月'];

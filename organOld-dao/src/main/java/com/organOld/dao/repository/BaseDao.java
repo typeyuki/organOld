@@ -19,4 +19,5 @@ public interface BaseDao<T extends DBEntity,ID extends Number> {
     void updateByIds(List<T> list);
 
     void updateProp(@Param("prop") String prop, @Param("value") String s,@Param("id") int id);
+    void updateProps(@Param("prop") String prop, @Param("value") String s,@Param("ids") String[] ids);
 }

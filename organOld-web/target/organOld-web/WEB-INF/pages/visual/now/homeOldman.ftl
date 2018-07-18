@@ -216,18 +216,8 @@
     var homeOldman_option_sex_pie = chartPie(title_text,legend_data,series);
     homeOldman_sex_pie.setOption(homeOldman_option_sex_pie);
 
-    var title_homeOldman_1={
-        text: "服务内容",
-        link:"javascript: change('child_homeOldman','child_organ')",
-        target: "self",
-        textStyle:{
-            color:title_color,
-            fontSize:title_fontSize,
-            fontWeight:100
-        },
-        x:'0%',
-        y:'0%'
-    };
+    title.text="服务内容";
+    title.link="javascript: change('child_homeOldman','child_organ')";
 //    title_text="服务内容";
     legend_data=[{name:'助餐',textStyle:{color:legend_color,fontSize:18}},{name:'助洁',textStyle:{color:legend_color,fontSize:18}},{name:'助急',textStyle:{color:legend_color,fontSize:18}}
         ,{name:'助浴',textStyle:{color:legend_color,fontSize:18}},{name:'助行',textStyle:{color:legend_color,fontSize:18}},{name:'助医',textStyle:{color:legend_color,fontSize:18}}
@@ -267,6 +257,6 @@
             }
         }
     }];
-    var homeOldman_option_jj_pie = chartPieClick(title_homeOldman_1,legend_data,series);
+    var homeOldman_option_jj_pie = chartPieClick(title,legend_data,series);
     homeOldman_jj_pie.setOption(homeOldman_option_jj_pie);
 </script>

@@ -16,19 +16,52 @@
         <result property="futureKeyStatus" column="future_key_status" />
         <collection property="healthSelectIdsList" ofType="com.organOld.dao.entity.oldman.HealthSelect">
             <id property="id" column="hsid" />
-            <id property="firType" column="fir_type" />
+            <result property="firType" column="fir_type" />
         </collection>
     </resultMap>
 
-    <select id="getByPage" parameterType="com.organOld.dao.util.Page" resultType="com.organOld.dao.entity.oldman.Oldman">
-        SELECT ob.id,ob.name,ob.is_handle,
+    <resultMap id="oldmanHandle" type="com.organOld.dao.entity.oldman.Oldman">
+        <id property="id" column="id" />
+        <result property="name" column="name"/>
+        <result property="goal" column="goal" />
+        <result property="isHandle" column="is_handle"/>
+        <result property="keyStatus" column="key_status"/>
+        <result property="oldStatus" column="old_status"/>
+        <association property="oldmanKeyHandle" javaType="com.organOld.dao.entity.oldman.OldmanKeyHandle">
+            <id property="id" column="khid"/>
+            <result property="homeFirTypes" column="home_fir_types"/>
+            <result property="type" column="type"/>
+            <result property="organIds" column="organ_ids"/>
+        </association>
+        <collection property="organList" ofType="com.organOld.dao.entity.organ.Organ">
+            <id property="id" column="oid" />
+            <result property="name" column="oname" />
+            <result property="organNum" column="organ_num"/>
+            <result property="organTypeId" column="organ_type_id"/>
+            <result property="applyTime" column="apply_time"/>
+        </collection>
+        <collection property="homeList" ofType="com.organOld.dao.entity.home.Home">
+            <id property="id" column="hid" />
+            <result property="firType" column="fir_type" />
+        </collection>
+    </resultMap>
+
+
+
+    <select id="getByPage" parameterType="com.organOld.dao.util.Page" resultMap="oldmanHandle">
+        SELECT ob.id,ob.name,kh.type,kh.organ_ids,kh.home_fir_types,organ.id oid,organ.name oname,organ.organ_type_id,oo.apply_time,oo.num organ_num,ob.is_handle,ob.old_status,h.fir_type,
         <if test="entity!=null and entity.future!=null and entity.future!=''">
             ob.future_goal goal,ob.future_key_status key_status
         </if>
         <if test="entity==null or entity.future==null or entity.future==''">
             ob.goal,ob.key_status
         </if>
-        FROM oldman_base ob left join organ_oldman oo on oo.oldman_id=ob.id,organ org,auto_value x
+        FROM oldman_base ob left join organ_oldman oo on oo.oldman_id=ob.id
+        left join key_handle kh on kh.oldman_id=ob.id
+        left join organ organ on organ.id=oo.organ_id
+        left join home_oldman ho on ho.oldman_id=ob.id
+        left join home h on h.id=ho.home_id
+        ,organ org,auto_value x
         WHERE x.id=ob.xq_id AND org.id=x.parent_index and ob.disable=0
 
         <if test="entity!=null and entity.future!=null and entity.future!=''">
@@ -58,7 +91,7 @@
             and oo.num=0
         </if>
         <if test="entity!=null and  entity.isActivity!=null and entity.isActivity==0">
-            and (oo.num!=0 or oo.num IS NULL)
+            and  (oo.num IS NULL and ob.is_handle!=2)
         </if>
         <if test="entity!=null and  entity.id!=null and entity.id!=0">
             and ob.id=#{entity.id}

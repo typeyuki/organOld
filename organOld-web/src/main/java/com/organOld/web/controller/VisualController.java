@@ -12,6 +12,75 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @RequestMapping("/visual")
 public class VisualController {
+    /**
+     * 分开的
+     * @return
+     */
+    @RequestMapping(value = "/now/part/total" ,method = RequestMethod.GET)
+    public ModelAndView part_total(){
+        return new ModelAndView("visual/now_part/total");
+    }
+    @RequestMapping(value = "/now/part/oldman" ,method = RequestMethod.GET)
+    public ModelAndView part_oldman(){
+        return new ModelAndView("visual/now_part/oldman");
+    }
+    @RequestMapping(value = "/now/part/base" ,method = RequestMethod.GET)
+    public ModelAndView part_base(){
+        return new ModelAndView("visual/now_part/base");
+    }
+    @RequestMapping(value = "/now/part/family" ,method = RequestMethod.GET)
+    public ModelAndView part_family(){
+        return new ModelAndView("visual/now_part/family");
+    }
+    @RequestMapping(value = "/now/part/economic" ,method = RequestMethod.GET)
+    public ModelAndView part_economic(){
+        return new ModelAndView("visual/now_part/economic");
+    }
+    @RequestMapping(value = "/now/part/health" ,method = RequestMethod.GET)
+    public ModelAndView part_health(){
+        return new ModelAndView("visual/now_part/health");
+    }
+    @RequestMapping(value = "/now/part/organ" ,method = RequestMethod.GET)
+    public ModelAndView part_organ(){
+        return new ModelAndView("visual/now_part/organ");
+    }
+    @RequestMapping(value = "/now/part/organOldman" ,method = RequestMethod.GET)
+    public ModelAndView part_organOldman(){
+        return new ModelAndView("visual/now_part/organOldman");
+    }
+    @RequestMapping(value = "/now/part/rzzxOldman" ,method = RequestMethod.GET)
+    public ModelAndView part_rzzxOldman(){
+        return new ModelAndView("visual/now_part/rzzxOldman");
+    }
+    @RequestMapping(value = "/now/part/zzzhOldman" ,method = RequestMethod.GET)
+    public ModelAndView part_zzzhOldman(){
+        return new ModelAndView("visual/now_part/zzzhOldman");
+    }
+    @RequestMapping(value = "/now/part/zcdOldman" ,method = RequestMethod.GET)
+    public ModelAndView part_zcdOldman(){
+        return new ModelAndView("visual/now_part/zcdOldman");
+    }
+    @RequestMapping(value = "/now/part/homeOldman" ,method = RequestMethod.GET)
+    public ModelAndView part_homeOldman(){
+        return new ModelAndView("visual/now_part/homeOldman");
+    }
+    @RequestMapping(value = "/now/part/otherOldman" ,method = RequestMethod.GET)
+    public ModelAndView part_otherOldman(){
+        return new ModelAndView("visual/now_part/otherOldman");
+    }
+    @RequestMapping(value = "/now/part/chxOldman" ,method = RequestMethod.GET)
+    public ModelAndView part_chxOldman(){
+        return new ModelAndView("visual/now_part/chxOldman");
+    }
+    @RequestMapping(value = "/now/part/finish" ,method = RequestMethod.GET)
+    public ModelAndView part_finish(){
+        return new ModelAndView("visual/now_part/finish");
+    }
+    @RequestMapping(value = "/now/part/label" ,method = RequestMethod.GET)
+    public ModelAndView part_label(){
+        return new ModelAndView("visual/now_part/label");
+    }
+
 
     @RequestMapping(value = "/now/home" ,method = RequestMethod.GET)
     public ModelAndView home(){

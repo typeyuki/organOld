@@ -1,18 +1,30 @@
 package com.organOld.service.model;
 
+import com.organOld.dao.entity.organ.Organ;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class OldmanKeyHandleModel {
     private int id;
-    private List<String> organIds;
-    private List<String> homeFirTypes;
-    private int type;
+    private List<Organ> organ=new ArrayList<>();
+    private List<String> organdIds;
+    private List<String> homeFirTypes=new ArrayList<>();
+    private String type;
 
-    public int getType() {
+    public List<String> getOrgandIds() {
+        return organdIds;
+    }
+
+    public void setOrgandIds(List<String> organdIds) {
+        this.organdIds = organdIds;
+    }
+
+    public String getType() {
         return type;
     }
 
-    public void setType(int type) {
+    public void setType(String type) {
         this.type = type;
     }
 
@@ -24,12 +36,12 @@ public class OldmanKeyHandleModel {
         this.id = id;
     }
 
-    public List<String> getOrganIds() {
-        return organIds;
+    public List<Organ> getOrgan() {
+        return organ;
     }
 
-    public void setOrganIds(List<String> organIds) {
-        this.organIds = organIds;
+    public void setOrgan(List<Organ> organ) {
+        this.organ = organ;
     }
 
     public List<String> getHomeFirTypes() {

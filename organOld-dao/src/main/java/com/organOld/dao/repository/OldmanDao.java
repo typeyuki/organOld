@@ -24,11 +24,13 @@ public interface OldmanDao extends BaseDao<Oldman,Integer>{
 
     Oldman getIntegralByOldmanId(int oldmanId);
 
-    void updateOldStatusByIds(List<Oldman> oldmanList);
+    void updateOrganExceLImportByIds(List<Oldman> oldmanList);
 
     List<Oldman> getIntegralByPage(Page<OldmanIntegral> page);
 
     Long getIntegralSizeByPage(Page<OldmanIntegral> page);
 
     void addInregral(@Param("oldmanId") int oldmanId,@Param("integral") int integral);
+
+
 }

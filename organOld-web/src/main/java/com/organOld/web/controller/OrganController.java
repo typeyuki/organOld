@@ -264,4 +264,10 @@ public class OrganController {
         mv.addObject("info",organService.getRegInfo());
         return mv;
     }
+
+    @ResponseBody
+    @RequestMapping(value = "/getByFirType",method = RequestMethod.POST)
+    public Result getByFirType(@RequestParam int firType){
+        return new Result(true,organService.getByOrganFirType(firType));
+    }
 }

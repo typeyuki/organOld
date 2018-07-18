@@ -21,16 +21,28 @@ $(document).ready(function(){
             "bStateSave": true,
             "bProcessing": true, //加载数据时显示正在加载信息
             "bServerSide": true, //指定从服务器端获取数据
-            "columns":[{
+            "columns":[{},{
                 data:"oldmanId"
             },{},{
                 data:"goal"
-            },{},{}
+            },{},{
+                data:"oldStatus"
+            },{}
+            ,{
+                data:"oldmanKeyHandleModel.type"
+                },{},{},{},{}
             ],
-            "order":[[0,"asc"]],
+            "order":[[1,"asc"]],
             "columnDefs": [
                 {
-                    "targets": [1], // 目标列位置，下标从0开始
+                    "targets": [0], // 目标列位置，下标从0开始
+                    "data": "oldmanId", // 数据列名
+                    "render": function(data, type, full) { // 返回自定义内容
+                        return "<input type='checkbox' name='check' value='"+data+"'/>"
+                    }
+                },
+                {
+                    "targets": [2], // 目标列位置，下标从0开始
                     "data": "oldmanNameKeyStatus", // 数据列名
                     "render": function(data, type, full) { // 返回自定义内容
                         var name=data.split("#")[0];
@@ -45,28 +57,84 @@ $(document).ready(function(){
                     }
                 },
                 {
-                    "targets": [3], // 目标列位置，下标从0开始
-                    "data": "isHandle", // 数据列名
+                    "targets": [4], // 目标列位置，下标从0开始
+                    "data": "status", // 数据列名
                     "render": function(data, type, full) { // 返回自定义内容
                         var id="$(this).parent().prev().prev().prev().text()";
                         var name="$(this).parent().prev().prev().text()";
-                        if(data==null || data==0){
-                            return "<button class='btn btn-primary' onclick=handle("+id+","+name+",this,'no')>未处理</button>";
+                        if(data=="未处理"){
+                            return "<button class='btn btn-primary' onclick=handle("+id+","+name+",this)>"+data+"</button>";
                         }else{
-                            return "<button class='btn btn-default' onclick=handle("+id+","+name+",this,'yes')>已处理</button>";
+                            return "<button class='btn btn-default'>"+data+"</button>";
                         }
+                    }
+                },{
+                    "targets": [6], // 目标列位置，下标从0开始
+                    "data": "organAndHome", // 数据列名
+                    "render": function(data, type, full) { // 返回自定义内容
+                        var s="";
+                        var i=0;
+                        for(var js in data){
+                            if(js.indexOf(0)!="0"){
+                                s+="<button class='btn btn-primary' onclick=newPage("+js+",'"+data[js]+"','/organ/"+js+"/info?look=true')>"+data[js]+"</button>";
+                            }else{
+                                s+="<button class='btn btn-default'>"+data[js]+"</button>";
+                            }
+                            i++;
+                        }
+                        return s;
+                    }
+                },{
+                    "targets": [8], // 目标列位置，下标从0开始
+                    "data": "oldmanKeyHandleModel", // 数据列名
+                    "render": function(data, type, full) { // 返回自定义内容
+                        var s="";
+                        if(data!=null){
+                            for(var i=0;i<data.organ.length;i++){
+                                s+="<button class='btn btn-primary' onclick=newPage("+data.organ[i].id+",'"+data.organ[i].name+"','/organ/"+data.organ[i].id+"/info?look=true')>"+data.organ[i].name+"</button>";
+                            }
+                            for(var i=0;i<data.homeFirTypes.length;i++){
+                                s+="<button class='btn btn-default'>"+data.homeFirTypes[i]+"</button>";
+                            }
+                        }
+                        return s;
+                    }
+                },
+                {
+                    "targets": [9], // 目标列位置，下标从0开始
+                    "data": "organActivity", // 数据列名
+                    "render": function(data, type, full) { // 返回自定义内容
+                        var s="";
+                        if(data!=null){
+                            for(var i=0;i<data.length;i++){
+                                s+="<button class='btn btn-primary'onclick=newPage("+data[i].id+",'"+data[i].name+"','/organ/"+data[i].id+"/info?look=true')>"+data[i].name+"</button><br>";
+                            }
+                        }
+                        return s;
+                    }
+                },{
+                    "targets": [10], // 目标列位置，下标从0开始
+                    "data": "organActivity", // 数据列名
+                    "render": function(data, type, full) { // 返回自定义内容
+                        var s="";
+                        if(data!=null){
+                            for(var i=0;i<data.length;i++){
+                                s+="<span>"+data[i].applyTime+"</span><br>";
+                            }
+                        }
+                        return s;
                     }
                 },
                 // 增加一列，包括删除和修改，同时将我们需要传递的数据传递到链接中
                 {
-                    "targets": [4], // 目标列位置，下标从0开始
+                    "targets": [11], // 目标列位置，下标从0开始
                     "data": "oldmanId", // 数据列名
                     "render": function(data, type, full) { // 返回自定义内容
                         return "<button class='btn btn-primary' id='"+data+"' onclick=newPage("+data+",$(this).parent().prev().prev().prev().text(),'/oldman/"+data+"/info')>查看</button>";
                     }
                 },
                 //不进行排序的列
-                { "bSortable": false, "aTargets": [0,1,2,3,4] }
+                { "bSortable": false, "aTargets": [0,2,3,4,5,6,7,8,9,10,11] }
             ],
             "sAjaxSource": "/oldman/key/data",//这个是请求的地址
             "fnServerData": retrieveData
@@ -193,55 +261,39 @@ function finish(data) {
     table.fnFilter();
 }
 
-function handle(id,name,obje,type) {
+function handle(id,name,obje) {
     obj=obje;
     $("#organ").hide();
     $("#home").hide();
     $("select.selectpicker").each(function(){
         $(this).selectpicker('deselectAll');  //重置bootstrap-select显示
     });
-    if(type=="no"){
         $("#handleModal select[name='type']").find("option").prop("selected", "false");
         $("#handleModal select[name='type']").find("option").first().prop("selected", "true");
 
         $("#handleModal input[name='oldmanId']").val(id);
         $("#handleModal small").html(name);
         $("#handleModal").modal();
-    }else{
-        $.ajax({
-            url: "/oldman/key/"+id+"/handle",
-            type: 'GET',
-            success: function (result) {
-                $("#handleModal select[name='type'] option").each(function () {
-                    if($(this).val()==result.data.type){
-                        $(this).prop("selected",true);
-                    }
-                });
-                if(result.data.type==1 || result.data.type==2 ||result.data.type==4){
-                    var number=new Array();
-                    for(var i=0;i<result.data.organIds.length;i++){
-                        number.push(result.data.organIds[i]);
-                    }
-                    $("#handleModal select[name='organIds']").selectpicker('val', number);//默认选中
-                    $("#handleModal select[name='organIds']").selectpicker('refresh');
-                    $("#organ").show();
 
-                }
-                if(result.data.type==3 ||result.data.type==4){
-                    var number=new Array();
-                    for(var i=0;i<result.data.homeFirTypes.length;i++){
-                        number.push(result.data.homeFirTypes[i]);
-                    }
-                    $("#handleModal select[name='homeFirTypes']").selectpicker('val', number);//默认选中
-                    $("#home").show();
-                }
-                $("#handleModal input[name='oldmanId']").val(id);
-                $("#handleModal small").html(name);
-                $("#handleModal #no").show();
-                $("#handleModal .sub").attr("onclick","handleSubmit('update')");
-                $("#handleModal").modal();
-            }
-        });
+}
 
-    }
+function noHandle() {
+    var array=[];
+    $("input[name='check']:checked").each(function () {
+       array.push($(this).val());
+    });
+    $.ajax({
+        url: "/oldman/key/handle/del",
+        data : {
+            oldmanIds:array
+        },
+        type: 'POST',
+        dataType: 'json',
+        success: function (result) {
+            table.fnFilter();
+        },
+        error:function(XMLHttpRequest, textStatus, errorThrown) {
+
+        }
+    });
 }

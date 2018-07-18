@@ -56,6 +56,8 @@ public class OrganServiceImpl implements OrganService{
     OldmanDao oldmanDao;
     @Autowired
     UserDao userDao;
+    @Autowired
+    OldmanKeyHandleDao oldmanKeyHandleDao;
 
 
     @Override
@@ -220,6 +222,12 @@ public class OrganServiceImpl implements OrganService{
     @Override
     public List<OrganType> getByFirType(int firType) {
         return organTypeDao.getByFirType(firType);
+    }
+
+
+    @Override
+    public List<Organ> getByOrganFirType(int firType) {
+        return organDao.getByFirType(firType);
     }
 
     @Override
@@ -420,7 +428,7 @@ public class OrganServiceImpl implements OrganService{
         excelReturnModel.setTotal(sht0.getLastRowNum()-(start-1));//一共
 
         Integer organId=commonService.getIdBySession();
-        int oldStatus=0;;//养老状态
+        int oldStatus=0;//养老状态
         Organ organ=organDao.getById(organId);
         if(organ.getOrganFirTypeId()==26){
             oldStatus= OldStatusEnum.JG.getIndex();
@@ -484,8 +492,9 @@ public class OrganServiceImpl implements OrganService{
         organOldmanDao.delByOrganId(organId);
         if(organOldmanList.size()>0){
             // 老人基本信息表  养老状态更新
-            oldmanDao.updateOldStatusByIds(oldmanList);
+            oldmanDao.updateOrganExceLImportByIds(oldmanList);
             organOldmanDao.saveAll(organOldmanList);
+            oldmanKeyHandleDao.delByOldman(oldmanList);
         }
         return new Result(true,excelReturnModel);
     }

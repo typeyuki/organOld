@@ -2,7 +2,9 @@ package com.organOld.dao.entity.oldman;
 
 
 import com.organOld.dao.entity.DBInterface;
+import com.organOld.dao.entity.home.Home;
 import com.organOld.dao.entity.label.LabelMan;
+import com.organOld.dao.entity.organ.Organ;
 
 import java.util.Date;
 import java.util.List;
@@ -53,13 +55,41 @@ public class Oldman extends Man implements DBInterface{
     private String future;//是否是查询未来的重点老人得分
 
     private Integer keyGoalBase;//重点老人分数基线
+
     /**
      * 关联对象
      * @return
      */
     private Xq xq;//小区
     private List<LabelMan> labelManList;
+    private OldmanKeyHandle oldmanKeyHandle;
+    private List<Organ> organList;
+    private List<Home> homeList;
 
+
+    public List<Home> getHomeList() {
+        return homeList;
+    }
+
+    public void setHomeList(List<Home> homeList) {
+        this.homeList = homeList;
+    }
+
+    public List<Organ> getOrganList() {
+        return organList;
+    }
+
+    public void setOrganList(List<Organ> organList) {
+        this.organList = organList;
+    }
+
+    public OldmanKeyHandle getOldmanKeyHandle() {
+        return oldmanKeyHandle;
+    }
+
+    public void setOldmanKeyHandle(OldmanKeyHandle oldmanKeyHandle) {
+        this.oldmanKeyHandle = oldmanKeyHandle;
+    }
 
     public Integer getIntegral() {
         return integral;

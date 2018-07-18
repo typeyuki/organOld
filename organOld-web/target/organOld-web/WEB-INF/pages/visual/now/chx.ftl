@@ -148,18 +148,9 @@
     chx_pj_jb_bar.setOption(chx_option_pj_jb_bar);
 
 
-    var title_chx_1={
-        text: "长护险",
-        link:"javascript: change('child_chx','child_organ')",
-        target: "self",
-        textStyle:{
-            color:title_color,
-            fontSize:title_fontSize,
-            fontWeight:100
-        },
-        x:'0%',
-        y:'0%'
-    };
+
+    title.text="长护险";
+    title.link="javascript: change('child_chx','child_organ')";
     //数量饼图
     legend_data=[{name:'获得服务',textStyle:{color:legend_color,fontSize:18}},{name:'未评级',textStyle:{color:legend_color,fontSize:18}},{name:'已经评级',textStyle:{color:legend_color,fontSize:18}}];
     series=[
@@ -184,7 +175,7 @@
             ]
         }
     ];
-    var chx_option_num_pie = chartPie_1Click(title_chx_1,legend_data,series);
+    var chx_option_num_pie = chartPie_1Click(title,legend_data,series);
     chx_num_pie.setOption(chx_option_num_pie);
 
     //片区人数分布

@@ -1,0 +1,48 @@
+@media only screen and (min-width: 1700px){
+    #ditu{
+        width:75%;
+    }
+
+    .title{
+        font-size: 30px;
+        color: white;
+        line-height: 60px;
+    }
+    .number{
+        font-size: 40px;
+        color: orange!important;
+        font-weight: bold;
+        padding: 20px 10px;
+    }
+    #Date{
+        font-size: 28px;
+    }
+    #ttt{
+        margin-top: 10%
+    }
+
+}
+
+@media only screen and (min-width: 1300px) and ( max-width: 1400px){
+    #ditu{
+        width:66%;
+    }
+
+    .title{
+        font-size: 24px;
+        color: white;
+        line-height: 35px;
+    }
+    .number{
+        font-size: 28px;
+        color: orange!important;
+        font-weight: bold;
+        padding: 12px 6px;
+    }
+    #Date{
+        font-size: 18px;
+    }
+    #ttt{
+        margin-top: 10%;
+    }
+}

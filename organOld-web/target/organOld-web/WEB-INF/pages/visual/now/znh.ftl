@@ -59,18 +59,8 @@
     var znh_zn_sex_pie= echarts.init(document.getElementById('znh_zn_sex_pie'));
 </script>
 <script>
-    var title_znh_1={
-        text: "人数占比",
-        link:"javascript: change('child_znh','child_organ')",
-        target: "self",
-        textStyle:{
-            color:title_color,
-            fontSize:title_fontSize,
-            fontWeight:100
-        },
-        x:'0%',
-        y:'0%'
-    };
+    title.text="人数占比";
+    title.link="javascript: change('child_znh','child_organ')";
 //    title_text="人数占比";
     legend_data=[{name:'已使用的重点老人',textStyle:{color:legend_color,fontSize:18}},{name:'未使用的重点老人',textStyle:{color:legend_color,fontSize:18}}];
     series=[
@@ -94,7 +84,7 @@
             ]
         }
     ];
-    var znh_option_zn_num_pie = chartPieClick(title_znh_1,legend_data,series);
+    var znh_option_zn_num_pie = chartPieClick(title,legend_data,series);
     znh_zn_num_pie.setOption(znh_option_zn_num_pie);
 
 

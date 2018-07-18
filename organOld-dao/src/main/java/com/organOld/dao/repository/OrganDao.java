@@ -20,4 +20,8 @@ public interface OrganDao extends BaseDao<Organ,Integer>{
     List<Organ> getByType(int type);
 
     List<Organ> getByTypes(List<Integer> typeIds);
+
+    List<Organ> getByIds(List<String> ids);
+
+    List<Organ> getByFirType(int firType);
 }
