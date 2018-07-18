@@ -86,18 +86,8 @@
     organ_zbPie.setOption(organ_option_zb_pie);
 
 
-    var title_organOldman_1={
-        text: "机构养老",
-        link:"javascript: change('child_organ','child_organOldman')",
-        target: "self",
-        textStyle:{
-            color:title_color,
-            fontSize:title_fontSize,
-            fontWeight:100
-        },
-        x:'0%',
-        y:'0%'
-    };
+    title.text="机构养老";
+    title.link="javascript: change('child_organ','child_organOldman')";
     legend_data=[{name:'古美养老院',textStyle:{color:legend_color,fontSize:18}},{name:'东兰养老院',textStyle:{color:legend_color,fontSize:18}},{name:'平阳养老院',textStyle:{color:legend_color,fontSize:18}}];
     series=[{
         name: '老人户籍',
@@ -126,7 +116,7 @@
             }
         }
     }];
-    var organ_option_jg_pie = chartPieClick(title_organOldman_1,legend_data,series);
+    var organ_option_jg_pie = chartPieClick(title,legend_data,series);
     organ_jg_pie.setOption(organ_option_jg_pie);
 
 

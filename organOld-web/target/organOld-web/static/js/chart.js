@@ -196,8 +196,34 @@ function chartLine(title_text,legend_data,xAxis_data,series) {
 
 //饼图
 function chartPie(title_text,legend_data,series) {
-    title.text=title_text;
-    return chartPieClick(title,legend_data,series);
+    //不用能以下方式 容易出现两个图一样的标题 应该是异步  不同步造成
+    // title.text=title_text;
+    // return chartPieClick(title,legend_data,series);
+    var option = {
+        title : {
+            text:title_text,
+            textStyle:{
+                color:'#fff',
+                fontSize:title_fontSize,
+                fontWeight:100
+            },
+            x:'0%',
+            y:'0%'
+        },
+        tooltip : {
+            trigger: 'item',
+            formatter: ""
+        },
+        legend: {
+            orient: 'vertical',
+            right: '0',
+            top:"0",
+            data: legend_data
+        },
+        series :series,
+        color: [series_color_1,series_color_2,series_color_3,series_color_4,series_color_5,series_color_6,series_color_7]
+    };
+    return option;
 }
 
 //饼图

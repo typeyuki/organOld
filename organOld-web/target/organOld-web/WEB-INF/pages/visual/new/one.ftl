@@ -34,7 +34,7 @@
                 </div>
                 <div class="row">
                     <div class="col-lg-12">
-                    <img src="/static/img/map/gumei_9.jpg" id="ditu">
+                    <#include "map.ftl"/>
                     </div>
                 </div>
             </div>
@@ -76,8 +76,8 @@
     </div>
     <script type="text/javascript">
         var tu_w,tu_h,tu_big_w,tu_big_h,text_h;
-
-        if(winWidth>=1900){
+        if(winWidth>=1700){
+            //家里电脑的分辨率
             tu_w=winWidth/4.5;
             tu_h=winHeight/5;
             tu_big_w=winWidth/4.5;

@@ -72,18 +72,8 @@
     var base_zbPie= echarts.init(document.getElementById('base_zbPie'));
 </script>
 <script>
-    var title_base_1={
-        text: "老\n人\n比\n例",
-        link:"javascript: change('child_base','child_oldman')",
-        target: "self",
-        textStyle:{
-            color:title_color,
-            fontSize:title_fontSize,
-            fontWeight:100
-        },
-        x:'0%',
-        y:'20%'
-    };
+    title.text="老\n人\n比\n例";
+    title.link="javascript: change('child_base','child_oldman')";
     legend_data=[{name:'老人',textStyle:{color:legend_color,fontSize:18}},{name:'非老人',textStyle:{color:legend_color,fontSize:18}}];
     series=[
         {
@@ -106,7 +96,7 @@
             ]
         }
     ];
-    var base_option_zb_pie = chartPieClick(title_base_1,legend_data,series);
+    var base_option_zb_pie = chartPieClick(title,legend_data,series);
     base_zbPie.setOption(base_option_zb_pie);
 
     title_text='老人数量变化趋势';

@@ -1,0 +1,40 @@
+h2,p,td,h3,h1,span{
+    color: white!important;
+}
+.line{
+    position: relative;
+    left:5px;
+    margin-bottom: 5px;
+}
+
+@media only screen and (min-width: 1700px){
+    #ditu{
+        width:65%;
+    }
+    .tu,.tu_big{
+        padding-top: 5%;
+        padding-bottom: 2%;
+    }
+    .map_title{
+        font-size: 50px;
+        color: white;
+    }
+
+
+}
+
+@media only screen and (min-width: 1300px) and ( max-width: 1400px){
+    #ditu{
+        width:56%;
+    }
+
+    .tu,.tu_big{
+        padding-top: 5%;
+        padding-bottom: 2%;
+    }
+    .map_title{
+        font-size: 29px;
+        color: white;
+    }
+
+}

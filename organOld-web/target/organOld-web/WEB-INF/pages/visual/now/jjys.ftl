@@ -49,18 +49,8 @@
 </script>
 
 <script>
-    var title_jjys_1={
-        text: "人数占比",
-        link:"javascript: change('child_jjys','child_organ')",
-        target: "self",
-        textStyle:{
-            color:title_color,
-            fontSize:title_fontSize,
-            fontWeight:100
-        },
-        x:'0%',
-        y:'0%'
-    };
+    title.text="人数占比容";
+    title.link="javascript: change('child_jjys','child_organ')";
 //    title_text="人数占比";
     legend_data=[{name:'已参加',textStyle:{color:legend_color,fontSize:18}},{name:'未参加',textStyle:{color:legend_color,fontSize:18}}];
     series=[
@@ -84,7 +74,7 @@
             ]
         }
     ];
-    var jjys_option_jt_ys_num= chartPieClick(title_jjys_1,legend_data,series);
+    var jjys_option_jt_ys_num= chartPieClick(title,legend_data,series);
     jjys_jt_ys_num_pie.setOption(jjys_option_jt_ys_num);
 
     title_text="性别分布";

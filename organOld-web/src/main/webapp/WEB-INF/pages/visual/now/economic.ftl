@@ -58,18 +58,8 @@
 </script>
 <script>
     //经济条件
-    var title_economic_1={
-        text: "经济条件分布饼图",
-        link:"javascript: change('child_economic','child_oldman')",
-        target: "self",
-        textStyle:{
-            color:title_color,
-            fontSize:title_fontSize,
-            fontWeight:100
-        },
-        x:'0%',
-        y:'0%'
-    };
+    title.text="经济条件分布饼图";
+    title.link="javascript: change('child_economic','child_oldman')";
 //    title_text="经济条件分布饼图";
     legend_data=[{name:'帮困',textStyle:{color:legend_color,fontSize:18}},{name:'低保',textStyle:{color:legend_color,fontSize:18}}
         ,{name:'养老保险',textStyle:{color:legend_color,fontSize:18}},{name:'医疗救助金',textStyle:{color:legend_color,fontSize:18}},
@@ -104,7 +94,7 @@
             }
         }
     }];
-    var economic_option_economic_pie = chartPieClick(title_economic_1,legend_data,series);
+    var economic_option_economic_pie = chartPieClick(title,legend_data,series);
     //经济条件增长趋势图
     title_text='经济条件变化趋势图';
     legend_data=[{name:'帮困',textStyle:{color:legend_color,fontSize:18}},{name:'低保',textStyle:{color:legend_color,fontSize:18}}
