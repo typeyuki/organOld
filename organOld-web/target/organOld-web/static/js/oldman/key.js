@@ -237,7 +237,6 @@ function handle(id,name,obje,type) {
                 }
                 $("#handleModal input[name='oldmanId']").val(id);
                 $("#handleModal small").html(name);
-                $("#handleModal #no").show();
                 $("#handleModal .sub").attr("onclick","handleSubmit('update')");
                 $("#handleModal").modal();
             }

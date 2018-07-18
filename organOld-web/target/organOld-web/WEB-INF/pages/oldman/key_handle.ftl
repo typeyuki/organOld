@@ -48,9 +48,6 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="form-group" id="no" style="display: none">
-                                            <button class="col-sm-2 btn btn-primary" onclick="handleSubmit('delete')">设置为未处理</button>
-                                        </div>
                                     </form>
                                 </div>
                             </div>

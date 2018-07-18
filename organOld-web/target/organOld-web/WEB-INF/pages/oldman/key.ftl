@@ -37,10 +37,10 @@
                 </div>
                 <div class="ibox-content">
                     <div class="func">
-
                         <a onclick="update('now')" href="#" class="btn btn-primary ">更新</a>
                         <a onclick="autoUpdate(true,this)" href="#" class="btn btn-primary ">开启自动更新</a>
                         <a onclick="newPage(999,'重点老人规则','/oldman/key/rule')" href="javascript:void(0);" class="btn btn-primary ">规则</a>
+                        <a onclick="" href="#" class="btn btn-primary ">设置为未处理</a>
                     </div>
                     <script>
                         $.ajax({
