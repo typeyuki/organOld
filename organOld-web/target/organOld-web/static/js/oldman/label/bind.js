@@ -1,6 +1,7 @@
 /**
  * Created by netlab606 on 2018/4/2.
  */
+var table;
 $(document).ready(function(){
     var columns=[];
     var order=[];
@@ -27,6 +28,8 @@ $(document).ready(function(){
                 data:"census"
             },{
                 data:"time"
+            },{},{
+                data:"remark"
             }
         ];
         order=[[1,"asc"]];
@@ -74,15 +77,19 @@ $(document).ready(function(){
                 "targets": [11], // 目标列位置，下标从0开始
                 "data": "isImplement", // 数据列名
                 "render": function(data, type, full) { // 返回自定义内容
+                    var s="<span class='btn btn-primary'>查看</span>";
                     if(data==0){
-                        return "<span class='btn btn-primary'>查看</span><button class='btn btn-primary' onclick='implement($(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().text(),this)'>落实</button>";
+                        s+="<button class='btn btn-primary' onclick='implement($(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().text(),$(this).parent().prev().prev().prev().prev().prev().prev().text())'>未操作</button>";
+                    }else if(data==1){
+                        s+="<button class='btn btn-default'>未落实</button>";
                     }else{
-                        return "<span class='btn btn-primary' >查看</span><button class='btn'>已落实</button>";
+                        s+="<button class='btn btn-default'>已落实</button>";
                     }
+                    return s;
                 }
             },
             //不进行排序的列
-            { "bSortable": false, "aTargets": [ 0,2 ,3, 4, 5,6,7,9,10,11] }
+            { "bSortable": false, "aTargets": [ 0,2 ,3, 4, 5,6,7,9,10,11,12] }
         ]
     }else{
         columns=[{
@@ -105,7 +112,9 @@ $(document).ready(function(){
                 data:"census"
             },{
                 data:"time"
-            }
+            },{},{
+            data:"remark"
+        }
         ];
         order=[[0,"asc"]];
         columnDefs= [
@@ -136,18 +145,22 @@ $(document).ready(function(){
                 "targets": [10], // 目标列位置，下标从0开始
                 "data": "isImplement", // 数据列名
                 "render": function(data, type, full) { // 返回自定义内容
+                    var s="<span class='btn btn-primary'>查看</span>";
                     if(data==0){
-                        return "<span class='btn btn-primary'>查看</span><button class='btn btn-primary' onclick='implement($(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().text(),this)'>落实</button>";
+                        s+="<button class='btn btn-primary' onclick='implement($(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().text(),$(this).parent().prev().prev().prev().prev().prev().prev().text())'>未操作</button>";
+                    }else if(data==1){
+                        s+="<button class='btn btn-default'>未落实</button>";
                     }else{
-                        return "<span class='btn btn-primary' >查看</span><button class='btn'>已落实</button>";
+                        s+="<button class='btn btn-default'>已落实</button>";
                     }
+                    return s;
                 }
             },
             //不进行排序的列
-            { "bSortable": false, "aTargets": [ 1 ,2, 3,4,5,6,8,9,10] }
+            { "bSortable": false, "aTargets": [ 1 ,2, 3,4,5,6,8,9,10,11] }
         ]
     }
-    var table =$(".dataTables-example").dataTable(
+    table =$(".dataTables-example").dataTable(
         {
             "sPaginationType": "full_numbers",
             "bPaginite": true,
@@ -333,17 +346,27 @@ function del(id) {
     });
 }
 
-function implement(id,obj) {
+function implement(id,name) {
+    $("#implementModal input[name='id']").val(id);
+    $("#implementModal h5").html(name);
+    $("#implementModal").modal();
+}
+
+function subImple() {
     $.ajax({
         url : "/oldman/label/implement",
         type : "post",
         dataType : 'json',
         data:{
-            id:id
+            "id":$("#implementModal input[name='id']").val(),
+            "isImplement":$("#implementModal input[name='isImpl']:checked").val(),
+            "remark":$("#implementModal input[name='remark']").val()
         },
         success : function(data) {
             if (data.success==true) {
-                $(obj).attr("class","btn").html("已落实");
+                $("#implementModal").modal("hide");
+                table.fnFilter();
+
             } else {
                 alert('删除失败！');
             }

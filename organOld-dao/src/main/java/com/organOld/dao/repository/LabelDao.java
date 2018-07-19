@@ -42,7 +42,6 @@ public interface LabelDao extends BaseDao<Label,Integer> {
 
     void deleteLableManByLabelId(int labelId);
 
-    void implement(int id);
 
     void saveLabelMan(@Param("labelId") int labelId,@Param("oldmanIds") int[] oldmanIds);
 

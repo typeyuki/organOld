@@ -164,8 +164,13 @@
                             <label class="col-sm-2 control-label">机构养老</label>
                             <#if info.organ??>
                                 <label class="col-sm-2 control-label">${info.organ.organName}</label>
-                                <label class="col-sm-2 control-label">床位号：${info.organ.num}</label>
-                                <label class="col-sm-2 control-label">服务时间：${info.organ.timeIn}-${info.organ.timeOut}</label>
+                                <#if info.organ.num=="0">
+                                    <label class="col-sm-2 control-label">主动申请</label>
+                                    <label class="col-sm-2 control-label">申请时间：${info.organ.applyTime}</label>
+                                <#else >
+                                    <label class="col-sm-2 control-label">床位号：${info.organ.num}</label>
+                                    <label class="col-sm-2 control-label">服务时间：${info.organ.timeIn}-${info.organ.timeOut}</label>
+                                </#if>
                             <#else >
                                 <label class="col-sm-2 control-label">无</label>
                             </#if>
@@ -176,8 +181,13 @@
                                     <#if list_index==0>
                                         <label class="col-sm-2 control-label">社区养老</label>
                                         <label class="col-sm-2 control-label">${list.organName}</label>
-                                        <label class="col-sm-2 control-label">床位号：${list.num}</label>
-                                        <label class="col-sm-2 control-label">服务时间：${list.timeIn}-${list.timeOut}</label>
+                                        <#if list.num=="0">
+                                            <label class="col-sm-2 control-label">主动申请</label>
+                                            <label class="col-sm-2 control-label">申请时间：${list.applyTime}</label>
+                                        <#else >
+                                            <label class="col-sm-2 control-label">床位号：${list.num}</label>
+                                            <label class="col-sm-2 control-label">服务时间：${list.timeIn}-${list.timeOut}</label>
+                                        </#if>
                                     <#else >
                                         <label class="col-sm-2 control-label"></label>
                                         <label class="col-sm-2 control-label">${list.organName}</label>
@@ -214,6 +224,7 @@
                                             <label class="col-sm-2 control-label">服务时间：${list.timeIn}-${list.timeOut}</label>
                                         </#if>
                                     </#if>
+                                    <label class="col-sm-2 control-label">服务机构：${list.organName!"无"}</label>
                                 </div>
                             </#list>
                         <#else >

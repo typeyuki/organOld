@@ -3,10 +3,7 @@ package com.organOld.service.service.impl;
 import com.organOld.dao.entity.AutoValue;
 import com.organOld.dao.entity.SysUser;
 import com.organOld.dao.entity.oldman.Oldman;
-import com.organOld.dao.entity.organ.Organ;
-import com.organOld.dao.entity.organ.OrganOldman;
-import com.organOld.dao.entity.organ.OrganReg;
-import com.organOld.dao.entity.organ.OrganType;
+import com.organOld.dao.entity.organ.*;
 import com.organOld.dao.repository.*;
 import com.organOld.dao.util.Page;
 import com.organOld.service.contract.*;
@@ -56,6 +53,10 @@ public class OrganServiceImpl implements OrganService{
     OldmanDao oldmanDao;
     @Autowired
     UserDao userDao;
+    @Autowired
+    OldmanKeyHandleDao oldmanKeyHandleDao;
+    @Autowired
+    OrganServiceRecordDao organServiceRecordDao;
 
 
     @Override
@@ -220,6 +221,12 @@ public class OrganServiceImpl implements OrganService{
     @Override
     public List<OrganType> getByFirType(int firType) {
         return organTypeDao.getByFirType(firType);
+    }
+
+
+    @Override
+    public List<Organ> getByOrganFirType(int firType) {
+        return organDao.getByFirType(firType);
     }
 
     @Override
@@ -420,7 +427,7 @@ public class OrganServiceImpl implements OrganService{
         excelReturnModel.setTotal(sht0.getLastRowNum()-(start-1));//一共
 
         Integer organId=commonService.getIdBySession();
-        int oldStatus=0;;//养老状态
+        int oldStatus=0;//养老状态
         Organ organ=organDao.getById(organId);
         if(organ.getOrganFirTypeId()==26){
             oldStatus= OldStatusEnum.JG.getIndex();
@@ -484,8 +491,9 @@ public class OrganServiceImpl implements OrganService{
         organOldmanDao.delByOrganId(organId);
         if(organOldmanList.size()>0){
             // 老人基本信息表  养老状态更新
-            oldmanDao.updateOldStatusByIds(oldmanList);
+            oldmanDao.updateOrganExceLImportByIds(oldmanList);
             organOldmanDao.saveAll(organOldmanList);
+            oldmanKeyHandleDao.delByOldman(oldmanList);
         }
         return new Result(true,excelReturnModel);
     }
@@ -507,5 +515,79 @@ public class OrganServiceImpl implements OrganService{
             case 4:if(organ.getAuthQueryIntegral()==1) return true;break;
         }
         return false;
+    }
+
+    @Override
+    public String getRecordByPage(OrganServiceRecordRequest organServiceRecordRequest, BTableRequest bTableRequest) {
+        Page<OrganServiceRecord> page=commonService.getPage(bTableRequest,"organ_service_record");
+        OrganServiceRecord organServiceRecord= Wrappers.organWrapper.unwrapServiceRecord(organServiceRecordRequest);
+        if(organServiceRecord.getOrganId()==null || organServiceRecord.getOrganId()==0){
+            //机构账号页面
+            commonService.checkIsOrgan(organServiceRecord);
+        }
+        page.setEntity(organServiceRecord);
+        List<OrganServiceRecordModel> productModelList=organServiceRecordDao.getByPage(page).stream().map(Wrappers.organWrapper::wrapServiceRecord).collect(Collectors.toList());
+        Long size=organServiceRecordDao.getSizeByPage(page);
+        return commonService.tableReturn(bTableRequest.getsEcho(),size,productModelList);
+    }
+
+
+    @Override
+    public Result importRecordExcel(MultipartFile file) throws IOException {
+        List<OrganServiceRecord> organServiceRecordList=new ArrayList<>();
+        Workbook wb0 = new HSSFWorkbook(file.getInputStream());
+        //获取Excel文档中的第一个表单
+        Sheet sht0 = wb0.getSheetAt(0);
+        int start=1;
+
+        ExcelReturnModel excelReturnModel=new ExcelReturnModel();
+        int numSuccess=0;//成功导入的数量
+        int successAdd=0;//导入数量中  增加的个数
+        excelReturnModel.setTotal(sht0.getLastRowNum()-(start-1));//一共
+
+        Integer organId=commonService.getIdBySession();
+
+        for (Row r : sht0) {
+            try {
+                if (r.getRowNum() >= start) {
+                    //创建实体类
+                    OrganServiceRecord organServiceRecord=new OrganServiceRecord();
+                    organServiceRecord.setOrganId(organId);
+
+                    if (r.getCell(0).getStringCellValue() != null && !r.getCell(0).getStringCellValue().equals("")) {
+                        Integer oldmanId=commonService.checkOldmanExiest(r.getCell(0).getStringCellValue());
+                        if(oldmanId!=null && oldmanId!=0){
+                            organServiceRecord.setOldmanId(oldmanId);
+                        }else{
+                            throw new Exception();
+                        }
+                    }else{
+                        throw new Exception();
+                    }
+
+                    if (r.getCell(1).getStringCellValue() != null && !r.getCell(1).getStringCellValue().equals("")) {
+                        organServiceRecord.setData(r.getCell(1).getStringCellValue());
+                    }
+                    if (r.getCell(2).getStringCellValue() != null && !r.getCell(2).getStringCellValue().equals("")) {
+                        organServiceRecord.setTime(Tool.stringToDate(r.getCell(2).getStringCellValue()));
+                    }
+
+                    organServiceRecordList.add(organServiceRecord);
+                    numSuccess++;
+                    successAdd++;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                excelReturnModel.getFail().add(r.getRowNum() + 1);
+            }
+        }
+        excelReturnModel.setNumFail(excelReturnModel.getFail().size());
+        excelReturnModel.setSuccessAdd(successAdd);
+        excelReturnModel.setNumSuccess(numSuccess);
+
+        if(organServiceRecordList.size()>0){
+            organServiceRecordDao.saveAll(organServiceRecordList);
+        }
+        return new Result(true,excelReturnModel);
     }
 }

@@ -12,10 +12,19 @@ public class LabelMan extends DBEntity implements DBInterface{
     private int oldmanId;
     private int isImplement;
     private String labelName;
+    private String remark;
 
     private Oldman oldman;
 
     private Integer organId;
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
 
     public Integer getOrganId() {
         return organId;

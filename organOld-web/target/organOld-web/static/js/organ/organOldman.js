@@ -17,6 +17,8 @@ $(document).ready(function(){
         },{
             data:"timeOut"
         },{
+            data:"applyTime"
+        },{
             data:"time"
         }
         ];
@@ -30,16 +32,27 @@ $(document).ready(function(){
                     return"<input type='checkbox' />"
                 }
             },
+            {
+                "targets": [3], // 目标列位置，下标从0开始
+                "data": "num", // 数据列名
+                "render": function(data, type, full) { // 返回自定义内容
+                    if(data=="0"){
+                        return "排队中";
+                    }else{
+                        return data;
+                    }
+                }
+            },
             // 增加一列，包括删除和修改，同时将我们需要传递的数据传递到链接中
             {
-                "targets": [7], // 目标列位置，下标从0开始
+                "targets": [8], // 目标列位置，下标从0开始
                 "data": "oldmanId", // 数据列名
                 "render": function(data, type, full) { // 返回自定义内容
                     return "<span class='look' id='"+data+"'>查看</span><span class='mod' id='"+data+"'>修改</span>";
                 }
             },
             //不进行排序的列
-            { "bSortable": false, "aTargets": [ 0,2 ,3, 4,5,6] }
+            { "bSortable": false, "aTargets": [ 0,2 ,3, 4,5,6,7,8] }
         ];
     }else{
         columns=[{
@@ -53,22 +66,35 @@ $(document).ready(function(){
         },{
             data:"timeOut"
         },{
+            data:"applyTime"
+        },{
             data:"time"
         }
         ];
         order=[[0,"asc"]];
         columnDefs=[
             // 列样式
+            {
+                "targets": [2], // 目标列位置，下标从0开始
+                "data": "num", // 数据列名
+                "render": function(data, type, full) { // 返回自定义内容
+                    if(data=="0"){
+                        return "排队中";
+                    }else{
+                        return data;
+                    }
+                }
+            },
             // 增加一列，包括删除和修改，同时将我们需要传递的数据传递到链接中
             {
-                "targets": [6], // 目标列位置，下标从0开始
+                "targets": [7], // 目标列位置，下标从0开始
                 "data": "oldmanId", // 数据列名
                 "render": function(data, type, full) { // 返回自定义内容
                     return "<span class='look' id='"+data+"'>查看</span>";
                 }
             },
             //不进行排序的列
-            { "bSortable": false, "aTargets": [ 1,2 ,3, 4,5] }
+            { "bSortable": false, "aTargets": [ 1,2 ,3, 4,5,6,7] }
         ];
     }
 

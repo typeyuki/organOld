@@ -34,7 +34,6 @@ public class OldmanKeyController {
     @RequestMapping("")
     public ModelAndView index(){
         ModelAndView mv=new ModelAndView("oldman/key");
-        mv.addObject("organ",organService.getAllOldmanType());
         return mv;
     }
 
@@ -98,7 +97,7 @@ public class OldmanKeyController {
 
 
     /**
-     * 重点老人 处理  增加 更新 删除
+     * 重点老人 处理  增加
      * @param organIds
      * @param homeFirTypes
      * @param oldmanhKeyHandleRequest
@@ -124,6 +123,18 @@ public class OldmanKeyController {
     @RequestMapping(value = "/{oldmanId}/handle",method = RequestMethod.GET)
     public Result getOldmanHandle(@PathVariable int oldmanId){
         Result result=oldmanKeyService.getHandleByOldmanId(oldmanId);
+        return result;
+    }
+
+    /**
+     * 处理 批量删除
+     * @param oldmanIds
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/handle/del",method = RequestMethod.POST)
+    public Result handle_del(@RequestParam(value = "oldmanIds[]") String oldmanIds[]){
+        Result result=oldmanKeyService.handleDel(oldmanIds);
         return result;
     }
 }

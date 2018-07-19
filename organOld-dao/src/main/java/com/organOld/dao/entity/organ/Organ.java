@@ -34,6 +34,10 @@ public class Organ extends DBEntity {
     private Integer authQueryInfo;
     private Integer authQueryIntegral;
 
+
+
+    private String organNum;//床位号 0表示排队   助餐点无排队
+    private String applyTime;//主动申请的时间
     /**
      * 搜索
      * @return
@@ -41,6 +45,22 @@ public class Organ extends DBEntity {
     private Integer organFirTypeId;//一级类型ID
     private String search;//模糊搜索
     private Integer oldmanId;
+
+    public String getApplyTime() {
+        return applyTime;
+    }
+
+    public void setApplyTime(String applyTime) {
+        this.applyTime = applyTime;
+    }
+
+    public String getOrganNum() {
+        return organNum;
+    }
+
+    public void setOrganNum(String organNum) {
+        this.organNum = organNum;
+    }
 
     public Integer getParent() {
         return parent;

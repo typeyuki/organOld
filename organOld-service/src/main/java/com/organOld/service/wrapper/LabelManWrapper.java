@@ -28,7 +28,7 @@ public class LabelManWrapper implements Wrapper<LabelMan,LabelManModel,LabelManR
         labelManModel.setjName(labelMan.getOldman().getXq().getJwName());
         labelManModel.setxName(labelMan.getOldman().getXq().getName());
         labelManModel.setTime(Tool.dateToString(labelMan.getOldman().getTime(), TimeConstant.DATA_FORMAT_YMD));
-
+        labelManModel.setRemark(labelMan.getRemark());
         return labelManModel;
     }
 

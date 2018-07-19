@@ -16,6 +16,15 @@ public class LabelManModel {
     private String oldmanName;
     private int oldmanId;
     private String time;
+    private String remark;
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
 
     public String getTime() {
         return time;

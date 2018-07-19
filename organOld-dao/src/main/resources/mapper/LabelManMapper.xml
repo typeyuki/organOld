@@ -9,4 +9,31 @@
             (#{item.labelId}, #{item.oldmanId})
         </foreach>
     </insert>
+
+    <update id="implement" parameterType="com.organOld.dao.entity.label.LabelMan">
+        UPDATE label_oldman
+        SET is_implement=#{isImplement},remark=#{remark}
+        WHERE id=#{id}
+    </update>
+
+
+    <select id="getLabelManImplNum" resultType="com.organOld.dao.entity.label.LabelManImplNum">
+        select(
+          SELECT count(1) from
+      label_oldman lm,oldman_base o,auto_value x,organ org
+         where lm.label_id=#{labelId} and lm.oldman_id=o.id and o.xq_id=x.id and x.parent_index=org.id and org.id=#{organId} ) sum,
+(
+          SELECT count(1) from
+      label_oldman lm,oldman_base o,auto_value x,organ org
+         where lm.label_id=#{labelId} and lm.oldman_id=o.id and o.xq_id=x.id and x.parent_index=org.id and  org.id=#{organId} and is_implement=0) no,
+         (
+          SELECT count(1) from
+      label_oldman lm,oldman_base o,auto_value x,organ org
+         where lm.label_id=#{labelId} and lm.oldman_id=o.id and o.xq_id=x.id and x.parent_index=org.id and org.id=#{organId} and is_implement=2 ) impl,
+         (
+          SELECT count(1) from
+      label_oldman lm,oldman_base o,auto_value x,organ org
+         where lm.label_id=#{labelId} and lm.oldman_id=o.id and o.xq_id=x.id  and x.parent_index=org.id and org.id=#{organId} and is_implement=1) noImpl
+
+    </select>
 </mapper>

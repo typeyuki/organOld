@@ -29,6 +29,8 @@ public class LabelWrapper implements Wrapper<Label,LabelModel,LabelRequest> {
         if(label.getOrgan()!=null)
         labelModel.setOrganName(label.getOrgan().getName());
         labelModel.setTime(Tool.dateToString(label.getTime(), TimeConstant.DATA_FORMAT_YMD));
+        labelModel.setStart(Tool.dateToString(label.getStart(), TimeConstant.DATA_FORMAT_YMD));
+        labelModel.setEnd(Tool.dateToString(label.getEnd(), TimeConstant.DATA_FORMAT_YMD));
         labelModel.setIsFeedback(label.getIsFeedback());
         return labelModel;
     }

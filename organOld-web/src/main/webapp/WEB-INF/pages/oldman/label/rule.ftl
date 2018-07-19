@@ -346,6 +346,19 @@
 </script>
 <script src="/static/js/oldman/label/rule.js"></script>
 <script>
+    $.ajax({
+        url: "/oldman/label/${labelId}/checkCanChange",
+        type: "get",
+        success: function (data) {
+            if (data.success ==false) {
+                $("input").prop("disabled",true);
+                $("select").prop("disabled",true);
+                $("textarea").prop("disabled",true);
+                $("button").hide();
+                $("input[type='file']").hide();
+            }
+        }
+    });
     $(document).ready(function(){$(".i-checks").iCheck({checkboxClass:"icheckbox_square-green",radioClass:"iradio_square-green"})});
 </script>
 <script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>

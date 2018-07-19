@@ -427,16 +427,30 @@
         WHERE id=#{id}
     </update>
 
+    <update id="updateProps">
+        UPDATE oldman_base
+        SET ${prop}=#{value}
+        WHERE id in
+        <foreach collection="ids" index="index" item="item" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+    </update>
+
     <select id="getIntegralByOldmanId" resultMap="oldman">
         SELECT name,integral FROM oldman_base WHERE id=#{oldmanId}
     </select>
 
-    <update id="updateOldStatusByIds">
+    <update id="updateOrganExceLImportByIds">
         update oldman_base
         SET
         old_status= CASE id
         <foreach collection="list" index="index" item="item" open="" separator=" " close="">
             WHEN ${item.id} THEN #{item.oldStatus}
+        </foreach>
+        END,
+        is_handle= CASE id
+        <foreach collection="list" index="index" item="item" open="" separator=" " close="">
+            WHEN ${item.id} THEN 2
         </foreach>
         END
     </update>

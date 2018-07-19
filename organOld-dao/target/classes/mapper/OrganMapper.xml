@@ -237,4 +237,19 @@
             ${item}
         </foreach>
     </select>
+
+
+    <select id="getByIds" resultType="com.organOld.dao.entity.organ.Organ">
+        select id,name from organ WHERE
+        id in
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+            ${item}
+        </foreach>
+    </select>
+
+    <select id="getByFirType" resultType="com.organOld.dao.entity.organ.Organ">
+        SELECT o.id,o.name
+        FROM organ o,organ_type ot
+        WHERE o.organ_type_id=ot.id and ot.fir_type=#{firType}
+    </select>
 </mapper>

@@ -32,12 +32,23 @@
                 </div>
                 <div class="ibox-content">
                     <#if type=="bind">
-                        <div>
+                        <div class="noplay">
                             <a onclick="$('#selectModal').modal()" href="javascript:void(0);" class="btn btn-primary ">添加</a>
                             <#if type=="bind">
                                 <a onclick="" href="javascript:void(0);" class="btn btn-primary ">删除</a>
                             </#if>
                         </div>
+                    <script>
+                        $.ajax({
+                            url: "/oldman/label/${labelId}/checkCanChange",
+                            type: "get",
+                            success: function (data) {
+                                if (data.success ==false) {
+                                    $(".noplay").hide();
+                                }
+                            }
+                        });
+                    </script>
                     </#if>
                     <div>
                         <input class="id" type="text" placeholder="序号">
@@ -67,6 +78,7 @@
                             <th>户籍</th>
                             <th>更新时间</th>
                             <th></th>
+                            <th>备注</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -82,8 +94,7 @@
 
 
 
-
-<#--<script src="/js/plugins/jeditable/jquery.jeditable.js"></script>-->
+<#include "bind_implement.ftl" />
 <script>
     var labelId="${labelId}";
     var type="${type}";

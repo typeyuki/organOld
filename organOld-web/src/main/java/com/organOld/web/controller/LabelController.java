@@ -3,10 +3,12 @@ package com.organOld.web.controller;
 import com.organOld.dao.entity.AutoValue;
 import com.organOld.dao.entity.label.Label;
 import com.organOld.dao.entity.label.LabelFeedback;
+import com.organOld.dao.entity.label.LabelMan;
 import com.organOld.dao.entity.label.LabelSec;
 import com.organOld.service.contract.*;
 import com.organOld.service.service.AutoValueService;
 import com.organOld.service.service.LabelService;
+import com.organOld.service.util.Tool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -186,13 +188,12 @@ public class LabelController {
 
     /**
      * 落实
-     * @param id
      * @return
      */
     @ResponseBody
     @RequestMapping(value = "/implement",method = RequestMethod.POST)
-    public Result implement(@RequestParam int id){
-        Result result=labelService.implement(id);
+    public Result implement(LabelMan labelMan){
+        Result result=labelService.implement(labelMan);
         return result;
     }
 
@@ -214,7 +215,9 @@ public class LabelController {
      * @return
      */
     @RequestMapping(value = "/add",method = RequestMethod.POST)
-    public ModelAndView add(Label label){
+    public ModelAndView add(Label label,@RequestParam String startTime,@RequestParam String endTime){
+        label.setStart(Tool.stringToDate(startTime));
+        label.setEnd(Tool.stringToDate(endTime));
         ModelAndView mv;
         labelService.save(label);
         if(label.getType()==1){
@@ -332,4 +335,6 @@ public class LabelController {
         labelService.addOrUpdateSecType(labelSec,type);
         return mv;
     }
+
+
 }

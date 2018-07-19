@@ -12,6 +12,24 @@ public class LabelModel extends Model{
     private String organName;
     private String wh;
     private Integer isFeedback;
+    private String start;
+    private String end;
+
+    public String getStart() {
+        return start;
+    }
+
+    public void setStart(String start) {
+        this.start = start;
+    }
+
+    public String getEnd() {
+        return end;
+    }
+
+    public void setEnd(String end) {
+        this.end = end;
+    }
 
     public Integer getIsFeedback() {
         return isFeedback;

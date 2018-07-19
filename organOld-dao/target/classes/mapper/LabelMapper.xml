@@ -12,6 +12,8 @@
         <result property="wh" column="wh"/>
         <result property="isFeedback" column="lfid"/>
         <result property="time" column="time" />
+        <result property="start" column="start"/>
+        <result property="end" column="end" />
         <association property="labelSec" javaType="com.organOld.dao.entity.label.LabelSec">
             <id property="id" column="lid" />
             <result property="secName" column="sname"/>
@@ -27,6 +29,7 @@
     <resultMap id="bindOldman" type="com.organOld.dao.entity.label.LabelMan">
         <id property="id" column="id" />
         <result property="isImplement" column="is_implement"/>
+        <result property="remark" column="remark"/>
         <association property="oldman" javaType="com.organOld.dao.entity.oldman.Oldman">
             <id property="id" column="oid" />
             <result property="name" column="name"/>
@@ -62,7 +65,7 @@
     </resultMap>
 
     <select id="getByPage" parameterType="com.organOld.dao.util.Page" resultMap="label">
-        SELECT l.id,l.wh,l.name,l.content,l.rule,l.time,lt.sec_name sname,f.value fname,o.name oname
+        SELECT l.id,l.wh,l.name,l.content,l.rule,l.time,lt.sec_name sname,l.start,l.end,f.value fname,o.name oname
         <if test="entity!=null and entity.organId!=null and entity.organId!=0">
         ,lf.id lfid
         </if>
@@ -324,7 +327,7 @@
 
 
     <select id="getBindManByPage" parameterType="com.organOld.dao.util.Page" resultMap="bindOldman">
-       SELECT o.id oid,o.name,o.sex,o.birthday,c.value census,p.value political_status,o.time,x.value xname,org.name jname,d.value dname,lo.id,lo.is_implement
+       SELECT o.id oid,o.name,o.sex,o.birthday,c.value census,p.value political_status,o.time,x.value xname,org.name jname,d.value dname,lo.id,lo.is_implement,lo.remark
         FROM oldman_base o left join auto_value c on o.census=c.id left join auto_value p on o.political_status=p.id
 		  ,auto_value x,auto_value d,organ org,label_oldman lo
         WHERE x.id=o.xq_id AND org.id=x.parent_index AND d.id=org.district_id
@@ -702,8 +705,8 @@
 
 
     <insert id="save" parameterType="com.organOld.dao.entity.label.Label" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO label(secId,name,rule,content,type,organ_id,wh)
-        VALUES (#{labelSec.id},#{name},#{rule},#{content},#{type},#{organId},#{wh})
+        INSERT INTO label(secId,name,rule,content,type,organ_id,wh,start,`end`)
+        VALUES (#{labelSec.id},#{name},#{rule},#{content},#{type},#{organId},#{wh},#{start},#{end})
 
     </insert>
 
@@ -715,11 +718,6 @@
         DELETE from label_oldman WHERE label_id=#{labelId}
     </delete>
 
-    <update id="implement">
-        UPDATE label_oldman
-        SET is_implement=1
-        WHERE id=#{id}
-    </update>
 
     <insert id="saveLabelMan">
         INSERT INTO label_oldman(label_id,oldman_id)

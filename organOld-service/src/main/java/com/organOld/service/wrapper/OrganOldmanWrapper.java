@@ -24,7 +24,7 @@ public class OrganOldmanWrapper implements Wrapper<OrganOldman,OrganOldmanModel,
         organOldmanModel.setTimeIn(Tool.dateToString(organOldman.getTimeIn(),"yyyy-MM-dd"));
         organOldmanModel.setTimeOut(Tool.dateToString(organOldman.getTimeOut(),"yyyy-MM-dd"));
         organOldmanModel.setTime(Tool.dateToString(organOldman.getTime(),"yyyy-MM-dd"));
-
+        organOldmanModel.setApplyTime(Tool.dateToString(organOldman.getApplyTime(),"yyyy-MM-dd"));
         return organOldmanModel;
     }
 

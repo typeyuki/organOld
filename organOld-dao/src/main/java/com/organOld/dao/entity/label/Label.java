@@ -5,6 +5,8 @@ import com.organOld.dao.entity.DBEntity;
 import com.organOld.dao.entity.DBInterface;
 import com.organOld.dao.entity.organ.Organ;
 
+import java.util.Date;
+
 /**
  * 三级标签实体
  * Created by netlab606 on 2018/6/7.
@@ -18,7 +20,8 @@ public class Label extends DBEntity implements DBInterface{
     private String rule;//规则
     private int type;//类型  1 人员绑定标签 2规则指定标签
     private Organ organ;//发布的组织ID 主要是居委 0的话 表示针对所有
-
+    private Date start;
+    private Date end;
 
     private Integer organId;
     private Integer oldmanId;
@@ -49,6 +52,21 @@ public class Label extends DBEntity implements DBInterface{
     private String[] eyesight;
     private String[] oldStatusArray;
 
+    public Date getStart() {
+        return start;
+    }
+
+    public void setStart(Date start) {
+        this.start = start;
+    }
+
+    public Date getEnd() {
+        return end;
+    }
+
+    public void setEnd(Date end) {
+        this.end = end;
+    }
 
     public String[] getCensusArray() {
         return censusArray;

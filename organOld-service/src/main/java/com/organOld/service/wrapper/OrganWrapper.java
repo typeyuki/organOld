@@ -1,11 +1,15 @@
 package com.organOld.service.wrapper;
 
+import com.organOld.dao.entity.oldman.Oldman;
 import com.organOld.dao.entity.organ.Organ;
 import com.organOld.dao.entity.organ.OrganReg;
+import com.organOld.dao.entity.organ.OrganServiceRecord;
 import com.organOld.service.constant.TimeConstant;
 import com.organOld.service.contract.OrganRegRequest;
 import com.organOld.service.contract.OrganRequest;
+import com.organOld.service.contract.OrganServiceRecordRequest;
 import com.organOld.service.model.OrganModel;
+import com.organOld.service.model.OrganServiceRecordModel;
 import com.organOld.service.util.ImgUpload;
 import com.organOld.service.util.Tool;
 import org.springframework.beans.BeanUtils;
@@ -89,5 +93,22 @@ public class OrganWrapper implements Wrapper<Organ,OrganModel,OrganRequest> {
         BeanUtils.copyProperties(organRegRequest,organReg);
         organReg.setPhone(organRegRequest.getPersonPhone());
         return organReg;
+    }
+
+    public OrganServiceRecord unwrapServiceRecord(OrganServiceRecordRequest organServiceRecordRequest) {
+        OrganServiceRecord organServiceRecord=new OrganServiceRecord();
+        organServiceRecord.setOrganId(organServiceRecordRequest.getOrganId());
+        return organServiceRecord;
+    }
+
+    public OrganServiceRecordModel wrapServiceRecord(OrganServiceRecord organServiceRecord) {
+        OrganServiceRecordModel organServiceRecordModel=new OrganServiceRecordModel();
+        BeanUtils.copyProperties(organServiceRecord,organServiceRecordModel);
+        Oldman oldman=new Oldman();
+        oldman.setId(organServiceRecord.getId());
+        oldman.setName(organServiceRecord.getOldmanName());
+        organServiceRecordModel.setOldman(oldman);
+        organServiceRecordModel.setTime(Tool.dateToString(organServiceRecord.getTime(),TimeConstant.DATA_FORMAT_YMD));
+        return organServiceRecordModel;
     }
 }

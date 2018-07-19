@@ -3,13 +3,12 @@ package com.organOld.service.service;
 
 import com.organOld.dao.entity.AutoValue;
 import com.organOld.dao.entity.label.Label;
+import com.organOld.dao.entity.label.LabelMan;
 import com.organOld.dao.entity.label.LabelSec;
 import com.organOld.service.contract.*;
 import com.organOld.service.model.LabelAllRuleModel;
 import com.organOld.service.model.LabelFilterModel;
 import com.organOld.service.model.LabelRuleModel;
-
-import javax.servlet.http.HttpSession;
 
 /**
  * Created by netlab606 on 2018/6/7.
@@ -33,7 +32,7 @@ public interface LabelService {
 
     Result saveLabelMan(int labelId, int[] oldmanIds);
 
-    Result implement(int id);
+    Result implement(LabelMan id);
 
     String getFeedbackByPage(LabelFeedbackRequest labelFeedbackRequest, BTableRequest bTableRequest);
 

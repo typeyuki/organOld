@@ -20,6 +20,7 @@ public class OrganOldman extends DBEntity implements DBInterface {
     private String num;
 
 
+    private Date applyTime;
     private Integer organId;//居委ID
 
 
@@ -28,6 +29,15 @@ public class OrganOldman extends DBEntity implements DBInterface {
      * @return
      */
     private Integer firType;
+
+
+    public Date getApplyTime() {
+        return applyTime;
+    }
+
+    public void setApplyTime(Date applyTime) {
+        this.applyTime = applyTime;
+    }
 
     public Integer getOrganId() {
         return organId;

@@ -8,7 +8,16 @@ public class OrganOldmanModel extends Model {
     private String timeIn;
     private String timeOut;
     private String num;
+    private String applyTime;
 
+
+    public String getApplyTime() {
+        return applyTime;
+    }
+
+    public void setApplyTime(String applyTime) {
+        this.applyTime = applyTime;
+    }
 
     public String getOrganName() {
         return organName;

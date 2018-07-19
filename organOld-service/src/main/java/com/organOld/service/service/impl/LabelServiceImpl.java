@@ -20,7 +20,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
-import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -169,7 +168,11 @@ public class LabelServiceImpl implements LabelService {
 
         //通知 居委
         Label label=labelDao.getById(labelRule.getLabelId());
-        commonService.informJwAndPq("您有新的人员绑定标签："+label.getName());
+
+        String content="您有新的规则制定标签："+label.getName()+"" +
+                "<br>有效时间："+Tool.dateToString(label.getStart(),TimeConstant.DATA_FORMAT_YMD)+"-"+Tool.dateToString(label.getEnd(),TimeConstant.DATA_FORMAT_YMD)+"" +
+                "<br><button class='btn btn-primary' onclick=newPageBefore("+label.getId()+","+label.getName()+",'/oldman/label/rule/"+label.getId()+"/man')>查看人员</button>";
+        commonService.informJwAndPq(content);
 
     }
 
@@ -208,7 +211,10 @@ public class LabelServiceImpl implements LabelService {
             labelDao.addLabelRule(label.getId());
         }else{
             //人员绑定
-            commonService.informJwAndPq("您有新的人员绑定标签："+label.getName());
+            String content="您有新的人员绑定标签："+label.getName()+"" +
+                    "<br>有效时间："+Tool.dateToString(label.getStart(),TimeConstant.DATA_FORMAT_YMD)+"-"+Tool.dateToString(label.getEnd(),TimeConstant.DATA_FORMAT_YMD)+"" +
+                    "<br><button class='btn btn-primary' onclick=newPageBefore("+label.getId()+","+label.getName()+",'/oldman/label/bind/"+label.getId()+"/man')>查看人员</button>";
+            commonService.informJwAndPq(content);
         }
     }
 
@@ -221,9 +227,9 @@ public class LabelServiceImpl implements LabelService {
     }
 
     @Override
-    public Result implement(int id) {
+    public Result implement(LabelMan labelMan) {
         Result result;
-        labelDao.implement(id);
+        labelManDao.implement(labelMan);
         result=new Result(true);
         return result;
     }
@@ -238,8 +244,15 @@ public class LabelServiceImpl implements LabelService {
         page.setEntity(labelFeedback);
         List<LabelFeedbackModel> labelFeedbackModelList=labelFeedbackDao.getByPage(page).stream().map(Wrappers.labelWrapper::wrapFeedback).collect(Collectors.toList());
         Long size=labelFeedbackDao.getSizeByPage(page);
+        labelFeedbackModelList.forEach(s->addProcess(s,labelFeedback.getLabelId()));
         return commonService.tableReturn(bTableRequest.getsEcho(),size,labelFeedbackModelList);
     }
+
+    private void addProcess(LabelFeedbackModel labelFeedbackModel,Integer labelId) {
+        labelFeedbackModel.setLabelManImplNum(labelManDao.getLabelManImplNum(labelFeedbackModel.getOrganId(),labelId));
+
+    }
+
 
     @Override
     public void feedbackAdd(LabelFeedbackAddRequest labelFeedbackAddRequest) {
@@ -260,6 +273,8 @@ public class LabelServiceImpl implements LabelService {
         Label label=labelDao.getById(labelId);
         Integer organId=commonService.getIdBySession();
         if(organId==label.getOrganId()){
+            return new Result(true);
+        }else if(organId==null || organId==0){
             return new Result(true);
         }
         return new Result(false);

@@ -61,6 +61,16 @@
 
                                             </div>
                                         </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-1 control-label">开始时间</label>
+                                            <div class="col-sm-3">
+                                                <input type="date" class="form-control" name="startTime"/>
+                                            </div>
+                                            <label class="col-sm-1 control-label">结束时间</label>
+                                            <div class="col-sm-3">
+                                                <input type="date" class="form-control" name="endTime"/>
+                                            </div>
+                                        </div>
                                     </form>
                                 </div>
                             </div>

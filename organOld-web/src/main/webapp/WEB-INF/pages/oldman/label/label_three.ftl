@@ -32,8 +32,8 @@
                 <div class="ibox-content">
                     <div>
                         <a onclick="$('#selectModal').modal()" href="javascript:void(0);" class="btn btn-primary ">添加</a>
-                        <a onclick=newPage("133","一级标签",'/oldman/label/type/1') href="javascript:void(0);" class="btn btn-primary hide">一级标签</a>
-                        <a onclick=newPage("133","二级标签",'/oldman/label/type/2') href="javascript:void(0);" class="btn btn-primary hide">二级标签</a>
+                        <a onclick=newPage("133","一级标签",'/oldman/label/type/1') href="javascript:void(0);" class="btn btn-primary jw">一级标签</a>
+                        <a onclick=newPage("133","二级标签",'/oldman/label/type/2') href="javascript:void(0);" class="btn btn-primary jw">二级标签</a>
                         <a  href="javascript:void(0);" class="btn btn-primary ">删除</a>
                         <a  href="javascript:void(0);" id="search" class="btn btn-primary ">搜索</a>
 
@@ -44,7 +44,7 @@
                                 success: function (data) {
                                     if (data.success == true) {
                                         if(data.data=="居委会" || data.data=="片区"){
-                                            $(".hide").hide();
+                                            $(".jw").hide();
                                         }
                                     }
                                 }
@@ -267,6 +267,8 @@
                             <th>条件</th>
                             <th>内容</th>
                             <th>文号</th>
+                            <th>开始时间</th>
+                            <th>结束时间</th>
                             <th>更新时间</th>
                             <th></th>
                         </tr>

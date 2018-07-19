@@ -7,6 +7,7 @@
         <result property="timeIn" column="time_in" />
         <result property="timeOut" column="time_out"/>
         <result property="num" column="num"/>
+        <result property="applyTime" column="apply_time" />
         <result property="time" column="time"/>
         <association property="oldman" javaType="com.organOld.dao.entity.oldman.Oldman">
             <id property="id" column="oid" />
@@ -20,7 +21,7 @@
 
 
     <select id="getByPage" parameterType="com.organOld.dao.util.Page" resultMap="organOldman">
-        SELECT oo.id,org.id orgid,o.id oid,oo.time_in,oo.time_out,oo.num,oo.time,o.name,org.name orgname
+        SELECT oo.id,org.id orgid,o.id oid,oo.time_in,oo.time_out,oo.num,oo.time,o.name,org.name orgname,oo.apply_time
         FROM organ_oldman oo,oldman_base o,organ org,organ_type ot,organ jw,auto_value x
         WHERE oo.oldman_id=o.id AND org.id=oo.organ_id AND org.organ_type_id=ot.id AND x.id=o.xq_id AND jw.id=x.parent_index and o.disable=0
         <if test="entity.organ!=null and entity.organ.id!=0">

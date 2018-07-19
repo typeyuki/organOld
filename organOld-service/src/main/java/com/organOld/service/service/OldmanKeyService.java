@@ -26,4 +26,6 @@ public interface OldmanKeyService {
     Result handle(OldmanhKeyHandleRequest oldmanhKeyHandleRequest);
 
     Result getHandleByOldmanId(int oldmanId);
+
+    Result handleDel(String[] oldmanIds);
 }

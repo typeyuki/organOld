@@ -29,6 +29,10 @@ $(document).ready(function(){
             },{
                 data:"wh"
             },{
+                data:"start"
+            },{
+                data:"end"
+            },{
                 data:"time"
             }
             ],
@@ -65,11 +69,11 @@ $(document).ready(function(){
                 },
                 // 增加一列，包括删除和修改，同时将我们需要传递的数据传递到链接中
                 {
-                    "targets": [10], // 目标列位置，下标从0开始
+                    "targets": [12], // 目标列位置，下标从0开始
                     "data": "isFeedback", // 数据列名
                     "render": function(data, type, full) { // 返回自定义内容
-                        var name="$(this).parent().prev().prev().prev().prev().prev().text()";
-                        var id="$(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().prev().text()";
+                        var name="$(this).parent().prev().prev().prev().prev().prev().prev().prev().text()";
+                        var id="$(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().text()";
                         if(typeLabel=="1"){
                             //人员绑定
                             if(userType=="居委会"){
