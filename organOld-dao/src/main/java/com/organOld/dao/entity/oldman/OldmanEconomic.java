@@ -17,16 +17,15 @@ public class OldmanEconomic extends DBEntity implements DBInterface {
 
     private Integer organId;
 
+    private String[] economicArray;
 
-    @Override
-    public String toString() {
-        return "OldmanEconomic{" +
-                "economic='" + economic + '\'' +
-                ", oldman=" + oldman +
-                ", oldmanId=" + oldmanId +
-                ", economicIndex=" + economicIndex +
-                ", organId=" + organId +
-                '}';
+
+    public String[] getEconomicArray() {
+        return economicArray;
+    }
+
+    public void setEconomicArray(String[] economicArray) {
+        this.economicArray = economicArray;
     }
 
     public Integer getEconomicIndex() {

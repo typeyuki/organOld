@@ -13,9 +13,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -77,5 +79,21 @@ public class HomeController {
     @RequestMapping(value = "/man",method = RequestMethod.POST)
     public String home_man(HomeOldmanRequest homeOldmanRequest,BTableRequest bTableRequest){
         return homeService.getManByPage(homeOldmanRequest,bTableRequest);
+    }
+
+
+
+    /**
+     * 居家养老人员的导入 更新：先删除之前的再添加  先根据 身份证号码 检测该老人是否在系统中 不在的话不添加
+     * @param file
+     * @return
+     * @throws IOException
+     */
+    @RequestMapping(value = "/man/importExcel",method = RequestMethod.POST)
+    public ModelAndView importManExcel(@RequestParam MultipartFile file) throws IOException {
+        ModelAndView mv=new ModelAndView("oldman/home_oldman");
+        Result result=homeService.importManExcel(file);
+        mv.addObject("result",result);
+        return mv;
     }
 }

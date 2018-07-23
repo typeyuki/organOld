@@ -24,24 +24,11 @@ $(document).ready(function(){
             ],
             "order":[[0,"asc"]],
             "columnDefs": [
-                // 列样式
-                // {
-                //     "targets": [9], // 目标列位置，下标从0开始
-                //     "data": "linkman.name", // 数据列名
-                //     "render": function(data, type, full) { // 返回自定义内容
-                //         if(data!=undefined){
-                //             return "<span class='linkman'>" + data + "</span>";
-                //         }else{
-                //             return "";
-                //         }
-                //     }
-                // },
-                // 增加一列，包括删除和修改，同时将我们需要传递的数据传递到链接中
                 {
                     "targets": [4], // 目标列位置，下标从0开始
-                    "data": "oldmanId", // 数据列名
+                    "data": "id", // 数据列名
                     "render": function(data, type, full) { // 返回自定义内容
-                        return "<button class='btn btn-primary' id='"+data+"' onclick=newPage("+data+",$(this).parent().prev().prev().prev().text(),'/oldman/"+data+"/info')>查看</button><button class='btn btn-primary' id='"+data+"'>修改</button>";
+                        return "<button class='btn btn-primary' id='"+data+"' onclick=newPageChange("+data+",$(this).parent().prev().prev().prev().text(),'/oldman/?/info',$(this).parent().prev().prev().prev().prev().text())>查看</button><button class='btn btn-primary' onclick=oldman_edit_oldmanName("+data+",'/oldman/economic/"+data+"/getById',$(this).parent().prev().prev().prev().text())>修改</button>";
                     }
                 },
                 //不进行排序的列
@@ -49,14 +36,6 @@ $(document).ready(function(){
             ],
             "sAjaxSource": "/oldman/economicData",//这个是请求的地址
             "fnServerData": retrieveData
-            // "fnServerParams": function (aoData) {  //查询条件
-            //     aoData.push(
-            //         { "name": "id", "value": $('.id').val() },
-            //         { "name": "sex", "value": $('.sex').val() },
-            //         { "name": "age", "value": $('.age').val() },
-            //         { "name": "time", "value": $('.time').val() }
-            //     );
-            // }
         });
     function retrieveData(url, aoData, fnCallback) {
         $.ajax({
@@ -67,7 +46,8 @@ $(document).ready(function(){
                 "iSortCol_0" : aoData.iSortCol_0,
                 "sEcho" : aoData.sEcho,
                 "sSortDir_0" : aoData.sSortDir_0,
-                "id" : ($('.id').val()==""?"0":aoData.id)//参数不能是空 400
+                "oldmanId":$("input[name='oldmanId']").val(),
+                "economic_array":$("select[name='economicIndex']").val()
             },
             type: 'POST',
             dataType: 'json',
@@ -117,4 +97,10 @@ function del(id) {
             }
         }
     });
+}
+
+
+function newPageChange(id,name,url,oldmanId) {
+    url=url.replace("?",oldmanId);
+    newPage(id,name,url);
 }

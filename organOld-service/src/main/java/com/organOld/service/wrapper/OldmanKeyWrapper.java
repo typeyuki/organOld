@@ -43,7 +43,8 @@ public class OldmanKeyWrapper implements Wrapper<Oldman,OldmanKeyModel,OldmanKey
         oldmanKeyModel.setOldmanNameKeyStatus(oldman.getName()+"#"+oldman.getKeyStatus());
 
         oldmanKeyModel.setStatus(KeyHandleEnum.getValue(oldman.getIsHandle()));
-        oldmanKeyModel.setOldStatus(OldStatusEnum.getValue(oldman.getOldStatus()));
+        if(oldman.getOldStatus()!=null)
+            oldmanKeyModel.setOldStatus(OldStatusEnum.getValue(oldman.getOldStatus()));
 
         if(oldman.getOrganList()!=null && oldman.getOrganList().size()>0){
             for(Organ organ:oldman.getOrganList()){

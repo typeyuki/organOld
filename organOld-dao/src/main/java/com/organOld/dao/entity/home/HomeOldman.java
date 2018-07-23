@@ -13,12 +13,30 @@ public class HomeOldman extends DBEntity implements DBInterface{
     private Oldman oldman;
     private Date timeIn;
     private Date timeOut;
-    private int isService;
+    private Integer isService;
     private Organ organ;
-
+    private Integer oldmanId;
+    private String[] type;
     private Home home;
 
     private Integer organId;//居委ID
+
+
+    public String[] getType() {
+        return type;
+    }
+
+    public void setType(String[] type) {
+        this.type = type;
+    }
+
+    public Integer getOldmanId() {
+        return oldmanId;
+    }
+
+    public void setOldmanId(Integer oldmanId) {
+        this.oldmanId = oldmanId;
+    }
 
     public Organ getOrgan() {
         return organ;
@@ -28,11 +46,11 @@ public class HomeOldman extends DBEntity implements DBInterface{
         this.organ = organ;
     }
 
-    public int getIsService() {
+    public Integer getIsService() {
         return isService;
     }
 
-    public void setIsService(int isService) {
+    public void setIsService(Integer isService) {
         this.isService = isService;
     }
 

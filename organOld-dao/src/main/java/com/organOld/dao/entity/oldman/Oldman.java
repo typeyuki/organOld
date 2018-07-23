@@ -13,7 +13,7 @@ import java.util.List;
  * 老人
  * Created by netlab606 on 2018/4/2.
  */
-public class Oldman extends Man implements DBInterface{
+public class Oldman extends Man implements DBInterface {
     private Integer sex;//1女 2男
     private Date birthday;//出生年月
     private String pid;//身份证号
@@ -28,6 +28,8 @@ public class Oldman extends Man implements DBInterface{
     private Integer isHandle;
     private Integer integral;
     private Integer oldStatus;
+
+    private String birthdayTime;
     /**
      * 搜索对象
      */
@@ -66,6 +68,29 @@ public class Oldman extends Man implements DBInterface{
     private List<Organ> organList;
     private List<Home> homeList;
 
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Oldman oldman = (Oldman) o;
+
+        return pid != null ? pid.equals(oldman.pid) : oldman.pid == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return pid != null ? pid.hashCode() : 0;
+    }
+
+    public String getBirthdayTime() {
+        return birthdayTime;
+    }
+
+    public void setBirthdayTime(String birthdayTime) {
+        this.birthdayTime = birthdayTime;
+    }
 
     public List<Home> getHomeList() {
         return homeList;

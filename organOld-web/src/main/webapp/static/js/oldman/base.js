@@ -47,7 +47,7 @@ $(document).ready(function(){
                     "targets": [0], // 目标列位置，下标从0开始
                     "data": "id", // 数据列名
                     "render": function(data, type, full) { // 返回自定义内容
-                        return"<input type='checkbox' />"
+                        return"<input type='checkbox' name='id' value='"+data+"'/>"
                     }
                 },
                 {
@@ -81,7 +81,7 @@ $(document).ready(function(){
                     "targets": [15], // 目标列位置，下标从0开始
                     "data": "id", // 数据列名
                     "render": function(data, type, full) { // 返回自定义内容
-                        return "<button class='btn btn-primary' id='"+data+"' onclick=newPage("+data+",$(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().prev().text(),'/oldman/"+data+"/info')>查看</button><button class='btn btn-primary' id='"+data+"'>修改</button>";
+                        return "<button class='btn btn-primary' id='"+data+"' onclick=newPage("+data+",$(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().prev().text(),'/oldman/"+data+"/info')>查看</button><button class='btn btn-primary' onclick=oldman_edit("+data+",'/oldman/base/"+data+"/getById')>修改</button>";
                     }
                 },
                 //不进行排序的列
@@ -148,29 +148,4 @@ $(document).ready(function(){
 
 });
 
-function del(id) {
-    $.ajax({
-        url : "/oldman/base/del",
-        type : "post",
-        dataType : 'json',
-        data:{
-            id:id
-        },
-        success : function(data) {
-            if (data.success==true) {
-                start = $(".dataTables-example").dataTable().fnSettings()._iDisplayStart;
-                total = $(".dataTables-example").dataTable().fnSettings().fnRecordsDisplay();
-                window.location.reload();
-                if(total-start==1){
-                    if(start>0){
-                        $(".dataTables-example").dataTable().fnPageChange('previous',true);
-                    }
-                }
-
-            } else {
-                alert('删除失败！');
-            }
-        }
-    });
-}
 

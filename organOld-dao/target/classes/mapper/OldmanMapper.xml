@@ -286,12 +286,6 @@
         VALUE (#{name},#{sex},#{birthday},#{pid},#{address},#{xqId},#{census},#{politicalStatus},#{phone},#{louNum},#{floor},0)
     </insert>
 
-    <update id="updateById" parameterType="com.organOld.dao.entity.oldman.Oldman">
-        UPDATE oldman_base
-        SET name=#{name},sex=#{sex},birthday=#{birthday},pid=#{pid},address=#{address},xq_id=#{xqId},census=#{census},political_status=#{politicalStatus},
-        district_id=#{districtId},phone=#{phone}
-        WHERE id=#{id}
-    </update>
 
 
     <update id="updateKeyOldman">
@@ -341,11 +335,17 @@
         SELECT id FROM oldman_base WHERE pid=#{pid}
     </select>
 
+    <update id="updateById" parameterType="com.organOld.dao.entity.oldman.Oldman">
+        UPDATE oldman_base
+        set name=#{name},birthday=#{birthday},sex=#{sex},pid=#{pid},address=#{address},census=#{census},political_status=#{politicalStatus},
+        phone=#{phone},xq_id=#{xqId},lou_num=#{louNum},floor=#{floor}
+        where id=#{id}
+    </update>
 
 
     <update id="updateByIds" parameterType="java.util.List">
         update oldman_base
-        SET
+        SET disable=0
         name= CASE id
         <foreach collection="list" index="index" item="item" open="" separator=" " close="">
             WHEN ${item.id} THEN #{item.name}
@@ -445,13 +445,15 @@
         SET
         old_status= CASE id
         <foreach collection="list" index="index" item="item" open="" separator=" " close="">
-            WHEN ${item.id} THEN #{item.oldStatus}
+            WHEN ${item.id} THEN ${item.oldStatus}
         </foreach>
+        else old_status
         END,
         is_handle= CASE id
         <foreach collection="list" index="index" item="item" open="" separator=" " close="">
-            WHEN ${item.id} THEN 2
+            WHEN ${item.id} THEN ${item.isHandle}
         </foreach>
+        else is_handle
         END
     </update>
 
@@ -504,4 +506,18 @@
         set integral = integral+${integral}
         WHERE id=#{oldmanId}
     </update>
+
+    <select id="getById" resultType="com.organOld.dao.entity.oldman.Oldman">
+        SELECT * from oldman_base where id=#{id}
+    </select>
+
+
+    <select id="getByJwId" resultType="com.organOld.dao.entity.oldman.Oldman">
+        SELECT o.id,o.name,o.pid,o.old_status,o.is_handle FROM oldman_base o
+        <if test="jwId!=null and jwId!=0">
+            ,auto_value x,organ org
+            where o.xq_id=x.id and x.parent_index=org.id and org.id=#{jwId}
+        </if>
+    </select>
+
 </mapper>

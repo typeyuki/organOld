@@ -40,4 +40,82 @@ function newPage(id,name,url) {
 }
 
 
+function oldman_edit(id,url) {
 
+    $(".searchable-select").remove();
+    $.ajax({
+        url: url,
+        type: "get",
+        success: function (result) {
+            var data=result.data;
+            for(key in data){
+                if(key=="sex"){
+                    $("#editModal input[name='sex']").each(function () {
+                        if($(this).val()==data[key]){
+                            $(this).prop("checked",true);
+                        }
+                    });
+                }else {
+                    $("#editModal input[name='"+key+"']").val(data[key]);
+                    $("#editModal select[name='"+key+"'] option[value='"+data[key]+"']").prop("selected",true);
+                }
+            }
+
+            $('.search_select').searchableSelect();
+            $("#editModal").modal();
+        }
+    });
+
+}
+
+function oldman_edit_oldmanName(id,url,oldmanName){
+    $("#editModal h5").html(oldmanName);
+    oldman_edit(id,url)
+}
+
+function del(url) {
+    var ids=[];
+    $("input[name='id']:checked").each(function () {
+       ids.push($(this).val());
+    });
+    $.ajax({
+        url : url,
+        type : "post",
+        dataType : 'json',
+        data:{
+            ids:ids
+        },
+        success : function(data) {
+            if (data.success==true) {
+                var start = $(".dataTables-example").dataTable().fnSettings()._iDisplayStart;
+                var total = $(".dataTables-example").dataTable().fnSettings().fnRecordsDisplay();
+                window.location.reload();
+                if(total-start==1){
+                    if(start>0){
+                        $(".dataTables-example").dataTable().fnPageChange('previous',true);
+                    }
+                }
+
+            } else {
+                alert('删除失败！');
+            }
+        }
+    });
+}
+
+
+
+function thCheck(obj) {
+    if($(obj).is(':checked')){
+        $("input[name='id']").prop("checked",true);
+    }else{
+        $("input[name='id']").prop("checked",false);
+    }
+}
+
+
+$(function () {
+    $('.selectpicker').selectpicker({
+        'selectedText': 'cat'
+    });
+});

@@ -30,7 +30,7 @@
                 <div class="ibox-content">
                     <div>
                         <a href="javascript:void(0);" class="btn btn-primary " onclick="add()">添加</a>
-                        <a  href="javascript:void(0);" class="btn btn-primary ">删除</a>
+                        <a  href="javascript:void(0);" class="btn btn-primary" onclick="del('/oldman/health/select/del')">删除</a>
                         <a  href="javascript:void(0);" id="search" class="btn btn-primary ">搜索</a>
                     </div>
                     <div>
@@ -39,7 +39,7 @@
                     <table class="table table-striped table-bordered table-hover dataTables-example">
                         <thead>
                         <tr>
-                            <th><input type="checkbox"></th>
+                            <th><input type="checkbox" onclick="thCheck(this)"></th>
                             <th>序号</th>
                             <th>类型</th>
                             <th>名称</th>

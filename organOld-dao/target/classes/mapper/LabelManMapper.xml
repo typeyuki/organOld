@@ -36,4 +36,11 @@
          where lm.label_id=#{labelId} and lm.oldman_id=o.id and o.xq_id=x.id  and x.parent_index=org.id and org.id=#{organId} and is_implement=1) noImpl
 
     </select>
+    
+    <delete id="delByOldmanIds">
+        DELETE from label_oldman where label_id in
+        <foreach collection="array" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
 </mapper>

@@ -10,6 +10,7 @@ import com.organOld.dao.entity.organ.OrganOldman;
 import com.organOld.dao.entity.volunteer.Volunteer;
 import com.organOld.dao.repository.*;
 import com.organOld.dao.util.Page;
+import com.organOld.service.constant.TimeConstant;
 import com.organOld.service.enumModel.AutoValueEnum;
 import com.organOld.service.enumModel.HealthEnum;
 import com.organOld.service.model.*;
@@ -77,9 +78,11 @@ public class OldmanServiceImpl implements OldmanService {
     VolunteerDao volunteerDao;
     @Autowired
     HealthSelectDao healthSelectDao;
+    @Autowired
+    CardDao cardDao;
 
     @Override
-    public String getOldmanByPage(OldmanRequest oldmanRequest, BTableRequest bTableRequest, HttpSession session) {
+    public String getOldmanByPage(OldmanRequest oldmanRequest, BTableRequest bTableRequest) {
         Page<Oldman> page=commonService.getPage(bTableRequest,"oldman_base");
         Oldman oldman= Wrappers.oldmanWrapper.unwrap(oldmanRequest);
         commonService.checkIsOrgan(oldman);
@@ -91,7 +94,7 @@ public class OldmanServiceImpl implements OldmanService {
 
 
     @Override
-    public String getHealthByPage(OldmanHealthRequest oldmanHealthRequest, BTableRequest bTableRequest, HttpSession session) {
+    public String getHealthByPage(OldmanHealthRequest oldmanHealthRequest, BTableRequest bTableRequest) {
         Page<OldmanHealth> page=commonService.getPage(bTableRequest,"oldman_health");
         OldmanHealth oldmanHealth=Wrappers.oldmanHealthWrapper.unwrap(oldmanHealthRequest);
         commonService.checkIsOrgan(oldmanHealth);
@@ -120,7 +123,7 @@ public class OldmanServiceImpl implements OldmanService {
     }
 
     @Override
-    public String getEconomyByPage(OldmanEconomicRequest economicRequest, BTableRequest bTableRequest, HttpSession session) {
+    public String getEconomyByPage(OldmanEconomicRequest economicRequest, BTableRequest bTableRequest) {
         Page<OldmanEconomic> page=commonService.getPage(bTableRequest,"oldman_economy");
         OldmanEconomic economic=Wrappers.economicWrapper.unwrap(economicRequest);
         commonService.checkIsOrgan(economic);
@@ -143,7 +146,7 @@ public class OldmanServiceImpl implements OldmanService {
     }
 
     @Override
-    public String getFamilyByPage(OldmanFamilyRequest familyRequest, BTableRequest bTableRequest, HttpSession session) {
+    public String getFamilyByPage(OldmanFamilyRequest familyRequest, BTableRequest bTableRequest) {
         Page<OldmanFamily> page=commonService.getPage(bTableRequest,"oldman_family");
         OldmanFamily family=Wrappers.familyWrapper.unwrap(familyRequest);
         commonService.checkIsOrgan(family);
@@ -154,7 +157,7 @@ public class OldmanServiceImpl implements OldmanService {
     }
 
     @Override
-    public String getOrganOldmanByPage(OrganOldmanRequest organOldmanRequest, BTableRequest bTableRequest, HttpSession session) {
+    public String getOrganOldmanByPage(OrganOldmanRequest organOldmanRequest, BTableRequest bTableRequest) {
         Page<OrganOldman> page=commonService.getPage(bTableRequest,"oldman_organOldman");
         OrganOldman organOldman=Wrappers.organOldmanWrapper.unwrap(organOldmanRequest);
         commonService.checkIsOrgan(organOldman);
@@ -165,7 +168,7 @@ public class OldmanServiceImpl implements OldmanService {
     }
 
     @Override
-    public String getLinkmanByPage(LinkmanRequest linkmanRequest, BTableRequest bTableRequest, HttpSession session) {
+    public String getLinkmanByPage(LinkmanRequest linkmanRequest, BTableRequest bTableRequest) {
         Page<Linkman> page=commonService.getPage(bTableRequest,"oldman_linkman");
         Linkman linkman=Wrappers.linkmanWrapper.unwrap(linkmanRequest);
         commonService.checkIsOrgan(linkman);
@@ -201,37 +204,6 @@ public class OldmanServiceImpl implements OldmanService {
 
 
     @Override
-    public void updateOldman(OldmanRequest oldmanBaseRequest) {
-        Oldman oldman= Wrappers.oldmanWrapper.unwrap(oldmanBaseRequest);
-        oldmanBaseDao.updateById(oldman);
-    }
-
-    @Override
-    public void updateLinkman(LinkmanRequest linkmanRequest) {
-        Linkman linkman= Wrappers.linkmanWrapper.unwrap(linkmanRequest);
-        linkmanDao.updateById(linkman);
-    }
-
-    @Override
-    public void updateFamily(OldmanFamilyRequest familyRequest) {
-        OldmanFamily family= Wrappers.familyWrapper.unwrap(familyRequest);
-        familyDao.updateById(family);
-    }
-
-    @Override
-    public void updateEconomy(OldmanEconomicRequest economicRequest) {
-        OldmanEconomic economic= Wrappers.economicWrapper.unwrap(economicRequest);
-        economicDao.updateById(economic);
-    }
-
-    @Override
-    public void updateOrganOldman(OrganOldmanRequest organOldmanRequest) {
-        OrganOldman organOldman= Wrappers.organOldmanWrapper.unwrap(organOldmanRequest);
-        organOldmanDao.updateById(organOldman);
-    }
-
-
-    @Override
     public OldmanAddInfoModel getAddInfo() {
         List<Integer> typeList=commonService.getAutoValueTypes("oldman_add");
         List<AutoValue> autoValueList=autoValueDao.getByTypeList(typeList);
@@ -244,7 +216,7 @@ public class OldmanServiceImpl implements OldmanService {
 
 
     @Override
-    public String getHomeOldmanByPage(HomeOldmanRequest homeOldmanRequest, BTableRequest bTableRequest, HttpSession session) {
+    public String getHomeOldmanByPage(HomeOldmanRequest homeOldmanRequest, BTableRequest bTableRequest) {
         Page<HomeOldman> page=commonService.getPage(bTableRequest,"oldman_homeOldman");
         HomeOldman homeOldman=Wrappers.homeOldmanWrapper.unwrap(homeOldmanRequest);
         commonService.checkIsOrgan(homeOldman);
@@ -349,7 +321,7 @@ public class OldmanServiceImpl implements OldmanService {
         List<HealthSelectMan> healthSelectManList_add=new ArrayList<>();
         List<HealthAdd> healthAddList_add=new ArrayList<>();
         List<Volunteer> volunteerList=new ArrayList<>();
-        //TODO 一卡通
+
         List<Card> cardList_add=new ArrayList<>();
 
         //批量更新
@@ -684,14 +656,22 @@ public class OldmanServiceImpl implements OldmanService {
                         family.setOldmanId(oldman.getId());
                         familyList_add.add(family);
 
-                    }
 
+                        Card card=new Card();
+                        card.setOldmanId(oldmanId);
+                        card.setCid(oldman.getPid().substring(oldman.getPid().length()-6));
+                        card.setPassword("123456");
+                        cardList_add.add(card);
+
+
+                    }
 
                     if(r.getCell(19).getStringCellValue().equals("1")){
                         Volunteer volunteer=new Volunteer();
                         volunteer.setOldmanId(oldman.getId());
                         volunteerList.add(volunteer);
                     }
+
 
                     for(int index:selectIdList){
                         HealthSelectMan healthSelectMan=new HealthSelectMan();
@@ -739,16 +719,23 @@ public class OldmanServiceImpl implements OldmanService {
             oldmanEconomicDao.saveAll(economicList_add);
         if(familyList_add.size()>0)
             oldmanFamilyDao.saveAll(familyList_add);
+
+        healthSelectManDao.delByOldmanId(existOldmanIds);
         if(healthSelectManList_add.size()>0) {
             //先把之前的记录删掉
-            healthSelectManDao.delByOldmanId(existOldmanIds);
             healthSelectManDao.saveAll(healthSelectManList_add);
         }
         if(healthAddList_add.size()>0)
             healthAddDao.saveAll(healthAddList_add);
+
+        volunteerDao.delByOrganId(organId);
         if(volunteerList.size()>0){
-            volunteerDao.delByOldmanId(existOldmanIds);
             volunteerDao.saveAll(volunteerList);
+        }
+
+        cardDao.delByOldmanIds(existOldmanIds);
+        if(cardList_add.size()>0){
+            cardDao.saveAll(cardList_add);
         }
 
 
@@ -772,5 +759,62 @@ public class OldmanServiceImpl implements OldmanService {
         if(organQueryIntegralModel!=null)
             return new Result(true,organQueryIntegralModel);
         else return new Result(false,"找不到");
+    }
+
+    @Override
+    public Result getById(int id, String type) {
+        switch (type){
+            case "base":
+                Oldman oldman=oldmanBaseDao.getById(id);
+                oldman.setBirthdayTime(Tool.dateToString(oldman.getBirthday(), TimeConstant.DATA_FORMAT_YMD));
+                return new Result(true,oldman);
+            case "family":
+                OldmanFamily oldmanFamily=oldmanFamilyDao.getById(id);
+                return new Result(true,oldmanFamily);
+            case "economic":
+                OldmanEconomic oldmanEconomic=oldmanEconomicDao.getById(id);
+                return new Result(true,oldmanEconomic);
+            case "linkman":
+                Linkman linkman=linkmanDao.getById(id);
+                return new Result(true,linkman);
+        }
+        return null;
+    }
+
+    @Override
+    public Result updateById(DBEntity dbEntity, String type) {
+        switch (type){
+            case "base":
+                Oldman oldman= (Oldman) dbEntity;
+                oldman.setBirthday(Tool.stringToDate(oldman.getBirthdayTime()));
+                oldmanBaseDao.updateById(oldman);
+                break;
+            case "family":
+                OldmanFamily oldmanFamily=(OldmanFamily)dbEntity;
+                oldmanFamilyDao.updateById(oldmanFamily);
+                break;
+            case "economic":
+                OldmanEconomic oldmanEconomic=(OldmanEconomic)dbEntity;
+                oldmanEconomicDao.updateById(oldmanEconomic);
+                break;
+            case "linkman":
+                Linkman linkman=(Linkman) dbEntity;
+                linkmanDao.updateById(linkman);
+        }
+        return new Result(true);
+    }
+
+    @Override
+    public void delByIds(String[] ids) {
+        oldmanBaseDao.updateProps("disable","1",ids);
+    }
+
+    @Override
+    public void delHealthSelectByIds(String[] ids) {
+        Integer[] id=new Integer[ids.length];
+        for(int i=0;i<ids.length;i++){
+            id[i]=Integer.parseInt(ids[i]);
+        }
+        healthSelectDao.delByIds(id);
     }
 }

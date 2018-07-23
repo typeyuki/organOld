@@ -296,4 +296,12 @@ public class OrganController {
         return mv;
     }
 
+
+    @ResponseBody
+    @RequestMapping(value = "/del/ids",method = RequestMethod.POST)
+    public Result dela(@RequestParam("ids[]") String ids[]){
+        organService.delByIds(ids);
+        return new Result(true);
+    }
+
 }

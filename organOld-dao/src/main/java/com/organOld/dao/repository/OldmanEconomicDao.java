@@ -12,4 +12,6 @@ public interface OldmanEconomicDao extends BaseDao<OldmanEconomic,Integer>{
     void delByOid(int id);
 
     void updateByOldmanIds(List<OldmanEconomic> economicList_update);
+
+    OldmanEconomic getByOldmanId(int oldmanId);
 }

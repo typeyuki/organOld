@@ -115,6 +115,9 @@
         <if test="entity!=null and entity.sex!=null and entity.sex!=0">
             and lr.sex=#{entity.sex}
         </if>
+        <if test="entity!=null and entity.isKey!=null and entity.isKey!=0">
+            and lr.is_key=#{entity.isKey}
+        </if>
         <if test="entity!=null and entity.isHealth!=null and entity.isHealth.length > 0">
             and (
             <foreach collection="entity.isHealth" index="index" item="item" open="(" separator="and" close=")">
@@ -248,6 +251,9 @@
         </if>
         <if test="entity!=null and entity.sex!=null and entity.sex!=0">
             and lr.sex=#{entity.sex}
+        </if>
+        <if test="entity!=null and entity.isKey!=null and entity.isKey!=0">
+            and lr.is_key=#{entity.isKey}
         </if>
         <if test="entity!=null and entity.isHealth!=null and entity.isHealth.length > 0">
             and (
@@ -729,6 +735,20 @@
 
 
     <select id="getById" resultType="com.organOld.dao.entity.label.Label">
-        SELECT  * from label where id=#{id}
+        SELECT  l.id,l.wh,l.name,l.rule,l.content,l.start,l.end,l.secId,lt.fir_index from label l,label_type lt
+         where l.id=#{id} and l.secId=lt.id
     </select>
+
+    <delete id="delByIds">
+        DELETE from label where id in
+        <foreach collection="array" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+    <update id="updateById" parameterType="com.organOld.dao.entity.label.Label">
+        UPDATE label
+        SET name=#{name},wh=#{wh},content=#{content},start=#{start},end=#{end},rule=#{rule},secId=#{secId}
+        where id=#{id}
+    </update>
 </mapper>

@@ -2,7 +2,7 @@ package com.organOld.service.contract;
 
 public class LinkmanRequest {
     private int id;
-    private int oldman_id;
+    private Integer oldmanId;
     private String search;//模糊全文 匹配搜索
 
     public int getId() {
@@ -13,12 +13,12 @@ public class LinkmanRequest {
         this.id = id;
     }
 
-    public int getOldman_id() {
-        return oldman_id;
+    public Integer getOldmanId() {
+        return oldmanId;
     }
 
-    public void setOldman_id(int id) {
-        this.oldman_id = oldman_id;
+    public void setOldmanId(Integer oldmanId) {
+        this.oldmanId = oldmanId;
     }
 
     public String getSearch() {

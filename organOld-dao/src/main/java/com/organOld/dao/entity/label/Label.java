@@ -23,9 +23,14 @@ public class Label extends DBEntity implements DBInterface{
     private Date start;
     private Date end;
 
+    private String startTime;
+    private String endTime;
+    private Integer firIndex;
+
+
     private Integer organId;
     private Integer oldmanId;
-
+    private Integer secId;
     private Integer isFeedback;//针对某居委会 是否反馈
 
 
@@ -51,6 +56,39 @@ public class Label extends DBEntity implements DBInterface{
     private String[] intelligence;
     private String[] eyesight;
     private String[] oldStatusArray;
+
+
+    public Integer getFirIndex() {
+        return firIndex;
+    }
+
+    public void setFirIndex(Integer firIndex) {
+        this.firIndex = firIndex;
+    }
+
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
+    }
+
+    public Integer getSecId() {
+        return secId;
+    }
+
+    public void setSecId(Integer secId) {
+        this.secId = secId;
+    }
 
     public Date getStart() {
         return start;

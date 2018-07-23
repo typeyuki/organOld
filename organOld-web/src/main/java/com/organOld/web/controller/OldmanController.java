@@ -1,8 +1,11 @@
 package com.organOld.web.controller;
 
-import com.organOld.dao.entity.oldman.HealthSelect;
+import com.organOld.dao.entity.AutoValue;
+import com.organOld.dao.entity.oldman.*;
 import com.organOld.service.contract.*;
+import com.organOld.service.enumModel.AutoValueEnum;
 import com.organOld.service.model.Model;
+import com.organOld.service.service.AutoValueService;
 import com.organOld.service.service.OldmanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,6 +25,8 @@ public class OldmanController {
 
     @Autowired
     OldmanService oldmanService;
+    @Autowired
+    AutoValueService autoValueService;
 
     /**
      *
@@ -70,7 +75,7 @@ public class OldmanController {
         oldmanRequest.setIsHealth(isHealth);
         oldmanRequest.setOldStatusArray(oldStatus);
 
-        return oldmanService.getOldmanByPage(oldmanRequest,bTableRequest,session);
+        return oldmanService.getOldmanByPage(oldmanRequest,bTableRequest);
     }
 
 
@@ -89,17 +94,6 @@ public class OldmanController {
         return mv;
     }
 
-    /**
-     * 删除
-     * @param id
-     * @return
-     */
-    @ResponseBody
-    @RequestMapping(value = "/base/del",method = RequestMethod.POST)
-    public Result base_del(@RequestParam int id){
-        oldmanService.delById(id);
-        return new Result(true);
-    }
 
     /**
      * 添加  全部信息 页面
@@ -123,16 +117,6 @@ public class OldmanController {
         return "redirect:/oldman/base";
     }
 
-    /**
-     * 基本信息更新
-     * @param oldmanRequest
-     * @return
-     */
-    @RequestMapping(value = "/base/update",method = RequestMethod.POST)
-    public String base_update(OldmanRequest oldmanRequest){
-        oldmanService.updateOldman(oldmanRequest);
-        return "redirect:/oldman/base";
-    }
 
     /**
      *
@@ -157,7 +141,7 @@ public class OldmanController {
     @ResponseBody
     @RequestMapping(value = "/healthData",method = RequestMethod.POST)
     public String health_data(OldmanHealthRequest oldmanHealthRequest, BTableRequest bTableRequest,HttpSession session){
-        return oldmanService.getHealthByPage(oldmanHealthRequest,bTableRequest,session);
+        return oldmanService.getHealthByPage(oldmanHealthRequest,bTableRequest);
     }
 
     /**
@@ -203,7 +187,9 @@ public class OldmanController {
      */
     @RequestMapping(value = "/family",method = RequestMethod.GET)
     public ModelAndView family(){
-        return new ModelAndView("oldman/family");
+        ModelAndView mv= new ModelAndView("oldman/family");
+        mv.addObject("family",autoValueService.getByType(AutoValueEnum.JJJG.getIndex()));
+        return mv;
     }
 
     /**
@@ -212,18 +198,10 @@ public class OldmanController {
      */
     @ResponseBody
     @RequestMapping(value = "/familyData",method = RequestMethod.POST)
-    public String family_data(OldmanFamilyRequest familyRequest, BTableRequest bTableRequest,HttpSession session){
-        return oldmanService.getFamilyByPage(familyRequest,bTableRequest,session);
-    }
-    /**
-     * 信息更新
-     * @param familyRequest
-     * @return
-     */
-    @RequestMapping(value = "/family/update",method = RequestMethod.POST)
-    public String family_update(OldmanFamilyRequest familyRequest){
-        oldmanService.updateFamily(familyRequest);
-        return "redirect:/family";
+    public String family_data(OldmanFamilyRequest familyRequest, BTableRequest bTableRequest,
+                              @RequestParam(value = "family_array[]",required = false) String family[]){
+        familyRequest.setFamilyArray(family);
+        return oldmanService.getFamilyByPage(familyRequest,bTableRequest);
     }
 
 
@@ -239,7 +217,9 @@ public class OldmanController {
      */
     @RequestMapping(value = "/economic",method = RequestMethod.GET)
     public ModelAndView economic(){
-        return new ModelAndView("oldman/economic");
+        ModelAndView mv= new ModelAndView("oldman/economic");
+        mv.addObject("economic",autoValueService.getByType(AutoValueEnum.JJTJ.getIndex()));
+        return mv;
     }
 
     /**
@@ -248,19 +228,12 @@ public class OldmanController {
      */
     @ResponseBody
     @RequestMapping(value = "/economicData",method = RequestMethod.POST)
-    public String economy_data(OldmanEconomicRequest economicRequest, BTableRequest bTableRequest,HttpSession session){
-        return oldmanService.getEconomyByPage(economicRequest,bTableRequest,session);
+    public String economy_data(OldmanEconomicRequest economicRequest, BTableRequest bTableRequest,
+                               @RequestParam(value = "economic_array[]",required = false) String economic[]){
+        economicRequest.setEconomicArray(economic);
+        return oldmanService.getEconomyByPage(economicRequest,bTableRequest);
     }
-    /**
-     * 信息更新
-     * @param economicRequest
-     * @return
-     */
-    @RequestMapping(value = "economic/update",method = RequestMethod.POST)
-    public String economic_update(OldmanEconomicRequest economicRequest){
-        oldmanService.updateEconomy(economicRequest);
-        return "redirect:/economic";
-    }
+
 
     /**
      *
@@ -279,19 +252,10 @@ public class OldmanController {
      */
     @ResponseBody
     @RequestMapping(value = "/linkman/data",method = RequestMethod.POST)
-    public String linkman_data(LinkmanRequest linkmanRequest, BTableRequest bTableRequest,HttpSession session){
-        return oldmanService.getLinkmanByPage(linkmanRequest,bTableRequest,session);
+    public String linkman_data(LinkmanRequest linkmanRequest, BTableRequest bTableRequest){
+        return oldmanService.getLinkmanByPage(linkmanRequest,bTableRequest);
     }
-    /**
-     * 信息更新
-     * @param linkmanRequest
-     * @return
-     */
-    @RequestMapping(value = "/linkman/update",method = RequestMethod.POST)
-    public String linkman_update(LinkmanRequest linkmanRequest){
-        oldmanService.updateLinkman(linkmanRequest);
-        return "redirect:/linkman";
-    }
+
 
 
     /**
@@ -319,8 +283,8 @@ public class OldmanController {
      */
     @ResponseBody
     @RequestMapping(value = "/organOldmanData",method = RequestMethod.POST)
-    public String data(OrganOldmanRequest organOldmanRequest, BTableRequest bTableRequest,HttpSession session){
-        return oldmanService.getOrganOldmanByPage(organOldmanRequest,bTableRequest,session);
+    public String data(OrganOldmanRequest organOldmanRequest, BTableRequest bTableRequest){
+        return oldmanService.getOrganOldmanByPage(organOldmanRequest,bTableRequest);
     }
 
 
@@ -341,8 +305,10 @@ public class OldmanController {
      */
     @ResponseBody
     @RequestMapping(value = "/homeOldmanData",method = RequestMethod.POST)
-    public String homedata(HomeOldmanRequest homeOldmanRequest, BTableRequest bTableRequest,HttpSession session){
-        return oldmanService.getHomeOldmanByPage(homeOldmanRequest,bTableRequest,session);
+    public String homedata(HomeOldmanRequest homeOldmanRequest, BTableRequest bTableRequest,
+                           @RequestParam(value = "type_array[]",required = false) String type[]){
+        homeOldmanRequest.setType(type);
+        return oldmanService.getHomeOldmanByPage(homeOldmanRequest,bTableRequest);
     }
 
 
@@ -378,5 +344,56 @@ public class OldmanController {
     public String integral_data(OldmanIntegralRequest oldmanIntegralRequest, BTableRequest bTableRequest){
         return oldmanService.getIntegralByPage(oldmanIntegralRequest,bTableRequest);
     }
+
+
+    @ResponseBody
+    @RequestMapping(value = "/{type}/{id}/getById",method = RequestMethod.GET)
+    public Result base_getById(@PathVariable String type,@PathVariable int id){
+        return oldmanService.getById(id,type);
+    }
+
+
+    @RequestMapping(value = "/base/update",method = RequestMethod.POST)
+    public ModelAndView base_update(Oldman oldman){
+        ModelAndView mv=new ModelAndView("redirect:/oldman/base");
+        oldmanService.updateById(oldman,"base");
+        return mv;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/base/del",method = RequestMethod.POST)
+    public Result base_del(@RequestParam("ids[]") String ids[]){
+        oldmanService.delByIds(ids);
+        return new Result(true);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/health/select/del",method = RequestMethod.POST)
+    public Result health_select_del(@RequestParam("ids[]") String ids[]){
+        oldmanService.delHealthSelectByIds(ids);
+        return new Result(true);
+    }
+
+    @RequestMapping(value = "/economic/update",method = RequestMethod.POST)
+    public ModelAndView economic_update(OldmanEconomic oldmanEconomic){
+        ModelAndView mv=new ModelAndView("redirect:/oldman/economic");
+        oldmanService.updateById(oldmanEconomic,"economic");
+        return mv;
+    }
+
+    @RequestMapping(value = "/family/update",method = RequestMethod.POST)
+    public ModelAndView family_update(OldmanFamily oldmanFamily){
+        ModelAndView mv=new ModelAndView("redirect:/oldman/family");
+        oldmanService.updateById(oldmanFamily,"family");
+        return mv;
+    }
+
+    @RequestMapping(value = "/linkman/update",method = RequestMethod.POST)
+    public ModelAndView linkman_update(Linkman linkman){
+        ModelAndView mv=new ModelAndView("redirect:/oldman/linkman");
+        oldmanService.updateById(linkman,"linkman");
+        return mv;
+    }
+
 
 }

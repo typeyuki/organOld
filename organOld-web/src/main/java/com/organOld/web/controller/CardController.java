@@ -1,7 +1,9 @@
 package com.organOld.web.controller;
 
 import com.organOld.dao.entity.SysUser;
+import com.organOld.service.contract.BTableRequest;
 import com.organOld.service.contract.CardConsumeRequest;
+import com.organOld.service.contract.CardRequest;
 import com.organOld.service.contract.Result;
 import com.organOld.service.enumModel.RecordTypeEnum;
 import com.organOld.service.model.OldmanAllInfoModel;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  * 一卡通
@@ -34,8 +37,24 @@ public class CardController {
     @Autowired
     RecordService recordService;
 
-    @ResponseBody
+
     @RequestMapping(value = "",method = RequestMethod.GET)
+    public ModelAndView base(){
+        ModelAndView mv=new ModelAndView("card/card");
+        return mv;
+    }
+
+
+    @ResponseBody
+    @RequestMapping(value = "/data",method = RequestMethod.POST)
+    public String data(CardRequest cardRequest, BTableRequest bTableRequest){
+        return cardService.getByPage(cardRequest,bTableRequest);
+    }
+
+
+
+    @ResponseBody
+    @RequestMapping(value = "/aa",method = RequestMethod.GET)
     public Result consume(CardConsumeRequest cardConsumeRequest){
         CardConsumeRequest consumeRequest=cardConsumeRequest;
 

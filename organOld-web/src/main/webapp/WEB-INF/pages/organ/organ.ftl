@@ -36,7 +36,7 @@
                         <#if status?? && (status=="1" || status=="3")>
                         <#else >
                             <a onclick=newPage("951","机构添加",'/organ/${type}/add') href="javascript:void(0);" class="btn btn-primary ">添加</a>
-                            <a onclick="" href="javascript:void(0);" class="btn btn-primary ">删除</a>
+                            <a onclick="del('/organ/del/ids')"  href="javascript:void(0);" class="btn btn-primary ">删除</a>
                             <a  href="javascript:void(0);" id="search" class="btn btn-primary ">搜索</a>
                         </#if>
                         <#if status?? && (status=="1" || status=="3")>
@@ -57,7 +57,7 @@
                         <tr>
                             <#if status?? && (status=="1" || status=="3")>
                             <#else >
-                                <th><input type='checkbox' /></th> <!-- checkbox-->
+                                <th><input type='checkbox' onclick="thCheck(this)" /></th> <!-- checkbox-->
                             </#if>
                             <th>编号</th>
                             <th>类型</th>

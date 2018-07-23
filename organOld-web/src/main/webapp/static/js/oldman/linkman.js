@@ -33,7 +33,7 @@ $(document).ready(function(){
                     "targets": [6], // 目标列位置，下标从0开始
                     "data": "id", // 数据列名
                     "render": function(data, type, full) { // 返回自定义内容
-                        return "<span class='mod' id='"+data+"'>修改</span>";
+                        return "<span class='btn btn-primary' onclick=oldman_edit("+data+",'/oldman/linkman/"+data+"/getById')>修改</span>";
                     }
                 },
                 //不进行排序的列
@@ -59,7 +59,8 @@ $(document).ready(function(){
                 "iSortCol_0" : aoData.iSortCol_0,
                 "sEcho" : aoData.sEcho,
                 "sSortDir_0" : aoData.sSortDir_0,
-                "id" : ($('.id').val()==""?"0":aoData.id)//参数不能是空 400
+                "oldmanId" : ($('.oldmanId').val()==""?"0":$('.oldmanId').val()),//参数不能是空 400
+                "search" : $('.search').val()
             },
             type: 'POST',
             dataType: 'json',

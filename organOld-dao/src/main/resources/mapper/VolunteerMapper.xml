@@ -27,7 +27,17 @@
         </foreach>
     </delete>
 
+    <delete id="delByOrganId" >
+        DELETE from volunteer
+        where oldamn_id in (
+        SELECT o.id FROM oldman_base o,auto_value x,organ org
+        WHERE o.xq_id=x.id and x.parent_index=org.id
+         <if test="organId!=null and organId!=0">
+             and org.id=#{orgaId}
+         </if>
+        )
 
+    </delete>
 
     <select id="getByPage" parameterType="com.organOld.dao.util.Page" resultMap="volunteer">
         SELECT v.id,ob.id oid,ob.name,v.time

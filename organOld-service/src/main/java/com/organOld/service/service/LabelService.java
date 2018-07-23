@@ -50,4 +50,10 @@ public interface LabelService {
     void addOrUpdateFirType(AutoValue firType, String type);
 
     void addOrUpdateSecType(LabelSec labelSec, String type);
+
+    Result getById(int id);
+
+    void updateById(Label label);
+
+    void delByIds(String[] ids);
 }

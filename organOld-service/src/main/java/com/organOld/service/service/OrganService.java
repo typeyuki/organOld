@@ -52,4 +52,6 @@ public interface OrganService {
     String getRecordByPage(OrganServiceRecordRequest organServiceRecordRequest, BTableRequest bTableRequest);
 
     Result importRecordExcel(MultipartFile file) throws IOException;
+
+    void delByIds(String[] ids);
 }

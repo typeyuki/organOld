@@ -33,11 +33,11 @@
         oldman_health_base o LEFT JOIN health_add ha ON ha.oldman_id=o.oldman_id
         LEFT JOIN health_select_oldman hso on hso.oldman_id=o.oldman_id left join health_select hs on hso.health_select_id=hs.id
         left join auto_value e on e.id=o.eyesight left join auto_value i on i.id=o.intelligence
-        WHERE old.id=o.oldman_id AND x.id=old.xq_id AND org.id=x.parent_index and old.disable=0
+        WHERE old.id=o.oldman_id AND x.id=old.xq_id AND org.id=x.parent_index
         <if test="length!=null and length!=0">
             and old.id in(
             select a.id from
-            (select oo.id from oldman_base oo,organ org,auto_value x where  x.id=oo.xq_id AND org.id=x.parent_index
+            (select oo.id from oldman_base oo,organ org,auto_value x where  x.id=oo.xq_id AND org.id=x.parent_index And oo.disable=0
             <if test="entity!=null and entity.oldman!=null and entity.oldman.id!=null and entity.oldman.id!=0">
                 and oo.id=#{entity.oldman.id}
             </if>
@@ -69,23 +69,33 @@
     </select>
 
     <select id="getSizeByPage" parameterType="com.organOld.dao.util.Page" resultType="java.lang.Long">
-        SELECT count(1)
-        FROM oldman_health_base ohb,oldman_base ob,organ org,auto_value x
-        WHERE ohb.oldman_id=ob.id AND x.id=ob.xq_id AND org.id=x.parent_index and ob.disable=0
-        <if test="entity!=null and entity.oldman!=null and entity.oldman.id!=null and entity.oldman.id!=0">
-            and oldman_id=#{entity.oldmanId}
-        </if>
-        <if test="entity!=null and entity.organId!=null and entity.organId!=0">
-            and org.id in (
-            SELECT
-            case o.parent
-            when 0 then child.id
-            else o.id
-            end id
-            from organ o left join organ child on child.parent=o.id
-            WHERE o.id=#{entity.organId}
-            )
-        </if>
+select count(1) from oldman_base oo,organ org,auto_value x where  x.id=oo.xq_id AND org.id=x.parent_index And oo.disable=0
+            <if test="entity!=null and entity.oldman!=null and entity.oldman.id!=null and entity.oldman.id!=0">
+                and oo.id=#{entity.oldman.id}
+            </if>
+            <if test="entity!=null and entity.organId!=null and entity.organId!=0">
+                and org.id in (
+                SELECT
+                case o.parent
+                when 0 then child.id
+                else o.id
+                end id
+                from organ o left join organ child on child.parent=o.id
+                WHERE o.id=#{entity.organId}
+                )
+            </if>
+            <if test="entity!=null and entity.search!=null and entity.search!=''">
+                and oo.id in
+                (
+                SELECT DISTINCT(old.id) FROM oldman_base old,oldman_health_base o LEFT JOIN health_add ha ON ha.oldman_id=o.oldman_id
+                LEFT JOIN health_select_oldman hso on hso.oldman_id=o.oldman_id left join health_select hs on hso.health_select_id=hs.id
+                WHERE old.id=o.oldman_id
+                and (o.blood_type LIKE  concat('%',#{entity.search},'%') OR o.eyesight LIKE  concat('%',#{entity.search},'%') OR old.name LIKE  concat('%',#{entity.search},'%')
+                OR o.intelligence LIKE  concat('%',#{entity.search},'%') OR ha.desc LIKE  concat('%',#{entity.search},'%') OR hs.sec_type_name LIKE  concat('%',#{entity.search},'%'))
+                )
+            </if>
+           
+
     </select>
 
     <delete id="delById">

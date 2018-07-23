@@ -337,4 +337,24 @@ public class LabelController {
     }
 
 
+    @ResponseBody
+    @RequestMapping(value = "/{id}/getById",method = RequestMethod.GET)
+    public Result getById(@PathVariable int id){
+        return labelService.getById(id);
+    }
+
+    @RequestMapping(value = "/update",method = RequestMethod.POST)
+    public ModelAndView base_update(Label label){
+        ModelAndView mv=new ModelAndView("redirect:/oldman/label/"+(label.getType()==1?"bind":"rule"));
+        labelService.updateById(label);
+        return mv;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/del",method = RequestMethod.POST)
+    public Result base_del(@RequestParam("ids[]") String ids[]){
+        labelService.delByIds(ids);
+        return new Result(true);
+    }
+
 }

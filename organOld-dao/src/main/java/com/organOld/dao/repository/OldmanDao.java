@@ -33,4 +33,5 @@ public interface OldmanDao extends BaseDao<Oldman,Integer>{
     void addInregral(@Param("oldmanId") int oldmanId,@Param("integral") int integral);
 
 
+    List<Oldman> getByJwId(Integer jwId);
 }

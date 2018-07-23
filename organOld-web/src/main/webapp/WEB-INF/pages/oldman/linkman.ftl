@@ -7,7 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <#include "../common/head.ftl" />
 
-<#--<link href="/css/animate.min.css" rel="stylesheet">-->
     <link href="/css/style.min.css?v=4.0.0" rel="stylesheet">
     <link href="/static/css/common_table.css" rel="stylesheet">
     <link href="/static/css/oldman/base.css" rel="stylesheet">
@@ -31,9 +30,15 @@
                 </div>
                 <div class="ibox-content">
                     <div>
-                        <input class="id" type="text" placeholder="老人序号">
-                        <input class="time" type="text" placeholder="模糊匹配">
-                        <button id="search">搜索</button>
+                        <a  href="javascript:void(0);" id="search" class="btn btn-primary ">搜索</a>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <input class="oldmanId form-control inp" type="text" placeholder="老人序号">
+                        </div>
+                        <div class="col-sm-4">
+                            <input class="search form-control inp" type="text" placeholder="模糊匹配">
+                        </div>
                     </div>
                     <table class="table table-striped table-bordered table-hover dataTables-example">
                         <thead>
@@ -58,9 +63,10 @@
 
 </div>
 
-<#--<script src="/js/plugins/jeditable/jquery.jeditable.js"></script>-->
+<#include "edit_linkman.ftl" />
 
 <script src="/js/content.min.js?v=1.0.0"></script>
+<script src="/static/js/common.js"></script>
 <script src="/static/js/oldman/linkman.js" ></script>
 <script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
 

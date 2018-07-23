@@ -37,11 +37,15 @@
                 <div class="ibox-content">
                     <div class="jw">
                         <a onclick=newPage("134","健康管理",'/oldman/health/select') href="javascript:void(0);" class="btn btn-primary ">管理</a>
+                        <a  href="javascript:void(0);" id="search" class="btn btn-primary ">搜索</a>
                     </div>
-                    <div>
-                        <input class="oldmanId" type="text" placeholder="老人序号">
-                        <input class="search" type="text" placeholder="模糊匹配">
-                        <button id="search">搜索</button>
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <input class="oldmanId form-control inp" type="text" placeholder="老人序号">
+                        </div>
+                        <div class="col-sm-4">
+                            <input class="search form-control inp" type="text" placeholder="模糊匹配">
+                        </div>
                     </div>
                     <script>
                         $.ajax({

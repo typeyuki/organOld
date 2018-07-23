@@ -32,11 +32,17 @@
         when 5 then org.name
         else h.sec_type
         end sec_type
-        FROM home_oldman ho left join organ orgDy on ho.organ_id=orgDy.id
+        FROM home_oldman ho left join organ orgDy on ho.organ_id=orgDy.id and orgDy.disable=0
         ,oldman_base o,organ jw,auto_value x,home h left join chx c on c.id=h.sec_type left join organ org on org.id=h.sec_type left join home_doctor hd on hd.id=h.sec_type
         WHERE ho.oldman_id=o.id AND x.id=o.xq_id AND jw.id=x.parent_index and ho.home_id=h.id and o.disable=0
-        <if test="entity!=null and entity.oldman!=null and entity.oldman.id!=null and entity.oldman.id!=0">
-            and o.id=#{entity.oldman.id}
+        <if test="entity!=null and entity.oldmanId!=null and entity.oldmanId!=0">
+            and o.id=#{entity.oldmanId}
+        </if>
+        <if test="entity!=null and entity.type!=null and entity.type.length > 0">
+            and h.fir_type IN
+            <foreach collection="entity.type" index="index" item="item" separator="," open="(" close=")">
+                #{item}
+            </foreach>
         </if>
         <if test="entity.organId!=null and entity.organId!=0">
             and jw.id in (
@@ -65,8 +71,17 @@
 
     <select id="getSizeByPage" parameterType="com.organOld.dao.util.Page" resultType="java.lang.Long">
         SELECT count(1)
-        FROM home_oldman ho,oldman_base o,organ jw,auto_value x
-        WHERE ho.oldman_id=o.id AND x.id=o.xq_id AND jw.id=x.parent_index and o.disable=0
+        FROM home_oldman ho,oldman_base o,organ jw,auto_value x,home h
+        WHERE ho.oldman_id=o.id AND x.id=o.xq_id AND jw.id=x.parent_index and o.disable=0 and ho.home_id=h.id
+        <if test="entity!=null and entity.oldmanId!=null and entity.oldmanId!=0">
+            and o.id=#{entity.oldmanId}
+        </if>
+        <if test="entity!=null and entity.type!=null and entity.type.length > 0">
+            and h.fir_type IN
+            <foreach collection="entity.type" index="index" item="item" separator="," open="(" close=")">
+                #{item}
+            </foreach>
+        </if>
         <if test="entity!=null and entity.organId!=null and entity.organId!=0">
             and jw.id in (
             SELECT
@@ -82,5 +97,30 @@
             AND ho.home_id=#{entity.homeId}
         </if>
     </select>
+
+
+    <select id="getByOrganId" resultType="com.organOld.dao.entity.oldman.Oldman">
+        SELECT o.id,o.name,o.pid,o.old_status,o.is_handle FROM oldman_base o,home_oldman oo WHERE oo.organ_id=#{organId} and oo.oldman_id=o.id
+    </select>
+
+
+    <insert id="saveAll" parameterType="java.util.List">
+        INSERT into home_oldman(home_id,oldman_id,time_in,time_out,is_service,organ_id)
+        VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.homeId},#{item.oldmanId},#{item.timeIn},#{item.timeOut},#{item.isService},#{item.organId})
+        </foreach>
+    </insert>
+
+    <delete id="delByJwId">
+        DELETE from home_oldman
+        <if test="jwId!=null and jwId!=0">
+            where oldman_id in (
+            SELECT o.id from oldman_base o,auto_value x,organ org WHERE o.xq_id=x.id and x.parent_index=org.id and org.id=#{jwId}
+            )
+        </if>
+
+    </delete>
+
 
 </mapper>

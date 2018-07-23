@@ -34,4 +34,12 @@
         set fir_type=#{firType},sec_type_name=#{secTypeName}
         where id=#{id}
     </update>
+
+    <delete id="delByIds">
+        DELETE from health_select
+        where id in
+        <foreach collection="array" index="index" item="item" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+    </delete>
 </mapper>

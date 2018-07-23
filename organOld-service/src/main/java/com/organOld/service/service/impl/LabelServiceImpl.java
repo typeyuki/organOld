@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -327,5 +328,32 @@ public class LabelServiceImpl implements LabelService {
             labelSecDao.save(labelSec);
         else
             labelSecDao.updateById(labelSec);
+    }
+
+    @Override
+    public Result getById(int id) {
+        Label label=labelDao.getById(id);
+        label.setStartTime(Tool.dateToString(label.getStart(), TimeConstant.DATA_FORMAT_YMD));
+        label.setEndTime(Tool.dateToString(label.getEnd(), TimeConstant.DATA_FORMAT_YMD));
+        return new Result(true,label);
+    }
+
+    @Override
+    public void updateById(Label label) {
+        label.setStart(Tool.stringToDate(label.getStartTime()));
+        label.setEnd(Tool.stringToDate(label.getEndTime()));
+        labelDao.updateById(label);
+    }
+
+    @Override
+    @Transactional
+    public void delByIds(String[] ids) {
+        Integer[] id=new Integer[ids.length];
+        for(int i=0;i<ids.length;i++){
+            id[i]=Integer.parseInt(ids[i]);
+        }
+        labelDao.delByIds(id);
+        labelManDao.delByOldmanIds(id);
+        labelFeedbackDao.delByOldmanIds(id);
     }
 }

@@ -2,9 +2,11 @@ package com.organOld.service.contract;
 
 public class OldmanEconomicRequest {
     private int id;
-    private int oldman_id;
-    private int economic_index;
+    private Integer oldmanId;
     private String search;//模糊全文 匹配搜索
+
+    private String[] economicArray;
+
 
     public int getId() {
         return id;
@@ -14,20 +16,20 @@ public class OldmanEconomicRequest {
         this.id = id;
     }
 
-    public int getOldman_id() {
-        return oldman_id;
+    public Integer getOldmanId() {
+        return oldmanId;
     }
 
-    public void setOldman_id(int oldman_id) {
-        this.oldman_id = oldman_id;
+    public void setOldmanId(Integer oldmanId) {
+        this.oldmanId = oldmanId;
     }
 
-    public int getEconomic_index() {
-        return economic_index;
+    public String[] getEconomicArray() {
+        return economicArray;
     }
 
-    public void setEconomic_index(int economic_index) {
-        this.economic_index = economic_index;
+    public void setEconomicArray(String[] economicArray) {
+        this.economicArray = economicArray;
     }
 
     public String getSearch() {

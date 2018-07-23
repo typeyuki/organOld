@@ -15,7 +15,7 @@
     <select id="getByPage" parameterType="com.organOld.dao.util.Page" resultType="com.organOld.dao.entity.organ.Organ">
         SELECT o.id,o.name,o.intro,o.address,o.phone,o.service_time,o.num,o.num_in,o.num_remain,o.status,ot.sec_type organType,d.value districtName,o.time,o.auth_consume,o.auth_product,o.auth_sign,o.auth_query_info,o.auth_query_integral
         FROM organ o LEFT JOIN auto_value d on d.id=o.district_id,organ_type ot
-        WHERE o.organ_type_id=ot.id AND ot.fir_type=#{entity.organFirTypeId}
+        WHERE o.organ_type_id=ot.id AND ot.fir_type=#{entity.organFirTypeId} and o.disable=0
         <if test="entity.status!=null and entity.status=='3'.toString()">
                 AND (o.status=3 or o.status=4)
         </if>
@@ -36,7 +36,7 @@
     <select id="getSizeByPage" parameterType="com.organOld.dao.util.Page" resultType="java.lang.Long">
         SELECT count(1)
         FROM organ o,organ_type ot
-        WHERE o.organ_type_id=ot.id AND ot.fir_type=#{entity.organFirTypeId}
+        WHERE o.organ_type_id=ot.id AND ot.fir_type=#{entity.organFirTypeId} and o.disable=0
         <if test="entity.status!=null and entity.status=='3'.toString()">
             AND (o.status=3 or o.status=4)
         </if>
@@ -251,5 +251,19 @@
         SELECT o.id,o.name
         FROM organ o,organ_type ot
         WHERE o.organ_type_id=ot.id and ot.fir_type=#{firType}
+    </select>
+
+
+    <update id="updateProps">
+        UPDATE organ
+        SET ${prop}=#{value}
+        WHERE id in
+        <foreach collection="ids" index="index" item="item" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+    </update>
+
+    <select id="getIdByName" resultType="java.lang.Integer">
+        SELECT id from organ where name=#{name}
     </select>
 </mapper>

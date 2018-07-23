@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.organOld.dao.repository.CardDao">
+
+    <resultMap id="card" type="com.organOld.dao.entity.volunteer.Volunteer">
+        <id property="id" column="id" />
+        <id property="cid" column="cid" />
+        <id property="status" column="status" />
+        <id property="money" column="money" />
+        <id property="password" column="password" />
+        <result property="time" column="time" />
+        <association property="oldman" javaType="com.organOld.dao.entity.oldman.Oldman">
+            <id property="id" column="oid" />
+            <result property="name" column="name"/>
+        </association>
+    </resultMap>
+
+    <insert id="saveAll" parameterType="java.util.List">
+        INSERT into card(oldman_id,cid,password)
+        VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.oldmanId},#{item.cid},#{item.password})
+        </foreach>
+    </insert>
+
+    <delete id="delByOldmanId" parameterType="java.util.List">
+        UPDATE card SET status=3
+        WHERE oldman_id IN
+        <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+
+    <select id="getByPage" parameterType="com.organOld.dao.util.Page" resultMap="card">
+        SELECT c.id,c.cid,c.password,c.status,ob.id oid,ob.name,c.time,c.money
+        FROM card c,oldman_base ob,organ org,auto_value x
+        WHERE ob.id=c.oldman_id AND x.id=ob.xq_id AND org.id=x.parent_index
+        <if test="sortType!=null and sortType!=''">
+            ORDER BY ob.${sortType}
+        </if>
+        <if test="sort!=null and sort!=''">
+            ${sort}
+        </if>
+        <if test="length!=null and length!=0">
+            limit #{start},#{length}
+        </if>
+    </select>
+
+    <select id="getSizeByPage" parameterType="com.organOld.dao.util.Page" resultType="java.lang.Long">
+        SELECT count(1)
+        FROM card c,oldman_base ob,organ org,auto_value x
+        WHERE ob.id=c.oldman_id AND x.id=ob.xq_id AND org.id=x.parent_index
+        <if test="entity!=null and entity.organId!=null and entity.organId!=0">
+            and org.id in (
+            SELECT
+            case o.parent
+            when 0 then child.id
+            else o.id
+            end id
+            from organ o left join organ child on child.parent=o.id
+            WHERE o.id=#{entity.organId}
+            )
+        </if>
+    </select>
+</mapper>

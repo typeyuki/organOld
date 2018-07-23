@@ -31,11 +31,20 @@
                 </div>
                 <div class="ibox-content">
                     <div>
-                        <input class="id" type="text" placeholder="序号">
-                        <input class="id" type="text" placeholder="机构序号">
-                        <input class="id" type="text" placeholder="老人序号">
-                        <input class="time" type="text" placeholder="模糊匹配">
-                        <button id="search">搜索</button>
+                        <a  href="javascript:void(0);" id="search" class="btn btn-primary ">搜索</a>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <input class="form-control inp" name="oldmanId" type="text" placeholder="老人序号">
+                        </div>
+                        <div class="col-sm-2">
+                            <label >是否在排队</label>
+                            <select name="isPd" class="form-control inp" style="width: 60%">
+                                <option></option>
+                                <option  value="1"> 是</option>
+                                <option  value="2"> 否</option>
+                            </select>
+                        </div>
                     </div>
                     <table class="table table-striped table-bordered table-hover dataTables-example">
                         <thead>

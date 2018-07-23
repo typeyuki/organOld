@@ -31,9 +31,20 @@
                 </div>
                 <div class="ibox-content">
                     <div>
-                        <input class="id" type="text" placeholder="老人序号">
-                        <input class="time" type="text" placeholder="模糊匹配">
-                        <button id="search">搜索</button>
+                        <a  href="javascript:void(0);" id="search" class="btn btn-primary ">搜索</a>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <input class="form-control inp" name="oldmanId" type="text" placeholder="老人序号">
+                        </div>
+                        <div class="col-sm-3">
+                            <label>经济条件：</label>
+                            <select name="economicIndex"  class="selectpicker bla bla bli" multiple data-live-search="true">
+                            <#list economic as list>
+                                <option value="${list.id!}"> <i></i> ${list.value!}</option>
+                            </#list>
+                            </select>
+                        </div>
                     </div>
                     <table class="table table-striped table-bordered table-hover dataTables-example">
                         <thead>
@@ -56,7 +67,7 @@
 
 </div>
 
-<#--<script src="/js/plugins/jeditable/jquery.jeditable.js"></script>-->
+<#include "edit_economic.ftl" />
 
 <script src="/js/content.min.js?v=1.0.0"></script>
 <script src="/static/js/common.js"></script>

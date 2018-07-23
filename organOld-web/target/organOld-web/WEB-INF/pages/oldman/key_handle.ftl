@@ -118,7 +118,14 @@
             success: function (result) {
                 $("#handleModal").modal('hide');
                 if(type=="add"){
-                    table.fnFilter();
+                    var start = $(".dataTables-example").dataTable().fnSettings()._iDisplayStart;
+                    var total = $(".dataTables-example").dataTable().fnSettings().fnRecordsDisplay();
+                    window.location.reload();
+                    if(total-start==1){
+                        if(start>0){
+                            $(".dataTables-example").dataTable().fnPageChange('previous',true);
+                        }
+                    }
                 }else if(type=="delete"){
                     $(obj).html("未处理");
                     var click=$(obj).attr("onclick");

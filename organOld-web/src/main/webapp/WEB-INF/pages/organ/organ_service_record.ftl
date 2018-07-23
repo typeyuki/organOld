@@ -29,12 +29,23 @@
                 </div>
                 <div class="ibox-content">
                     <div>
-                        <form action="/organ/record/importExcel" method="post" enctype="multipart/form-data" id="importForm">
+                        <form  action="/organ/record/importExcel" method="post" enctype="multipart/form-data" id="importForm">
                             <input type="hidden" name="organId" value="${organId!0}">
                             <input type="file" name="file" style="display:inline">
                             <input type="button" style="display:inline" class="btn btn-primary" onclick="$('.wrapper').hide();$('#process').show();$('#importForm').submit()" value="导入">
                         </form>
                     </div>
+                    <script>
+                        $.ajax({
+                            url: "/user/checkUserOrganType",
+                            type: "get",
+                            success: function (data) {
+                                if (data.success == false) {
+                                    $("#importForm").hide();
+                                }
+                            }
+                        });
+                    </script>
                     <div>
                         <input class="id" type="text" placeholder="序号">
                         <input class="id" type="text" placeholder="模糊搜索">

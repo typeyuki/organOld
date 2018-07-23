@@ -8,4 +8,6 @@ public interface LabelFeedbackDao extends BaseDao<LabelFeedback,Number> {
     LabelFeedback getByLabelIdOrganId(@Param("labelId") int labelId,@Param("organId") Integer organId);
 
     void deleteByLabelId(int labelId);
+
+    void delByOldmanIds(Integer[] id);
 }

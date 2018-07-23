@@ -23,13 +23,21 @@ public class OrganOldman extends DBEntity implements DBInterface {
     private Date applyTime;
     private Integer organId;//居委ID
 
-
     /**
      * 搜素
      * @return
      */
     private Integer firType;
+    private Integer isPd;
 
+
+    public Integer getIsPd() {
+        return isPd;
+    }
+
+    public void setIsPd(Integer isPd) {
+        this.isPd = isPd;
+    }
 
     public Date getApplyTime() {
         return applyTime;
