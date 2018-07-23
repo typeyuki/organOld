@@ -13,6 +13,7 @@ public class Home extends DBEntity{
     private Doctor doctor;//家庭医生
 
 
+
     public int getFirType() {
         return firType;
     }

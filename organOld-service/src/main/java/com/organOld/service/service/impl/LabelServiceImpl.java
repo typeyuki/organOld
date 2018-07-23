@@ -20,7 +20,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -353,7 +352,16 @@ public class LabelServiceImpl implements LabelService {
             id[i]=Integer.parseInt(ids[i]);
         }
         labelDao.delByIds(id);
-        labelManDao.delByOldmanIds(id);
-        labelFeedbackDao.delByOldmanIds(id);
+        labelManDao.delByLabelIds(id);
+        labelFeedbackDao.delByLabelIds(id);
+    }
+
+    @Override
+    public void delManByOldmanIds(String[] ids, int labelId) {
+        Integer[] id=new Integer[ids.length];
+        for(int i=0;i<ids.length;i++){
+            id[i]=Integer.parseInt(ids[i]);
+        }
+        labelManDao.delByOldmanIds(id,labelId);
     }
 }

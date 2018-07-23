@@ -130,7 +130,7 @@ $(document).ready(function(){
                 "type":typeLabel,
                 "census_array":$("select[name='census_array']").val(),
                 "ageStart":$("input[name='ageStart']").val(),
-                "isKey":$("input[name='isKey']").val(),
+                "isKey":$("select[name='isKey']").val(),
                 "ageEnd":$("input[name='ageEnd']").val(),
                 "wh":$("input[name='wh']").val(),
                 "family_array":$("select[name='family_array']").val(),

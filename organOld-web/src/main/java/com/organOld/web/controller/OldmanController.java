@@ -53,7 +53,7 @@ public class OldmanController {
      */
     @ResponseBody
     @RequestMapping(value = "/baseData",method = RequestMethod.POST)
-    public String data(OldmanRequest oldmanRequest, BTableRequest bTableRequest, HttpSession session,
+    public String data(OldmanRequest oldmanRequest, BTableRequest bTableRequest,
                        @RequestParam(value = "census_array[]",required = false) String census[],
                        @RequestParam(value = "family_array[]",required = false) String family[],
                        @RequestParam(value = "economic_array[]",required = false) String economic[],

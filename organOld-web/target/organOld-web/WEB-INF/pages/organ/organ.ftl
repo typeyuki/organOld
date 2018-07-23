@@ -39,12 +39,12 @@
                             <a onclick="del('/organ/del/ids')"  href="javascript:void(0);" class="btn btn-primary ">删除</a>
                             <a  href="javascript:void(0);" id="search" class="btn btn-primary ">搜索</a>
                         </#if>
-                        <#if status?? && (status=="1" || status=="3")>
+                        <#if status??>
                         <#else >
-                            <form action="/organ/${type}/importExcel" method="post" enctype="multipart/form-data" id="importForm" style="display: inline-block;margin-left: 200px">
+                            <form action="/organ/${type}/importExcel" method="post" enctype="multipart/form-data" id="importForm" style="display: inline">
+                                <input type="button" style="display:inline" class="btn btn-primary" onclick="$('.wrapper').hide();$('#process').show();$('#importForm').submit()" value="导入">
                                 <input type="file" name="file" style="display:inline">
                                 <input type="hidden" name="pType" value="oldman">
-                                <input type="button" style="display:inline" class="btn btn-primary" onclick="$('.wrapper').hide();$('#process').show();$('#importForm').submit()" value="导入">
                             </form>
                         </#if>
                     </div>

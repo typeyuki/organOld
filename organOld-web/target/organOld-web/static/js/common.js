@@ -106,10 +106,15 @@ function del(url) {
 
 
 function thCheck(obj) {
+    thCheckByName(obj,"id");
+}
+
+
+function thCheckByName(obj,name) {
     if($(obj).is(':checked')){
-        $("input[name='id']").prop("checked",true);
+        $("input[name="+name+"]").prop("checked",true);
     }else{
-        $("input[name='id']").prop("checked",false);
+        $("input[name="+name+"]").prop("checked",false);
     }
 }
 

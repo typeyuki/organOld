@@ -5,6 +5,7 @@ package com.organOld.service.contract;
  */
 public class LabelManRequest {
     private int labelId;
+    private int id;//老人的id
     private String[] censusArray;//户籍
     private String[] district;//片区索引
     private String ageStart;//年龄段-起
@@ -19,6 +20,15 @@ public class LabelManRequest {
     private String[] intelligence;
     private String[] eyesight;
     private String isImplement;
+
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public int getLabelId() {
         return labelId;

@@ -12,5 +12,7 @@ public interface LabelManDao extends BaseDao<LabelMan,Number> {
 
     LabelManImplNum getLabelManImplNum(@Param("organId") int organId,@Param("labelId") Integer labelId);
 
-    void delByOldmanIds(Integer[] id);
+    void delByLabelIds(Integer[] id);
+
+    void delByOldmanIds(@Param("oldmanIds") Integer[] id,@Param("labelId") int labelId);
 }

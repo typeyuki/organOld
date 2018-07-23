@@ -7,7 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <#include "../common/head.ftl" />
 
-    <#--<link href="/css/animate.min.css" rel="stylesheet">-->
     <link href="/css/style.min.css?v=4.0.0" rel="stylesheet">
     <link href="/static/css/common_table.css" rel="stylesheet">
     <link href="/static/css/oldman/base.css" rel="stylesheet">

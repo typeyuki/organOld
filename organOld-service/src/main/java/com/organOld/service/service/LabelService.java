@@ -56,4 +56,6 @@ public interface LabelService {
     void updateById(Label label);
 
     void delByIds(String[] ids);
+
+    void delManByOldmanIds(String[] ids, int labelId);
 }

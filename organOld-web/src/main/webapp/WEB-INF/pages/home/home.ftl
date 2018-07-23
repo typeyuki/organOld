@@ -28,13 +28,8 @@
                 </div>
                 <div class="ibox-content">
                     <div>
-                        <a onclick="" href="javascript:void(0);" class="btn btn-primary ">添加</a>
+                        <a onclick="addHome()" href="javascript:void(0);" class="btn btn-primary ">添加</a>
                         <a onclick="" href="javascript:void(0);" class="btn btn-primary ">删除</a>
-                    </div>
-                    <div>
-                        <input class="id" type="text" placeholder="编号">
-                        <input class="id" type="text" placeholder="模糊搜索">
-                        <button id="search">搜索</button>
                     </div>
                     <table class="table table-striped table-bordered table-hover dataTables-example">
                         <thead>
@@ -66,8 +61,11 @@
     </div>
 
 </div>
+
+<#include "add_home.ftl"/>
 <script>
-    var typeHome="${type}"
+    var typeHome="${type}";
+    $('.search_select').searchableSelect();
 </script>
 
 <script src="/js/content.min.js?v=1.0.0"></script>

@@ -8,6 +8,7 @@ import com.organOld.dao.entity.label.LabelSec;
 import com.organOld.service.contract.*;
 import com.organOld.service.service.AutoValueService;
 import com.organOld.service.service.LabelService;
+import com.organOld.service.service.OldmanService;
 import com.organOld.service.util.Tool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,7 +30,8 @@ public class LabelController {
     LabelService labelService;
     @Autowired
     AutoValueService autoValueService;
-
+    @Autowired
+    OldmanService oldmanService;
     /**
      * 人员绑定标签
      * @return
@@ -142,6 +144,7 @@ public class LabelController {
         ModelAndView mv=new ModelAndView("oldman/label/bind");
         mv.addObject("labelId",labelId);
         mv.addObject("type",type);
+        mv.addObject("info",oldmanService.getAddInfo());
         return mv;
     }
 
@@ -154,7 +157,19 @@ public class LabelController {
      */
     @ResponseBody
     @RequestMapping(value = "/manData",method = RequestMethod.POST)
-    public String bind_man_data(BTableRequest bTableRequest, LabelManRequest labelManRequest){
+    public String bind_man_data(BTableRequest bTableRequest, LabelManRequest labelManRequest,
+                                @RequestParam(value = "census_array[]",required = false) String census[],
+                                @RequestParam(value = "family_array[]",required = false) String family[],
+                                @RequestParam(value = "economic_array[]",required = false) String economic[],
+                                @RequestParam(value = "politicalStatus_array[]",required = false) String politicalStatus[],
+                                @RequestParam(value = "district_array[]",required = false) String district[],
+                                @RequestParam(value = "jw_array[]",required = false) String jw[]){
+        labelManRequest.setCensusArray(census);
+        labelManRequest.setFamily(family);
+        labelManRequest.setEconomic(economic);
+        labelManRequest.setPoliticalStatusArray(politicalStatus);
+        labelManRequest.setDistrict(district);
+        labelManRequest.setJw(jw);
         return labelService.getBindManByPage(labelManRequest,bTableRequest);
     }
 
@@ -167,7 +182,19 @@ public class LabelController {
      */
     @ResponseBody
     @RequestMapping(value = "/bind/{labelId}/getNoSelectManData",method = RequestMethod.POST)
-    public String bind_no_select_man_data(BTableRequest bTableRequest, OldmanRequest oldmanRequest, @PathVariable int labelId){
+    public String bind_no_select_man_data(BTableRequest bTableRequest, OldmanRequest oldmanRequest, @PathVariable int labelId,
+                                          @RequestParam(value = "census_array[]",required = false) String census[],
+                                          @RequestParam(value = "family_array[]",required = false) String family[],
+                                          @RequestParam(value = "economic_array[]",required = false) String economic[],
+                                          @RequestParam(value = "politicalStatus_array[]",required = false) String politicalStatus[],
+                                          @RequestParam(value = "district_array[]",required = false) String district[],
+                                          @RequestParam(value = "jw_array[]",required = false) String jw[]){
+        oldmanRequest.setCensusArray(census);
+        oldmanRequest.setFamily(family);
+        oldmanRequest.setEconomic(economic);
+        oldmanRequest.setPoliticalStatusArray(politicalStatus);
+        oldmanRequest.setDistrict(district);
+        oldmanRequest.setJw(jw);
         return labelService.getNoSelectManDataByPage(oldmanRequest,bTableRequest,labelId);
     }
 
@@ -357,4 +384,12 @@ public class LabelController {
         return new Result(true);
     }
 
+
+
+    @ResponseBody
+    @RequestMapping(value = "/bind/{labelId}/man/del",method = RequestMethod.POST)
+    public Result dela(@RequestParam("ids[]") String ids[],@PathVariable int labelId){
+        labelService.delManByOldmanIds(ids,labelId);
+        return new Result(true);
+    }
 }

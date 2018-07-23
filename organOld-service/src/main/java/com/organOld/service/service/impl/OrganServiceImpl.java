@@ -646,4 +646,9 @@ public class OrganServiceImpl implements OrganService{
     public void delByIds(String[] ids) {
         organDao.updateProps("disable","1",ids);
     }
+
+    @Override
+    public List<Organ> getAll() {
+        return organDao.getAll();
+    }
 }

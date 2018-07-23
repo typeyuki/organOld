@@ -9,5 +9,6 @@ public interface LabelFeedbackDao extends BaseDao<LabelFeedback,Number> {
 
     void deleteByLabelId(int labelId);
 
-    void delByOldmanIds(Integer[] id);
+
+    void delByLabelIds(Integer[] id);
 }

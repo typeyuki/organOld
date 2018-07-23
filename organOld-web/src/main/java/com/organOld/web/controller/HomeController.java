@@ -1,6 +1,7 @@
 package com.organOld.web.controller;
 
 import com.organOld.dao.entity.AutoValue;
+import com.organOld.dao.entity.home.Home;
 import com.organOld.service.contract.*;
 import com.organOld.service.enumModel.AutoValueEnum;
 import com.organOld.service.enumModel.HomeEnum;
@@ -18,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -30,7 +32,8 @@ public class HomeController {
 
     @Autowired
     HomeService homeService;
-
+    @Autowired
+    OrganService organService;
 
     /**
      *
@@ -48,6 +51,9 @@ public class HomeController {
         ModelAndView mv=new ModelAndView("home/home");
         mv.addObject("title", HomeEnum.getValue(type));
         mv.addObject("type", type);
+        if(type==4|| type==5){
+            mv.addObject("organ",organService.getAll());
+        }
         return mv;
     }
 
@@ -94,6 +100,14 @@ public class HomeController {
         ModelAndView mv=new ModelAndView("oldman/home_oldman");
         Result result=homeService.importManExcel(file);
         mv.addObject("result",result);
+        return mv;
+    }
+
+
+    @RequestMapping(value = "/add",method = RequestMethod.POST)
+    public ModelAndView add(Home home){
+        ModelAndView mv=new ModelAndView("redirect:/home/"+home.getFirType());
+        homeService.add(home);
         return mv;
     }
 }

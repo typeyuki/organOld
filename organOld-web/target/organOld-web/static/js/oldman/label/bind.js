@@ -40,11 +40,7 @@ $(document).ready(function(){
                 "data": "oldmanId", // 数据列名
                 "render": function(data, type, full) { // 返回自定义内容
                     if(data!=undefined){
-                        return '<div class="icheckbox_square-green checked" style="position: relative;">' +
-                            '<input type="checkbox" checked="" class="i-checks" name="input[]" style="position: absolute; opacity: 0;">' +
-                            '<ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;">' +
-                            '</ins>' +
-                            '</div>';
+                        return "<input type='checkbox' name='id' value='"+data+"'/>";
                     }else{
                         return "";
                     }
@@ -185,7 +181,18 @@ $(document).ready(function(){
                 "iSortCol_0" : aoData.iSortCol_0,
                 "sEcho" : aoData.sEcho,
                 "sSortDir_0" : aoData.sSortDir_0,
-                "labelId" :labelId
+                "labelId" :labelId,
+                "id" : ($('input[name="id"]').val()==""?"0":$('input[name="id"]').val()),//参数不能是空 400
+                "census_array":$("select[name='census']").val(),
+                "ageStart":$("input[name='ageStart']").val(),
+                "ageEnd":$("input[name='ageEnd']").val(),
+                "family_array":$("select[name='familyIndex']").val(),
+                "economic_array":$("select[name='economicIndex']").val(),
+                "sex":$("select[name='sex']").val(),
+                "search":$("input[name='search']").val(),
+                "politicalStatus_array":$("select[name='politicalStatuses']").val(),
+                "district_array":$("select[name='district']").val(),
+                "jw_array":$("select[name='jw']").val()
             },
             type: 'POST',
             dataType: 'json',
@@ -292,7 +299,17 @@ $(document).ready(function(){
                     "iSortCol_0" : aoData.iSortCol_0,
                     "sEcho" : aoData.sEcho,
                     "sSortDir_0" : aoData.sSortDir_0,
-                    "id" : ($('.sid').val()==""?"0":aoData.id)//参数不能是空 400
+                    "id" : ($('input[name="id_select"]').val()==""?"0":$('input[name="id_select"]').val()),//参数不能是空 400
+                    "census_array":$("select[name='census_select']").val(),
+                    "ageStart":$("input[name='ageStart_select']").val(),
+                    "ageEnd":$("input[name='ageEnd_select']").val(),
+                    "family_array":$("select[name='familyIndex_select']").val(),
+                    "economic_array":$("select[name='economicIndex_select']").val(),
+                    "sex":$("select[name='sex_select']").val(),
+                    "search":$("input[name='search_select']").val(),
+                    "politicalStatus_array":$("select[name='politicalStatuses_select']").val(),
+                    "district_array":$("select[name='district_select']").val(),
+                    "jw_array":$("select[name='jw_select']").val()
                 },
                 type: 'POST',
                 dataType: 'json',
@@ -309,6 +326,7 @@ $(document).ready(function(){
         $('#selectSearch').click(function () {
             table2.fnFilter();
         });
+
     }
 
     var oTable=$("#editable").dataTable();
@@ -320,31 +338,6 @@ $(document).ready(function(){
 
 });
 
-function del(id) {
-    $.ajax({
-        url : "/oldman/base/del",
-        type : "post",
-        dataType : 'json',
-        data:{
-            id:id
-        },
-        success : function(data) {
-            if (data.success==true) {
-                start = $(".dataTables-example").dataTable().fnSettings()._iDisplayStart;
-                total = $(".dataTables-example").dataTable().fnSettings().fnRecordsDisplay();
-                window.location.reload();
-                if(total-start==1){
-                    if(start>0){
-                        $(".dataTables-example").dataTable().fnPageChange('previous',true);
-                    }
-                }
-
-            } else {
-                alert('删除失败！');
-            }
-        }
-    });
-}
 
 function implement(id,name) {
     $("#implementModal input[name='id']").val(id);

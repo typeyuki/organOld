@@ -266,4 +266,9 @@
     <select id="getIdByName" resultType="java.lang.Integer">
         SELECT id from organ where name=#{name}
     </select>
+
+
+    <select id="getAll" resultType="com.organOld.dao.entity.organ.Organ">
+        select id,name from organ
+    </select>
 </mapper>

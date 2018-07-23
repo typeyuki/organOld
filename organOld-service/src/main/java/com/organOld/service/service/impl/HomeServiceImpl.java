@@ -314,4 +314,9 @@ public class HomeServiceImpl implements HomeService{
         }
         return new Result(true,excelReturnModel);
     }
+
+    @Override
+    public void add(Home home) {
+        
+    }
 }

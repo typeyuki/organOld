@@ -1,17 +1,24 @@
 package com.organOld.service.wrapper;
 
 import com.organOld.dao.entity.label.LabelMan;
+import com.organOld.dao.entity.oldman.Oldman;
 import com.organOld.service.constant.TimeConstant;
 import com.organOld.service.contract.LabelManRequest;
 import com.organOld.service.enumModel.SexEnum;
 import com.organOld.service.model.LabelManModel;
 import com.organOld.service.service.CommonService;
 import com.organOld.service.util.Tool;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * Created by netlab606 on 2018/7/8.
  */
 public class LabelManWrapper implements Wrapper<LabelMan,LabelManModel,LabelManRequest> {
+
+    @Autowired
+    CommonService commonService;
+
 
     @Override
     public LabelManModel wrap(LabelMan labelMan) {
@@ -35,7 +42,14 @@ public class LabelManWrapper implements Wrapper<LabelMan,LabelManModel,LabelManR
     @Override
     public LabelMan unwrap(LabelManRequest labelManRequest) {
         LabelMan labelMan=new LabelMan();
+        Oldman oldman=new Oldman();
+        BeanUtils.copyProperties(labelManRequest,oldman);
+        if(labelManRequest.getAgeStart()!=null && !labelManRequest.getAgeStart().equals(""))
+            oldman.setBirthdayEnd(commonService.AgeTobirthday(Integer.parseInt(labelManRequest.getAgeStart())));
+        if(labelManRequest.getAgeEnd()!=null && !labelManRequest.getAgeEnd().equals(""))
+            oldman.setBirthdayStart(commonService.AgeTobirthday(Integer.parseInt(labelManRequest.getAgeEnd())));
         labelMan.setLabelId(labelManRequest.getLabelId());
+        labelMan.setOldman(oldman);
         return labelMan;
     }
 }

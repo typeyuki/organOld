@@ -54,4 +54,6 @@ public interface OrganService {
     Result importRecordExcel(MultipartFile file) throws IOException;
 
     void delByIds(String[] ids);
+
+    List<Organ> getAll();
 }

@@ -167,3 +167,11 @@ $(document).ready(function(){
         "submitdata":function(value,settings){return{"row_id":this.parentNode.getAttribute("id"),
             "column":oTable.fnGetPosition(this)[2]}},"width":"90%","height":"100%"});
 });
+
+
+function addHome() {
+    $("#selectModal small").html("添加");
+    $("#subBtn").html("添加");
+    $("#homeForm").attr("action","/home/add");
+    $("#selectModal").modal();
+}

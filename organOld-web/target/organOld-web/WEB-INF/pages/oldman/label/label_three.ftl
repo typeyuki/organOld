@@ -75,7 +75,7 @@
                                     </div>
                                     <div class="col-sm-2">
                                         <label >是否是重点老人</label>
-                                        <select name="sex"  class="form-control inp" style="width: 55%">
+                                        <select name="isKey"  class="form-control inp" style="width: 53%">
                                             <option></option>
                                             <#list (rule.isKey)?keys as key>
                                                 <option  value="${key!}"> ${(rule.isKey)?values[key_index]!}</option>
@@ -211,14 +211,12 @@
                             <#else >
                                 <div class="row" >
                                     <form class="form-horizontal">
-                                        <div class="col-sm-2"><input type="text" name="id" class="form-control inp" placeholder="序号"/></div>
-                                        <div class="col-sm-2"><input type="text" name="wh" class="form-control inp" placeholder="文号"/></div>
-                                        <div class="col-sm-2">
+                                        <div class="col-sm-2" style="padding-top: 20px"><input type="text" name="id" class="form-control inp" placeholder="序号"/></div>
+                                        <div class="col-sm-2" style="padding-top: 20px"><input type="text" name="wh" class="form-control inp" placeholder="文号"/></div>
+                                        <div class="col-sm-2" style="padding-top: 20px">
                                             <input type="text" name="search" class="form-control inp" value="" placeholder="模糊搜索"/>
                                         </div>
                                     </form>
-                                </div>
-                                <div class="row">
                                     <div class="col-sm-2">
                                         <label> 所属机构：</label>
                                         <select  name="belongOrgan" class="search_select" data-live-search="true">

@@ -18,6 +18,11 @@ public class LabelMan extends DBEntity implements DBInterface{
 
     private Integer organId;
 
+
+
+
+
+
     public String getRemark() {
         return remark;
     }

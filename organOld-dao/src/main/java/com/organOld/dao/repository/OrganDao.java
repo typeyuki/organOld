@@ -26,4 +26,6 @@ public interface OrganDao extends BaseDao<Organ,Integer>{
     List<Organ> getByFirType(int firType);
 
     Integer getIdByName(String name);
+
+    List<Organ> getAll();
 }
