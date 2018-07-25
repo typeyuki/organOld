@@ -22,30 +22,47 @@ $(document).ready(function(){
                 data:"isFinish"
             },{
                 data:"remark"
+            },{
+                data:"labelManImplNum.sum"
             },{},{
+                data:"labelManImplNum.impl"
+            },{
+                data:"labelManImplNum.noImpl"
+            },{},{},{
                 data:"time"
             }
             ],
             "columnDefs": [
                 // 增加一列，包括删除和修改，同时将我们需要传递的数据传递到链接中
                 {
-                    "targets": [5], // 目标列位置，下标从0开始
+                    "targets": [6], // 目标列位置，下标从0开始
                     "data": "labelManImplNum", // 数据列名
                     "render": function(data, type, full) { // 返回自定义内容
                         if(data.sum!=0){
-                            return "一共："+data.sum+'人<br>'+
-                                "已处理："+(data.sum-data.no)+"人<br>"+
-                                "已落实："+data.impl+"人<br>"+
-                                "未落实："+data.noImpl+"人<br>"+
-                                "处理百分比："+((((data.sum-data.no)*1.00)/(data.sum))*100).toFixed(2)+"%<br>"+
-                                "落实百分比："+((data.impl*1.00/(data.sum)*100)).toFixed(2)+"%";
+                            return data.sum-data.no;
                         }else{
-                            return "一共：0人<br>"+
-                                "已处理：0人<br>"+
-                                "已落实：0人<br>"+
-                                "未落实：0人<br>"+
-                                "处理百分比：0.00%<br>"+
-                                "落实百分比：0.00%";
+                            return 0;
+                        }
+                    }
+                },
+                {
+                    "targets": [9], // 目标列位置，下标从0开始
+                    "data": "labelManImplNum", // 数据列名
+                    "render": function(data, type, full) { // 返回自定义内容
+                        if(data.sum!=0){
+                            return ((((data.sum-data.no)*1.00)/(data.sum))*100).toFixed(2);
+                        }else{
+                            return "0.00";
+                        }
+                    }
+                },{
+                    "targets": [10], // 目标列位置，下标从0开始
+                    "data": "labelManImplNum", // 数据列名
+                    "render": function(data, type, full) { // 返回自定义内容
+                        if(data.sum!=0){
+                            return ((data.impl*1.00/(data.sum)*100)).toFixed(2);
+                        }else{
+                            return "0.00";
                         }
                     }
                 }

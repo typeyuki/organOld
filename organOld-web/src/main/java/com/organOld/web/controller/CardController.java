@@ -46,9 +46,17 @@ public class CardController {
     }
 
     @RequestMapping(value = "/{id}/record",method = RequestMethod.GET)
-    public ModelAndView record(@PathVariable int id){
+    public ModelAndView record(@PathVariable int id,@RequestParam(value = "type",required = false) Integer type){
         ModelAndView mv=new ModelAndView("card/record");
         mv.addObject("id",id);
+        mv.addObject("type",type);
+        return mv;
+    }
+
+    @RequestMapping(value = "/{oldmanId}/integral/record",method = RequestMethod.GET)
+    public ModelAndView record(@PathVariable int oldmanId){
+        int cid=cardService.getIdByOldmanId(oldmanId);
+        ModelAndView mv=new ModelAndView("redirect:/card/"+cid+"/record?type=9");
         return mv;
     }
 
@@ -131,9 +139,10 @@ public class CardController {
 
     @ResponseBody
     @RequestMapping(value = "/sign",method = RequestMethod.GET)
-    public Result sign(@RequestParam int oldmanId,@RequestParam int organId){
+    public Result sign(@RequestParam int cid,@RequestParam int organId,@RequestParam String username,@RequestParam String password){
         Result result=new Result(true,"签到成功");
-        recordService.save(oldmanId,organId, RecordTypeEnum.SIGN.getIndex());
+        System.out.println("签到成功");
+//        recordService.save(cid,organId, RecordTypeEnum.SIGN.getIndex());
         return result;
     }
 }

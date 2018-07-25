@@ -22,8 +22,18 @@ public class RecordWrapper implements Wrapper<Record,RecordModel,RecordRequest> 
         recordModel.setOrgan(record.getOrgan());
         recordModel.setType(RecordTypeEnum.getValue(record.getType()));
         recordModel.setOrder(record.getOrder());
-        if(record.getPrevMoney()!=null)
-        recordModel.setMoneyChange(record.getPrevMoney()+"--->"+record.getNowMoney());
+        if(record.getPrevMoney()!=null){
+            if(record.getType()==9){
+                recordModel.setMoneyChange(record.getPrevMoney().intValue()+"--->"+record.getNowMoney().intValue());
+            }else{
+                recordModel.setMoneyChange(record.getPrevMoney()+"--->"+record.getNowMoney());
+            }
+        }
+
+        if(record.getType()==9){
+            //积分记录
+            recordModel.setOrder(record.getOrder().equals("1")?"消费":"签到");
+        }
         return recordModel;
     }
 

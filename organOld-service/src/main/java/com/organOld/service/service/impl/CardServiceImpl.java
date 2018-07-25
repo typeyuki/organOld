@@ -68,4 +68,10 @@ public class CardServiceImpl implements CardService {
         cardDao.updateProps("status",status,ids);
         return new Result(true);
     }
+
+    @Override
+    public int getIdByOldmanId(int oldmanId) {
+        Card card=cardDao.getByOldmanId(oldmanId);
+        return card.getId();
+    }
 }

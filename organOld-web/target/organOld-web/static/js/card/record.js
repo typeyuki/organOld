@@ -2,6 +2,32 @@
  * Created by netlab606 on 2018/4/2.
  */
 $(document).ready(function(){
+    var columns;
+    if(type==0){
+        columns=[{
+            data:"id"
+        },{
+            data:"time"
+        },{
+            data:"organ.name"
+        },{
+            data:"data"
+        },{data:"moneyChange"},{data:"order"}
+        ];
+    }else{
+        columns=[{
+            data:"id"
+        },{
+            data:"time"
+        },{
+            data:"order"
+        },{
+            data:"data"
+        },{data:"moneyChange"}
+        ];
+    }
+
+
 
     var table =$(".dataTables-example").dataTable(
         {
@@ -13,18 +39,7 @@ $(document).ready(function(){
             "bStateSave": true,
             "bProcessing": true, //加载数据时显示正在加载信息
             "bServerSide": true, //指定从服务器端获取数据
-            "columns":[{
-                data:"id"
-            },{
-                data:"time"
-            },{
-                data:"type"
-            },{
-                data:"organ.name"
-            },{
-                data:"data"
-            },{data:"moneyChange"},{data:"order"}
-            ],
+            "columns":columns,
             "columnDefs":[
                 // 列样式
 

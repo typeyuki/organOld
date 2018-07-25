@@ -20,6 +20,12 @@
         WHERE type=#{type}
     </select>
 
+    <select id="getById" resultType="com.organOld.dao.entity.AutoValue">
+        SELECT id,type,value,time
+        FROM auto_value
+        WHERE id=#{id}
+    </select>
+
 
     <select id="getStringLikeIndex" resultType="java.lang.Integer">
         SELECT id
@@ -45,4 +51,25 @@
         set value=#{value}
         where id=#{id}
     </update>
+
+    <select id="getByPage" parameterType="com.organOld.dao.util.Page" resultType="com.organOld.dao.entity.AutoValue">
+        SELECT id,value
+        FROM auto_value
+        WHERE type=#{entity.type}
+        <if test="sortType!=null and sortType!=''">
+            ORDER BY ${sortType}
+        </if>
+        <if test="sort!=null and sort!=''">
+            ${sort}
+        </if>
+        <if test="length!=null and length!=0">
+            limit #{start},#{length}
+        </if>
+    </select>
+
+    <select id="getSizeByPage" parameterType="com.organOld.dao.util.Page" resultType="java.lang.Long">
+        SELECT count(1)
+        FROM auto_value
+        WHERE type=#{entity.type}
+    </select>
 </mapper>

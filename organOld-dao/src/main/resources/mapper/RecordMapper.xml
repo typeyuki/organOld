@@ -93,5 +93,18 @@
         SELECT count(1)
         FROM record r LEFT JOIN organ org on org.id=r.organ_id,card c
         WHERE r.oldman_id=c.oldman_id and c.id=#{entity.cardId}
+        <if test="entity.type!=null and entity.type!=0">
+            and r.type=#{entity.type}
+        </if>
+        <if test="entity.start!=null">
+            <![CDATA[
+            and DATE_FORMAT(r.time,'%Y%m%d') >= DATE_FORMAT(#{entity.start},'%Y%m%d')
+            ]]>
+        </if>
+        <if test="entity.end!=null">
+            <![CDATA[
+            and DATE_FORMAT(r.time,'%Y%m%d') <= DATE_FORMAT(#{entity.end},'%Y%m%d')
+            ]]>
+        </if>
     </select>
 </mapper>

@@ -12,4 +12,6 @@ public interface CardDao extends BaseDao<Card,Number>{
     void delByOldmanIds(List<Integer> existOldmanIds);
 
     void addMoney(@Param("ids") String[] ids,@Param("money") Double money);
+
+    Card getByOldmanId(int oldmanId);
 }

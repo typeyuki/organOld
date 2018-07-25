@@ -76,4 +76,8 @@
         </foreach>
     </update>
 
+
+    <select id="getByOldmanId" resultType="com.organOld.dao.entity.Card">
+        SELECT * from card where oldman_id=#{oldmanId}
+    </select>
 </mapper>

@@ -20,6 +20,8 @@ public class Tool {
     }
 
     public static Date stringToDate(String str){
+        if(str==null || str.equals(""))
+            return null;
         if(str.contains(".")){
             str=str.replace(".","-");
         }

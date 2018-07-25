@@ -13,4 +13,6 @@ public interface CardService {
     Result addMoney(String[] ids, Double money);
 
     Result changeStatus(String[] ids, String status);
+
+    int getIdByOldmanId(int oldmanId);
 }
