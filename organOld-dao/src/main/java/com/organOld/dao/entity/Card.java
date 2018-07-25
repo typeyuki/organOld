@@ -7,7 +7,7 @@ import com.organOld.dao.entity.oldman.Oldman;
  * Created by netlab606 on 2018/7/16.
  */
 public class Card extends DBEntity{
-    private int oldmanId;
+    private Integer oldmanId;
     private String cid;//身份证后六位
     private String password;
     private Double money;
@@ -39,11 +39,11 @@ public class Card extends DBEntity{
         this.money = money;
     }
 
-    public int getOldmanId() {
+    public Integer getOldmanId() {
         return oldmanId;
     }
 
-    public void setOldmanId(int oldmanId) {
+    public void setOldmanId(Integer oldmanId) {
         this.oldmanId = oldmanId;
     }
 

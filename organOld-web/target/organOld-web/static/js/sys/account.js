@@ -33,7 +33,7 @@ $(document).ready(function(){
                     "targets": [0], // 目标列位置，下标从0开始
                     "data": "id", // 数据列名
                     "render": function(data, type, full) { // 返回自定义内容
-                        return"<input type='checkbox' />"
+                        return"<input type='checkbox' name='id' value='"+data+"'/>"
                     }
                 },
                 // 增加一列，包括删除和修改，同时将我们需要传递的数据传递到链接中
@@ -41,7 +41,7 @@ $(document).ready(function(){
                     "targets": [7], // 目标列位置，下标从0开始
                     "data": "id", // 数据列名
                     "render": function(data, type, full) { // 返回自定义内容
-                        return "<span class='mod' id='"+data+"'>修改</span>";
+                        return "<span class='btn btn-primary' onclick='editUser("+data+")'>修改</span>";
                     }
                 },
                 //不进行排序的列
@@ -84,3 +84,79 @@ $(document).ready(function(){
 
 });
 
+
+function add() {
+    $(".organ").hide();
+    $("#editModal small").html("添加");
+    $("#subBtn").html("添加");
+    $("#userForm").attr("action","/user/save");
+    $("#editModal").modal();
+}
+
+function editUser(id) {
+    $(".organ").hide();
+    $("#editModal small").html("修改");
+    $("#subBtn").html("修改");
+    $("#userForm").attr("action","/user/update");
+    $("#editModal input[name='id']").val(id);
+    $("#editModal").modal();
+    $.ajax({
+        url: "/user/" + id + "/getById",
+        type: "get",
+        success: function (result) {
+            var data = result.data;
+            for(key in data) {
+                $("#editModal input[name='" + key + "']").val(data[key]);
+                $("#editModal select[name='" + key + "'] option[value='" + data[key] + "']").prop("selected", true);
+            }
+            if($("select[name='roleId']").find("option:selected").attr("type")!="0"){
+                $("select[name='organId']").html("");
+                $(".organ").show();
+
+                $.ajax({
+                    url: "/user/getRoleOrgan",
+                    data : {
+                        "type":$("select[name='roleId']").find("option:selected").attr("type"),
+                        "typeIndex":$("select[name='roleId']").find("option:selected").attr("index")
+                    },
+                    type: 'POST',
+                    dataType: 'json',
+                    success: function (result_2) {
+                        if(result_2.success==true){
+                            for(var i=0;i<result_2.data.length;i++){
+                                var op;
+                                if(result_2.data[i].id==data.organId){
+                                    op=$("<option value='"+result_2.data[i].id+"' selected>"+result_2.data[i].name+"</option>");
+                                }else{
+                                    op=$("<option value='"+result_2.data[i].id+"'>"+result_2.data[i].name+"</option>");
+                                }
+                                $("select[name='organId']").append(op)
+                            }
+                        }
+                    }
+                });
+                if(data.authProduct==1){
+                    $("#editModal input[value='product']").prop("checked",true);
+                }
+                if(data.authConsume==1){
+                    $("#editModal input[value='consume']").prop("checked",true);
+                }
+                if(data.authSign==1){
+                    $("#editModal input[value='sign']").prop("checked",true);
+                }
+                if(data.authQueryInfo==1){
+                    $("#editModal input[value='info']").prop("checked",true);
+                }
+                if(data.authQueryIntegral==1){
+                    $("#editModal input[value='integral']").prop("checked",true);
+                }
+            }else{
+
+                $(".organ").hide();
+
+            }
+        }
+    });
+
+
+}

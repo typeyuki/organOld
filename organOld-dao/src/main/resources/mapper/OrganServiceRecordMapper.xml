@@ -5,7 +5,7 @@
 
     <select id="getByPage" parameterType="com.organOld.dao.util.Page" resultType="com.organOld.dao.entity.organ.OrganServiceRecord">
         SELECT osr.id,osr.data,osr.time,ob.id oldmanId,ob.name oldmanName,dy.id organId,dy.name organName
-        FROM organ_sertvice_record osr,oldman_base ob,organ dy
+        FROM organ_service_record osr,oldman_base ob,organ dy
         WHERE ob.id=osr.oldman_id and osr.organ_id=dy.id
         <if test="entity!=null and entity.organId!=null and entity.organId!=0">
             and dy.id =#{entity.organId}
@@ -23,7 +23,7 @@
 
     <select id="getSizeByPage" parameterType="com.organOld.dao.util.Page" resultType="java.lang.Long">
         SELECT count(1)
-        FROM organ_sertvice_record osr,oldman_base ob,organ dy
+        FROM organ_service_record osr,oldman_base ob,organ dy
         WHERE ob.id=osr.oldman_id and osr.organ_id=dy.id
         <if test="entity!=null and entity.organId!=null and entity.organId!=0">
             and dy.id =#{entity.organId}
@@ -31,7 +31,7 @@
     </select>
 
     <insert id="saveAll" parameterType="java.util.List">
-        INSERT into organ_sertvice_record(oldman_id,organ_id,`data`,`time`)
+        INSERT into organ_service_record(oldman_id,organ_id,`data`,`time`)
         VALUES
         <foreach collection="list" item="item" index="index" separator=",">
             (#{item.oldmanId}, #{item.organId},#{item.data},#{item.time})

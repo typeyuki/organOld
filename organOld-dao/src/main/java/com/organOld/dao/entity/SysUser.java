@@ -16,6 +16,13 @@ public class SysUser extends DBEntity implements UserDetails,Serializable{
     private String password;
 
     private String organName;//对应的机构名
+    private Integer organId;
+    private Integer roleId;
+    private Integer authConsume;
+    private Integer authProduct;
+    private Integer authSign;
+    private Integer authQueryInfo;
+    private Integer authQueryIntegral;
 
     private String desc;
 
@@ -30,6 +37,63 @@ public class SysUser extends DBEntity implements UserDetails,Serializable{
     @Override
     public boolean equals(Object obj) {
         return this.username.equals(((SysUser)obj).getUsername());
+    }
+
+
+    public Integer getAuthConsume() {
+        return authConsume;
+    }
+
+    public void setAuthConsume(Integer authConsume) {
+        this.authConsume = authConsume;
+    }
+
+    public Integer getAuthProduct() {
+        return authProduct;
+    }
+
+    public void setAuthProduct(Integer authProduct) {
+        this.authProduct = authProduct;
+    }
+
+    public Integer getAuthSign() {
+        return authSign;
+    }
+
+    public void setAuthSign(Integer authSign) {
+        this.authSign = authSign;
+    }
+
+    public Integer getAuthQueryInfo() {
+        return authQueryInfo;
+    }
+
+    public void setAuthQueryInfo(Integer authQueryInfo) {
+        this.authQueryInfo = authQueryInfo;
+    }
+
+    public Integer getAuthQueryIntegral() {
+        return authQueryIntegral;
+    }
+
+    public void setAuthQueryIntegral(Integer authQueryIntegral) {
+        this.authQueryIntegral = authQueryIntegral;
+    }
+
+    public Integer getOrganId() {
+        return organId;
+    }
+
+    public void setOrganId(Integer organId) {
+        this.organId = organId;
+    }
+
+    public Integer getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(Integer roleId) {
+        this.roleId = roleId;
     }
 
     public String getDesc() {

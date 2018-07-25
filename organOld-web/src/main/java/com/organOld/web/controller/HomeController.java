@@ -104,10 +104,32 @@ public class HomeController {
     }
 
 
-    @RequestMapping(value = "/add",method = RequestMethod.POST)
-    public ModelAndView add(Home home){
+    /**
+     * 添加
+     * @param home
+     * @return
+     */
+    @RequestMapping(value = "/{type}",method = RequestMethod.POST)
+    public ModelAndView addOrUpdate(@PathVariable String type,Home home){
         ModelAndView mv=new ModelAndView("redirect:/home/"+home.getFirType());
-        homeService.add(home);
+        homeService.addOrUpdate(home,type);
         return mv;
     }
+
+
+    @ResponseBody
+    @RequestMapping(value = "/{firType}/{id}/getById",method = RequestMethod.GET)
+    public Result getById(@PathVariable int id,@PathVariable int firType){
+        Result result=homeService.getById(id,firType);
+        return result;
+    }
+
+
+    @ResponseBody
+    @RequestMapping(value = "/{type}/del",method = RequestMethod.POST)
+    public Result dela(@PathVariable int type,@RequestParam("ids[]") String ids[]){
+        homeService.delByIds(ids,type);
+        return new Result(true);
+    }
+
 }

@@ -396,4 +396,18 @@ public class OldmanController {
     }
 
 
+
+    @ResponseBody
+    @RequestMapping(value = "/integral/getRule",method = RequestMethod.GET)
+    public Result integral_getRule(){
+        return oldmanService.getIntegralRule();
+    }
+
+    @RequestMapping(value = "/integral/rule/update",method = RequestMethod.POST)
+    public ModelAndView integral_rule(@RequestParam int sign,@RequestParam int consume){
+        ModelAndView mv=new ModelAndView("redirect:/oldman/integral");
+        oldmanService.updateIntegral(sign,consume);
+        return mv;
+    }
+
 }

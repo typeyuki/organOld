@@ -9,6 +9,15 @@ public class CardModel {
     private String status;
     private Oldman oldman;
     private String time;
+    private int id;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getCid() {
         return cid;

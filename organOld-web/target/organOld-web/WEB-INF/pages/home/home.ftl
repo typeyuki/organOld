@@ -29,12 +29,12 @@
                 <div class="ibox-content">
                     <div>
                         <a onclick="addHome()" href="javascript:void(0);" class="btn btn-primary ">添加</a>
-                        <a onclick="" href="javascript:void(0);" class="btn btn-primary ">删除</a>
+                        <a onclick="del('/home/${type}/del')" href="javascript:void(0);" class="btn btn-primary ">删除</a>
                     </div>
                     <table class="table table-striped table-bordered table-hover dataTables-example">
                         <thead>
                         <tr>
-                            <th><input type='checkbox' /></th>
+                            <th><input type='checkbox' onclick="thCheck(this)" /></th>
                             <th>编号</th>
                             <#if type==1 || type==3>
                                 <th>名称</th>

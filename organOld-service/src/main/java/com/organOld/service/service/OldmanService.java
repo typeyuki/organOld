@@ -55,4 +55,8 @@ public interface OldmanService {
     void delByIds(String[] ids);
 
     void delHealthSelectByIds(String[] ids);
+
+    Result getIntegralRule();
+
+    void updateIntegral(int sign, int consume);
 }

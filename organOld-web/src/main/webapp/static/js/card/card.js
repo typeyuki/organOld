@@ -30,7 +30,7 @@ $(document).ready(function(){
                     "targets": [0], // 目标列位置，下标从0开始
                     "data": "id", // 数据列名
                     "render": function(data, type, full) { // 返回自定义内容
-                        return"<input type='checkbox' />"
+                        return"<input type='checkbox' name='id' value='"+data+"'/>"
                     }
                 },
                 {
@@ -45,7 +45,7 @@ $(document).ready(function(){
                     "targets": [7], // 目标列位置，下标从0开始
                     "data": "id", // 数据列名
                     "render": function(data, type, full) { // 返回自定义内容
-                        return "<span class='mod' id='"+data+"'>查看记录</span>";
+                        return "<span class='btn btn-primary' onclick=newPage("+data+",$(this).parent().prev().prev().prev().prev().prev().text(),'/card/"+data+"/record')>查看记录</span>";
                     }
                 }
             ],
@@ -85,3 +85,24 @@ $(document).ready(function(){
 
 });
 
+function changeStatus(status) {
+    var ids=[];
+    $("input[name='id']:checked").each(function () {
+        ids.push($(this).val());
+    });
+    $.ajax({
+        url : "/card/changeStatus/"+status,
+        type : "post",
+        dataType : 'json',
+        data:{
+            ids:ids
+        },
+        success : function(data) {
+            if (data.success==true) {
+                tableUpdate();
+            } else {
+                alert('充值失败！');
+            }
+        }
+    });
+}

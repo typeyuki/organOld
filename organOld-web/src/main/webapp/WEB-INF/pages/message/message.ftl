@@ -38,7 +38,6 @@
                 </div>
                 <div class="ibox-content">
                     <div>
-                        <a href="javascript:void(0);" class="btn btn-primary ">写邮件</a>
                         <a  href="javascript:void(0);" class="btn btn-primary ">删除</a>
                     </div>
                     <div>

@@ -25,6 +25,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -48,6 +49,10 @@ public class HomeServiceImpl implements HomeService{
     OrganDao organDao;
     @Autowired
     OldmanKeyHandleDao oldmanKeyHandleDao;
+    @Autowired
+    ChxDao chxDao;
+    @Autowired
+    HomeDoctorDao homeDoctorDao;
 
     @Override
     public String getByPage(HomeRequest homeRequest, BTableRequest bTableRequest) {
@@ -316,7 +321,60 @@ public class HomeServiceImpl implements HomeService{
     }
 
     @Override
-    public void add(Home home) {
+    @Transactional
+    public void addOrUpdate(Home home,String type) {
+        if(type.equals("add")) {
+            switch (home.getFirType()) {
+                case 2:
+                    chxDao.save(home.getChx());
+                    home.setSecType(home.getChx().getId() + "");
+                    break;
+                case 4:
+                    homeDoctorDao.save(home.getDoctor());
+                    home.setSecType(home.getDoctor().getId() + "");
+                    break;
+            }
+            homeDao.save(home);
+        }else{
+            switch (home.getFirType()) {
+                case 1:
+                case 3:
+                case 5:
+                    homeDao.updateById(home);
+                    break;
+                case 2:
+                    home.getChx().setHomeId(home.getId());
+                    chxDao.updateById(home.getChx());
+                    break;
+                case 4:
+                    home.getDoctor().setHomeId(home.getId());
+                    homeDoctorDao.updateById(home.getDoctor());
+                    break;
+            }
+        }
+    }
+
+    @Override
+    public Result getById(int id, int firType) {
+        return new Result(true,homeDao.getByIdAndFirType(id,firType));
+    }
+
+    @Override
+    @Transactional
+    public void delByIds(String[] ids, int type) {
+        Integer[] id=new Integer[ids.length];
+        for(int i=0;i<ids.length;i++){
+            id[i]=Integer.parseInt(ids[i]);
+        }
+        homeDao.delByIds(id);
+        switch (type) {
+            case 2:
+                chxDao.delByIds(id);
+                break;
+            case 4:
+                homeDoctorDao.delByIds(id);
+                break;
+        }
 
     }
 }

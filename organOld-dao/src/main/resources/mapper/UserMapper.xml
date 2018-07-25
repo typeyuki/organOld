@@ -79,4 +79,24 @@
         UPDATE sysuser u,user_organ uo set u.disable=1
         WHERE uo.organ_id=#{organId} and u.id=uo.user_id
     </update>
+
+
+    <delete id="delByIds">
+        UPDATE sysuser SET disable=1 where id in
+        <foreach collection="array" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+    <select id="getById" resultType="com.organOld.dao.entity.SysUser">
+        SELECT u.id,u.username,u.password,r.id roleId,o.id organId,o.auth_consume,o.auth_product,o.auth_sign,o.auth_query_info,o.auth_query_integral
+        FROM sysuser u left join user_organ uo on uo.user_id=u.id left join organ o on o.id=uo.organ_id,sysrole r,user_role ur
+        WHERE u.id=ur.user_id and r.id=ur.role_id and u.id=#{id}
+    </select>
+
+    <update id="updateById" parameterType="com.organOld.dao.entity.SysUser">
+UPDATE sysuser SET username=#{username},password=#{password} where id=#{id};
+UPDATE user_role SET role_id=#{roleId} where user_id=#{id};
+UPDATE user_organ SET organ_id=#{organId} where user_id=#{id}
+    </update>
 </mapper>

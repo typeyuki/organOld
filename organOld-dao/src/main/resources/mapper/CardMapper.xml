@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.organOld.dao.repository.CardDao">
 
-    <resultMap id="card" type="com.organOld.dao.entity.volunteer.Volunteer">
+    <resultMap id="card" type="com.organOld.dao.entity.Card">
         <id property="id" column="id" />
         <id property="cid" column="cid" />
         <id property="status" column="status" />
@@ -23,7 +23,7 @@
         </foreach>
     </insert>
 
-    <delete id="delByOldmanId" parameterType="java.util.List">
+    <delete id="delByOldmanIds" parameterType="java.util.List">
         UPDATE card SET status=3
         WHERE oldman_id IN
         <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
@@ -34,8 +34,8 @@
 
     <select id="getByPage" parameterType="com.organOld.dao.util.Page" resultMap="card">
         SELECT c.id,c.cid,c.password,c.status,ob.id oid,ob.name,c.time,c.money
-        FROM card c,oldman_base ob,organ org,auto_value x
-        WHERE ob.id=c.oldman_id AND x.id=ob.xq_id AND org.id=x.parent_index
+        FROM card c,oldman_base ob
+        WHERE ob.id=c.oldman_id
         <if test="sortType!=null and sortType!=''">
             ORDER BY ob.${sortType}
         </if>
@@ -49,18 +49,31 @@
 
     <select id="getSizeByPage" parameterType="com.organOld.dao.util.Page" resultType="java.lang.Long">
         SELECT count(1)
-        FROM card c,oldman_base ob,organ org,auto_value x
-        WHERE ob.id=c.oldman_id AND x.id=ob.xq_id AND org.id=x.parent_index
-        <if test="entity!=null and entity.organId!=null and entity.organId!=0">
-            and org.id in (
-            SELECT
-            case o.parent
-            when 0 then child.id
-            else o.id
-            end id
-            from organ o left join organ child on child.parent=o.id
-            WHERE o.id=#{entity.organId}
-            )
-        </if>
+        FROM card
     </select>
+
+
+    <select id="getById" resultType="com.organOld.dao.entity.Card">
+        SELECT *
+        FROM card WHERE id=#{id}
+    </select>
+
+    <update id="addMoney">
+        UPDATE card
+        SET money=money+${money}
+        WHERE id in
+        <foreach collection="ids" index="index" item="item" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+    </update>
+
+    <update id="updateProps">
+        UPDATE card
+        SET ${prop}=#{value}
+        WHERE id in
+        <foreach collection="ids" index="index" item="item" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+    </update>
+
 </mapper>
