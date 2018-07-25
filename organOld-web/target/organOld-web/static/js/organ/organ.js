@@ -49,10 +49,10 @@ $(document).ready(function(){
                         btn+="<span class='btn btn-primary' onclick=newPage("+data.id+",$(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().prev().text(),'/record/1?organId="+data.id+"')>消费记录</span>";
                     }
                     if(data.authProduct==1){
-                        btn+="<span class='btn btn-primary' onclick=newPage("+data.id+",$(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().prev().text(),'/product?organId="+data.id+"')>商品列表</span>";
+                        btn+="<span class='btn btn-primary' onclick=newPage("+data.id+",$(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().prev().text(),'/product?organId="+data.id+"')>服务产品</span>";
                     }
                     if(data.authProduct==1){
-                        btn+="<span class='btn btn-primary' onclick=newPage("+data.id+",$(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().prev().text(),'/product/book?organId="+data.id+"')>商品预定记录</span>";
+                        btn+="<span class='btn btn-primary' onclick=newPage("+data.id+",$(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().prev().text(),'/product/book?organId="+data.id+"')>预定记录</span>";
                     }
                     if(data.authSign==1){
                         btn+="<span class='btn btn-primary' onclick=newPage("+data.id+",$(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().prev().text(),'/record/2?organId="+data.id+"')>签到记录</span>";
@@ -119,10 +119,10 @@ $(document).ready(function(){
                         btn+="<span class='btn btn-primary' onclick=newPage("+data.id+",$(this).parent().prev().prev().prev().prev().prev().text(),'/record/1?organId="+data.id+"')>消费记录</span>";
                     }
                     if(data.authProduct==1){
-                        btn+="<span class='btn btn-primary' onclick=newPage("+data.id+",$(this).parent().prev().prev().prev().prev().prev().text(),'/product?organId="+data.id+"')>商品列表</span>";
+                        btn+="<span class='btn btn-primary' onclick=newPage("+data.id+",$(this).parent().prev().prev().prev().prev().prev().text(),'/product?organId="+data.id+"')>服务产品</span>";
                     }
                     if(data.authProduct==1){
-                        btn+="<span class='btn btn-primary' onclick=newPage("+data.id+",$(this).parent().prev().prev().prev().prev().prev().prev().text(),'/product/book?organId="+data.id+"')>商品预定记录</span>";
+                        btn+="<span class='btn btn-primary' onclick=newPage("+data.id+",$(this).parent().prev().prev().prev().prev().prev().prev().text(),'/product/book?organId="+data.id+"')>预定记录</span>";
                     }
                     if(data.authSign==1){
                         btn+="<span class='btn btn-primary' onclick=newPage("+data.id+",$(this).parent().prev().prev().prev().prev().prev().prev().text(),'/record/2?organId="+data.id+"')>签到记录</span>";
@@ -189,10 +189,10 @@ $(document).ready(function(){
                         btn+="<span class='btn btn-primary' onclick=newPage("+data.id+",$(this).parent().prev().prev().prev().prev().prev().prev().prev().text(),'/record/1?organId="+data.id+"')>消费记录</span>";
                     }
                     if(data.authProduct==1){
-                        btn+="<span class='btn btn-primary' onclick=newPage("+data.id+",$(this).parent().prev().prev().prev().prev().prev().prev().prev().text(),'/product?organId="+data.id+"')>商品列表</span>";
+                        btn+="<span class='btn btn-primary' onclick=newPage("+data.id+",$(this).parent().prev().prev().prev().prev().prev().prev().prev().text(),'/product?organId="+data.id+"')>服务产品</span>";
                     }
                     if(data.authProduct==1){
-                        btn+="<span class='btn btn-primary' onclick=newPage("+data.id+",$(this).parent().prev().prev().prev().prev().prev().prev().prev().text(),'/product/book?organId="+data.id+"')>商品预定记录</span>";
+                        btn+="<span class='btn btn-primary' onclick=newPage("+data.id+",$(this).parent().prev().prev().prev().prev().prev().prev().prev().text(),'/product/book?organId="+data.id+"')>预定记录</span>";
                     }
                     if(data.authSign==1){
                         btn+="<span class='btn btn-primary' onclick=newPage("+data.id+",$(this).parent().prev().prev().prev().prev().prev().prev().prev().text(),'/record/2?organId="+data.id+"')>签到记录</span>";
@@ -263,15 +263,15 @@ $(document).ready(function(){
                     }
                     if(data.authProduct==1){
                         if(data.status=="4")
-                        btn+="<span class='btn btn-primary' onclick=newPage("+data.id+",$(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().text(),'/product?organId="+data.id+"')>商品列表</span>";
+                        btn+="<span class='btn btn-primary' onclick=newPage("+data.id+",$(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().text(),'/product?organId="+data.id+"')>服务产品</span>";
                         else
-                            btn+="<span class='noBtn'>商品列表</span>";
+                            btn+="<span class='noBtn'>服务产品</span>";
                     }
                     if(data.authProduct==1){
                         if(data.status=="4")
-                        btn+="<span class='btn btn-primary' onclick=newPage("+data.id+",$(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().text(),'/product/book?organId="+data.id+"')>商品预定记录</span>";
+                        btn+="<span class='btn btn-primary' onclick=newPage("+data.id+",$(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().text(),'/product/book?organId="+data.id+"')>预定记录</span>";
                         else
-                            btn+="<span class='noBtn'>商品预定记录</span>";
+                            btn+="<span class='noBtn'>预定记录</span>";
                     }
                     if(data.authSign==1){
                         if(data.status=="4")
@@ -339,8 +339,8 @@ $(document).ready(function(){
                         btn+="<span class='noBtn'>消费记录</span>";
                     }
                     if(data.authProduct==1){
-                        btn+="<span  class='noBtn'>商品列表</span>";
-                        btn+="<span  class='noBtn'>商品预定列表</span>";
+                        btn+="<span  class='noBtn'>服务产品</span>";
+                        btn+="<span  class='noBtn'>预定列表</span>";
                     }
                     if(data.authSign==1){
                         btn+="<span class='noBtn'>签到记录</span>";

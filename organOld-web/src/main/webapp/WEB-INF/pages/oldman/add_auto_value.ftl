@@ -12,13 +12,25 @@
                                 <div class="ibox-content">
                                     <form method="post" id="autoValueForm" class="form-horizontal" action="">
                                         <input type="hidden" name="id" value="0">
-                                        <input type="hidden" name="type" value="0">
                                         <div class="form-group">
                                             <label class="col-sm-1 control-label">名称</label>
                                             <div class="col-sm-8">
                                                 <input type="text" class="form-control" name="value"/>
                                             </div>
                                         </div>
+                                        <#if type==2>
+                                            <div class="form-group">
+                                                <label class="col-sm-1 control-label">所属居委</label>
+                                                <div class="col-sm-8">
+                                                    <select name="parentIndex"  class="search_select" data-live-search="true">
+                                                        <option></option>
+                                                        <#list jw as list>
+                                                            <option type="checkbox" value="${list.id!}" >${list.name!}</option>
+                                                        </#list>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </#if>
                                     </form>
                                 </div>
                             </div>

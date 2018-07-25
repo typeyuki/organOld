@@ -176,6 +176,10 @@ public class OrganServiceImpl implements OrganService{
         return sysUser;
     }
 
+    @Override
+    public List<Organ> getByType(int type) {
+        return organDao.getSimpleByType(2,0);
+    }
 
     @Override
     public OrganRegInfoModel getRegInfo() {
@@ -600,8 +604,8 @@ public class OrganServiceImpl implements OrganService{
                     OrganServiceRecord organServiceRecord=new OrganServiceRecord();
                     organServiceRecord.setOrganId(organId);
 
-                    if (r.getCell(0).getStringCellValue() != null && !r.getCell(0).getStringCellValue().equals("")) {
-                        Integer oldmanId=commonService.checkOldmanExiest(r.getCell(0).getStringCellValue());
+                    if (r.getCell(1).getStringCellValue() != null && !r.getCell(1).getStringCellValue().equals("")) {
+                        Integer oldmanId=commonService.checkOldmanExiest(r.getCell(1).getStringCellValue());
                         if(oldmanId!=null && oldmanId!=0){
                             organServiceRecord.setOldmanId(oldmanId);
                         }else{
@@ -611,13 +615,15 @@ public class OrganServiceImpl implements OrganService{
                         throw new Exception();
                     }
 
-                    if (r.getCell(1).getStringCellValue() != null && !r.getCell(1).getStringCellValue().equals("")) {
-                        organServiceRecord.setData(r.getCell(1).getStringCellValue());
+                    if (r.getCell(12).getStringCellValue() != null && !r.getCell(2).getStringCellValue().equals("")) {
+                        organServiceRecord.setData(r.getCell(2).getStringCellValue());
                     }
-                    if (r.getCell(2).getStringCellValue() != null && !r.getCell(2).getStringCellValue().equals("")) {
-                        organServiceRecord.setTime(Tool.stringToDate(r.getCell(2).getStringCellValue()));
+                    if (r.getCell(3).getStringCellValue() != null && !r.getCell(3).getStringCellValue().equals("")) {
+                        organServiceRecord.setTime(Tool.stringToDate(r.getCell(3).getStringCellValue()));
                     }
-
+                    if (r.getCell(4).getStringCellValue() != null && !r.getCell(4).getStringCellValue().equals("")) {
+                        organServiceRecord.setOrder(r.getCell(4).getStringCellValue());
+                    }
                     organServiceRecordList.add(organServiceRecord);
                     numSuccess++;
                     successAdd++;

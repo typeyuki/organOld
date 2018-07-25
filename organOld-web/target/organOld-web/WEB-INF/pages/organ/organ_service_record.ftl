@@ -58,6 +58,7 @@
                             <th>老人</th>
                             <th>时间</th>
                             <th>内容</th>
+                            <th>单号</th>
                         </tr>
                         </thead>
                         <tbody>

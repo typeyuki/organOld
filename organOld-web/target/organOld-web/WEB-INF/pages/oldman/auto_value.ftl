@@ -19,7 +19,7 @@
         <div class="col-sm-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>一级标签 <small></small></h5>
+                    <h5>${typeName} <small></small></h5>
                     <div class="ibox-tools">
                         <a class="collapse-link">
                             <i class="fa fa-chevron-up"></i>
@@ -31,8 +31,16 @@
                 </div>
                 <div class="ibox-content">
                     <div>
+                        <#list autoValue as list>
+                            <#if list.index!=9 && list.index!=10>
+                                <button onclick=location.href="/autoValue/${list.index}" class="btn btn-primary auto" index="${list.index}" >${list.getName()}</button>
+
+                            </#if>
+                        </#list>
+                    </div>
+                    <div>
                         <a href="javascript:void(0);" class="btn btn-primary " onclick="add()">添加</a>
-                        <a  href="javascript:void(0);" class="btn btn-primary ">删除</a>
+                        <a onclick="del('/autoValue/del')"  href="javascript:void(0);" class="btn btn-primary ">删除</a>
                     </div>
                     <table class="table table-striped table-bordered table-hover dataTables-example">
                         <thead>
@@ -56,6 +64,12 @@
 <#include "add_auto_value.ftl"/>
 <script>
     var type=${type!0};
+    $(".auto").each(function () {
+        if($(this).attr("index")==type){
+            $(this).prop("disabled",true);
+        }
+    });
+    $('.search_select').searchableSelect();
 </script>
 <script src="/js/content.min.js?v=1.0.0"></script>
 <script src="/static/js/common.js"></script>

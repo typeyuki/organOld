@@ -9,7 +9,7 @@ $(document).ready(function(){
             "sPaginationType": "full_numbers",
             "bPaginite": true,
             "bInfo": true,
-            "bSort": true,
+            "bSort": false,
             "bFilter": false, //搜索栏
             "bStateSave": true,
             "bProcessing": true, //加载数据时显示正在加载信息
@@ -20,6 +20,8 @@ $(document).ready(function(){
                 data:"time"
             },{
                 data:"data"
+            },{
+                data:"order"
             }
             ],
             "order":[[0,"asc"]],

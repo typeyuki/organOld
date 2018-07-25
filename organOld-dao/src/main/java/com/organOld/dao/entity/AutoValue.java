@@ -6,10 +6,18 @@ package com.organOld.dao.entity;
 public class AutoValue extends DBEntity {
     private String value;
     private int type;
-
+    private int parentIndex;
 
     private String timeFormat;//传给前端的时间格式
 
+
+    public int getParentIndex() {
+        return parentIndex;
+    }
+
+    public void setParentIndex(int parentIndex) {
+        this.parentIndex = parentIndex;
+    }
 
     public String getTimeFormat() {
         return timeFormat;

@@ -56,4 +56,6 @@ public interface OrganService {
     void delByIds(String[] ids);
 
     List<Organ> getAll();
+
+    List<Organ> getByType(int type);
 }

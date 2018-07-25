@@ -9,7 +9,16 @@ public class OrganServiceRecord extends DBEntity implements DBInterface {
     private Integer oldmanId;
     private String oldmanName;
     private String organName;
+    private String order;//单号
 
+
+    public String getOrder() {
+        return order;
+    }
+
+    public void setOrder(String order) {
+        this.order = order;
+    }
 
     public Integer getOldmanId() {
         return oldmanId;

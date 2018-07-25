@@ -9,6 +9,15 @@ public class OrganServiceRecordModel {
     private Oldman oldman;
     private String organName;
     private String time;
+    private String order;
+
+    public String getOrder() {
+        return order;
+    }
+
+    public void setOrder(String order) {
+        this.order = order;
+    }
 
     public int getId() {
         return id;

@@ -21,7 +21,7 @@
     </select>
 
     <select id="getById" resultType="com.organOld.dao.entity.AutoValue">
-        SELECT id,type,value,time
+        SELECT id,type,value,time,parent_index
         FROM auto_value
         WHERE id=#{id}
     </select>
@@ -42,13 +42,13 @@
 
 
     <insert id="save" parameterType="com.organOld.dao.entity.AutoValue">
-        INSERT into auto_value(type,value)
-        VALUES (#{type},#{value})
+        INSERT into auto_value(type,value,parent_index)
+        VALUES (#{type},#{value},#{parentIndex})
     </insert>
 
     <update id="updateById" parameterType="com.organOld.dao.entity.AutoValue">
         UPDATE auto_value
-        set value=#{value}
+        set value=#{value},parent_index=#{parentIndex}
         where id=#{id}
     </update>
 
@@ -72,4 +72,11 @@
         FROM auto_value
         WHERE type=#{entity.type}
     </select>
+
+    <delete id="delByIds">
+        DELETE from auto_value where id in
+        <foreach collection="array" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
 </mapper>

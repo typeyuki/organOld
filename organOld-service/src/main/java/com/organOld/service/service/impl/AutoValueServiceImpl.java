@@ -54,4 +54,13 @@ public class AutoValueServiceImpl implements AutoValueService {
             autoValueDao.updateById(autoValue);
         }
     }
+
+    @Override
+    public void delByIds(String[] ids) {
+        Integer[] id=new Integer[ids.length];
+        for(int i=0;i<ids.length;i++){
+            id[i]=Integer.parseInt(ids[i]);
+        }
+        autoValueDao.delByIds(id);
+    }
 }
