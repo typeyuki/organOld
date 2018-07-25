@@ -246,7 +246,6 @@ public class OrganServiceImpl implements OrganService{
         ExcelReturnModel excelReturnModel=new ExcelReturnModel();
         int numSuccess=0;//成功导入的数量
         int successAdd=0;//导入数量中  增加的个数
-        excelReturnModel.setTotal(sht0.getLastRowNum()-(start-1));//一共
 
         //得到所有的图片  一个机构一张图片  key是行号
         Map<Integer, PictureData> sheetIndexPicMap = getSheetPictrues03( (HSSFSheet) sht0, (HSSFWorkbook) wb0);
@@ -383,7 +382,7 @@ public class OrganServiceImpl implements OrganService{
         excelReturnModel.setNumFail(excelReturnModel.getFail().size());
         excelReturnModel.setSuccessAdd(successAdd);
         excelReturnModel.setNumSuccess(numSuccess);
-
+        excelReturnModel.setTotal(numSuccess+excelReturnModel.getNumFail());//一共
         organDao.saveAll(organList);
         return new Result(true,excelReturnModel);
     }
@@ -424,7 +423,6 @@ public class OrganServiceImpl implements OrganService{
         ExcelReturnModel excelReturnModel=new ExcelReturnModel();
         int numSuccess=0;//成功导入的数量
         int successAdd=0;//导入数量中  增加的个数
-        excelReturnModel.setTotal(sht0.getLastRowNum()-(start-1));//一共
 
         Integer organId=commonService.getIdBySession();
         int oldStatus=0;//养老状态
@@ -514,7 +512,7 @@ public class OrganServiceImpl implements OrganService{
         excelReturnModel.setNumFail(excelReturnModel.getFail().size());
         excelReturnModel.setSuccessAdd(successAdd);
         excelReturnModel.setNumSuccess(numSuccess);
-
+        excelReturnModel.setTotal(numSuccess+excelReturnModel.getNumFail());//一共
         //该机构 删除的老人 的养老状态   之前是机构养老 则变为0 之前是社区养老的 看看之前的养老状态是不是居家社区 看看有没有在其他的社区养老机构
         for(Oldman oldman:organExistOldman){
             if(organ.getOrganFirTypeId()==21){
@@ -593,8 +591,6 @@ public class OrganServiceImpl implements OrganService{
         int numSuccess=0;//成功导入的数量
         int successAdd=0;//导入数量中  增加的个数
 
-        excelReturnModel.setTotal(sht0.getLastRowNum()-(start));//一共
-
         Integer organId=commonService.getIdBySession();
 
         for (Row r : sht0) {
@@ -634,7 +630,7 @@ public class OrganServiceImpl implements OrganService{
         excelReturnModel.setNumFail(excelReturnModel.getFail().size());
         excelReturnModel.setSuccessAdd(successAdd);
         excelReturnModel.setNumSuccess(numSuccess);
-
+        excelReturnModel.setTotal(numSuccess+excelReturnModel.getNumFail());//一共
         if(organServiceRecordList.size()>0){
             organServiceRecordDao.saveAll(organServiceRecordList);
         }

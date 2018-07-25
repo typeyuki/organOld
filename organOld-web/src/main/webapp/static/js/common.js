@@ -41,11 +41,11 @@ function newPage(id,name,url) {
 
 
 function oldman_edit(id,url) {
-
     $(".searchable-select").remove();
     $.ajax({
         url: url,
         type: "get",
+        async:false,
         success: function (result) {
             var data=result.data;
             for(key in data){
@@ -55,9 +55,19 @@ function oldman_edit(id,url) {
                             $(this).prop("checked",true);
                         }
                     });
-                }else {
-                    $("#editModal input[name='"+key+"']").val(data[key]);
-                    $("#editModal select[name='"+key+"'] option[value='"+data[key]+"']").prop("selected",true);
+                }else if(key=="chx" || key=="doctor"){
+                    for(keyChild in data[key]){
+                        $("#editModal input[name='"+key+"."+keyChild+"']").val(data[key][keyChild]);
+                        $("#editModal select[name='"+key+"."+keyChild+"'] option[value='"+data[key][keyChild]+"']").prop("selected",true);
+                    }
+                }
+                else{
+                    if(data[key]!=null){
+                        $("#editModal input[name='"+key+"']").val(data[key]);
+                        $("#editModal select[name='"+key+"'] option[value='"+data[key]+"']").prop("selected",true);
+                    }else{
+                        $("#editModal select[name='"+key+"'] option:first-child").prop("selected",true);
+                    }
                 }
             }
 
@@ -67,6 +77,8 @@ function oldman_edit(id,url) {
     });
 
 }
+
+
 
 function oldman_edit_oldmanName(id,url,oldmanName){
     $("#editModal h5").html(oldmanName);
@@ -115,6 +127,17 @@ function thCheckByName(obj,name) {
         $("input[name="+name+"]").prop("checked",true);
     }else{
         $("input[name="+name+"]").prop("checked",false);
+    }
+}
+
+function tableUpdate() {
+    var start = $(".dataTables-example").dataTable().fnSettings()._iDisplayStart;
+    var total = $(".dataTables-example").dataTable().fnSettings().fnRecordsDisplay();
+    window.location.reload();
+    if(total-start==1){
+        if(start>0){
+            $(".dataTables-example").dataTable().fnPageChange('previous',true);
+        }
     }
 }
 

@@ -6,11 +6,26 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <#include "../../common/head.ftl" />
-
-    <#--<link href="/css/animate.min.css" rel="stylesheet">-->
     <link href="/css/style.min.css?v=4.0.0" rel="stylesheet">
     <link href="/static/css/common_table.css" rel="stylesheet">
-    <link href="/static/css/oldman/base.css" rel="stylesheet">
+    <style>
+        @media only screen and (min-width: 1401px){
+            .age{
+                width: 48%;
+            }
+            select.isKey{
+                width: 53%;
+            }
+        }
+        @media only screen and ( max-width: 1400px){
+            .age{
+                width: 45%;
+            }
+            select.isKey{
+                width: 39%;
+            }
+        }
+    </style>
 </head>
 
 <body class="gray-bg">
@@ -58,8 +73,8 @@
                                     <div class="col-sm-2"><input type="text" name="id" class="form-control inp" placeholder="序号"/></div>
                                     <div class="col-sm-2"><input type="text" name="wh" class="form-control inp" placeholder="文号"/></div>
                                     <div class="col-sm-2">
-                                        <input class="age form-control inp" style="width: 48%" name="ageStart" type="text" placeholder="年龄段-起">-
-                                        <input class="age form-control inp" style="width: 48%" name="ageEnd" type="text" placeholder="年龄段-止">
+                                        <input class="age form-control inp"  name="ageStart" type="text" placeholder="年龄段-起">-
+                                        <input class="age form-control inp"  name="ageEnd" type="text" placeholder="年龄段-止">
                                     </div>
                                     <div class="col-sm-2">
                                         <input type="text" name="search" class="form-control inp" value="" placeholder="模糊搜索"/>
@@ -75,7 +90,7 @@
                                     </div>
                                     <div class="col-sm-2">
                                         <label >是否是重点老人</label>
-                                        <select name="isKey"  class="form-control inp" style="width: 53%">
+                                        <select name="isKey"  class="form-control inp isKey" >
                                             <option></option>
                                             <#list (rule.isKey)?keys as key>
                                                 <option  value="${key!}"> ${(rule.isKey)?values[key_index]!}</option>

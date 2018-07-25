@@ -346,12 +346,10 @@ public class OldmanServiceImpl implements OldmanService {
 
         int start=2;
 
-        excelReturnModel.setTotal(sht0.getLastRowNum()-(start-1));//一共
-
-
 
         //对Sheet中的每一行进行迭代
         for (Row r : sht0) {
+            Oldman oldman = new Oldman();
             try {
                 if (r.getRowNum() >= start) {
                     //遍历 cell  将单元格 格式 全都转换成String 类型
@@ -363,7 +361,6 @@ public class OldmanServiceImpl implements OldmanService {
 
 
                     //创建实体类
-                    Oldman oldman = new Oldman();
                     oldman.setName(r.getCell(3).getStringCellValue());
                     oldman.setSex((r.getCell(4).getStringCellValue().equals("男")) ? 2 : 1);
                     oldman.setBirthday(Tool.stringToDate((r.getCell(5).getStringCellValue())));
@@ -571,7 +568,7 @@ public class OldmanServiceImpl implements OldmanService {
                             healthAddList.add(healthAdd);
                         }
                     }
-//!!!!
+
                     OldmanFamily family = new OldmanFamily();
                     if (r.getCell(62).getStringCellValue().equals("1")) {
                         family.setFamilyIndex(autoValueDao.getStringLikeIndex("纯老", AutoValueEnum.JJJG.getIndex(), "like"));
@@ -658,7 +655,7 @@ public class OldmanServiceImpl implements OldmanService {
 
 
                         Card card=new Card();
-                        card.setOldmanId(oldmanId);
+                        card.setOldmanId(oldman.getId());
                         card.setCid(oldman.getPid().substring(oldman.getPid().length()-6));
                         card.setPassword("123456");
                         cardList_add.add(card);
@@ -684,16 +681,14 @@ public class OldmanServiceImpl implements OldmanService {
                         add.setOldmanId(oldman.getId());
                         add.setType(healthAdd.getType());
                         add.setDesc(healthAdd.getDesc());
-                        healthAddList_add.add(healthAdd);
+                        healthAddList_add.add(add);
                     }
-//                    System.out.println(oldman.toString());
-//                    System.out.println(linkman.toString());
-//                    System.out.println(health.toString());
-//                    System.out.println(family.toString());
-//                    System.out.println(economic.toString());
                     numSuccess++;
                 }
             }catch (Exception e){
+                //检测 是否已经把改老人信息加到表里
+                oldmanBaseDao.delById(oldman.getId());
+
                 e.printStackTrace();
                 excelReturnModel.getFail().add(r.getRowNum()+1);
             }
@@ -747,7 +742,7 @@ public class OldmanServiceImpl implements OldmanService {
         excelReturnModel.setSuccessAdd(successAdd);
         excelReturnModel.setSuccessUpdate(successUpdate);
         excelReturnModel.setNumFail(excelReturnModel.getFail().size());
-
+        excelReturnModel.setTotal(numSuccess+excelReturnModel.getNumFail());//一共
 
         return new Result(true,excelReturnModel);
     }

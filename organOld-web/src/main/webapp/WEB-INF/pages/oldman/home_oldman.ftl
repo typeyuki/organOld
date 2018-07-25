@@ -9,6 +9,11 @@
 
     <link href="/css/style.min.css?v=4.0.0" rel="stylesheet">
     <link href="/static/css/common_table.css" rel="stylesheet">
+    <style>
+        .bootstrap-select:not([class*="span"]):not([class*="col-"]):not([class*="form-control"]){
+            width: 80% !important;
+        }
+    </style>
 </head>
 <body class="gray-bg">
 <div class="wrapper wrapper-content animated fadeInRight">
@@ -40,7 +45,7 @@
                         </div>
                         <div class="col-sm-3">
                             <label>类型：</label>
-                            <select name="type"  class="selectpicker bla bla bli" multiple data-live-search="true">
+                            <select name="type"   class="selectpicker bla bla bli" multiple data-live-search="true">
                                 <option></option>
                                 <option value="1">家庭服务</option>
                                 <option value="2">长护险</option>

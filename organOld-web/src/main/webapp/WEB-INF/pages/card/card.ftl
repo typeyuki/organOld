@@ -31,9 +31,11 @@
                 </div>
                 <div class="ibox-content">
                     <div>
+                        <a onclick="$('#addModal').modal()" href="javascript:void(0);" class="btn btn-primary ">充钱</a>
+                        <a onclick="changeStatus('3')" href="javascript:void(0);" class="btn btn-primary ">设置为不可用</a>
+                        <a onclick="changeStatus('1')" href="javascript:void(0);" class="btn btn-primary ">设置为可用</a>
+                        <a onclick="changeStatus('2')" href="javascript:void(0);" class="btn btn-primary ">挂失</a>
                         <a  href="javascript:void(0);" id="search" class="btn btn-primary ">搜索</a>
-                        <a  href="javascript:void(0);" class="btn btn-primary ">不可用</a>
-                        <a  href="javascript:void(0);" class="btn btn-primary ">挂失</a>
                     </div>
                     <div>
                         <input class="id" type="text" placeholder="老人序号">
@@ -44,7 +46,7 @@
                     <table class="table table-striped table-bordered table-hover dataTables-example">
                         <thead>
                         <tr>
-                            <th><input type='checkbox' /></th>
+                            <th><input type='checkbox' onclick="thCheck(this)"/></th>
                             <th>卡号</th>
                             <th>老人</th>
                             <th>密码</th>
@@ -65,9 +67,10 @@
 
 </div>
 
-<#--<script src="/js/plugins/jeditable/jquery.jeditable.js"></script>-->
-
 <script src="/js/content.min.js?v=1.0.0"></script>
+<script src="/static/js/common.js"></script>
+
+<#include "add_money.ftl"/>
 <script src="/static/js/card/card.js" ></script>
 <script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
 

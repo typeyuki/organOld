@@ -345,21 +345,24 @@
 
     <update id="updateByIds" parameterType="java.util.List">
         update oldman_base
-        SET disable=0
+        SET disable=0,
         name= CASE id
         <foreach collection="list" index="index" item="item" open="" separator=" " close="">
             WHEN ${item.id} THEN #{item.name}
         </foreach>
+        ELSE name
         END,
         sex= CASE id
         <foreach collection="list" index="index" item="item" open="" separator=" " close="">
             WHEN ${item.id} THEN #{item.sex}
         </foreach>
+        ELSE sex
         END,
         birthday= CASE id
         <foreach collection="list" index="index" item="item" open="" separator=" " close="">
             WHEN ${item.id} THEN #{item.birthday}
         </foreach>
+        ELSE birthday
         END,
         pid= CASE id
         <foreach collection="list" index="index" item="item" open="" separator=" " close="">
@@ -370,36 +373,43 @@
         <foreach collection="list" index="index" item="item" open="" separator=" " close="">
             WHEN ${item.id} THEN #{item.address}
         </foreach>
+        ELSE address
         END,
         xq_id= CASE id
         <foreach collection="list" index="index" item="item" open="" separator=" " close="">
             WHEN ${item.id} THEN #{item.xqId}
         </foreach>
+        ELSE xq_id
         END,
         census= CASE id
         <foreach collection="list" index="index" item="item" open="" separator=" " close="">
             WHEN ${item.id} THEN #{item.census}
         </foreach>
+        ELSE census
         END,
         political_status= CASE id
         <foreach collection="list" index="index" item="item" open="" separator=" " close="">
             WHEN ${item.id} THEN #{item.politicalStatus}
         </foreach>
+        ELSE political_status
         END,
         phone= CASE id
         <foreach collection="list" index="index" item="item" open="" separator=" " close="">
             WHEN ${item.id} THEN #{item.phone}
         </foreach>
+        ELSE phone
         END,
         lou_num= CASE id
         <foreach collection="list" index="index" item="item" open="" separator=" " close="">
             WHEN ${item.id} THEN #{item.louNum}
         </foreach>
+        ELSE lou_num
         END,
         floor= CASE id
         <foreach collection="list" index="index" item="item" open="" separator=" " close="">
             WHEN ${item.id} THEN #{item.floor}
         </foreach>
+        ELSE floor
         END
         where id in
         <foreach collection="list" index="index" item="item" separator="," open="(" close=")">

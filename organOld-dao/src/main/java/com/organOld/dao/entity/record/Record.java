@@ -12,7 +12,45 @@ public class Record extends DBEntity implements DBInterface{
     private Integer oldmanId;
     private Integer type;
     private Organ organ;
+    private Double prevMoney;
+    private Double nowMoney;
+    private String order;
 
+
+    private Integer cardId;
+
+
+    public String getOrder() {
+        return order;
+    }
+
+    public void setOrder(String order) {
+        this.order = order;
+    }
+
+    public Double getPrevMoney() {
+        return prevMoney;
+    }
+
+    public void setPrevMoney(Double prevMoney) {
+        this.prevMoney = prevMoney;
+    }
+
+    public Double getNowMoney() {
+        return nowMoney;
+    }
+
+    public void setNowMoney(Double nowMoney) {
+        this.nowMoney = nowMoney;
+    }
+
+    public Integer getCardId() {
+        return cardId;
+    }
+
+    public void setCardId(Integer cardId) {
+        this.cardId = cardId;
+    }
 
     public Integer getOldmanId() {
         return oldmanId;

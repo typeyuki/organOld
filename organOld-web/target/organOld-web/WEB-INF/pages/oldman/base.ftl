@@ -9,7 +9,18 @@
 
     <link href="/css/style.min.css?v=4.0.0" rel="stylesheet">
     <link href="/static/css/common_table.css" rel="stylesheet">
-    <link href="/static/css/oldman/base.css" rel="stylesheet">
+    <style>
+        @media only screen and (min-width: 1401px){
+            .age{
+                width: 48%;
+            }
+        }
+        @media only screen and ( max-width: 1400px){
+            .age{
+                width: 45%;
+            }
+        }
+    </style>
 </head>
 
 <body class="gray-bg">
@@ -30,7 +41,7 @@
                 </div>
                 <div class="ibox-content">
                     <div>
-                        <a onclick=newPage("132","用户添加",'/oldman/add') href="javascript:void(0);" class="btn btn-primary ">添加</a>
+                        <#--<a onclick=newPage("132","用户添加",'/oldman/add') href="javascript:void(0);" class="btn btn-primary ">添加</a>-->
                         <a  onclick="del('/oldman/base/del')" class="btn btn-primary ">删除</a>
                         <a  href="javascript:void(0);" id="search" class="btn btn-primary ">搜索</a>
                         <form action="/oldman/importExcel" method="post" enctype="multipart/form-data" id="importForm" style="display: inline">
@@ -52,8 +63,8 @@
                             </select>
                         </div>
                         <div class="col-sm-2">
-                            <input class="age form-control inp" style="width: 48%" name="ageStart" type="text" placeholder="年龄段-起">-
-                            <input class="age form-control inp" style="width: 48%" name="ageEnd" type="text" placeholder="年龄段-止">
+                            <input class="age form-control inp" name="ageStart" type="text" placeholder="年龄段-起">-
+                            <input class="age form-control inp" name="ageEnd" type="text" placeholder="年龄段-止">
                         </div>
                         <div class="col-sm-4">
                             <input name="search" class="form-control inp"  type="text" placeholder="模糊匹配">

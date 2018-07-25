@@ -16,5 +16,10 @@ public interface HomeService {
 
     Result importManExcel(MultipartFile file) throws IOException;
 
-    void add(Home home);
+
+    Result getById(int id, int firType);
+
+    void addOrUpdate(Home home, String type);
+
+    void delByIds(String[] ids, int type);
 }

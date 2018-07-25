@@ -33,4 +33,10 @@ public interface UserService {
     void save(UserAddRequest userAddRequest);
 
     Result ckeckOrganLogin(SysUser sysUser);
+
+    void delByIds(String[] ids);
+
+    Result getById(int id);
+
+    void update(UserAddRequest sysUser);
 }

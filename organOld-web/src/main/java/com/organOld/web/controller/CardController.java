@@ -1,10 +1,7 @@
 package com.organOld.web.controller;
 
 import com.organOld.dao.entity.SysUser;
-import com.organOld.service.contract.BTableRequest;
-import com.organOld.service.contract.CardConsumeRequest;
-import com.organOld.service.contract.CardRequest;
-import com.organOld.service.contract.Result;
+import com.organOld.service.contract.*;
 import com.organOld.service.enumModel.RecordTypeEnum;
 import com.organOld.service.model.OldmanAllInfoModel;
 import com.organOld.service.model.OrganQueryIntegralModel;
@@ -14,10 +11,7 @@ import com.organOld.service.service.RecordService;
 import com.organOld.service.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -49,6 +43,36 @@ public class CardController {
     @RequestMapping(value = "/data",method = RequestMethod.POST)
     public String data(CardRequest cardRequest, BTableRequest bTableRequest){
         return cardService.getByPage(cardRequest,bTableRequest);
+    }
+
+    @RequestMapping(value = "/{id}/record",method = RequestMethod.GET)
+    public ModelAndView record(@PathVariable int id){
+        ModelAndView mv=new ModelAndView("card/record");
+        mv.addObject("id",id);
+        return mv;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/record/data",method = RequestMethod.POST)
+    public String record_data(BTableRequest bTableRequest,CardRecordRequest cardRecordRequest){
+        return recordService.getByCardPage(bTableRequest,cardRecordRequest);
+    }
+
+    /**
+     * 充值
+     * @param ids
+     * @param money
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping( value = "/addMoney",method = RequestMethod.POST)
+    public Result addMoney(@RequestParam("ids[]") String ids[],Double money){
+        return cardService.addMoney(ids,money);
+    }
+    @ResponseBody
+    @RequestMapping( value = "/changeStatus/{status}",method = RequestMethod.POST)
+    public Result changeStatus(@RequestParam("ids[]") String ids[],@PathVariable String status){
+        return cardService.changeStatus(ids,status);
     }
 
 

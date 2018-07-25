@@ -10,7 +10,6 @@
 <#--<link href="/css/animate.min.css" rel="stylesheet">-->
     <link href="/css/style.min.css?v=4.0.0" rel="stylesheet">
     <link href="/static/css/common_table.css" rel="stylesheet">
-    <link href="/static/css/oldman/base.css" rel="stylesheet">
 </head>
 
 <body class="gray-bg">
@@ -39,7 +38,7 @@
                         </div>
                         <div class="col-sm-2">
                             <label >是否在排队</label>
-                            <select name="isPd" class="form-control inp" style="width: 60%">
+                            <select name="isPd" class="form-control inp" style="width: 50%">
                                 <option></option>
                                 <option  value="1"> 是</option>
                                 <option  value="2"> 否</option>

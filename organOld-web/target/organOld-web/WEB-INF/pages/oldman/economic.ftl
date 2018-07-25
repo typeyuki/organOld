@@ -11,6 +11,11 @@
     <link href="/css/style.min.css?v=4.0.0" rel="stylesheet">
     <link href="/static/css/common_table.css" rel="stylesheet">
     <link href="/static/css/oldman/base.css" rel="stylesheet">
+    <style>
+        .bootstrap-select:not([class*="span"]):not([class*="col-"]):not([class*="form-control"]){
+            width: 70% !important;
+        }
+    </style>
 </head>
 
 <body class="gray-bg">

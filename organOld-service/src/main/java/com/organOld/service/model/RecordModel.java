@@ -9,6 +9,33 @@ public class RecordModel {
     private Integer id;
     private String data;
     private Organ organ;
+    private String type;
+    private String order;
+    private String moneyChange;
+
+    public String getOrder() {
+        return order;
+    }
+
+    public void setOrder(String order) {
+        this.order = order;
+    }
+
+    public String getMoneyChange() {
+        return moneyChange;
+    }
+
+    public void setMoneyChange(String moneyChange) {
+        this.moneyChange = moneyChange;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 
     public Organ getOrgan() {
         return organ;

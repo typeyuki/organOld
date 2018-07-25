@@ -29,8 +29,8 @@
                 </div>
                 <div class="ibox-content">
                     <div>
-                        <a onclick="$('#selectModal').modal()" href="javascript:void(0);" class="btn btn-primary ">添加</a>
-                        <a onclick="" href="javascript:void(0);" class="btn btn-primary ">删除</a>
+                        <a onclick="add()" href="javascript:void(0);" class="btn btn-primary ">添加</a>
+                        <a onclick="del('/user/del')" href="javascript:void(0);" class="btn btn-primary ">禁用</a>
                     </div>
                     <div>
                         <input class="id" type="text" placeholder="账号">
@@ -40,7 +40,7 @@
                     <table class="table table-striped table-bordered table-hover dataTables-example">
                         <thead>
                         <tr>
-                            <th><input type='checkbox' /></th>
+                            <th><input type='checkbox' onclick="thCheck(this)"/></th>
                             <th>序号</th>
                             <th>账号</th>
                             <th>密码</th>
@@ -64,6 +64,7 @@
 <#include "add_account.ftl" />
 
 <script src="/js/content.min.js?v=1.0.0"></script>
+<script src="/static/js/common.js" ></script>
 <script src="/static/js/sys/account.js" ></script>
 <script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
 

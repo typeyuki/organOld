@@ -1,6 +1,7 @@
 package com.organOld.dao.repository;
 
 import com.organOld.dao.entity.Card;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -9,4 +10,6 @@ import java.util.List;
  */
 public interface CardDao extends BaseDao<Card,Number>{
     void delByOldmanIds(List<Integer> existOldmanIds);
+
+    void addMoney(@Param("ids") String[] ids,@Param("money") Double money);
 }

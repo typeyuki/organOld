@@ -29,7 +29,7 @@
 
     <delete id="delByOrganId" >
         DELETE from volunteer
-        where oldamn_id in (
+        where oldman_id in (
         SELECT o.id FROM oldman_base o,auto_value x,organ org
         WHERE o.xq_id=x.id and x.parent_index=org.id
          <if test="organId!=null and organId!=0">
