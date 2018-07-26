@@ -194,6 +194,24 @@
                                     </select>
                                 </div>
                                 <div class="col-sm-2">
+                                    <label >职<span style="color: white">填充</span>称：</label>
+                                    <select  name="zc_array" class="selectpicker bla bla bli" multiple data-live-search="true">
+                                        <#list rule.zc as list>
+                                            <option value="${list.id!}"> ${list.value!}</option>
+                                        </#list>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-2">
+                                    <label>社区职务：</label>
+                                    <select name="sqzw_array" class="selectpicker bla bla bli" multiple data-live-search="true">
+                                        <#list rule.sqzw as list>
+                                            <option value="${list.id!}"> ${list.value!}</option>
+                                        </#list>
+                                    </select>
+                                </div>
+                                <div class="col-sm-2">
                                     <label> 所属机构：</label>
                                     <select  name="belongOrgan" class="search_select" data-live-search="true">
                                         <option></option>
@@ -202,8 +220,6 @@
                                         </#list>
                                     </select>
                                 </div>
-                            </div>
-                            <div class="row">
                                 <div class="col-sm-2">
                                     <label >一级标签：</label>
                                     <select name="fir" class="search_select" data-live-search="true">

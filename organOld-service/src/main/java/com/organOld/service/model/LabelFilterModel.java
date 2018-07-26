@@ -19,6 +19,8 @@ public class LabelFilterModel {
     private List<AutoValue> economic=new ArrayList<>();
     private List<AutoValue> family=new ArrayList<>();
     private List<AutoValue> intelligence=new ArrayList<>();
+    private List<AutoValue> zc=new ArrayList<>();
+    private List<AutoValue> sqzw=new ArrayList<>();
     private List<AutoValue> eyesight=new ArrayList<>();
     private Map<Integer,String> isHealth;
     private List<Chx> chx;
@@ -27,6 +29,22 @@ public class LabelFilterModel {
     private List<AutoValue> firLabel=new ArrayList<>();
     private List<LabelSec> secLabel;
 
+
+    public List<AutoValue> getZc() {
+        return zc;
+    }
+
+    public void setZc(List<AutoValue> zc) {
+        this.zc = zc;
+    }
+
+    public List<AutoValue> getSqzw() {
+        return sqzw;
+    }
+
+    public void setSqzw(List<AutoValue> sqzw) {
+        this.sqzw = sqzw;
+    }
 
     public List<Organ> getBelongOrgan() {
         return belongOrgan;
