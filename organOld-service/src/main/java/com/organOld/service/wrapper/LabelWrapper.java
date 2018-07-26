@@ -95,6 +95,12 @@ public class LabelWrapper implements Wrapper<Label,LabelModel,LabelRequest> {
             if (autoValue.getType()== AutoValueEnum.PQ.getIndex()){
                 labelRuleModel.getDistrict().add(autoValue);
             }
+            if (autoValue.getType()== AutoValueEnum.ZC.getIndex()){
+                labelRuleModel.getZc().add(autoValue);
+            }
+            if (autoValue.getType()== AutoValueEnum.SQZW.getIndex()){
+                labelRuleModel.getSqzw().add(autoValue);
+            }
         }
 
         return labelRuleModel;
@@ -108,6 +114,10 @@ public class LabelWrapper implements Wrapper<Label,LabelModel,LabelRequest> {
         labelRuleModel.setAgeStart(labelRule.getAgeStart());
         labelRuleModel.setIsKey(labelRule.getIsKey());
 
+        if(labelRule.getZcs()!=null && !labelRule.getZcs().equals(""))
+            labelRuleModel.setZcs(Arrays.asList(labelRule.getZcs().split("#")));
+        if(labelRule.getSqzws()!=null && !labelRule.getSqzws().equals(""))
+            labelRuleModel.setSqzws(Arrays.asList(labelRule.getSqzws().split("#")));
         if(labelRule.getCensuses()!=null && !labelRule.getCensuses().equals(""))
             labelRuleModel.setCensuses(Arrays.asList(labelRule.getCensuses().split("#")));
         if(labelRule.getPoliticalStatuses()!=null && !labelRule.getPoliticalStatuses().equals(""))
@@ -146,6 +156,11 @@ public class LabelWrapper implements Wrapper<Label,LabelModel,LabelRequest> {
         if(labelRuleRequest.getIsKey()!=null && !labelRuleRequest.getIsKey().equals(""))
             labelRule.setIsKey(Integer.parseInt(labelRuleRequest.getIsKey()));
 
+
+        if(labelRuleRequest.getZc()!=null && labelRuleRequest.getZc().length>0)
+            labelRule.setZcs(String.join("#", labelRuleRequest.getZc()));
+        if(labelRuleRequest.getSqzw()!=null && labelRuleRequest.getSqzw().length>0)
+            labelRule.setSqzws(String.join("#", labelRuleRequest.getSqzw()));
         if(labelRuleRequest.getCensus()!=null && labelRuleRequest.getCensus().length>0)
             labelRule.setCensuses(String.join("#", labelRuleRequest.getCensus()));
         if(labelRuleRequest.getPoliticalStatus()!=null && labelRuleRequest.getPoliticalStatus().length>0)

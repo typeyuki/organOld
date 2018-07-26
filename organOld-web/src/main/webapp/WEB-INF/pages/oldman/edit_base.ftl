@@ -77,9 +77,9 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-sm-1 control-label">职务</label>
+                                            <label class="col-sm-1 control-label">职称</label>
                                             <div class="col-sm-8">
-                                                <select class="search_select" name="zw">
+                                                <select class="search_select" name="zc">
                                                     <option></option>
                                                 <#list info.zc as list>
                                                     <option type="checkbox" value="${list.id!}" >${list.value!}</option>

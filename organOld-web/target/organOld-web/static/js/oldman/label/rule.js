@@ -44,6 +44,22 @@ $(function () {
                         }
                     });
                 }
+                if(result.data.zcs!=null && result.data.zcs.length>0){
+                    $("input[name='zc']:checkbox").prop("checked",false);
+                    $("input[name='zc']").each(function () {
+                        if(result.data.zcs.indexOf($(this).val())!=-1){
+                            $(this).prop("checked",true);
+                        }
+                    });
+                }
+                if(result.data.sqzws!=null && result.data.sqzws.length>0){
+                    $("input[name='sqzw']:checkbox").prop("checked",false);
+                    $("input[name='sqzw']").each(function () {
+                        if(result.data.sqzws.indexOf($(this).val())!=-1){
+                            $(this).prop("checked",true);
+                        }
+                    });
+                }
                 if(result.data.politicalStatuses!=null && result.data.politicalStatuses.length>0){
                     $("input[name='politicalStatus']:checkbox").prop("checked",false);
                     $("input[name='politicalStatus']").each(function () {

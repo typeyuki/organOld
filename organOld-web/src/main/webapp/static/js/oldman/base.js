@@ -137,7 +137,7 @@ $(document).ready(function(){
                     "targets": [18], // 目标列位置，下标从0开始
                     "data": "id", // 数据列名
                     "render": function(data, type, full) { // 返回自定义内容
-                        return "<button class='btn btn-primary' id='"+data+"' onclick=newPage("+data+",$(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().prev().text(),'/oldman/"+data+"/info')>查看</button><button class='btn btn-primary' onclick=oldman_edit("+data+",'/oldman/base/"+data+"/getById')>修改</button>";
+                        return "<button class='btn btn-primary' id='"+data+"' onclick=newPage("+data+",$(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().text(),'/oldman/"+data+"/info')>查看</button><button class='btn btn-primary' onclick=oldman_edit("+data+",'/oldman/base/"+data+"/getById')>修改</button>";
                     }
                 },
                 //不进行排序的列
@@ -178,6 +178,8 @@ $(document).ready(function(){
                 "eyesight_array":$("select[name='eyesight']").val(),
                 "district_array":$("select[name='district']").val(),
                 "jw_array":$("select[name='jw']").val(),
+                "sqzw_array":$("select[name='sqzw']").val(),
+                "zc_array":$("select[name='zc']").val(),
                 "oldStatus_array":$("select[name='oldStatus']").val()
             },
             type: 'POST',

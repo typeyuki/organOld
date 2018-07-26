@@ -11,6 +11,8 @@ $(document).ready(function(){
             data:"time"
         },{
             data:"data"
+        },{
+            data:"moneyChange"
         }
         ];
         columnDefs=[
@@ -47,7 +49,7 @@ $(document).ready(function(){
         columns.push({});
         if(type==1){
             columnDefs.push({
-                "targets": [4], // 目标列位置，下标从0开始
+                "targets": [5], // 目标列位置，下标从0开始
                 "data": "organ", // 数据列名
                 "render": function(data, type, full) { // 返回自定义内容
                     return data.name
@@ -78,7 +80,7 @@ $(document).ready(function(){
             "sPaginationType": "full_numbers",
             "bPaginite": true,
             "bInfo": true,
-            "bSort": true,
+            "bSort": false,
             "bFilter": false, //搜索栏
             "bStateSave": true,
             "bProcessing": true, //加载数据时显示正在加载信息

@@ -71,4 +71,10 @@ public class RecordServiceImpl implements RecordService {
         record.setOrganId(organId);
         recordDao.save(record);
     }
+
+
+    @Override
+    public void saveEntity(Record record) {
+        recordDao.save(record);
+    }
 }

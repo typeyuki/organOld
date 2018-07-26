@@ -64,6 +64,12 @@ public class OldmanWrapper implements Wrapper<Oldman,OldmanModel,OldmanRequest> 
     public Oldman unwrap(OldmanRequest oldmanRequest) {
         Oldman oldman=new Oldman();
         BeanUtils.copyProperties(oldmanRequest,oldman);
+//        if(oldmanRequest.getSqzwArray()!=null && oldmanRequest.getSqzwArray().length>0){
+//            for(String s:oldmanRequest.getSqzwArray()){
+//                oldman.getSqzwArray().add("s"+s+"s");
+//            }
+//        }
+
         if(oldmanRequest.getAgeStart()!=null && !oldmanRequest.getAgeStart().equals(""))
             oldman.setBirthdayEnd(commonService.AgeTobirthday(Integer.parseInt(oldmanRequest.getAgeStart())));
         if(oldmanRequest.getAgeEnd()!=null && !oldmanRequest.getAgeEnd().equals(""))

@@ -117,6 +117,10 @@ public class LabelServiceImpl implements LabelService {
             labelRuleToDB.setOldStatuses(Arrays.asList(labelRule.getOldStatuses().split("#")));
         if(!StringUtils.isEmpty(labelRule.getChxs()))
             labelRuleToDB.setChxs(Arrays.asList(labelRule.getChxs().split("#")));
+        if(!StringUtils.isEmpty(labelRule.getZcs()))
+            labelRuleToDB.setZcs(Arrays.asList(labelRule.getZcs().split("#")));
+        if(!StringUtils.isEmpty(labelRule.getSqzws()))
+            labelRuleToDB.setSqzws(Arrays.asList(labelRule.getSqzws().split("#")));
         labelRuleToDB.setSex(labelRule.getSex());
         labelRuleToDB.setIsKey(labelRule.getIsKey());
         return labelRuleToDB;

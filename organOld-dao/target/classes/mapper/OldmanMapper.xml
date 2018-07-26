@@ -132,6 +132,18 @@
                     ${item}
                 </foreach>
             </if>
+            <if test="entity!=null and entity.zcArray!=null and entity.zcArray.length > 0">
+                and oo.zc in
+                <foreach collection="entity.zcArray" index="index" item="item" open="(" separator="," close=")">
+                    ${item}
+                </foreach>
+            </if>
+            <if test="entity!=null and entity.sqzwArray!=null and entity.sqzwArray.length > 0">
+                and
+                <foreach collection="entity.sqzwArray" index="index" item="item" open="(" separator="or" close=")">
+                    (oo.sqzw like concat('%',#{item},'%'))
+                </foreach>
+            </if>
             <if test="entity!=null and entity.oldStatusArray!=null and entity.oldStatusArray.length > 0">
                 and oo.old_status in
                 <foreach collection="entity.oldStatusArray" index="index" item="item" open="(" separator="," close=")">
@@ -198,6 +210,18 @@
         </if>
         <if test="entity!=null and entity.sex!=null and entity.sex!=0">
             and o.sex=#{entity.sex}
+        </if>
+        <if test="entity!=null and entity.zcArray!=null and entity.zcArray.length > 0">
+            and o.zc in
+            <foreach collection="entity.zcArray" index="index" item="item" open="(" separator="," close=")">
+                ${item}
+            </foreach>
+        </if>
+        <if test="entity!=null and entity.sqzwArray!=null and entity.sqzwArray.length > 0">
+            and
+            <foreach collection="entity.sqzwArray" index="index" item="item" open="(" separator="or" close=")">
+                (o.sqzw like concat('%',#{item},'%'))
+            </foreach>
         </if>
         <if test="entity!=null and entity.isHealth!=null and entity.isHealth.length > 0">
             and (ohb.is_mb in

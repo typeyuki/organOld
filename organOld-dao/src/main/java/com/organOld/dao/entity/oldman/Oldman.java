@@ -54,7 +54,8 @@ public class Oldman extends Man implements DBInterface {
     private String intelligence[];
     private String eyesight[];
     private String oldStatusArray[];
-
+    private String zcArray[];
+    private String sqzwArray[];
 
     private String future;//是否是查询未来的重点老人得分
 
@@ -84,6 +85,23 @@ public class Oldman extends Man implements DBInterface {
     @Override
     public int hashCode() {
         return pid != null ? pid.hashCode() : 0;
+    }
+
+
+    public String[] getZcArray() {
+        return zcArray;
+    }
+
+    public void setZcArray(String[] zcArray) {
+        this.zcArray = zcArray;
+    }
+
+    public String[] getSqzwArray() {
+        return sqzwArray;
+    }
+
+    public void setSqzwArray(String[] sqzwArray) {
+        this.sqzwArray = sqzwArray;
     }
 
     public String getBirthdayTime() {

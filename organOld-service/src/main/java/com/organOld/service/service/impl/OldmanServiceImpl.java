@@ -101,6 +101,7 @@ public class OldmanServiceImpl implements OldmanService {
                 String[] sq=oldmanModel.getSqzwString().split("#");
                 List<String> sqzw=new ArrayList<>();
                 for(String s:sq){
+//                    s=s.replace("s","");
                     sqzw.add(map.get(Integer.parseInt(s)));
                 }
                 oldmanModel.setSqzw(sqzw);
@@ -420,12 +421,12 @@ public class OldmanServiceImpl implements OldmanService {
                     String sqzw="";
                     if (r.getCell(17).getStringCellValue().equals("1")) {
                         Integer szIndex = autoValueDao.getStringLikeIndex("三长", AutoValueEnum.SQZW.getIndex(), "equals");
-                        sqzw=szIndex+"";
+                        sqzw="s"+szIndex+"s";
                     }
                     if (r.getCell(18).getStringCellValue().equals("1")) {
                         Integer sqIndex = autoValueDao.getStringLikeIndex("社区团队负责人", AutoValueEnum.SQZW.getIndex(), "equals");
                         if(sqzw.length()>1){
-                            sqzw+="#"+sqIndex;
+                            sqzw+="#s"+sqIndex+"s";
                         }
                     }
                     oldman.setSqzw(sqzw);
@@ -801,6 +802,7 @@ public class OldmanServiceImpl implements OldmanService {
         switch (type){
             case "base":
                 Oldman oldman=oldmanBaseDao.getById(id);
+                oldman.setSqzw(oldman.getSqzw().replace("s",""));
                 oldman.setBirthdayTime(Tool.dateToString(oldman.getBirthday(), TimeConstant.DATA_FORMAT_YMD));
                 return new Result(true,oldman);
             case "family":
@@ -822,6 +824,8 @@ public class OldmanServiceImpl implements OldmanService {
             case "base":
                 Oldman oldman= (Oldman) dbEntity;
                 oldman.setBirthday(Tool.stringToDate(oldman.getBirthdayTime()));
+                if(oldman.getSqzw()!=null && !oldman.getSqzw().equals(""))
+                    oldman.setSqzw(oldman.getSqzw().replace(",","#"));
                 oldmanBaseDao.updateById(oldman);
                 break;
             case "family":

@@ -3,6 +3,7 @@ package com.organOld.service.service;
 import com.organOld.service.contract.BTableRequest;
 import com.organOld.service.contract.CardRequest;
 import com.organOld.service.contract.Result;
+import com.organOld.service.model.OldmanAllInfoModel;
 
 /**
  * Created by netlab606 on 2018/6/25.
@@ -14,5 +15,13 @@ public interface CardService {
 
     Result changeStatus(String[] ids, String status);
 
-    int getIdByOldmanId(int oldmanId);
+    Integer getIdByOldmanId(int oldmanId);
+
+    OldmanAllInfoModel handleInfo(int cid, int organId);
+
+    Result handleIntegral(int cid, int organId);
+
+    Result handleSign(int cid, int organId);
+
+    Result handleConsume(int cid, int organId, String order, String oldmanPassword, String money);
 }

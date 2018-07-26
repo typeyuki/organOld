@@ -23,9 +23,28 @@ public class LabelAllRuleModel {
     private List<AutoValue> family=new ArrayList<>();
     private List<AutoValue> intelligence=new ArrayList<>();
     private List<AutoValue> eyesight=new ArrayList<>();
+    private List<AutoValue> zc=new ArrayList<>();
+    private List<AutoValue> sqzw=new ArrayList<>();
     private Map<Integer,String> isHealth;
     private List<Chx> chx;
     private Map<Integer,String> oldStatus;
+
+
+    public List<AutoValue> getZc() {
+        return zc;
+    }
+
+    public void setZc(List<AutoValue> zc) {
+        this.zc = zc;
+    }
+
+    public List<AutoValue> getSqzw() {
+        return sqzw;
+    }
+
+    public void setSqzw(List<AutoValue> sqzw) {
+        this.sqzw = sqzw;
+    }
 
     public Map<Integer, String> getSex() {
         return sex;

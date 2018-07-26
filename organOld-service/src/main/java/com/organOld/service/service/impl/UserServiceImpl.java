@@ -144,7 +144,7 @@ public class UserServiceImpl implements UserService {
             organAuth.setAuthConsume(organ.getAuthConsume());
             organAuth.setAuthSign(organ.getAuthSign());
             organAuth.setAuthQueryInfo(organ.getAuthQueryInfo());
-            organAuth.setAuthQueryIntegral(organAuth.getAuthQueryIntegral());
+            organAuth.setAuthQueryIntegral(organ.getAuthQueryIntegral());
             return new Result(true, organAuth);
         }
     }

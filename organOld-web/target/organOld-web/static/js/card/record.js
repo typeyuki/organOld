@@ -9,6 +9,8 @@ $(document).ready(function(){
         },{
             data:"time"
         },{
+            data:"type"
+        },{
             data:"organ.name"
         },{
             data:"data"

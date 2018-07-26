@@ -115,8 +115,24 @@
                                 <option value="6">有残疾史</option>
                             </select>
                         </div>
+                        <div class="col-sm-2">
+                            <label >职<span style="color: white">填充</span>称：</label>
+                            <select name="zc" class="selectpicker bla bla bli" multiple data-live-search="true">
+                            <#list info.zc as list>
+                                <option value="${list.id!}" > ${list.value!}</option>
+                            </#list>
+                            </select>
+                        </div>
                     </div>
                     <div class="row">
+                        <div class="col-sm-2">
+                            <label >社区职务：</label>
+                            <select name="sqzw" class="selectpicker bla bla bli" multiple data-live-search="true">
+                            <#list info.sqzw as list>
+                                <option value="${list.id!}" > ${list.value!}</option>
+                            </#list>
+                            </select>
+                        </div>
                         <div class="col-sm-2">
                             <label >智<span style="color: white">填充</span>力：</label>
                             <select name="intelligence" class="selectpicker bla bla bli" multiple data-live-search="true">

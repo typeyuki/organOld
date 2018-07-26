@@ -511,6 +511,18 @@
                 #{item}
             </foreach>
         </if>
+        <if test="rule.zcs!=null and rule.zcs.size() > 0">
+            and o.zc IN
+            <foreach collection="rule.zcs" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="rule.sqzws!=null and rule.sqzws.size() > 0">
+            and
+            <foreach collection="rule.sqzws" index="index" item="item" open="(" separator="or" close=")">
+                (o.sqzw like concat('%',#{item},'%'))
+            </foreach>
+        </if>
         <if test="rule.families!=null and rule.families.size() > 0">
             and oldf.family_index IN
             <foreach collection="rule.families" index="index" item="item" open="(" separator="," close=")">
@@ -930,7 +942,9 @@
         eyesights=#{eyesights},
         is_healths=#{isHealths},
         chxs=#{chxs},
-        old_statuses=#{oldStatuses}
+        old_statuses=#{oldStatuses},
+        zcs=#{zcs},
+        sqzws=#{sqzws}
         WHERE label_id=#{labelId}
     </update>
 

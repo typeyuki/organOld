@@ -58,6 +58,11 @@
         FROM card WHERE id=#{id}
     </select>
 
+    <select id="getByCid" resultType="com.organOld.dao.entity.Card">
+        SELECT *
+        FROM card WHERE cid=#{cid}
+    </select>
+
     <update id="addMoney">
         UPDATE card
         SET money=money+${money}
@@ -80,4 +85,11 @@
     <select id="getByOldmanId" resultType="com.organOld.dao.entity.Card">
         SELECT * from card where oldman_id=#{oldmanId}
     </select>
+
+
+    <update id="updateProp">
+        UPDATE card
+        SET ${prop}=#{value}
+        WHERE id=#{id}
+    </update>
 </mapper>

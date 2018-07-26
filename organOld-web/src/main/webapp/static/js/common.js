@@ -60,6 +60,12 @@ function oldman_edit(id,url) {
                         $("#editModal input[name='"+key+"."+keyChild+"']").val(data[key][keyChild]);
                         $("#editModal select[name='"+key+"."+keyChild+"'] option[value='"+data[key][keyChild]+"']").prop("selected",true);
                     }
+                }else if(key=="sqzw"){
+                    if(data[key]!=null && data[key].length>0){
+                        var s=data[key].split("#");
+                        $('#editModal .selectpicker').selectpicker('val', s);//默认选中
+                        $('#editModal .selectpicker').selectpicker('refresh');
+                    }
                 }
                 else{
                     if(data[key]!=null){

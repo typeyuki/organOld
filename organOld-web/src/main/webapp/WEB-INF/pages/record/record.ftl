@@ -41,6 +41,7 @@
                             <th>时间</th>
                             <#if type==1>
                                 <th>金额</th>
+                                <th>金额变动</th>
                             </#if>
                             <#if organId?? && organId!=0>
                             <#else >

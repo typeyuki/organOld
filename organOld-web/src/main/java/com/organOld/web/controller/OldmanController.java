@@ -63,7 +63,9 @@ public class OldmanController {
                        @RequestParam(value = "eyesight_array[]",required = false) String eyesight[],
                        @RequestParam(value = "district_array[]",required = false) String district[],
                        @RequestParam(value = "jw_array[]",required = false) String jw[],
-                       @RequestParam(value = "oldStatus_array[]",required = false) String oldStatus[]){
+                       @RequestParam(value = "oldStatus_array[]",required = false) String oldStatus[],
+                       @RequestParam(value = "sqzw_array[]",required = false) String sqzw[],
+                       @RequestParam(value = "zc_array[]",required = false) String zc[]){
         oldmanRequest.setCensusArray(census);
         oldmanRequest.setFamily(family);
         oldmanRequest.setEconomic(economic);
@@ -74,7 +76,8 @@ public class OldmanController {
         oldmanRequest.setJw(jw);
         oldmanRequest.setIsHealth(isHealth);
         oldmanRequest.setOldStatusArray(oldStatus);
-
+        oldmanRequest.setSqzwArray(sqzw);
+        oldmanRequest.setZcArray(zc);
         return oldmanService.getOldmanByPage(oldmanRequest,bTableRequest);
     }
 

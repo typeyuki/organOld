@@ -55,8 +55,14 @@ public class CardController {
 
     @RequestMapping(value = "/{oldmanId}/integral/record",method = RequestMethod.GET)
     public ModelAndView record(@PathVariable int oldmanId){
-        int cid=cardService.getIdByOldmanId(oldmanId);
-        ModelAndView mv=new ModelAndView("redirect:/card/"+cid+"/record?type=9");
+        Integer cid=cardService.getIdByOldmanId(oldmanId);
+        ModelAndView mv;
+        if(cid==null || cid==0 ){
+            mv=new ModelAndView("error/message");
+            mv.addObject("message","卡号不存在");
+        }else{
+            mv=new ModelAndView("redirect:/card/"+cid+"/record?type=9");
+        }
         return mv;
     }
 
@@ -84,15 +90,21 @@ public class CardController {
     }
 
 
-
+    /**
+     * 消费
+     * @param
+     * @return
+     */
     @ResponseBody
-    @RequestMapping(value = "/aa",method = RequestMethod.GET)
-    public Result consume(CardConsumeRequest cardConsumeRequest){
-        CardConsumeRequest consumeRequest=cardConsumeRequest;
-
-        System.out.println(cardConsumeRequest.toString());
-        Result result=new Result(true,"成功");
-        return result;
+    @RequestMapping(value = "/consume",method = RequestMethod.GET)
+    public Result consume(@RequestParam int cid,@RequestParam int organId,SysUser sysUser,String order,String oldmanPassword,String money){
+        Result check=userService.ckeckOrganLogin(sysUser);
+        if(check!=null) {
+            Result result=cardService.handleConsume(cid,organId,order,oldmanPassword,money);
+            return result;
+        }else{
+            return new Result(false,"没有权限");
+        }
     }
 
 
@@ -109,40 +121,57 @@ public class CardController {
     }
 
     /**
-     * 老人信息查询
-     * @param oldmanId
+     * 老人信息查询  根据卡号
+     * @param cid
      * @return
      */
     @ResponseBody
     @RequestMapping(value = "/info",method = RequestMethod.GET)
-    public Result info(@RequestParam int oldmanId,@RequestParam int organId){
-        OldmanAllInfoModel oldmanAllInfoModel =oldmanService.getOldmanInfo(oldmanId);
-        recordService.save(oldmanId,organId, RecordTypeEnum.INFO.getIndex());
-        if(oldmanAllInfoModel.getOldman()==null) return new Result(false,"找不到");
-        else  return new Result(true,oldmanAllInfoModel);
+    public Result info(@RequestParam int cid,@RequestParam int organId,SysUser sysUser){
+        Result check=userService.ckeckOrganLogin(sysUser);
+        if(check!=null){
+            OldmanAllInfoModel oldmanAllInfoModel =cardService.handleInfo(cid,organId);
+            if(oldmanAllInfoModel.getOldman()==null) return new Result(false,"找不到");
+            else  return new Result(true,oldmanAllInfoModel);
+        }else{
+            return new Result(false,"没有权限");
+        }
     }
 
 
     /**
      * 积分查询
-     * @param oldmanId
+     * @param cid
      * @return
      */
     @ResponseBody
     @RequestMapping(value = "/integral",method = RequestMethod.GET)
-    public Result integral(@RequestParam int oldmanId,@RequestParam int organId){
-        Result result=oldmanService.getIntegralByOldmanId(oldmanId);
-        recordService.save(oldmanId,organId, RecordTypeEnum.IN.getIndex());
-        return result;
+    public Result integral(@RequestParam int cid,@RequestParam int organId,SysUser sysUser){
+        Result check=userService.ckeckOrganLogin(sysUser);
+        if(check!=null) {
+            Result result=cardService.handleIntegral(cid,organId);
+            return result;
+        }else{
+            return new Result(false,"没有权限");
+        }
     }
 
 
+    /**
+     * 签到
+     * @param cid
+     * @param organId
+     * @return
+     */
     @ResponseBody
     @RequestMapping(value = "/sign",method = RequestMethod.GET)
-    public Result sign(@RequestParam int cid,@RequestParam int organId,@RequestParam String username,@RequestParam String password){
-        Result result=new Result(true,"签到成功");
-        System.out.println("签到成功");
-//        recordService.save(cid,organId, RecordTypeEnum.SIGN.getIndex());
-        return result;
+    public Result sign(@RequestParam int cid,@RequestParam int organId,SysUser sysUser){
+        Result check=userService.ckeckOrganLogin(sysUser);
+        if(check!=null) {
+            Result result=cardService.handleSign(cid,organId);
+            return result;
+        }else{
+            return new Result(false,"没有权限");
+        }
     }
 }
