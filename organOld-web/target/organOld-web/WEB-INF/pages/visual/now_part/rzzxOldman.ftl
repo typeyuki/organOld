@@ -22,6 +22,16 @@
             }
 
         }
+
+        /*@media only screen and (min-width: 1401px) and ( max-width: 1699px){*/
+            /*.title{*/
+                /*text-align: center;*/
+                /*font-size: 21px;*/
+                /*font-weight: bold;*/
+                /*margin-top: 7px;*/
+            /*}*/
+
+        /*}*/
     </style>
 </head>
 
@@ -124,7 +134,9 @@
         }else if(winWidth<=1400 && winWidth>=1300){
             tu_big_w=winWidth/8.8;
             tu_big_h=winHeight/5.5;
-        }
+        }else if(winWidth<1700 && winWidth>1400){
+            tu_big_w=winWidth/8.8;
+            tu_big_h=winHeight/5.5;
         $(".tu_big").css('width',tu_big_w);
         $(".tu_big").css( 'height', tu_big_h);
 

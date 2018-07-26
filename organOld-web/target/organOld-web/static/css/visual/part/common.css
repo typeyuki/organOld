@@ -38,3 +38,19 @@ h2,p,td,h3,h1,span{
     }
 
 }
+
+/*@media only screen and (min-width: 1401px) and ( max-width: 1699px){*/
+    /*#ditu{*/
+        /*width:60%;*/
+    /*}*/
+
+    /*.tu,.tu_big{*/
+        /*padding-top: 5%;*/
+        /*padding-bottom: 2%;*/
+    /*}*/
+    /*.map_title{*/
+        /*font-size: 40px;*/
+        /*color: white;*/
+    /*}*/
+
+/*}*/

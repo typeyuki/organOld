@@ -280,24 +280,28 @@
     }];
     var base_option_area_pie = chartPie(title_text,legend_data,series);
 
+    // title_text='户籍占比趋势图';
+    // legend_data=[{name:'户籍',textStyle:{color:legend_color,fontSize:18}},{name:'非户籍',textStyle:{color:legend_color,fontSize:18}}];
+    // xAxis_data=['2月','3月','4月','今天','6月','7月','8月'];
+    // series=[
+    //     {
+    //         name:'户籍',
+    //         type:'bar',
+    //         stack: '广告',
+    //         data:[80, 79, 80, 74, 78, 80, 81]
+    //     },
+    //     {
+    //         name:'非户籍',
+    //         type:'bar',
+    //         stack: '广告',
+    //         data:[20, 21, 20, 26, 22, 20, 19]
+    //     }
+    // ];
+    // var base_option_area_line=chartBarHei(title_text,legend_data,xAxis_data,series);
     title_text='户籍占比趋势图';
-    legend_data=[{name:'户籍',textStyle:{color:legend_color,fontSize:18}},{name:'非户籍',textStyle:{color:legend_color,fontSize:18}}];
-    xAxis_data=['2月','3月','4月','今天','6月','7月','8月'];
-    series=[
-        {
-            name:'户籍',
-            type:'bar',
-            stack: '广告',
-            data:[80, 79, 80, 74, 78, 80, 81]
-        },
-        {
-            name:'非户籍',
-            type:'bar',
-            stack: '广告',
-            data:[20, 21, 20, 26, 22, 20, 19]
-        }
-    ];
-    var base_option_area_line=chartBarHei(title_text,legend_data,xAxis_data,series);
+    legendData=['户籍','非户籍'];
+    name1='户籍',name2='非户籍';
+    var base_option_area_line=toolTip(title_text,legendData,name1,name2);
 
 
     title_text="性别分布饼图";
@@ -330,24 +334,28 @@
     }];
     var base_option_sex_pie = chartPie(title_text,legend_data,series);
 
+    // title_text='性别占比趋势图';
+    // legend_data=[{name:'男',textStyle:{color:legend_color,fontSize:18}},{name:'女',textStyle:{color:legend_color,fontSize:18}}];
+    // xAxis_data=['2月','3月','4月','今天','6月','7月','8月'];
+    // series=[
+    //     {
+    //         name:'男',
+    //         type:'bar',
+    //         stack: '广告',
+    //         data:[80, 79, 80, 74, 78, 80, 81]
+    //     },
+    //     {
+    //         name:'女',
+    //         type:'bar',
+    //         stack: '广告',
+    //         data:[20, 21, 20, 26, 22, 20, 19]
+    //     }
+    // ];
+    // var base_option_sex_line=chartBarHei(title_text,legend_data,xAxis_data,series);
     title_text='性别占比趋势图';
-    legend_data=[{name:'男',textStyle:{color:legend_color,fontSize:18}},{name:'女',textStyle:{color:legend_color,fontSize:18}}];
-    xAxis_data=['2月','3月','4月','今天','6月','7月','8月'];
-    series=[
-        {
-            name:'男',
-            type:'bar',
-            stack: '广告',
-            data:[80, 79, 80, 74, 78, 80, 81]
-        },
-        {
-            name:'女',
-            type:'bar',
-            stack: '广告',
-            data:[20, 21, 20, 26, 22, 20, 19]
-        }
-    ];
-    var base_option_sex_line=chartBarHei(title_text,legend_data,xAxis_data,series);
+    legendData=['男','女'];
+    name1='女',name2='女';
+    var base_option_sex_line=toolTip(title_text,legendData,name1,name2);
 
 
 
@@ -416,37 +424,42 @@
     ];
     var base_option_age_bar=chartBar(title_text,legend_data,yAxis_data,series);
 
+    // title_text='年龄占比趋势图';
+    // legend_data=[{name:'60-70',textStyle:{color:legend_color,fontSize:18}},{name:'70-80',textStyle:{color:legend_color,fontSize:18}},
+    //     {name:'80-90',textStyle:{color:legend_color,fontSize:18}},{name:'90-',textStyle:{color:legend_color,fontSize:18}}];
+    // xAxis_data=['2月','3月','4月','今天','6月','7月','8月'];
+    // series=[
+    //     {
+    //         name:'60-70',
+    //         type:'bar',
+    //         stack: '广告',
+    //         data:[40, 37, 40, 22, 34, 40, 43]
+    //     },
+    //     {
+    //         name:'70-80',
+    //         type:'bar',
+    //         stack: '广告',
+    //         data:[20, 21, 20, 26, 22, 20, 19]
+    //     },
+    //     {
+    //         name:'80-90',
+    //         type:'bar',
+    //         stack: '广告',
+    //         data:[20, 21, 20, 26, 22, 20, 19]
+    //     },
+    //     {
+    //         name:'90-',
+    //         type:'bar',
+    //         stack: '广告',
+    //         data:[20, 21, 20, 26, 22, 20, 19]
+    //     }
+    // ];
+    // var base_option_age_line=chartBarHei_1(title_text,legend_data,xAxis_data,series);
     title_text='年龄占比趋势图';
-    legend_data=[{name:'60-70',textStyle:{color:legend_color,fontSize:18}},{name:'70-80',textStyle:{color:legend_color,fontSize:18}},
-        {name:'80-90',textStyle:{color:legend_color,fontSize:18}},{name:'90-',textStyle:{color:legend_color,fontSize:18}}];
-    xAxis_data=['2月','3月','4月','今天','6月','7月','8月'];
-    series=[
-        {
-            name:'60-70',
-            type:'bar',
-            stack: '广告',
-            data:[40, 37, 40, 22, 34, 40, 43]
-        },
-        {
-            name:'70-80',
-            type:'bar',
-            stack: '广告',
-            data:[20, 21, 20, 26, 22, 20, 19]
-        },
-        {
-            name:'80-90',
-            type:'bar',
-            stack: '广告',
-            data:[20, 21, 20, 26, 22, 20, 19]
-        },
-        {
-            name:'90-',
-            type:'bar',
-            stack: '广告',
-            data:[20, 21, 20, 26, 22, 20, 19]
-        }
-    ];
-    var base_option_age_line=chartBarHei_1(title_text,legend_data,xAxis_data,series);
+    legend_data=[{name:'60-70',textStyle:{color:legend_color}},{name:'70-80',textStyle:{color:legend_color}},
+        {name:'80-90',textStyle:{color:legend_color}},{name:'90-',textStyle:{color:legend_color}}];
+    var base_option_age_line=toolTipMulti(title_text,legend_data);
+
 
 
     base_numLine.setOption(base_option_num_line);

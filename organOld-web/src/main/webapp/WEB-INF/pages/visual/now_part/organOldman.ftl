@@ -3,6 +3,7 @@
 
 <head>
 <#include "../head.ftl" />
+<script src="../../../static/js/echarts.js"></script>
     <style>
         @media only screen and (min-width: 1700px){
             .title{
@@ -182,31 +183,31 @@
     }];
     var option_sub_pie = chartPie(title_text,legend_data,series);
 
-        title_text="";
-        legend_data=[];
-        series=[
-            {
-                name:'未来空余',
-                type:'pie',
-                radius: ['50%', '65%'],
-                avoidLabelOverlap: false,
-                label: {
-                    normal : {
-                        position:"center",
-                        formatter: '{a}\n{c}',
-                        textStyle : {
-                            fontWeight : 'normal',
-                            fontSize : 18,
-                            color:"#f2f989"
-                        }
-                    }
-                },
-                data:[
-                    {value:40, name:'未来空余'}
-                ]
-            }
-        ];
-        var option_sub_wl = chartPie(title_text,legend_data,series);
+    title_text="";
+    // legend_data=[];
+    // series=[
+    //     {
+    //         name:'未来空余',
+    //         type:'pie',
+    //         radius: ['50%', '65%'],
+    //         avoidLabelOverlap: false,
+    //         label: {
+    //             normal : {
+    //                 position:"center",
+    //                 formatter: '{a}\n{c}',
+    //                 textStyle : {
+    //                     fontWeight : 'normal',
+    //                     fontSize : 18,
+    //                     color:"#f2f989"
+    //                 }
+    //             }
+    //         },
+    //         data:[
+    //             {value:40, name:'未来空余'}
+    //         ]
+    //     }
+    // ];
+    var option_sub_wl = gauge(title_text);
     title_text="";
     legend_data=[{name:'已入住',textStyle:{color:legend_color,fontSize:18}},{name:'剩余',textStyle:{color:legend_color,fontSize:18}}];
     series=[{
@@ -237,31 +238,32 @@
     }];
     var option_1_pie = chartPie(title_text,legend_data,series);
 
-    title_text="";
-    legend_data=[];
-    series=[
-        {
-            name:'未来空余',
-            type:'pie',
-            radius: ['50%', '65%'],
-            avoidLabelOverlap: false,
-            label: {
-                normal : {
-                    position:"center",
-                    formatter: '{a}\n{c}',
-                    textStyle : {
-                        fontWeight : 'normal',
-                        fontSize : 18,
-                        color:"#f2f989"
-                    }
-                }
-            },
-            data:[
-                {value:40, name:'未来空余'}
-            ]
-        }
-    ];
-    var option_1_wl = chartPie(title_text,legend_data,series);
+    // title_text="";
+    // legend_data=[];
+    // series=[
+    //     {
+    //         name:'未来空余',
+    //         type:'pie',
+    //         radius: ['50%', '65%'],
+    //         avoidLabelOverlap: false,
+    //         label: {
+    //             normal : {
+    //                 position:"center",
+    //                 formatter: '{a}\n{c}',
+    //                 textStyle : {
+    //                     fontWeight : 'normal',
+    //                     fontSize : 18,
+    //                     color:"#f2f989"
+    //                 }
+    //             }
+    //         },
+    //         data:[
+    //             {value:40, name:'未来空余'}
+    //         ]
+    //     }
+    // ];
+    var option_1_wl = gauge(title_text);
+
     title_text="";
     legend_data=[{name:'已入住',textStyle:{color:legend_color,fontSize:18}},{name:'剩余',textStyle:{color:legend_color,fontSize:18}}];
     series=[{
@@ -292,31 +294,31 @@
     }];
     var option_2_pie = chartPie(title_text,legend_data,series);
 
-    title_text="";
-    legend_data=[];
-    series=[
-        {
-            name:'未来空余',
-            type:'pie',
-            radius: ['50%', '65%'],
-            avoidLabelOverlap: false,
-            label: {
-                normal : {
-                    position:"center",
-                    formatter: '{a}\n{c}',
-                    textStyle : {
-                        fontWeight : 'normal',
-                        fontSize : 18,
-                        color:"#f2f989"
-                    }
-                }
-            },
-            data:[
-                {value:40, name:'未来空余'}
-            ]
-        }
-    ];
-    var option_2_wl = chartPie(title_text,legend_data,series);
+    // title_text="";
+    // legend_data=[];
+    // series=[
+    //     {
+    //         name:'未来空余',
+    //         type:'pie',
+    //         radius: ['50%', '65%'],
+    //         avoidLabelOverlap: false,
+    //         label: {
+    //             normal : {
+    //                 position:"center",
+    //                 formatter: '{a}\n{c}',
+    //                 textStyle : {
+    //                     fontWeight : 'normal',
+    //                     fontSize : 18,
+    //                     color:"#f2f989"
+    //                 }
+    //             }
+    //         },
+    //         data:[
+    //             {value:40, name:'未来空余'}
+    //         ]
+    //     }
+    // ];
+    var option_2_wl = gauge(title_text);
     title_text="";
     legend_data=[{name:'已入住',textStyle:{color:legend_color,fontSize:18}},{name:'剩余',textStyle:{color:legend_color,fontSize:18}}];
     series=[{
@@ -347,31 +349,31 @@
     }];
     var option_3_pie = chartPie(title_text,legend_data,series);
 
-    title_text="";
-    legend_data=[];
-    series=[
-        {
-            name:'未来空余',
-            type:'pie',
-            radius: ['50%', '65%'],
-            avoidLabelOverlap: false,
-            label: {
-                normal : {
-                    position:"center",
-                    formatter: '{a}\n{c}',
-                    textStyle : {
-                        fontWeight : 'normal',
-                        fontSize : 18,
-                        color:"#f2f989"
-                    }
-                }
-            },
-            data:[
-                {value:40, name:'未来空余'}
-            ]
-        }
-    ];
-    var option_3_wl = chartPie(title_text,legend_data,series);
+    // title_text="";
+    // legend_data=[];
+    // series=[
+    //     {
+    //         name:'未来空余',
+    //         type:'pie',
+    //         radius: ['50%', '65%'],
+    //         avoidLabelOverlap: false,
+    //         label: {
+    //             normal : {
+    //                 position:"center",
+    //                 formatter: '{a}\n{c}',
+    //                 textStyle : {
+    //                     fontWeight : 'normal',
+    //                     fontSize : 18,
+    //                     color:"#f2f989"
+    //                 }
+    //             }
+    //         },
+    //         data:[
+    //             {value:40, name:'未来空余'}
+    //         ]
+    //     }
+    // ];
+    var option_3_wl = gauge(title_text);
 
     jg_sub_pie.setOption(option_sub_pie);
     jg_sub_wl.setOption(option_sub_wl);
