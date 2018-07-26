@@ -23,8 +23,49 @@ $(document).ready(function(){
             },{
                 data:"remark"
             },{
+                data:"labelManImplNum.sum"
+            },{},{
+                data:"labelManImplNum.impl"
+            },{
+                data:"labelManImplNum.noImpl"
+            },{},{},{
                 data:"time"
             }
+            ],
+            "columnDefs": [
+                // 增加一列，包括删除和修改，同时将我们需要传递的数据传递到链接中
+                {
+                    "targets": [6], // 目标列位置，下标从0开始
+                    "data": "labelManImplNum", // 数据列名
+                    "render": function(data, type, full) { // 返回自定义内容
+                        if(data.sum!=0){
+                            return data.sum-data.no;
+                        }else{
+                            return 0;
+                        }
+                    }
+                },
+                {
+                    "targets": [9], // 目标列位置，下标从0开始
+                    "data": "labelManImplNum", // 数据列名
+                    "render": function(data, type, full) { // 返回自定义内容
+                        if(data.sum!=0){
+                            return ((((data.sum-data.no)*1.00)/(data.sum))*100).toFixed(2);
+                        }else{
+                            return "0.00";
+                        }
+                    }
+                },{
+                    "targets": [10], // 目标列位置，下标从0开始
+                    "data": "labelManImplNum", // 数据列名
+                    "render": function(data, type, full) { // 返回自定义内容
+                        if(data.sum!=0){
+                            return ((data.impl*1.00/(data.sum)*100)).toFixed(2);
+                        }else{
+                            return "0.00";
+                        }
+                    }
+                }
             ],
             "sAjaxSource": "/oldman/label/feedback",//这个是请求的地址
             "fnServerData": retrieveData

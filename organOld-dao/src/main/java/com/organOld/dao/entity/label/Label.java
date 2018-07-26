@@ -5,6 +5,8 @@ import com.organOld.dao.entity.DBEntity;
 import com.organOld.dao.entity.DBInterface;
 import com.organOld.dao.entity.organ.Organ;
 
+import java.util.Date;
+
 /**
  * 三级标签实体
  * Created by netlab606 on 2018/6/7.
@@ -18,11 +20,17 @@ public class Label extends DBEntity implements DBInterface{
     private String rule;//规则
     private int type;//类型  1 人员绑定标签 2规则指定标签
     private Organ organ;//发布的组织ID 主要是居委 0的话 表示针对所有
+    private Date start;
+    private Date end;
+
+    private String startTime;
+    private String endTime;
+    private Integer firIndex;
 
 
     private Integer organId;
     private Integer oldmanId;
-
+    private Integer secId;
     private Integer isFeedback;//针对某居委会 是否反馈
 
 
@@ -49,6 +57,54 @@ public class Label extends DBEntity implements DBInterface{
     private String[] eyesight;
     private String[] oldStatusArray;
 
+
+    public Integer getFirIndex() {
+        return firIndex;
+    }
+
+    public void setFirIndex(Integer firIndex) {
+        this.firIndex = firIndex;
+    }
+
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
+    }
+
+    public Integer getSecId() {
+        return secId;
+    }
+
+    public void setSecId(Integer secId) {
+        this.secId = secId;
+    }
+
+    public Date getStart() {
+        return start;
+    }
+
+    public void setStart(Date start) {
+        this.start = start;
+    }
+
+    public Date getEnd() {
+        return end;
+    }
+
+    public void setEnd(Date end) {
+        this.end = end;
+    }
 
     public String[] getCensusArray() {
         return censusArray;

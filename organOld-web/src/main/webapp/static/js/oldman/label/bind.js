@@ -1,6 +1,7 @@
 /**
  * Created by netlab606 on 2018/4/2.
  */
+var table;
 $(document).ready(function(){
     var columns=[];
     var order=[];
@@ -27,6 +28,8 @@ $(document).ready(function(){
                 data:"census"
             },{
                 data:"time"
+            },{},{
+                data:"remark"
             }
         ];
         order=[[1,"asc"]];
@@ -37,11 +40,7 @@ $(document).ready(function(){
                 "data": "oldmanId", // 数据列名
                 "render": function(data, type, full) { // 返回自定义内容
                     if(data!=undefined){
-                        return '<div class="icheckbox_square-green checked" style="position: relative;">' +
-                            '<input type="checkbox" checked="" class="i-checks" name="input[]" style="position: absolute; opacity: 0;">' +
-                            '<ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;">' +
-                            '</ins>' +
-                            '</div>';
+                        return "<input type='checkbox' name='id' value='"+data+"'/>";
                     }else{
                         return "";
                     }
@@ -74,15 +73,19 @@ $(document).ready(function(){
                 "targets": [11], // 目标列位置，下标从0开始
                 "data": "isImplement", // 数据列名
                 "render": function(data, type, full) { // 返回自定义内容
+                    var s="<span class='btn btn-primary'>查看</span>";
                     if(data==0){
-                        return "<span class='btn btn-primary'>查看</span><button class='btn btn-primary' onclick='implement($(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().text(),this)'>落实</button>";
+                        s+="<button class='btn btn-primary' onclick='implement($(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().text(),$(this).parent().prev().prev().prev().prev().prev().prev().text())'>未操作</button>";
+                    }else if(data==1){
+                        s+="<button class='btn btn-default'>未落实</button>";
                     }else{
-                        return "<span class='btn btn-primary' >查看</span><button class='btn'>已落实</button>";
+                        s+="<button class='btn btn-default'>已落实</button>";
                     }
+                    return s;
                 }
             },
             //不进行排序的列
-            { "bSortable": false, "aTargets": [ 0,2 ,3, 4, 5,6,7,9,10,11] }
+            { "bSortable": false, "aTargets": [ 0,2 ,3, 4, 5,6,7,9,10,11,12] }
         ]
     }else{
         columns=[{
@@ -105,7 +108,9 @@ $(document).ready(function(){
                 data:"census"
             },{
                 data:"time"
-            }
+            },{},{
+            data:"remark"
+        }
         ];
         order=[[0,"asc"]];
         columnDefs= [
@@ -136,18 +141,22 @@ $(document).ready(function(){
                 "targets": [10], // 目标列位置，下标从0开始
                 "data": "isImplement", // 数据列名
                 "render": function(data, type, full) { // 返回自定义内容
+                    var s="<span class='btn btn-primary'>查看</span>";
                     if(data==0){
-                        return "<span class='btn btn-primary'>查看</span><button class='btn btn-primary' onclick='implement($(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().text(),this)'>落实</button>";
+                        s+="<button class='btn btn-primary' onclick='implement($(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().text(),$(this).parent().prev().prev().prev().prev().prev().prev().text())'>未操作</button>";
+                    }else if(data==1){
+                        s+="<button class='btn btn-default'>未落实</button>";
                     }else{
-                        return "<span class='btn btn-primary' >查看</span><button class='btn'>已落实</button>";
+                        s+="<button class='btn btn-default'>已落实</button>";
                     }
+                    return s;
                 }
             },
             //不进行排序的列
-            { "bSortable": false, "aTargets": [ 1 ,2, 3,4,5,6,8,9,10] }
+            { "bSortable": false, "aTargets": [ 1 ,2, 3,4,5,6,8,9,10,11] }
         ]
     }
-    var table =$(".dataTables-example").dataTable(
+    table =$(".dataTables-example").dataTable(
         {
             "sPaginationType": "full_numbers",
             "bPaginite": true,
@@ -172,7 +181,18 @@ $(document).ready(function(){
                 "iSortCol_0" : aoData.iSortCol_0,
                 "sEcho" : aoData.sEcho,
                 "sSortDir_0" : aoData.sSortDir_0,
-                "labelId" :labelId
+                "labelId" :labelId,
+                "id" : ($('input[name="id"]').val()==""?"0":$('input[name="id"]').val()),//参数不能是空 400
+                "census_array":$("select[name='census']").val(),
+                "ageStart":$("input[name='ageStart']").val(),
+                "ageEnd":$("input[name='ageEnd']").val(),
+                "family_array":$("select[name='familyIndex']").val(),
+                "economic_array":$("select[name='economicIndex']").val(),
+                "sex":$("select[name='sex']").val(),
+                "search":$("input[name='search']").val(),
+                "politicalStatus_array":$("select[name='politicalStatuses']").val(),
+                "district_array":$("select[name='district']").val(),
+                "jw_array":$("select[name='jw']").val()
             },
             type: 'POST',
             dataType: 'json',
@@ -279,7 +299,17 @@ $(document).ready(function(){
                     "iSortCol_0" : aoData.iSortCol_0,
                     "sEcho" : aoData.sEcho,
                     "sSortDir_0" : aoData.sSortDir_0,
-                    "id" : ($('.sid').val()==""?"0":aoData.id)//参数不能是空 400
+                    "id" : ($('input[name="id_select"]').val()==""?"0":$('input[name="id_select"]').val()),//参数不能是空 400
+                    "census_array":$("select[name='census_select']").val(),
+                    "ageStart":$("input[name='ageStart_select']").val(),
+                    "ageEnd":$("input[name='ageEnd_select']").val(),
+                    "family_array":$("select[name='familyIndex_select']").val(),
+                    "economic_array":$("select[name='economicIndex_select']").val(),
+                    "sex":$("select[name='sex_select']").val(),
+                    "search":$("input[name='search_select']").val(),
+                    "politicalStatus_array":$("select[name='politicalStatuses_select']").val(),
+                    "district_array":$("select[name='district_select']").val(),
+                    "jw_array":$("select[name='jw_select']").val()
                 },
                 type: 'POST',
                 dataType: 'json',
@@ -296,6 +326,7 @@ $(document).ready(function(){
         $('#selectSearch').click(function () {
             table2.fnFilter();
         });
+
     }
 
     var oTable=$("#editable").dataTable();
@@ -307,43 +338,28 @@ $(document).ready(function(){
 
 });
 
-function del(id) {
-    $.ajax({
-        url : "/oldman/base/del",
-        type : "post",
-        dataType : 'json',
-        data:{
-            id:id
-        },
-        success : function(data) {
-            if (data.success==true) {
-                start = $(".dataTables-example").dataTable().fnSettings()._iDisplayStart;
-                total = $(".dataTables-example").dataTable().fnSettings().fnRecordsDisplay();
-                window.location.reload();
-                if(total-start==1){
-                    if(start>0){
-                        $(".dataTables-example").dataTable().fnPageChange('previous',true);
-                    }
-                }
 
-            } else {
-                alert('删除失败！');
-            }
-        }
-    });
+function implement(id,name) {
+    $("#implementModal input[name='id']").val(id);
+    $("#implementModal h5").html(name);
+    $("#implementModal").modal();
 }
 
-function implement(id,obj) {
+function subImple() {
     $.ajax({
         url : "/oldman/label/implement",
         type : "post",
         dataType : 'json',
         data:{
-            id:id
+            "id":$("#implementModal input[name='id']").val(),
+            "isImplement":$("#implementModal input[name='isImpl']:checked").val(),
+            "remark":$("#implementModal input[name='remark']").val()
         },
         success : function(data) {
             if (data.success==true) {
-                $(obj).attr("class","btn").html("已落实");
+                $("#implementModal").modal("hide");
+                table.fnFilter();
+
             } else {
                 alert('删除失败！');
             }

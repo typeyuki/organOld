@@ -8,7 +8,11 @@
     <#include "../common/head.ftl" />
     <link href="/css/style.min.css?v=4.0.0" rel="stylesheet">
     <link href="/static/css/common_table.css" rel="stylesheet">
-    <link href="/static/css/oldman/base.css" rel="stylesheet">
+    <style>
+        .bootstrap-select:not([class*="span"]):not([class*="col-"]):not([class*="form-control"]){
+            width: 70% !important;
+        }
+    </style>
 </head>
 
 <body class="gray-bg">
@@ -29,32 +33,44 @@
                 </div>
                 <div class="ibox-content">
                     <div>
-                        <input class="id" type="text" placeholder="老人序号">
-                        <input class="id" type="text" placeholder="家庭结构">
-                        <button id="search">搜索</button>
+                        <a  href="javascript:void(0);" id="search" class="btn btn-primary ">搜索</a>
                     </div>
-                    <table class="table table-striped table-bordered table-hover dataTables-example">
-                        <thead>
-                        <tr>
-                            <th>老人序号</th>
-                            <th>老人姓名</th>
-                            <th>家庭结构</th>
-                            <th>更新时间</th>
-                            <th></th>
-                        </tr>
-                        </thead>
-                        <tbody>
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <input class="form-control inp" name="oldmanId" type="text" placeholder="老人序号">
+                        </div>
+                        <div class="col-sm-3">
+                            <label>家庭结构：</label>
+                            <select name="familyIndex"  class="selectpicker bla bla bli" multiple data-live-search="true">
+                            <#list family as list>
+                                <option value="${list.id!}"> <i></i> ${list.value!}</option>
+                            </#list>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-hover dataTables-example text-nowrap">
+                            <thead>
+                            <tr>
+                                <th>老人序号</th>
+                                <th>老人姓名</th>
+                                <th>家庭结构</th>
+                                <th>更新时间</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
 
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
 </div>
-
-<#--<script src="/js/plugins/jeditable/jquery.jeditable.js"></script>-->
+<#include "edit_familty.ftl" />
 
 <script src="/js/content.min.js?v=1.0.0"></script>
 <script src="/static/js/common.js" ></script>

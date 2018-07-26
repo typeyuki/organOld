@@ -1,5 +1,6 @@
 package com.organOld.service.service;
 
+import com.organOld.dao.entity.organ.Organ;
 import com.organOld.dao.entity.organ.OrganType;
 import com.organOld.service.contract.*;
 import com.organOld.service.model.OrganAddModel;
@@ -45,4 +46,16 @@ public interface OrganService {
     OrganAddModel getAddInfo(int firType);
 
     Boolean checkHaveAuthByAuthType(int type, Integer organId);
+
+    List<Organ> getByOrganFirType(int firType);
+
+    String getRecordByPage(OrganServiceRecordRequest organServiceRecordRequest, BTableRequest bTableRequest);
+
+    Result importRecordExcel(MultipartFile file) throws IOException;
+
+    void delByIds(String[] ids);
+
+    List<Organ> getAll();
+
+    List<Organ> getByType(int type);
 }

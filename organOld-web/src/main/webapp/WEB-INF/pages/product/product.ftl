@@ -40,23 +40,25 @@
                         <input class="id" type="text" placeholder="模糊搜索">
                         <button id="search">搜索</button>
                     </div>
-                    <table class="table table-striped table-bordered table-hover dataTables-example">
-                        <thead>
-                        <tr>
-                            <th><input type='checkbox' /></th>
-                            <th>序号</th>
-                            <th>名称</th>
-                            <th>价格</th>
-                            <th>描述</th>
-                            <th>图片</th>
-                            <th>更新时间</th>
-                            <th></th>
-                        </tr>
-                        </thead>
-                        <tbody>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-hover dataTables-example text-nowrap">
+                            <thead>
+                            <tr>
+                                <th><input type='checkbox' /></th>
+                                <th>序号</th>
+                                <th>名称</th>
+                                <th>价格</th>
+                                <th>描述</th>
+                                <th>图片</th>
+                                <th>更新时间</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
 
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

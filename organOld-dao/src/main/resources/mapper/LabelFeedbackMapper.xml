@@ -94,4 +94,12 @@
     <delete id="deleteByLabelId">
         DELETE from label_feedback WHERE label_id=#{labelId}
     </delete>
+
+
+    <delete id="delByLabelIds">
+        DELETE from label_feedback where label_id in
+        <foreach collection="array" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
 </mapper>

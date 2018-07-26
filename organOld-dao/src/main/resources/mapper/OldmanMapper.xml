@@ -16,6 +16,8 @@
         <result property="politicalStatus" column="political_status" />
         <result property="integral" column="integral"/>
         <result property="time" column="time" />
+        <result property="sqzw" column="sqzw" />
+        <result property="zc" column="zc" />
         <association property="xq" javaType="com.organOld.dao.entity.oldman.Xq">
             <id property="id" column="xid"/>
             <result property="name" column="xname"/>
@@ -30,11 +32,13 @@
     </resultMap>
     <!--不能简单的 limit 0，10  因为有1对多的关系  会补全   一条记录当多条使用（由于某个字段有多个值）-->
     <select id="getByPage" parameterType="com.organOld.dao.util.Page" resultMap="oldman">
-        SELECT o.id,o.name,o.sex,o.birthday,c.value census,p.value political_status,o.time,o.phone,o.address,o.pid,o.lou_num,o.old_status,
+        SELECT o.id,o.name,o.sqzw,z.value zc,o.sex,o.birthday,c.value census,p.value political_status,o.time,o.phone,o.address,o.pid,o.lou_num,o.old_status,
         x.value xname,org.name jname,d.value dname,lo.id lmid,l.name label_name,lo.is_implement
         FROM oldman_base o left join auto_value c on o.census=c.id
         left join auto_value p on o.political_status=p.id
-        left join label_oldman lo on lo.oldman_id=o.id left join label l on lo.label_id=l.id,
+        left join label_oldman lo on lo.oldman_id=o.id
+        left join label l on lo.label_id=l.id
+        left join auto_value z on o.zc=z.id,
         auto_value x,auto_value d,organ org
         WHERE  x.id=o.xq_id AND org.id=x.parent_index AND d.id=org.district_id and o.disable=0
 
@@ -128,6 +132,18 @@
                     ${item}
                 </foreach>
             </if>
+            <if test="entity!=null and entity.zcArray!=null and entity.zcArray.length > 0">
+                and oo.zc in
+                <foreach collection="entity.zcArray" index="index" item="item" open="(" separator="," close=")">
+                    ${item}
+                </foreach>
+            </if>
+            <if test="entity!=null and entity.sqzwArray!=null and entity.sqzwArray.length > 0">
+                and
+                <foreach collection="entity.sqzwArray" index="index" item="item" open="(" separator="or" close=")">
+                    (oo.sqzw like concat('%',#{item},'%'))
+                </foreach>
+            </if>
             <if test="entity!=null and entity.oldStatusArray!=null and entity.oldStatusArray.length > 0">
                 and oo.old_status in
                 <foreach collection="entity.oldStatusArray" index="index" item="item" open="(" separator="," close=")">
@@ -165,7 +181,7 @@
     <select id="getSizeByPage" parameterType="com.organOld.dao.util.Page" resultType="java.lang.Long">
         SELECT count(1)
         FROM oldman_base o left join auto_value c on o.census=c.id
-        left join auto_value p on o.political_status=p.id,
+        left join auto_value p on o.political_status=p.id left join auto_value z on o.zc=z.id,
         auto_value x,auto_value d,organ org,oldman_family ofa,oldman_economic oe,oldman_health_base ohb
         WHERE  x.id=o.xq_id AND org.id=x.parent_index AND d.id=org.district_id and ofa.oldman_id=o.id and oe.oldman_id=o.id AND ohb.oldman_id=o.id and o.disable=0
         <if test="entity.birthdayStart!=null">
@@ -194,6 +210,18 @@
         </if>
         <if test="entity!=null and entity.sex!=null and entity.sex!=0">
             and o.sex=#{entity.sex}
+        </if>
+        <if test="entity!=null and entity.zcArray!=null and entity.zcArray.length > 0">
+            and o.zc in
+            <foreach collection="entity.zcArray" index="index" item="item" open="(" separator="," close=")">
+                ${item}
+            </foreach>
+        </if>
+        <if test="entity!=null and entity.sqzwArray!=null and entity.sqzwArray.length > 0">
+            and
+            <foreach collection="entity.sqzwArray" index="index" item="item" open="(" separator="or" close=")">
+                (o.sqzw like concat('%',#{item},'%'))
+            </foreach>
         </if>
         <if test="entity!=null and entity.isHealth!=null and entity.isHealth.length > 0">
             and (ohb.is_mb in
@@ -282,16 +310,10 @@
     </delete>
 
     <insert id="save" parameterType="com.organOld.dao.entity.oldman.Oldman" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO oldman_base(name,sex,birthday,pid,address,xq_id,census,political_status,phone,lou_num,floor,disable)
-        VALUE (#{name},#{sex},#{birthday},#{pid},#{address},#{xqId},#{census},#{politicalStatus},#{phone},#{louNum},#{floor},0)
+        INSERT INTO oldman_base(name,sex,birthday,pid,address,xq_id,census,political_status,phone,lou_num,floor,disable,zc,sqzw)
+        VALUE (#{name},#{sex},#{birthday},#{pid},#{address},#{xqId},#{census},#{politicalStatus},#{phone},#{louNum},#{floor},0,#{zc},#{sqzw})
     </insert>
 
-    <update id="updateById" parameterType="com.organOld.dao.entity.oldman.Oldman">
-        UPDATE oldman_base
-        SET name=#{name},sex=#{sex},birthday=#{birthday},pid=#{pid},address=#{address},xq_id=#{xqId},census=#{census},political_status=#{politicalStatus},
-        district_id=#{districtId},phone=#{phone}
-        WHERE id=#{id}
-    </update>
 
 
     <update id="updateKeyOldman">
@@ -341,25 +363,34 @@
         SELECT id FROM oldman_base WHERE pid=#{pid}
     </select>
 
+    <update id="updateById" parameterType="com.organOld.dao.entity.oldman.Oldman">
+        UPDATE oldman_base
+        set name=#{name},birthday=#{birthday},sex=#{sex},pid=#{pid},address=#{address},census=#{census},political_status=#{politicalStatus},
+        phone=#{phone},xq_id=#{xqId},lou_num=#{louNum},floor=#{floor},zc=#{zc},sqzw=#{sqzw}
+        where id=#{id}
+    </update>
 
 
     <update id="updateByIds" parameterType="java.util.List">
         update oldman_base
-        SET
+        SET disable=0,
         name= CASE id
         <foreach collection="list" index="index" item="item" open="" separator=" " close="">
             WHEN ${item.id} THEN #{item.name}
         </foreach>
+        ELSE name
         END,
         sex= CASE id
         <foreach collection="list" index="index" item="item" open="" separator=" " close="">
             WHEN ${item.id} THEN #{item.sex}
         </foreach>
+        ELSE sex
         END,
         birthday= CASE id
         <foreach collection="list" index="index" item="item" open="" separator=" " close="">
             WHEN ${item.id} THEN #{item.birthday}
         </foreach>
+        ELSE birthday
         END,
         pid= CASE id
         <foreach collection="list" index="index" item="item" open="" separator=" " close="">
@@ -370,36 +401,55 @@
         <foreach collection="list" index="index" item="item" open="" separator=" " close="">
             WHEN ${item.id} THEN #{item.address}
         </foreach>
+        ELSE address
         END,
         xq_id= CASE id
         <foreach collection="list" index="index" item="item" open="" separator=" " close="">
             WHEN ${item.id} THEN #{item.xqId}
         </foreach>
+        ELSE xq_id
         END,
         census= CASE id
         <foreach collection="list" index="index" item="item" open="" separator=" " close="">
             WHEN ${item.id} THEN #{item.census}
         </foreach>
+        ELSE census
+        END,
+        zc= CASE id
+        <foreach collection="list" index="index" item="item" open="" separator=" " close="">
+            WHEN ${item.id} THEN #{item.zc}
+        </foreach>
+        ELSE zc
+        END,
+        sqzw= CASE id
+        <foreach collection="list" index="index" item="item" open="" separator=" " close="">
+            WHEN ${item.id} THEN #{item.sqzw}
+        </foreach>
+        ELSE sqzw
         END,
         political_status= CASE id
         <foreach collection="list" index="index" item="item" open="" separator=" " close="">
             WHEN ${item.id} THEN #{item.politicalStatus}
         </foreach>
+        ELSE political_status
         END,
         phone= CASE id
         <foreach collection="list" index="index" item="item" open="" separator=" " close="">
             WHEN ${item.id} THEN #{item.phone}
         </foreach>
+        ELSE phone
         END,
         lou_num= CASE id
         <foreach collection="list" index="index" item="item" open="" separator=" " close="">
             WHEN ${item.id} THEN #{item.louNum}
         </foreach>
+        ELSE lou_num
         END,
         floor= CASE id
         <foreach collection="list" index="index" item="item" open="" separator=" " close="">
             WHEN ${item.id} THEN #{item.floor}
         </foreach>
+        ELSE floor
         END
         where id in
         <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
@@ -427,17 +477,33 @@
         WHERE id=#{id}
     </update>
 
+    <update id="updateProps">
+        UPDATE oldman_base
+        SET ${prop}=#{value}
+        WHERE id in
+        <foreach collection="ids" index="index" item="item" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+    </update>
+
     <select id="getIntegralByOldmanId" resultMap="oldman">
         SELECT name,integral FROM oldman_base WHERE id=#{oldmanId}
     </select>
 
-    <update id="updateOldStatusByIds">
+    <update id="updateOrganExceLImportByIds">
         update oldman_base
         SET
         old_status= CASE id
         <foreach collection="list" index="index" item="item" open="" separator=" " close="">
-            WHEN ${item.id} THEN #{item.oldStatus}
+            WHEN ${item.id} THEN ${item.oldStatus}
         </foreach>
+        else old_status
+        END,
+        is_handle= CASE id
+        <foreach collection="list" index="index" item="item" open="" separator=" " close="">
+            WHEN ${item.id} THEN ${item.isHandle}
+        </foreach>
+        else is_handle
         END
     </update>
 
@@ -490,4 +556,18 @@
         set integral = integral+${integral}
         WHERE id=#{oldmanId}
     </update>
+
+    <select id="getById" resultType="com.organOld.dao.entity.oldman.Oldman">
+        SELECT * from oldman_base where id=#{id}
+    </select>
+
+
+    <select id="getByJwId" resultType="com.organOld.dao.entity.oldman.Oldman">
+        SELECT o.id,o.name,o.pid,o.old_status,o.is_handle FROM oldman_base o
+        <if test="jwId!=null and jwId!=0">
+            ,auto_value x,organ org
+            where o.xq_id=x.id and x.parent_index=org.id and org.id=#{jwId}
+        </if>
+    </select>
+
 </mapper>

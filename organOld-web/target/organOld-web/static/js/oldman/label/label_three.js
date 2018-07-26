@@ -29,6 +29,10 @@ $(document).ready(function(){
             },{
                 data:"wh"
             },{
+                data:"start"
+            },{
+                data:"end"
+            },{
                 data:"time"
             }
             ],
@@ -36,9 +40,9 @@ $(document).ready(function(){
             "columnDefs": [
                 {
                     "targets": [0], // 目标列位置，下标从0开始
-                    "data": "content", // 数据列名
+                    "data": "id", // 数据列名
                     "render": function(data, type, full) { // 返回自定义内容
-                        return "<input type='checkbox' />";
+                        return "<input type='checkbox' name='id' value='"+data+"'/>";
                     }
                 },
                 {
@@ -65,11 +69,11 @@ $(document).ready(function(){
                 },
                 // 增加一列，包括删除和修改，同时将我们需要传递的数据传递到链接中
                 {
-                    "targets": [10], // 目标列位置，下标从0开始
+                    "targets": [12], // 目标列位置，下标从0开始
                     "data": "isFeedback", // 数据列名
                     "render": function(data, type, full) { // 返回自定义内容
-                        var name="$(this).parent().prev().prev().prev().prev().prev().text()";
-                        var id="$(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().prev().text()";
+                        var name="$(this).parent().prev().prev().prev().prev().prev().prev().prev().text()";
+                        var id="$(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().text()";
                         if(typeLabel=="1"){
                             //人员绑定
                             if(userType=="居委会"){
@@ -79,12 +83,12 @@ $(document).ready(function(){
                                 }else{
                                     s+="<span class='btn btn-primary' onclick=feedback("+id+")>反馈</span>";
                                 }
-                                    s+="<span class='btn btn-primary hide' id='"+data+"'>修改</span>";
+                                    s+="<span class='btn btn-primary' onclick=oldman_editBefore("+id+",'/oldman/label/?/getById')>修改</span>";
                                 return s;
                             }else{
                                 return "<span class='btn btn-primary' onclick=newPageBefore("+id+","+name+",'/oldman/label/bind/?/man') >人员</span>" +
                                     "<span class='btn btn-primary' onclick=newPageBefore("+id+","+name+",'/oldman/label/?/feedback')>反馈信息</span>" +
-                                    "<span  class='btn btn-primary hide' id='"+id+"'>修改</span>";
+                                    "<button class='btn btn-primary' onclick=oldman_editBefore("+id+",'/oldman/label/?/getById')>修改</button>";
                             }
                         }else{
                             //规则指定
@@ -96,13 +100,13 @@ $(document).ready(function(){
                                 }else{
                                     s+="<span class='btn btn-primary' onclick=feedback("+id+")>反馈</span>";
                                 }
-                                s+="<span class='btn btn-primary hide' id='"+data+"'>修改</span>";
+                                s+="<span class='btn btn-primary' onclick=oldman_editBefore("+id+",'/oldman/label/?/getById')>修改</span>";
                                 return s;
                             }else{
                                 return "<span class='btn btn-primary' onclick=newPageBefore("+id+","+name+",'/oldman/label/rule/?/man')>人员</span>" +
                                     "<span class='btn btn-primary' onclick=newPageBefore("+id+","+name+",'/oldman/label/rule/?')>规则</span>" +
                                     "<span class='btn btn-primary' onclick=newPageBefore("+id+","+name+",'/oldman/label/?/feedback')>反馈信息</span>" +
-                                    "<span class='btn btn-primary hide' class='edit' id='"+id+"'>修改</span>";
+                                    "<span class='btn btn-primary' onclick=oldman_editBefore("+id+",'/oldman/label/?/getById')>修改</span>";
                             }
                         }
                     }
@@ -126,7 +130,7 @@ $(document).ready(function(){
                 "type":typeLabel,
                 "census_array":$("select[name='census_array']").val(),
                 "ageStart":$("input[name='ageStart']").val(),
-                "isKey":$("input[name='isKey']").val(),
+                "isKey":$("select[name='isKey']").val(),
                 "ageEnd":$("input[name='ageEnd']").val(),
                 "wh":$("input[name='wh']").val(),
                 "family_array":$("select[name='family_array']").val(),
@@ -189,4 +193,22 @@ function lookfeedback(id) {
             $("#isFinish").html(result.data.isFinish);
         }
     });
+}
+
+function oldman_editBefore(id,url) {
+    //查看是否有修改标签的权限
+    $.ajax({
+        url: "/oldman/label/"+id+"/checkCanChange",
+        type: "get",
+        success: function (data) {
+            if (data.success ==false) {
+                alert("您没有权限修改");
+            }else{
+                url=url.replace("?",id);
+                oldman_edit(id,url);
+            }
+        }
+    });
+
+
 }

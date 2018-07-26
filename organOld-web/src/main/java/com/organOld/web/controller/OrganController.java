@@ -264,4 +264,44 @@ public class OrganController {
         mv.addObject("info",organService.getRegInfo());
         return mv;
     }
+
+    @ResponseBody
+    @RequestMapping(value = "/getByFirType",method = RequestMethod.POST)
+    public Result getByFirType(@RequestParam int firType){
+        return new Result(true,organService.getByOrganFirType(firType));
+    }
+
+    /**
+     * 服务情况
+     * @return
+     */
+    @RequestMapping(value = "/record",method = RequestMethod.GET)
+    public ModelAndView record(@RequestParam(required = false) Integer organId){
+        ModelAndView mv=new ModelAndView("organ/organ_service_record");
+        if(organId!=null)
+            mv.addObject("organId",organId);
+        return mv;
+    }
+    @ResponseBody
+    @RequestMapping(value = "/record/data",method = RequestMethod.POST)
+    public String data(OrganServiceRecordRequest organServiceRecordRequest, BTableRequest bTableRequest){
+        return organService.getRecordByPage(organServiceRecordRequest,bTableRequest);
+    }
+    @RequestMapping(value = "/record/importExcel",method = RequestMethod.POST)
+    public ModelAndView importRecordExcel(@RequestParam MultipartFile file,@RequestParam Integer organId) throws IOException {
+        ModelAndView mv=new ModelAndView("organ/organ_service_record");
+        Result result=organService.importRecordExcel(file);
+        mv.addObject("result",result);
+        mv.addObject("organId",organId);
+        return mv;
+    }
+
+
+    @ResponseBody
+    @RequestMapping(value = "/del/ids",method = RequestMethod.POST)
+    public Result dela(@RequestParam("ids[]") String ids[]){
+        organService.delByIds(ids);
+        return new Result(true);
+    }
+
 }

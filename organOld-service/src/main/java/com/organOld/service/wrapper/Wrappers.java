@@ -19,4 +19,6 @@ public class Wrappers {
     public static LabelManWrapper labelManWrapper=new LabelManWrapper();
     public static RecordWrapper recordWrapper=new RecordWrapper();
     public static MessageWrapper messageWrapper=new MessageWrapper();
+    public static CardWrapper cardWrapper=new CardWrapper();
+    public static AutoValueWrapper autoValueWrapper=new AutoValueWrapper();
 }

@@ -32,6 +32,15 @@
         <if test="entity!=null and entity.oldman!=null and entity.oldman.id!=null and entity.oldman.id!=0">
             and ob.id=#{entity.oldman.id}
         </if>
+        <if test="entity!=null and entity.oldmanId!=null and entity.oldmanId!=0">
+            and ob.id=#{entity.oldmanId}
+        </if>
+        <if test="entity!=null and entity.economicArray!=null and entity.economicArray.length > 0">
+            and oe.economic_index IN
+            <foreach collection="entity.economicArray" index="index" item="item" separator="," open="(" close=")">
+                #{item}
+            </foreach>
+        </if>
         <if test="sortType!=null and sortType!=''">
             ORDER BY ob.${sortType}
         </if>
@@ -61,11 +70,20 @@
         <if test="entity!=null and entity.oldman!=null and entity.oldman.id!=null and entity.oldman.id!=0">
             and o.oldman_id=#{entity.oldman.id}
         </if>
+        <if test="entity!=null and entity.oldmanId!=null and entity.oldmanId!=0">
+            and ob.id=#{entity.oldmanId}
+        </if>
+        <if test="entity!=null and entity.economicArray!=null and entity.economicArray.length > 0">
+            and oe.economic_index IN
+            <foreach collection="entity.economicArray" index="index" item="item" separator="," open="(" close=")">
+                #{item}
+            </foreach>
+        </if>
     </select>
 
     <update id="updateById" parameterType="com.organOld.dao.entity.oldman.OldmanEconomic">
         UPDATE oldman_economic
-        SET econmic_index=#{econmic_index},oldman_id=#{oldman_id},id=#{id},time=#{time}
+        SET economic_index=#{economicIndex}
         WHERE id=#{id}
     </update>
 
@@ -92,4 +110,9 @@
             (#{item.oldmanId}, #{item.economicIndex})
         </foreach>
     </insert>
+
+
+    <select id="getById" resultType="com.organOld.dao.entity.oldman.OldmanEconomic">
+        SELECT * from oldman_economic where id=#{id}
+    </select>
 </mapper>

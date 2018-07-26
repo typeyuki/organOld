@@ -228,6 +228,44 @@
                         </div>
                         <div class="hr-line-dashed"></div>
                         <div class="form-group">
+                            <label class="col-sm-2 control-label">职称
+                            </label>
+                            <div class="col-sm-1">
+                                <div class="checkbox i-checks">
+                                    <label>
+                                        <input type="checkbox" name="zc" value=""  checked> <i></i> 不限</label>
+                                </div>
+                            </div>
+                        <#list rule.zc as list>
+                            <div class="col-sm-1">
+                                <div class="radio i-checks">
+                                    <label>
+                                        <input type="checkbox" value="${list.id}" name="zc" > <i></i> ${list.value}</label>
+                                </div>
+                            </div>
+                        </#list>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">社区职务(其中之一)
+                            </label>
+                            <div class="col-sm-1">
+                                <div class="checkbox i-checks">
+                                    <label>
+                                        <input type="checkbox" name="sqzw" value=""  checked> <i></i> 不限</label>
+                                </div>
+                            </div>
+                        <#list rule.sqzw as list>
+                            <div class="col-sm-1">
+                                <div class="radio i-checks">
+                                    <label>
+                                        <input type="checkbox" value="${list.id}" name="sqzw" > <i></i> ${list.value}</label>
+                                </div>
+                            </div>
+                        </#list>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+                        <div class="form-group">
                             <label class="col-sm-2 control-label">失智
                             </label>
                             <div class="col-sm-1">
@@ -266,7 +304,7 @@
                         </div>
                         <div class="hr-line-dashed"></div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">是否有以下情况
+                            <label class="col-sm-2 control-label">是否有以下情况(其中之一)
                             </label>
                             <div class="col-sm-1">
                                 <div class="checkbox i-checks">
@@ -346,6 +384,19 @@
 </script>
 <script src="/static/js/oldman/label/rule.js"></script>
 <script>
+    $.ajax({
+        url: "/oldman/label/${labelId}/checkCanChange",
+        type: "get",
+        success: function (data) {
+            if (data.success ==false) {
+                $("input").prop("disabled",true);
+                $("select").prop("disabled",true);
+                $("textarea").prop("disabled",true);
+                $("button").hide();
+                $("input[type='file']").hide();
+            }
+        }
+    });
     $(document).ready(function(){$(".i-checks").iCheck({checkboxClass:"icheckbox_square-green",radioClass:"iradio_square-green"})});
 </script>
 <script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>

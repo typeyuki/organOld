@@ -1,6 +1,7 @@
 package com.organOld.service.service;
 
 
+import com.organOld.dao.entity.DBEntity;
 import com.organOld.dao.entity.oldman.HealthSelect;
 import com.organOld.service.contract.*;
 import com.organOld.service.model.OldmanAddInfoModel;
@@ -18,31 +19,22 @@ public interface OldmanService {
 
     void save(OldmanAddRequest oldmanAddRequest);
 
-    void updateOldman(OldmanRequest oldmanBaseRequest);
 
-    void updateLinkman(LinkmanRequest linkmanBaseRequest);
+    String getOldmanByPage(OldmanRequest oldmanBaseRequest, BTableRequest bTableRequest);
 
-    void updateEconomy(OldmanEconomicRequest economicRequest);
+    String getHealthByPage(OldmanHealthRequest oldmanHealthRequest, BTableRequest bTableRequest);
 
-    void updateFamily(OldmanFamilyRequest familyRequest);
+    String getLinkmanByPage(LinkmanRequest linkmanRequest, BTableRequest bTableRequest);
 
-    void updateOrganOldman(OrganOldmanRequest organoldmanRequest);
+    String getEconomyByPage(OldmanEconomicRequest economicRequest, BTableRequest bTableRequest);
 
-    String getOldmanByPage(OldmanRequest oldmanBaseRequest, BTableRequest bTableRequest, HttpSession session);
+    String getFamilyByPage(OldmanFamilyRequest familyRequest, BTableRequest bTableRequest);
 
-    String getHealthByPage(OldmanHealthRequest oldmanHealthRequest, BTableRequest bTableRequest, HttpSession session);
-
-    String getLinkmanByPage(LinkmanRequest linkmanRequest, BTableRequest bTableRequest, HttpSession session);
-
-    String getEconomyByPage(OldmanEconomicRequest economicRequest, BTableRequest bTableRequest, HttpSession session);
-
-    String getFamilyByPage(OldmanFamilyRequest familyRequest, BTableRequest bTableRequest, HttpSession session);
-
-    String getOrganOldmanByPage(OrganOldmanRequest organOldmanRequest, BTableRequest bTableRequest, HttpSession session);
+    String getOrganOldmanByPage(OrganOldmanRequest organOldmanRequest, BTableRequest bTableRequest);
 
     OldmanAddInfoModel getAddInfo();
 
-    String getHomeOldmanByPage(HomeOldmanRequest homeOldmanRequest, BTableRequest bTableRequest, HttpSession session);
+    String getHomeOldmanByPage(HomeOldmanRequest homeOldmanRequest, BTableRequest bTableRequest);
 
     OldmanAllInfoModel getOldmanInfo(int oldmanId);
 
@@ -55,4 +47,16 @@ public interface OldmanService {
     void addOrUpdateHealthSelect(HealthSelect healthSelect, String type);
 
     String getIntegralByPage(OldmanIntegralRequest oldmanIntegralRequest, BTableRequest bTableRequest);
+
+    Result getById(int id, String type);
+
+    Result updateById(DBEntity dbEntity, String base);
+
+    void delByIds(String[] ids);
+
+    void delHealthSelectByIds(String[] ids);
+
+    Result getIntegralRule();
+
+    void updateIntegral(int sign, int consume);
 }

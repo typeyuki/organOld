@@ -2,7 +2,9 @@ package com.organOld.dao.entity.oldman;
 
 
 import com.organOld.dao.entity.DBInterface;
+import com.organOld.dao.entity.home.Home;
 import com.organOld.dao.entity.label.LabelMan;
+import com.organOld.dao.entity.organ.Organ;
 
 import java.util.Date;
 import java.util.List;
@@ -11,7 +13,7 @@ import java.util.List;
  * 老人
  * Created by netlab606 on 2018/4/2.
  */
-public class Oldman extends Man implements DBInterface{
+public class Oldman extends Man implements DBInterface {
     private Integer sex;//1女 2男
     private Date birthday;//出生年月
     private String pid;//身份证号
@@ -26,6 +28,10 @@ public class Oldman extends Man implements DBInterface{
     private Integer isHandle;
     private Integer integral;
     private Integer oldStatus;
+    private String zc;
+    private String sqzw;
+
+    private String birthdayTime;
     /**
      * 搜索对象
      */
@@ -48,18 +54,87 @@ public class Oldman extends Man implements DBInterface{
     private String intelligence[];
     private String eyesight[];
     private String oldStatusArray[];
-
+    private String zcArray[];
+    private String sqzwArray[];
 
     private String future;//是否是查询未来的重点老人得分
 
     private Integer keyGoalBase;//重点老人分数基线
+
     /**
      * 关联对象
      * @return
      */
     private Xq xq;//小区
     private List<LabelMan> labelManList;
+    private OldmanKeyHandle oldmanKeyHandle;
+    private List<Organ> organList;
+    private List<Home> homeList;
 
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Oldman oldman = (Oldman) o;
+
+        return pid != null ? pid.equals(oldman.pid) : oldman.pid == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return pid != null ? pid.hashCode() : 0;
+    }
+
+
+    public String[] getZcArray() {
+        return zcArray;
+    }
+
+    public void setZcArray(String[] zcArray) {
+        this.zcArray = zcArray;
+    }
+
+    public String[] getSqzwArray() {
+        return sqzwArray;
+    }
+
+    public void setSqzwArray(String[] sqzwArray) {
+        this.sqzwArray = sqzwArray;
+    }
+
+    public String getBirthdayTime() {
+        return birthdayTime;
+    }
+
+    public void setBirthdayTime(String birthdayTime) {
+        this.birthdayTime = birthdayTime;
+    }
+
+    public List<Home> getHomeList() {
+        return homeList;
+    }
+
+    public void setHomeList(List<Home> homeList) {
+        this.homeList = homeList;
+    }
+
+    public List<Organ> getOrganList() {
+        return organList;
+    }
+
+    public void setOrganList(List<Organ> organList) {
+        this.organList = organList;
+    }
+
+    public OldmanKeyHandle getOldmanKeyHandle() {
+        return oldmanKeyHandle;
+    }
+
+    public void setOldmanKeyHandle(OldmanKeyHandle oldmanKeyHandle) {
+        this.oldmanKeyHandle = oldmanKeyHandle;
+    }
 
     public Integer getIntegral() {
         return integral;
@@ -342,5 +417,21 @@ public class Oldman extends Man implements DBInterface{
 
     public void setLouNum(Integer louNum) {
         this.louNum = louNum;
+    }
+
+    public String getZc() {
+        return zc;
+    }
+
+    public void setZc(String zc) {
+        this.zc = zc;
+    }
+
+    public String getSqzw() {
+        return sqzw;
+    }
+
+    public void setSqzw(String sqzw) {
+        this.sqzw = sqzw;
     }
 }

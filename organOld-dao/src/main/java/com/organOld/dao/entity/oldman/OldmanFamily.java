@@ -17,15 +17,14 @@ public class OldmanFamily extends DBEntity implements DBInterface {
     private Integer familyIndex;
 
 
-    @Override
-    public String toString() {
-        return "OldmanFamily{" +
-                "family='" + family + '\'' +
-                ", oldman=" + oldman +
-                ", oldmanId=" + oldmanId +
-                ", organId=" + organId +
-                ", familyIndex=" + familyIndex +
-                '}';
+    private String[] familyArray;
+
+    public String[] getFamilyArray() {
+        return familyArray;
+    }
+
+    public void setFamilyArray(String[] familyArray) {
+        this.familyArray = familyArray;
     }
 
     public Integer getFamilyIndex() {

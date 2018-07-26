@@ -27,7 +27,7 @@ $(document).ready(function(){
                     "targets": [3], // 目标列位置，下标从0开始
                     "data": "oldmanId", // 数据列名
                     "render": function(data, type, full) { // 返回自定义内容
-                        return "<button class='btn btn-primary' id='"+data+"' onclick=newPage("+data+",$(this).parent().prev().prev().prev().text(),'/oldman/"+data+"/info')>查看</button>";
+                        return "<button class='btn btn-primary' onclick=newPage("+data+",$(this).parent().prev().prev().text(),'/card/"+data+"/integral/record')>查看积分记录</button>";
                     }
                 },
                 //不进行排序的列

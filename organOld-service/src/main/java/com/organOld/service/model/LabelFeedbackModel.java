@@ -1,5 +1,7 @@
 package com.organOld.service.model;
 
+import com.organOld.dao.entity.label.LabelManImplNum;
+
 public class LabelFeedbackModel {
     private int organId;
     private String organName;
@@ -7,6 +9,16 @@ public class LabelFeedbackModel {
     private String districtName;
     private String remark;
     private String isFinish;
+    private LabelManImplNum labelManImplNum;
+
+
+    public LabelManImplNum getLabelManImplNum() {
+        return labelManImplNum;
+    }
+
+    public void setLabelManImplNum(LabelManImplNum labelManImplNum) {
+        this.labelManImplNum = labelManImplNum;
+    }
 
     public int getOrganId() {
         return organId;

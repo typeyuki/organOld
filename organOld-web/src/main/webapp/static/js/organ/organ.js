@@ -37,7 +37,7 @@ $(document).ready(function(){
                 "targets": [0], // 目标列位置，下标从0开始
                 "data": "id", // 数据列名
                 "render": function(data, type, full) { // 返回自定义内容
-                    return"<input type='checkbox' />"
+                    return"<input type='checkbox' name='id' value='"+data+"'/>"
                 }
             },
             {
@@ -49,10 +49,10 @@ $(document).ready(function(){
                         btn+="<span class='btn btn-primary' onclick=newPage("+data.id+",$(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().prev().text(),'/record/1?organId="+data.id+"')>消费记录</span>";
                     }
                     if(data.authProduct==1){
-                        btn+="<span class='btn btn-primary' onclick=newPage("+data.id+",$(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().prev().text(),'/product?organId="+data.id+"')>商品列表</span>";
+                        btn+="<span class='btn btn-primary' onclick=newPage("+data.id+",$(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().prev().text(),'/product?organId="+data.id+"')>服务产品</span>";
                     }
                     if(data.authProduct==1){
-                        btn+="<span class='btn btn-primary' onclick=newPage("+data.id+",$(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().prev().text(),'/product/book?organId="+data.id+"')>商品预定记录</span>";
+                        btn+="<span class='btn btn-primary' onclick=newPage("+data.id+",$(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().prev().text(),'/product/book?organId="+data.id+"')>预定记录</span>";
                     }
                     if(data.authSign==1){
                         btn+="<span class='btn btn-primary' onclick=newPage("+data.id+",$(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().prev().text(),'/record/2?organId="+data.id+"')>签到记录</span>";
@@ -107,7 +107,7 @@ $(document).ready(function(){
                 "targets": [0], // 目标列位置，下标从0开始
                 "data": "id", // 数据列名
                 "render": function(data, type, full) { // 返回自定义内容
-                    return"<input type='checkbox' />"
+                    return"<input type='checkbox' name='id' value='"+data+"'/>"
                 }
             },
             {
@@ -119,10 +119,10 @@ $(document).ready(function(){
                         btn+="<span class='btn btn-primary' onclick=newPage("+data.id+",$(this).parent().prev().prev().prev().prev().prev().text(),'/record/1?organId="+data.id+"')>消费记录</span>";
                     }
                     if(data.authProduct==1){
-                        btn+="<span class='btn btn-primary' onclick=newPage("+data.id+",$(this).parent().prev().prev().prev().prev().prev().text(),'/product?organId="+data.id+"')>商品列表</span>";
+                        btn+="<span class='btn btn-primary' onclick=newPage("+data.id+",$(this).parent().prev().prev().prev().prev().prev().text(),'/product?organId="+data.id+"')>服务产品</span>";
                     }
                     if(data.authProduct==1){
-                        btn+="<span class='btn btn-primary' onclick=newPage("+data.id+",$(this).parent().prev().prev().prev().prev().prev().prev().text(),'/product/book?organId="+data.id+"')>商品预定记录</span>";
+                        btn+="<span class='btn btn-primary' onclick=newPage("+data.id+",$(this).parent().prev().prev().prev().prev().prev().prev().text(),'/product/book?organId="+data.id+"')>预定记录</span>";
                     }
                     if(data.authSign==1){
                         btn+="<span class='btn btn-primary' onclick=newPage("+data.id+",$(this).parent().prev().prev().prev().prev().prev().prev().text(),'/record/2?organId="+data.id+"')>签到记录</span>";
@@ -177,7 +177,7 @@ $(document).ready(function(){
                 "targets": [0], // 目标列位置，下标从0开始
                 "data": "id", // 数据列名
                 "render": function(data, type, full) { // 返回自定义内容
-                    return"<input type='checkbox' />"
+                    return"<input type='checkbox' name='id' value='"+data+"' />"
                 }
             },
             {
@@ -189,10 +189,10 @@ $(document).ready(function(){
                         btn+="<span class='btn btn-primary' onclick=newPage("+data.id+",$(this).parent().prev().prev().prev().prev().prev().prev().prev().text(),'/record/1?organId="+data.id+"')>消费记录</span>";
                     }
                     if(data.authProduct==1){
-                        btn+="<span class='btn btn-primary' onclick=newPage("+data.id+",$(this).parent().prev().prev().prev().prev().prev().prev().prev().text(),'/product?organId="+data.id+"')>商品列表</span>";
+                        btn+="<span class='btn btn-primary' onclick=newPage("+data.id+",$(this).parent().prev().prev().prev().prev().prev().prev().prev().text(),'/product?organId="+data.id+"')>服务产品</span>";
                     }
                     if(data.authProduct==1){
-                        btn+="<span class='btn btn-primary' onclick=newPage("+data.id+",$(this).parent().prev().prev().prev().prev().prev().prev().prev().text(),'/product/book?organId="+data.id+"')>商品预定记录</span>";
+                        btn+="<span class='btn btn-primary' onclick=newPage("+data.id+",$(this).parent().prev().prev().prev().prev().prev().prev().prev().text(),'/product/book?organId="+data.id+"')>预定记录</span>";
                     }
                     if(data.authSign==1){
                         btn+="<span class='btn btn-primary' onclick=newPage("+data.id+",$(this).parent().prev().prev().prev().prev().prev().prev().prev().text(),'/record/2?organId="+data.id+"')>签到记录</span>";
@@ -211,10 +211,8 @@ $(document).ready(function(){
                 "targets": [12], // 目标列位置，下标从0开始
                 "data": "id", // 数据列名
                 "render": function(data, type, full) { // 返回自定义内容
-
                     return "<span class='btn btn-primary' onclick=newPage("+data+",$(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().prev().text(),'/organ/"+data+"/info')>查看</span>" +
-
-                        "<span class='btn btn-danger' onclick=location.href='/organ/"+data+"/cancel'>撤销</span>";
+                        "<span class='btn btn-primary' onclick=newPage("+data.id+",$(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().prev().text(),'/organ/record?organId="+data+"')>服务情况</span><span class='btn btn-danger' onclick=location.href='/organ/"+data+"/cancel'>撤销</span>";
                 }
             },
             //不进行排序的列
@@ -265,15 +263,15 @@ $(document).ready(function(){
                     }
                     if(data.authProduct==1){
                         if(data.status=="4")
-                        btn+="<span class='btn btn-primary' onclick=newPage("+data.id+",$(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().text(),'/product?organId="+data.id+"')>商品列表</span>";
+                        btn+="<span class='btn btn-primary' onclick=newPage("+data.id+",$(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().text(),'/product?organId="+data.id+"')>服务产品</span>";
                         else
-                            btn+="<span class='noBtn'>商品列表</span>";
+                            btn+="<span class='noBtn'>服务产品</span>";
                     }
                     if(data.authProduct==1){
                         if(data.status=="4")
-                        btn+="<span class='btn btn-primary' onclick=newPage("+data.id+",$(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().text(),'/product/book?organId="+data.id+"')>商品预定记录</span>";
+                        btn+="<span class='btn btn-primary' onclick=newPage("+data.id+",$(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().text(),'/product/book?organId="+data.id+"')>预定记录</span>";
                         else
-                            btn+="<span class='noBtn'>商品预定记录</span>";
+                            btn+="<span class='noBtn'>预定记录</span>";
                     }
                     if(data.authSign==1){
                         if(data.status=="4")
@@ -341,8 +339,8 @@ $(document).ready(function(){
                         btn+="<span class='noBtn'>消费记录</span>";
                     }
                     if(data.authProduct==1){
-                        btn+="<span  class='noBtn'>商品列表</span>";
-                        btn+="<span  class='noBtn'>商品预定列表</span>";
+                        btn+="<span  class='noBtn'>服务产品</span>";
+                        btn+="<span  class='noBtn'>预定列表</span>";
                     }
                     if(data.authSign==1){
                         btn+="<span class='noBtn'>签到记录</span>";

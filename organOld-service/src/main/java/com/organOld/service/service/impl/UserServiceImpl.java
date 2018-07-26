@@ -2,14 +2,12 @@ package com.organOld.service.service.impl;
 
 import com.organOld.dao.entity.SysAuthority;
 import com.organOld.dao.entity.SysRole;
-import com.organOld.dao.entity.oldman.Oldman;
 import com.organOld.dao.entity.organ.Organ;
 import com.organOld.dao.repository.OrganDao;
 import com.organOld.dao.repository.UserDao;
 import com.organOld.dao.entity.SysUser;
 import com.organOld.dao.util.Page;
 import com.organOld.service.contract.*;
-import com.organOld.service.model.OldmanModel;
 import com.organOld.service.model.OrganAuth;
 import com.organOld.service.model.UserModel;
 import com.organOld.service.service.CommonService;
@@ -21,7 +19,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -124,8 +121,8 @@ public class UserServiceImpl implements UserService {
             if(auths.contains("sign"))organ.setAuthSign(1);else organ.setAuthSign(0);
             if(auths.contains("product"))organ.setAuthProduct(1);else organ.setAuthProduct(0);
             if(auths.contains("consume"))organ.setAuthConsume(1);else organ.setAuthConsume(0);
-            if(auths.contains("info"))organ.setAuthConsume(1);else organ.setAuthConsume(0);
-            if(auths.contains("integral"))organ.setAuthConsume(1);else organ.setAuthConsume(0);
+            if(auths.contains("info"))organ.setAuthQueryInfo(1);else organ.setAuthQueryInfo(0);
+            if(auths.contains("integral"))organ.setAuthQueryIntegral(1);else organ.setAuthQueryIntegral(0);
         }else{
             organ.setAuthSign(0);
             organ.setAuthProduct(0);
@@ -147,8 +144,51 @@ public class UserServiceImpl implements UserService {
             organAuth.setAuthConsume(organ.getAuthConsume());
             organAuth.setAuthSign(organ.getAuthSign());
             organAuth.setAuthQueryInfo(organ.getAuthQueryInfo());
-            organAuth.setAuthQueryIntegral(organAuth.getAuthQueryIntegral());
+            organAuth.setAuthQueryIntegral(organ.getAuthQueryIntegral());
             return new Result(true, organAuth);
         }
+    }
+
+    @Override
+    public void delByIds(String[] ids) {
+        Integer[] id=new Integer[ids.length];
+        for(int i=0;i<ids.length;i++){
+            id[i]=Integer.parseInt(ids[i]);
+        }
+        userDao.delByIds(id);
+
+    }
+
+
+    @Override
+    public Result getById(int id) {
+        return new Result(true,userDao.getById(id));
+    }
+
+    @Override
+    @Transactional
+    public void update(UserAddRequest userAddRequest) {
+        SysUser sysUser=new SysUser();
+        sysUser.setId(userAddRequest.getId());
+        sysUser.setUsername(userAddRequest.getUsername());
+        sysUser.setPassword(userAddRequest.getPassword());
+        sysUser.setRoleId(Integer.parseInt(userAddRequest.getRoleId()));
+        sysUser.setOrganId(userAddRequest.getOrganId());
+        if(userAddRequest.getAuth()!=null && userAddRequest.getAuth().length>0){
+            List<String> auths= Arrays.asList(userAddRequest.getAuth());
+            if(auths.contains("sign"))sysUser.setAuthSign(1);else sysUser.setAuthSign(0);
+            if(auths.contains("product"))sysUser.setAuthProduct(1);else sysUser.setAuthProduct(0);
+            if(auths.contains("consume"))sysUser.setAuthConsume(1);else sysUser.setAuthConsume(0);
+            if(auths.contains("info"))sysUser.setAuthQueryInfo(1);else sysUser.setAuthQueryInfo(0);
+            if(auths.contains("integral"))sysUser.setAuthQueryIntegral(1);else sysUser.setAuthQueryIntegral(0);
+        }else{
+            sysUser.setAuthSign(0);
+            sysUser.setAuthProduct(0);
+            sysUser.setAuthConsume(0);
+            sysUser.setAuthQueryInfo(0);
+            sysUser.setAuthQueryIntegral(0);
+        }
+        userDao.updateById(sysUser);
+        organDao.updateAuth(sysUser.getOrganId(),sysUser.getAuthConsume(),sysUser.getAuthProduct(),sysUser.getAuthSign(),sysUser.getAuthQueryInfo(),sysUser.getAuthQueryIntegral());
     }
 }

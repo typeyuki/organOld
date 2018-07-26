@@ -33,25 +33,28 @@
                         <input class="id" type="text" placeholder="模糊搜索">
                         <button id="search">搜索</button>
                     </div>
-                    <table class="table table-striped table-bordered table-hover dataTables-example">
-                        <thead>
-                        <tr>
-                            <th>序号</th>
-                            <th>老人</th>
-                            <th>时间</th>
-                            <#if type==1>
-                                <th>金额</th>
-                            </#if>
-                            <#if organId?? && organId!=0>
-                            <#else >
-                            <th>机构</th>
-                            </#if>
-                        </tr>
-                        </thead>
-                        <tbody>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-hover dataTables-example text-nowrap">
+                            <thead>
+                            <tr>
+                                <th>序号</th>
+                                <th>老人</th>
+                                <th>时间</th>
+                                <#if type==1>
+                                    <th>金额</th>
+                                    <th>金额变动</th>
+                                </#if>
+                                <#if organId?? && organId!=0>
+                                <#else >
+                                <th>机构</th>
+                                </#if>
+                            </tr>
+                            </thead>
+                            <tbody>
 
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

@@ -40,4 +40,116 @@ function newPage(id,name,url) {
 }
 
 
+function oldman_edit(id,url) {
+    $(".searchable-select").remove();
+    $.ajax({
+        url: url,
+        type: "get",
+        async:false,
+        success: function (result) {
+            var data=result.data;
+            for(key in data){
+                if(key=="sex"){
+                    $("#editModal input[name='sex']").each(function () {
+                        if($(this).val()==data[key]){
+                            $(this).prop("checked",true);
+                        }
+                    });
+                }else if(key=="chx" || key=="doctor"){
+                    for(keyChild in data[key]){
+                        $("#editModal input[name='"+key+"."+keyChild+"']").val(data[key][keyChild]);
+                        $("#editModal select[name='"+key+"."+keyChild+"'] option[value='"+data[key][keyChild]+"']").prop("selected",true);
+                    }
+                }else if(key=="sqzw"){
+                    if(data[key]!=null && data[key].length>0){
+                        var s=data[key].split("#");
+                        $('#editModal .selectpicker').selectpicker('val', s);//默认选中
+                        $('#editModal .selectpicker').selectpicker('refresh');
+                    }
+                }
+                else{
+                    if(data[key]!=null){
+                        $("#editModal input[name='"+key+"']").val(data[key]);
+                        $("#editModal select[name='"+key+"'] option[value='"+data[key]+"']").prop("selected",true);
+                    }else{
+                        $("#editModal select[name='"+key+"'] option:first-child").prop("selected",true);
+                    }
+                }
+            }
 
+            $('.search_select').searchableSelect();
+            $("#editModal").modal();
+        }
+    });
+
+}
+
+
+
+function oldman_edit_oldmanName(id,url,oldmanName){
+    $("#editModal h5").html(oldmanName);
+    oldman_edit(id,url)
+}
+
+function del(url) {
+    var ids=[];
+    $("input[name='id']:checked").each(function () {
+       ids.push($(this).val());
+    });
+    $.ajax({
+        url : url,
+        type : "post",
+        dataType : 'json',
+        data:{
+            ids:ids
+        },
+        success : function(data) {
+            if (data.success==true) {
+                var start = $(".dataTables-example").dataTable().fnSettings()._iDisplayStart;
+                var total = $(".dataTables-example").dataTable().fnSettings().fnRecordsDisplay();
+                window.location.reload();
+                if(total-start==1){
+                    if(start>0){
+                        $(".dataTables-example").dataTable().fnPageChange('previous',true);
+                    }
+                }
+
+            } else {
+                alert('删除失败！');
+            }
+        }
+    });
+}
+
+
+
+function thCheck(obj) {
+    thCheckByName(obj,"id");
+}
+
+
+function thCheckByName(obj,name) {
+    if($(obj).is(':checked')){
+        $("input[name="+name+"]").prop("checked",true);
+    }else{
+        $("input[name="+name+"]").prop("checked",false);
+    }
+}
+
+function tableUpdate() {
+    var start = $(".dataTables-example").dataTable().fnSettings()._iDisplayStart;
+    var total = $(".dataTables-example").dataTable().fnSettings().fnRecordsDisplay();
+    window.location.reload();
+    if(total-start==1){
+        if(start>0){
+            $(".dataTables-example").dataTable().fnPageChange('previous',true);
+        }
+    }
+}
+
+
+$(function () {
+    $('.selectpicker').selectpicker({
+        'selectedText': 'cat'
+    });
+});

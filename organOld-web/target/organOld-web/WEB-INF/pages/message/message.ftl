@@ -38,27 +38,28 @@
                 </div>
                 <div class="ibox-content">
                     <div>
-                        <a href="javascript:void(0);" class="btn btn-primary ">写邮件</a>
                         <a  href="javascript:void(0);" class="btn btn-primary ">删除</a>
                     </div>
                     <div>
                         <input class="time" type="text" placeholder="模糊匹配">
                         <button id="search">搜索</button>
                     </div>
-                    <table class="table table-striped table-bordered table-hover dataTables-example">
-                        <thead>
-                        <tr>
-                            <th><input type='checkbox' /></th>
-                            <th>序号</th>
-                            <th>类型</th>
-                            <th>消息</th>
-                            <th>针对的机构</th>
-                            <th>时间</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-hover dataTables-example text-nowrap">
+                            <thead>
+                            <tr>
+                                <th><input type='checkbox' /></th>
+                                <th>序号</th>
+                                <th>类型</th>
+                                <th>消息</th>
+                                <th>针对的机构</th>
+                                <th>时间</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

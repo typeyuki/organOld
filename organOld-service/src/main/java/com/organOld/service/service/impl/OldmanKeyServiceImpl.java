@@ -4,10 +4,7 @@ import com.organOld.dao.entity.oldman.KeyRule;
 import com.organOld.dao.entity.oldman.Oldman;
 import com.organOld.dao.entity.oldman.OldmanKey;
 import com.organOld.dao.entity.oldman.OldmanKeyHandle;
-import com.organOld.dao.repository.KeyRuleDao;
-import com.organOld.dao.repository.OldmanDao;
-import com.organOld.dao.repository.OldmanKeyDao;
-import com.organOld.dao.repository.OldmanKeyHandleDao;
+import com.organOld.dao.repository.*;
 import com.organOld.dao.util.Page;
 import com.organOld.service.constant.ValueConstant;
 import com.organOld.service.contract.*;
@@ -49,6 +46,8 @@ public class OldmanKeyServiceImpl implements OldmanKeyService {
     OldmanKeyHandleDao oldmanKeyHandleDao;
     @Autowired
     OldmanDao oldmanDao;
+    @Autowired
+    OrganDao organDao;
 
 
     public static List<KeyRule> keyRuleList;
@@ -63,6 +62,13 @@ public class OldmanKeyServiceImpl implements OldmanKeyService {
         page.setEntity(oldman);
         List<OldmanKeyModel> oldmanKeyModelList=oldmanKeyDao.getByPage(page).stream().map(Wrappers.oldmanKeyWrapper::wrap).collect(Collectors.toList());
         Long size=oldmanKeyDao.getSizeByPage(page);
+
+        for(OldmanKeyModel oldmanKeyModel:oldmanKeyModelList){
+            if(oldmanKeyModel.getOldmanKeyHandleModel()!=null && oldmanKeyModel.getOldmanKeyHandleModel().getOrgandIds()!=null && oldmanKeyModel.getOldmanKeyHandleModel().getOrgandIds().size()>0){
+                oldmanKeyModel.getOldmanKeyHandleModel().setOrgan(organDao.getByIds(oldmanKeyModel.getOldmanKeyHandleModel().getOrgandIds()));
+            }
+        }
+
         return commonService.tableReturn(bTableRequest.getsEcho(),size,oldmanKeyModelList);
     }
 
@@ -295,5 +301,13 @@ public class OldmanKeyServiceImpl implements OldmanKeyService {
     @Override
     public Result getHandleByOldmanId(int oldmanId) {
         return new Result(true,Wrappers.oldmanKeyWrapper.wrapHandle(oldmanKeyHandleDao.getByOldmanId(oldmanId)));
+    }
+
+    @Override
+    @Transactional
+    public Result handleDel(String[] oldmanIds) {
+        oldmanKeyHandleDao.delByOldmanIds(oldmanIds);
+        oldmanDao.updateProps("is_handle","0",oldmanIds);
+        return new Result(true);
     }
 }

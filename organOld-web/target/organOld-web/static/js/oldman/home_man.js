@@ -60,7 +60,7 @@ $(document).ready(function(){
             "targets": [9], // 目标列位置，下标从0开始
             "data": "oldmanId", // 数据列名
             "render": function(data, type, full) { // 返回自定义内容
-                return "<button class='btn btn-primary' id='"+data+"' onclick=newPage("+data+",$(this).parent().prev().prev().prev().prev().prev().prev().prev().text(),'/oldman/"+data+"/info')>查看</button>";
+                return "<button class='btn btn-primary' id='"+data+"' onclick=newPage("+data+",$(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().text(),'/oldman/"+data+"/info')>查看</button>";
             }
         },
         //不进行排序的列
@@ -91,7 +91,9 @@ $(document).ready(function(){
                 "iDisplayLength" : aoData.iDisplayLength,
                 "iSortCol_0" : aoData.iSortCol_0,
                 "sEcho" : aoData.sEcho,
-                "sSortDir_0" : aoData.sSortDir_0
+                "sSortDir_0" : aoData.sSortDir_0,
+                "oldmanId":$("input[name='oldmanId']").val(),
+                "type_array":$("select[name='type']").val()
             },
             type: 'POST',
             dataType: 'json',

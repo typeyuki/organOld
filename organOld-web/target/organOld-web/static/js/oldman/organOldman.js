@@ -16,14 +16,14 @@ $(document).ready(function(){
                 data:"oldmanId"
             },{
                 data:"oldmanName"
-            },{
-                data:"organName"
-            },{
+            },{},{
                 data:"num"
             },{
                 data:"timeIn"
             },{
                 data:"timeOut"
+            },{
+                data:"applyTime"
             },{
                 data:"time"
             }
@@ -31,16 +31,34 @@ $(document).ready(function(){
             "order":[[0,"asc"]],
             "columnDefs": [
                 // 列样式
+                {
+                    "targets": [3], // 目标列位置，下标从0开始
+                    "data": "num", // 数据列名
+                    "render": function(data, type, full) { // 返回自定义内容
+                        if(data=="0"){
+                            return "排队中";
+                        }else{
+                            return data;
+                        }
+                    }
+                },
+                {
+                    "targets": [2], // 目标列位置，下标从0开始
+                    "data": "organ", // 数据列名
+                    "render": function(data, type, full) { // 返回自定义内容
+                        return "<button class='btn btn-primary' onclick=newPage("+data.id+",'"+data.name+"','/organ/"+data.id+"/info?look=true')>"+data.name+"</button>";
+                    }
+                },
                 // 增加一列，包括删除和修改，同时将我们需要传递的数据传递到链接中
                 {
-                    "targets": [7], // 目标列位置，下标从0开始
+                    "targets": [8], // 目标列位置，下标从0开始
                     "data": "oldmanId", // 数据列名
                     "render": function(data, type, full) { // 返回自定义内容
-                        return "<button class='btn btn-primary' id='"+data+"' onclick=newPage("+data+",$(this).parent().prev().prev().prev().prev().prev().prev().text(),'/oldman/"+data+"/info')>查看</button>";
+                        return "<button class='btn btn-primary' id='"+data+"' onclick=newPage("+data+",$(this).parent().prev().prev().prev().prev().prev().prev().prev().text(),'/oldman/"+data+"/info')>查看</button>";
                     }
                 },
                 //不进行排序的列
-                { "bSortable": false, "aTargets": [ 1,2 ,3, 4,5,6] }
+                { "bSortable": false, "aTargets": [ 1,2 ,3, 4,5,6,7,8] }
             ],
             "sAjaxSource": "/oldman/organOldmanData",//这个是请求的地址
             "fnServerData": retrieveData
@@ -54,7 +72,9 @@ $(document).ready(function(){
                 "iSortCol_0" : aoData.iSortCol_0,
                 "sEcho" : aoData.sEcho,
                 "sSortDir_0" : aoData.sSortDir_0,
-                "firType" : firType
+                "firType" : firType,
+                "oldmanId":$("input[name='oldmanId']").val(),
+                "isPd":$("select[name='isPd']").val()
             },
             type: 'POST',
             dataType: 'json',

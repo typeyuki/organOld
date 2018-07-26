@@ -12,4 +12,6 @@ public interface OldmanFamilyDao extends BaseDao<OldmanFamily,Integer>{
     void delByOid(int id);
 
     void updateByOldmanIds(List<OldmanFamily> familyList_update);
+
+    OldmanFamily getByOldmanId(int oldmanId);
 }

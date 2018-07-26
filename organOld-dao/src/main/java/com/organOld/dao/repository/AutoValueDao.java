@@ -15,4 +15,6 @@ public interface AutoValueDao extends BaseDao<AutoValue,Integer>{
 
     //type mysql  equals 表示用=  like 表示用like
     Integer getStringLikeIndex(@Param("str") String str, @Param("index") int index,@Param("type") String type);
+
+    List<AutoValue> getByIds(String[] sq);
 }

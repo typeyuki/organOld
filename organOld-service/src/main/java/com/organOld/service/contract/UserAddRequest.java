@@ -1,11 +1,20 @@
 package com.organOld.service.contract;
 
 public class UserAddRequest {
+    private Integer id;
     private String username;
     private String password;
     private Integer organId;
     private String roleId;
     private String[] auth;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String[] getAuth() {
         return auth;

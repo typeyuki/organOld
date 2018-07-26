@@ -1,12 +1,20 @@
 package com.organOld.service.contract;
 
 public class OldmanhKeyHandleRequest {
+    private Integer id;
     private int oldmanId;
     private int type;
     private String[] organIds;
     private String[] homeFirTypes;
     private String handle;//增加还是修改 还是删除
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getHandle() {
         return handle;

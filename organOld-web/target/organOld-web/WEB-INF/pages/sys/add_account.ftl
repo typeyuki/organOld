@@ -1,4 +1,4 @@
-<div class="modal fade" id="selectModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog" style="width: 80%">
         <div class="modal-content">
             <div class="modal-body">
@@ -11,8 +11,8 @@
                                 </div>
                                 <div class="ibox-content">
 
-                                    <form method="post" action="/user/save" class="form-horizontal">
-
+                                    <form method="post" action="/user/save" class="form-horizontal" id="userForm">
+                                        <input type="hidden" name="id">
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label">用户名</label>
                                             <div class="col-sm-2">
@@ -87,7 +87,7 @@
             </div>
             <div class="modal-footer">
 
-                <a onclick="$('form').submit()" href="javascript:void(0);" class="btn btn-primary ">添加</a>
+                <a onclick="$('form').submit()" href="javascript:void(0);" class="btn btn-primary " id="subBtn">添加</a>
 
                 <a data-dismiss="modal" href="javascript:void(0);" class="btn btn-primary ">关闭</a>
             </div>

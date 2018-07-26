@@ -22,7 +22,24 @@ public class LabelRuleModel{
     private List<String> isHealths;
     private List<String> chxs;
     private List<String> oldStatuses;
+    private List<String> zcs;
+    private List<String> sqzws;
 
+    public List<String> getZcs() {
+        return zcs;
+    }
+
+    public void setZcs(List<String> zcs) {
+        this.zcs = zcs;
+    }
+
+    public List<String> getSqzws() {
+        return sqzws;
+    }
+
+    public void setSqzws(List<String> sqzws) {
+        this.sqzws = sqzws;
+    }
 
     public List<String> getJwIds() {
         return jwIds;

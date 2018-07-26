@@ -1,5 +1,7 @@
 package com.organOld.service.model;
 
+import com.organOld.dao.entity.organ.Organ;
+
 public class OrganOldmanModel extends Model {
     private int oldmanId;
     private String oldmanName;
@@ -8,7 +10,27 @@ public class OrganOldmanModel extends Model {
     private String timeIn;
     private String timeOut;
     private String num;
+    private String applyTime;
 
+
+    private Organ organ;
+
+
+    public Organ getOrgan() {
+        return organ;
+    }
+
+    public void setOrgan(Organ organ) {
+        this.organ = organ;
+    }
+
+    public String getApplyTime() {
+        return applyTime;
+    }
+
+    public void setApplyTime(String applyTime) {
+        this.applyTime = applyTime;
+    }
 
     public String getOrganName() {
         return organName;

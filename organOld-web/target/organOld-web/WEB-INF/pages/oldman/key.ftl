@@ -36,12 +36,12 @@
                     </div>
                 </div>
                 <div class="ibox-content">
-                    <div class="func">
+                    <div class="func" style="display: inline">
                         <a onclick="update('now')" href="#" class="btn btn-primary ">更新</a>
                         <a onclick="autoUpdate(true,this)" href="#" class="btn btn-primary ">开启自动更新</a>
                         <a onclick="newPage(999,'重点老人规则','/oldman/key/rule')" href="javascript:void(0);" class="btn btn-primary ">规则</a>
-                        <a onclick="" href="#" class="btn btn-primary ">设置为未处理</a>
                     </div>
+                    <a onclick="noHandle()" href="#" class="btn btn-primary ">设置为未处理</a>
                     <script>
                         $.ajax({
                             url: "/user/checkUserOrganType",
@@ -73,20 +73,29 @@
                         </select>
                         <button id="search">搜索</button>
                     </div>
-                    <table class="table table-striped table-bordered table-hover dataTables-example">
-                        <thead>
-                        <tr>
-                            <th>老人序号</th>
-                            <th>姓名</th>
-                            <th id="goal">分数</th>
-                            <th>是否处理</th>
-                            <th></th>
-                        </tr>
-                        </thead>
-                        <tbody>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-hover dataTables-example text-nowrap">
+                            <thead>
+                            <tr>
+                                <th><input type="checkbox"></th>
+                                <th>老人序号</th>
+                                <th>姓名</th>
+                                <th id="goal">分数</th>
+                                <th>状态</th>
+                                <th>已安排的情况</th>
+                                <th></th>
+                                <th>已处理的情况</th>
+                                <th></th>
+                                <th>主动申请的机构</th>
+                                <th>申请时间</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
 
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

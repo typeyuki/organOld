@@ -10,7 +10,6 @@
 <#--<link href="/css/animate.min.css" rel="stylesheet">-->
     <link href="/css/style.min.css?v=4.0.0" rel="stylesheet">
     <link href="/static/css/common_table.css" rel="stylesheet">
-    <link href="/static/css/oldman/base.css" rel="stylesheet">
 </head>
 
 <body class="gray-bg">
@@ -31,28 +30,40 @@
                 </div>
                 <div class="ibox-content">
                     <div>
-                        <input class="id" type="text" placeholder="序号">
-                        <input class="id" type="text" placeholder="机构序号">
-                        <input class="id" type="text" placeholder="老人序号">
-                        <input class="time" type="text" placeholder="模糊匹配">
-                        <button id="search">搜索</button>
+                        <a  href="javascript:void(0);" id="search" class="btn btn-primary ">搜索</a>
                     </div>
-                    <table class="table table-striped table-bordered table-hover dataTables-example">
-                        <thead>
-                        <tr>
-                            <th>老人编号</th>
-                            <th>老人姓名</th>
-                            <th>机构名称</th>
-                            <th>床位号</th>
-                            <th>入院时间</th>
-                            <th>预计出院时间</th>
-                            <th>更新时间</th>
-                            <th></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <input class="form-control inp" name="oldmanId" type="text" placeholder="老人序号">
+                        </div>
+                        <div class="col-sm-2">
+                            <label >是否在排队</label>
+                            <select name="isPd" class="form-control inp" style="width: 50%">
+                                <option></option>
+                                <option  value="1"> 是</option>
+                                <option  value="2"> 否</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-hover dataTables-example text-nowrap">
+                            <thead>
+                            <tr>
+                                <th>老人编号</th>
+                                <th>老人姓名</th>
+                                <th>机构名称</th>
+                                <th>床位号</th>
+                                <th>入院时间</th>
+                                <th>预计出院时间</th>
+                                <th>申请时间</th>
+                                <th>更新时间</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

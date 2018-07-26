@@ -45,25 +45,28 @@
                         <input class="time" type="text" placeholder="模糊匹配">
                         <button id="search">搜索</button>
                     </div>
-                    <table class="table table-striped table-bordered table-hover dataTables-example">
-                        <thead>
-                        <tr>
-                            <#if single??>
-                                <th><input type="checkbox"></th>
-                            </#if>
-                            <th>老人编号</th>
-                            <th>老人姓名</th>
-                            <th>床位号</th>
-                            <th>入院时间</th>
-                            <th>预计出院时间</th>
-                            <th>更新时间</th>
-                            <th></th>
-                        </tr>
-                        </thead>
-                        <tbody>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-hover dataTables-example text-nowrap">
+                            <thead>
+                            <tr>
+                                <#if single??>
+                                    <th><input type="checkbox"></th>
+                                </#if>
+                                <th>老人编号</th>
+                                <th>老人姓名</th>
+                                <th>床位号</th>
+                                <th>入院时间</th>
+                                <th>预计出院时间</th>
+                                <th>申请时间</th>
+                                <th>更新时间</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
 
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

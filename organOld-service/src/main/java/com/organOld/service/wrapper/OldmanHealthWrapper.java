@@ -3,6 +3,7 @@ package com.organOld.service.wrapper;
 
 import com.organOld.dao.entity.oldman.HealthAdd;
 import com.organOld.dao.entity.oldman.HealthSelect;
+import com.organOld.dao.entity.oldman.Oldman;
 import com.organOld.dao.entity.oldman.OldmanHealth;
 import com.organOld.service.constant.TimeConstant;
 import com.organOld.service.enumModel.HealthEnum;
@@ -62,6 +63,9 @@ public class OldmanHealthWrapper implements Wrapper<OldmanHealth,OldmanHealthMod
     @Override
     public OldmanHealth unwrap(OldmanHealthRequest oldmanHealthRequest) {
         OldmanHealth oldmanHealth=new OldmanHealth();
+        Oldman oldman=new Oldman();
+        oldman.setId(oldmanHealthRequest.getOldmanId());
+        oldmanHealth.setOldman(oldman);
         BeanUtils.copyProperties(oldmanHealthRequest,oldmanHealth);//类型要一致  不能int 和Integer
         return oldmanHealth;
     }

@@ -34,7 +34,8 @@
                         <button id="search">搜索</button>
 
                     </div>
-                    <table class="table table-striped table-bordered table-hover dataTables-example">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-hover dataTables-example text-nowrap">
                         <thead>
                         <tr>
                             <th>机构序号</th>
@@ -42,13 +43,20 @@
                             <th>机构名称</th>
                             <th>是否完成</th>
                             <th>备注</th>
+                            <th>总人数</th>
+                            <th>已处理人数</th>
+                            <th>已落实人数</th>
+                            <th>未落实人数</th>
+                            <th>处理率</th>
+                            <th>落实率</th>
                             <th>更新时间</th>
                         </tr>
                         </thead>
                         <tbody>
 
                         </tbody>
-                    </table>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

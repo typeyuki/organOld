@@ -7,6 +7,7 @@
         <result property="timeIn" column="time_in" />
         <result property="timeOut" column="time_out"/>
         <result property="num" column="num"/>
+        <result property="applyTime" column="apply_time" />
         <result property="time" column="time"/>
         <association property="oldman" javaType="com.organOld.dao.entity.oldman.Oldman">
             <id property="id" column="oid" />
@@ -20,14 +21,21 @@
 
 
     <select id="getByPage" parameterType="com.organOld.dao.util.Page" resultMap="organOldman">
-        SELECT oo.id,org.id orgid,o.id oid,oo.time_in,oo.time_out,oo.num,oo.time,o.name,org.name orgname
+        SELECT oo.id,org.id orgid,o.id oid,oo.time_in,oo.time_out,oo.num,oo.time,o.name,org.name orgname,oo.apply_time
         FROM organ_oldman oo,oldman_base o,organ org,organ_type ot,organ jw,auto_value x
         WHERE oo.oldman_id=o.id AND org.id=oo.organ_id AND org.organ_type_id=ot.id AND x.id=o.xq_id AND jw.id=x.parent_index and o.disable=0
+        and org.disable=0
         <if test="entity.organ!=null and entity.organ.id!=0">
             and oo.organ_id=#{entity.organ.id}
         </if>
         <if test="entity.firType!=null and entity.firType!=''">
             AND ot.fir_type=#{entity.firType}
+        </if>
+        <if test="entity.isPd!=null and entity.isPd==1">
+            AND oo.num='0'
+        </if>
+        <if test="entity.isPd!=null and entity.isPd==2">
+            AND oo.num!='0'
         </if>
         <if test="entity!=null and entity.organId!=null and entity.organId!=0">
             and jw.id in (
@@ -58,6 +66,7 @@
         SELECT count(1)
         FROM organ_oldman oo,oldman_base o,organ org,organ_type ot,organ jw,auto_value x
         WHERE oo.oldman_id=o.id AND org.id=oo.organ_id AND org.organ_type_id=ot.id AND x.id=o.xq_id AND jw.id=x.parent_index and o.disable=0
+        and org.disable=0
         <if test="entity.organ!=null and entity.organ.id!=0">
             and oo.organ_id=#{entity.organ.id}
         </if>
@@ -85,14 +94,23 @@
     </update>
 
     <insert id="saveAll" parameterType="java.util.List">
-        INSERT into organ_oldman(organ_id,oldman_id,time_in,time_out,num)
+        INSERT into organ_oldman(organ_id,oldman_id,time_in,time_out,num,apply_time)
         VALUES
         <foreach collection="list" item="item" index="index" separator=",">
-            (#{item.organId},#{item.oldman.id},#{item.timeIn},#{item.timeOut},#{item.num})
+            (#{item.organId},#{item.oldman.id},#{item.timeIn},#{item.timeOut},#{item.num},#{item.applyTime})
         </foreach>
     </insert>
 
     <delete id="delByOrganId">
         DELETE from organ_oldman where organ_id=#{organId}
     </delete>
+
+
+    <select id="getByOrganId" resultType="com.organOld.dao.entity.oldman.Oldman">
+        SELECT o.id,o.name,o.pid,o.old_status,o.is_handle FROM oldman_base o,organ_oldman oo WHERE oo.organ_id=#{organId} and oo.oldman_id=o.id
+    </select>
+
+    <select id="getNumByOldmanId" resultType="java.lang.Integer">
+        SELECT count(1) from organ_oldman where oldman_id=#{oldmanId}
+    </select>
 </mapper>

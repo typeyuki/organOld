@@ -19,7 +19,7 @@ $(document).ready(function(){
                 "targets": [0], // 目标列位置，下标从0开始
                 "data": "id", // 数据列名
                 "render": function(data, type, full) { // 返回自定义内容
-                    return"<input type='checkbox' />"
+                    return"<input type='checkbox' name='id' value='"+data+"' />"
                 }
             },
             // 增加一列，包括删除和修改，同时将我们需要传递的数据传递到链接中
@@ -27,7 +27,7 @@ $(document).ready(function(){
                 "targets": [4], // 目标列位置，下标从0开始
                 "data": "id", // 数据列名
                 "render": function(data, type, full) { // 返回自定义内容
-                    return "<span class='btn btn-primary' onclick=newPage("+data+",$(this).parent().prev().prev().text(),'/home/"+typeHome+"/"+data+"/man')  id='"+data+"'>人员</span><span class='btn btn-primary' id='"+data+"'>修改</span>";
+                    return "<span class='btn btn-primary' onclick=newPage("+data+",$(this).parent().prev().prev().text(),'/home/"+typeHome+"/"+data+"/man')  id='"+data+"'>人员</span><span class='btn btn-primary' onclick='editHome("+data+")'>修改</span>";
                 }
             }
         ]
@@ -36,9 +36,7 @@ $(document).ready(function(){
             data:"id"
         },{
             data:"doctorName"
-        },{
-            data:"OrganName"
-        },{
+        },{},{
             data:"time"
         }
         ];
@@ -48,7 +46,13 @@ $(document).ready(function(){
                 "targets": [0], // 目标列位置，下标从0开始
                 "data": "id", // 数据列名
                 "render": function(data, type, full) { // 返回自定义内容
-                    return"<input type='checkbox' />"
+                    return"<input type='checkbox'name='id' value='"+data+"' />"
+                }
+            },{
+                "targets": [3], // 目标列位置，下标从0开始
+                "data": "organ", // 数据列名
+                "render": function(data, type, full) { // 返回自定义内容
+                    return "<button class='btn btn-primary' onclick=newPage("+data.id+",'"+data.name+"','/organ/"+data.id+"/info?look=true')>"+data.name+"</button>";
                 }
             },
             // 增加一列，包括删除和修改，同时将我们需要传递的数据传递到链接中
@@ -56,7 +60,7 @@ $(document).ready(function(){
                 "targets": [5], // 目标列位置，下标从0开始
                 "data": "id", // 数据列名
                 "render": function(data, type, full) { // 返回自定义内容
-                    return "<span class='btn btn-primary' onclick=newPage("+data+",$(this).parent().prev().prev().prev().text(),'/home/"+typeHome+"/"+data+"/man') id='"+data+"'>人员</span><span class='btn btn-primary' id='"+data+"'>修改</span>";
+                    return "<span class='btn btn-primary' onclick=newPage("+data+",$(this).parent().prev().prev().prev().text(),'/home/"+typeHome+"/"+data+"/man') id='"+data+"'>人员</span><span class='btn btn-primary'  onclick='editHome("+data+")'>修改</span>";
                 }
             }
         ]
@@ -77,7 +81,7 @@ $(document).ready(function(){
                 "targets": [0], // 目标列位置，下标从0开始
                 "data": "id", // 数据列名
                 "render": function(data, type, full) { // 返回自定义内容
-                    return"<input type='checkbox' />"
+                    return"<input type='checkbox' name='id' value='"+data+"'/>"
                 }
             },
             // 增加一列，包括删除和修改，同时将我们需要传递的数据传递到链接中
@@ -85,16 +89,14 @@ $(document).ready(function(){
                 "targets": [5], // 目标列位置，下标从0开始
                 "data": "id", // 数据列名
                 "render": function(data, type, full) { // 返回自定义内容
-                    return "<span class='btn btn-primary' onclick=newPage("+data+",$(this).parent().prev().prev().prev().text(),'/home/"+typeHome+"/"+data+"/man')  id='"+data+"'>人员</span><span class='btn btn-primary' id='"+data+"'>修改</span>";
+                    return "<span class='btn btn-primary' onclick=newPage("+data+",$(this).parent().prev().prev().prev().text(),'/home/"+typeHome+"/"+data+"/man')  id='"+data+"'>人员</span><span class='btn btn-primary'  onclick='editHome("+data+")'>修改</span>";
                 }
             }
         ]
     }else if(typeHome==5){
         columns=[{},{
             data:"id"
-        },{
-            data:"OrganName"
-        },{
+        },{},{
             data:"time"
         }
         ];
@@ -104,7 +106,13 @@ $(document).ready(function(){
                 "targets": [0], // 目标列位置，下标从0开始
                 "data": "id", // 数据列名
                 "render": function(data, type, full) { // 返回自定义内容
-                    return"<input type='checkbox' />"
+                    return"<input type='checkbox' name='id' value='"+data+"' />"
+                }
+            },{
+                "targets": [2], // 目标列位置，下标从0开始
+                "data": "organ", // 数据列名
+                "render": function(data, type, full) { // 返回自定义内容
+                    return "<button class='btn btn-primary' onclick=newPage("+data.id+",'"+data.name+"','/organ/"+data.id+"/info?look=true')>"+data.name+"</button>";
                 }
             },
             // 增加一列，包括删除和修改，同时将我们需要传递的数据传递到链接中
@@ -112,7 +120,7 @@ $(document).ready(function(){
                 "targets": [4], // 目标列位置，下标从0开始
                 "data": "id", // 数据列名
                 "render": function(data, type, full) { // 返回自定义内容
-                    return "<span class='btn btn-primary' onclick=newPage("+data+",$(this).parent().prev().prev().text(),'/home/"+typeHome+"/"+data+"/man') id='"+data+"'>人员</span><span class='btn btn-primary' id='"+data+"'>修改</span>";
+                    return "<span class='btn btn-primary' onclick=newPage("+data+",$(this).parent().prev().prev().text(),'/home/"+typeHome+"/"+data+"/man') id='"+data+"'>人员</span><span class='btn btn-primary'  onclick='editHome("+data+")'>修改</span>";
                 }
             }
         ]
@@ -167,3 +175,18 @@ $(document).ready(function(){
         "submitdata":function(value,settings){return{"row_id":this.parentNode.getAttribute("id"),
             "column":oTable.fnGetPosition(this)[2]}},"width":"90%","height":"100%"});
 });
+
+
+function addHome() {
+    $("#editModal small").html("添加");
+    $("#subBtn").html("添加");
+    $("#homeForm").attr("action","/home/add");
+    $("#editModal").modal();
+}
+
+function editHome(id) {
+    $("#editModal small").html("修改");
+    $("#subBtn").html("修改");
+    $("#homeForm").attr("action","/home/update");
+    oldman_edit(id,"/home/"+typeHome+"/"+id+"/getById");
+}

@@ -7,10 +7,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <#include "../common/head.ftl" />
 
-    <#--<link href="/css/animate.min.css" rel="stylesheet">-->
     <link href="/css/style.min.css?v=4.0.0" rel="stylesheet">
     <link href="/static/css/common_table.css" rel="stylesheet">
-    <link href="/static/css/oldman/base.css" rel="stylesheet">
+    <style>
+        @media only screen and (min-width: 1401px){
+            .age{
+                width: 48%;
+            }
+        }
+        @media only screen and ( max-width: 1400px){
+            .age{
+                width: 45%;
+            }
+        }
+    </style>
 </head>
 
 <body class="gray-bg">
@@ -31,21 +41,22 @@
                 </div>
                 <div class="ibox-content">
                     <div>
-                        <a onclick=newPage("132","用户添加",'/oldman/add') href="javascript:void(0);" class="btn btn-primary ">添加</a>
-                        <a  href="javascript:void(0);" class="btn btn-primary ">删除</a>
+                        <button onclick=newPage(15,"管理","/autoValue/1") class="btn btn-primary" >管理</button>
+                        <#--<a onclick=newPage("132","用户添加",'/oldman/add') href="javascript:void(0);" class="btn btn-primary ">添加</a>-->
+                        <a  onclick="del('/oldman/base/del')" class="btn btn-primary ">删除</a>
                         <a  href="javascript:void(0);" id="search" class="btn btn-primary ">搜索</a>
-                        <form action="/oldman/importExcel" method="post" enctype="multipart/form-data" id="importForm" style="display: inline-block;margin-left: 200px">
-                            <input type="file" name="file" style="display:inline">
+                        <form action="/oldman/importExcel" method="post" enctype="multipart/form-data" id="importForm" style="display: inline">
                             <input type="button" style="display:inline" class="btn btn-primary" onclick="$('.wrapper').hide();$('#process').show();$('#importForm').submit()" value="导入">
+                            <input type="file" name="file" style="display:inline">
                         </form>
                     </div>
                     <div class="row" style="margin-top: 10px;margin-bottom: 10px">
-                        <div class="col-sm-1">
-                            <input class="id" style="width: 100%" name="id" type="text" placeholder="序号">
+                        <div class="col-sm-2">
+                            <input class="id form-control inp"  name="id" type="text" placeholder="序号">
                         </div>
-                        <div class="col-sm-1">
+                        <div class="col-sm-2">
                             <label >性别</label>
-                            <select name="sex" style="width:60%;">
+                            <select name="sex" class="form-control inp" style="width: 80%">
                                 <option></option>
                                 <#list (info.sex)?keys as key>
                                     <option  value="${key!}"> ${(info.sex)?values[key_index]!}</option>
@@ -53,15 +64,15 @@
                             </select>
                         </div>
                         <div class="col-sm-2">
-                            <input class="age" style="width: 48%" name="ageStart" type="text" placeholder="年龄段-起">-
-                            <input class="age" style="width: 48%" name="ageEnd" type="text" placeholder="年龄段-止">
+                            <input class="age form-control inp" name="ageStart" type="text" placeholder="年龄段-起">-
+                            <input class="age form-control inp" name="ageEnd" type="text" placeholder="年龄段-止">
                         </div>
                         <div class="col-sm-4">
-                            <input name="search" style="width:100%;" type="text" placeholder="模糊匹配">
+                            <input name="search" class="form-control inp"  type="text" placeholder="模糊匹配">
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-sm-3">
+                        <div class="col-sm-2">
                             <label >户<span style="color: white">填充</span>籍：</label>
                             <select name="census"  class="selectpicker bla bla bli" multiple data-live-search="true">
                                 <#list info.census as census>
@@ -69,7 +80,7 @@
                                 </#list>
                             </select>
                         </div>
-                        <div class="col-sm-3">
+                        <div class="col-sm-2">
                             <label >政治面貌：</label>
                             <select name="politicalStatuses" class="selectpicker bla bla bli" multiple data-live-search="true">
                                 <#list info.politicalStatuses as politicalStatuses>
@@ -77,7 +88,7 @@
                                 </#list>
                             </select>
                         </div>
-                        <div class="col-sm-3">
+                        <div class="col-sm-2">
                             <label>家庭结构：</label>
                             <select name="familyIndex"  class="selectpicker bla bla bli" multiple data-live-search="true">
                                 <#list info.family as family>
@@ -85,7 +96,7 @@
                                 </#list>
                             </select>
                         </div>
-                        <div class="col-sm-3">
+                        <div class="col-sm-2">
                             <label >经济条件：</label>
                             <select name="economicIndex" class="selectpicker bla bla bli" multiple data-live-search="true">
                                 <#list info.economic as economic>
@@ -93,9 +104,7 @@
                                 </#list>
                             </select>
                         </div>
-                    </div>
-                    <div class="row">
-                    <div class="col-sm-3">
+                        <div class="col-sm-2">
                             <label >健康状况：</label>
                             <select name="isHealth" class="selectpicker bla bla bli" multiple data-live-search="true">
                                 <option value="1">有慢病</option>
@@ -105,8 +114,26 @@
                                 <option value="5">有骨折史</option>
                                 <option value="6">有残疾史</option>
                             </select>
+                        </div>
+                        <div class="col-sm-2">
+                            <label >职<span style="color: white">填充</span>称：</label>
+                            <select name="zc" class="selectpicker bla bla bli" multiple data-live-search="true">
+                            <#list info.zc as list>
+                                <option value="${list.id!}" > ${list.value!}</option>
+                            </#list>
+                            </select>
+                        </div>
                     </div>
-                        <div class="col-sm-3">
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <label >社区职务：</label>
+                            <select name="sqzw" class="selectpicker bla bla bli" multiple data-live-search="true">
+                            <#list info.sqzw as list>
+                                <option value="${list.id!}" > ${list.value!}</option>
+                            </#list>
+                            </select>
+                        </div>
+                        <div class="col-sm-2">
                             <label >智<span style="color: white">填充</span>力：</label>
                             <select name="intelligence" class="selectpicker bla bla bli" multiple data-live-search="true">
                                 <#list info.intelligence as intelligence>
@@ -114,7 +141,7 @@
                                 </#list>
                             </select>
                         </div>
-                        <div class="col-sm-3">
+                        <div class="col-sm-2">
                             <label>视<span style="color: white">填充</span>力：</label>
                             <select name="eyesight" class="selectpicker bla bla bli" multiple data-live-search="true">
                                 <#list info.eyesight as eyesight>
@@ -122,7 +149,7 @@
                                 </#list>
                             </select>
                         </div>
-                        <div class="col-sm-3">
+                        <div class="col-sm-2">
                             <label>养老状态：</label>
                             <select name="oldStatus" class="selectpicker bla bla bli" multiple data-live-search="true">
                                 <#list (info.oldStatus)?keys as key>
@@ -130,38 +157,33 @@
                                 </#list>
                             </select>
                         </div>
+                        <div class="col-sm-2 pq jw">
+                            <label >片<span style="color: white">填充</span>区：</label>
+                            <select name="district" class="selectpicker bla bla bli" multiple data-live-search="true">
+                            <#list info.district as district>
+                                <option  value="${district.id!}" > ${district.value!}</option>
+                            </#list>
+                            </select>
+                        </div>
+                        <div class="col-sm-2 jw">
+                            <label >居<span style="color: white">填充</span>委：</label>
+                            <select  name="jw" class="selectpicker bla bla bli" multiple data-live-search="true">
+
+                            <#list info.organ as organ>
+                                <option value="${organ.id!}"> ${organ.name!}</option>
+                            </#list>
+                            </select>
+
+                        </div>
                     </div>
-                    <div class="row" id="jw">
-                            <div class="col-sm-3">
-
-                                <label class="pq">片<span style="color: white">填充</span>区：</label>
-                                <select name="district" class="selectpicker bla bla bli pq" multiple data-live-search="true">
-                                    <#list info.district as district>
-                                        <option  value="${district.id!}" > ${district.value!}</option>
-                                    </#list>
-                                </select>
-                            </div>
-                        <div class="col-sm-3">
-                                <label >居<span style="color: white">填充</span>委：</label>
-                                <select  name="jw" class="selectpicker bla bla bli" multiple data-live-search="true">
-
-                                    <#list info.organ as organ>
-                                        <option value="${organ.id!}"> ${organ.name!}</option>
-                                    </#list>
-                                </select>
-
-                            </div>
                             <script>
-                                $('.selectpicker').selectpicker({
-                                    'selectedText': 'cat'
-                                });
                                 $.ajax({
                                     url: "/user/checkUserOrganType",
                                     type: "get",
                                     success: function (data) {
                                         if (data.success == true) {
                                             if(data.data=="居委会"){
-                                                $("#jw").hide();
+                                                $(".jw").hide();
                                             }else if(data.data=="片区"){
                                                 $(".pq").hide();
                                             }
@@ -169,12 +191,14 @@
                                     }
                                 });
                             </script>
-                    </div>
-                    <table class="table table-striped table-bordered table-hover dataTables-example">
+
+
+                    <div class="table-responsive">
+                    <table id="table" class="table table-striped table-bordered table-hover dataTables-example text-nowrap">
                         <thead>
                         <tr>
-                            <th><input type='checkbox' /></th>
-                            <th>序号</th>
+                            <th style="width:15px;"><input type='checkbox' onclick="thCheck(this)" /></th>
+                            <th index="id">序号</th>
                             <th>片区</th>
                             <th>居委</th>
                             <th>小区</th>
@@ -186,6 +210,9 @@
                             <th>户籍</th>
                             <th>电话</th>
                             <th>身份证号码</th>
+                            <th>地址</th>
+                            <th>职称</th>
+                            <th>社区职务</th>
                             <th>标签</th>
                             <th>更新时间</th>
                             <th></th>
@@ -195,6 +222,7 @@
 
                         </tbody>
                     </table>
+                    </div>
                 </div>
             </div>
         </div>
@@ -202,7 +230,7 @@
 
 </div>
 <#include  "../spinner.ftl"/>
-<#--<#include  "edit_base.ftl"/>-->
+<#include  "edit_base.ftl"/>
 <#--<script src="/js/plugins/jeditable/jquery.jeditable.js"></script>-->
 
 <script>

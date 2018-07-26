@@ -33,8 +33,13 @@
             WHERE o.id=#{entity.organId}
             )
         </if>
-        <if test="entity!=null and entity.oldman!=null and entity.oldman.id!=null and entity.oldman.id!=0">
-            and o.id=#{entity.oldman.id}
+        <if test="entity!=null and entity.oldmanId!=null and entity.oldmanId!=0">
+            and o.id=#{entity.oldmanId}
+        </if>
+        <if test="entity!=null and entity.search!=null and entity.search!=''">
+            and (l.name LIKE  concat('%',#{entity.search},'%')
+            OR l.phone LIKE  concat('%',#{entity.search},'%') OR l.relation LIKE  concat('%',#{entity.search},'%')
+            OR o.name LIKE  concat('%',#{entity.search},'%'))
         </if>
         <if test="sortType!=null and sortType!=''">
             ORDER BY ${sortType}
@@ -65,15 +70,16 @@
             WHERE o.id=#{entity.organId}
             )
         </if>
-        <if test="entity!=null and entity.oldman!=null and entity.oldman.id!=null and entity.oldman.id!=0">
-            and o.oldman_id=#{entity.oldman.id}
+        <if test="entity!=null and entity.oldmanId!=null and entity.oldmanId!=0">
+            and o.id=#{entity.oldmanId}
+        </if>
+        <if test="entity!=null and entity.search!=null and entity.search!=''">
+            and (l.name LIKE  concat('%',#{entity.search},'%')
+            OR l.phone LIKE  concat('%',#{entity.search},'%') OR l.relation LIKE  concat('%',#{entity.search},'%')
+            OR o.name LIKE  concat('%',#{entity.search},'%'))
         </if>
     </select>
-    <update id="updateById" parameterType="com.organOld.dao.entity.oldman.Linkman">
-        UPDATE linkman
-        SET name=#{name},phone=#{phone},oldman_id=#{oldman_id},id=#{id},time=#{time},relation=#relation
-        WHERE id=#{id}
-    </update>
+
 
 
     <update id="updateByOldmanIds" parameterType="java.util.List">
@@ -108,4 +114,15 @@
             (#{item.oldmanId}, #{item.name},#{item.phone},#{item.relation})
         </foreach>
     </insert>
+
+    <update id="updateById" parameterType="com.organOld.dao.entity.oldman.Linkman">
+        UPDATE linkman
+        SET name=#{name},relation=#{relation},phone=#{phone}
+        WHERE id=#{id}
+    </update>
+
+    <select id="getById" resultType="com.organOld.dao.entity.oldman.Linkman">
+        SELECT * from linkman where id=#{id}
+    </select>
+
 </mapper>

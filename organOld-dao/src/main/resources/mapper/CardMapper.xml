@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.organOld.dao.repository.CardDao">
+
+    <resultMap id="card" type="com.organOld.dao.entity.Card">
+        <id property="id" column="id" />
+        <id property="cid" column="cid" />
+        <id property="status" column="status" />
+        <id property="money" column="money" />
+        <id property="password" column="password" />
+        <result property="time" column="time" />
+        <association property="oldman" javaType="com.organOld.dao.entity.oldman.Oldman">
+            <id property="id" column="oid" />
+            <result property="name" column="name"/>
+        </association>
+    </resultMap>
+
+    <insert id="saveAll" parameterType="java.util.List">
+        INSERT into card(oldman_id,cid,password)
+        VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.oldmanId},#{item.cid},#{item.password})
+        </foreach>
+    </insert>
+
+    <delete id="delByOldmanIds" parameterType="java.util.List">
+        UPDATE card SET status=3
+        WHERE oldman_id IN
+        <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+
+    <select id="getByPage" parameterType="com.organOld.dao.util.Page" resultMap="card">
+        SELECT c.id,c.cid,c.password,c.status,ob.id oid,ob.name,c.time,c.money
+        FROM card c,oldman_base ob
+        WHERE ob.id=c.oldman_id
+        <if test="sortType!=null and sortType!=''">
+            ORDER BY ob.${sortType}
+        </if>
+        <if test="sort!=null and sort!=''">
+            ${sort}
+        </if>
+        <if test="length!=null and length!=0">
+            limit #{start},#{length}
+        </if>
+    </select>
+
+    <select id="getSizeByPage" parameterType="com.organOld.dao.util.Page" resultType="java.lang.Long">
+        SELECT count(1)
+        FROM card
+    </select>
+
+
+    <select id="getById" resultType="com.organOld.dao.entity.Card">
+        SELECT *
+        FROM card WHERE id=#{id}
+    </select>
+
+    <select id="getByCid" resultType="com.organOld.dao.entity.Card">
+        SELECT *
+        FROM card WHERE cid=#{cid}
+    </select>
+
+    <update id="addMoney">
+        UPDATE card
+        SET money=money+${money}
+        WHERE id in
+        <foreach collection="ids" index="index" item="item" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+    </update>
+
+    <update id="updateProps">
+        UPDATE card
+        SET ${prop}=#{value}
+        WHERE id in
+        <foreach collection="ids" index="index" item="item" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+    </update>
+
+
+    <select id="getByOldmanId" resultType="com.organOld.dao.entity.Card">
+        SELECT * from card where oldman_id=#{oldmanId}
+    </select>
+
+
+    <update id="updateProp">
+        UPDATE card
+        SET ${prop}=#{value}
+        WHERE id=#{id}
+    </update>
+</mapper>

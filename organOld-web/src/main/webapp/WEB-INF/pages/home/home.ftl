@@ -28,46 +28,46 @@
                 </div>
                 <div class="ibox-content">
                     <div>
-                        <a onclick="" href="javascript:void(0);" class="btn btn-primary ">添加</a>
-                        <a onclick="" href="javascript:void(0);" class="btn btn-primary ">删除</a>
+                        <a onclick="addHome()" href="javascript:void(0);" class="btn btn-primary ">添加</a>
+                        <a onclick="del('/home/${type}/del')" href="javascript:void(0);" class="btn btn-primary ">删除</a>
                     </div>
-                    <div>
-                        <input class="id" type="text" placeholder="编号">
-                        <input class="id" type="text" placeholder="模糊搜索">
-                        <button id="search">搜索</button>
-                    </div>
-                    <table class="table table-striped table-bordered table-hover dataTables-example">
-                        <thead>
-                        <tr>
-                            <th><input type='checkbox' /></th>
-                            <th>编号</th>
-                            <#if type==1 || type==3>
-                                <th>名称</th>
-                            <#elseif type==2>
-                                <th>级别</th>
-                                <th>服务时间</th>
-                            <#elseif type==4>
-                                <th>医生姓名</th>
-                                <th>所在医院</th>
-                            <#elseif type==5>
-                                <th>服务医院</th>
-                            </#if>
-                            <th>更新时间</th>
-                            <th></th>
-                        </tr>
-                        </thead>
-                        <tbody>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-hover dataTables-example text-nowrap">
+                            <thead>
+                            <tr>
+                                <th><input type='checkbox' onclick="thCheck(this)" /></th>
+                                <th>编号</th>
+                                <#if type==1 || type==3>
+                                    <th>名称</th>
+                                <#elseif type==2>
+                                    <th>级别</th>
+                                    <th>服务时间</th>
+                                <#elseif type==4>
+                                    <th>医生姓名</th>
+                                    <th>所在医院</th>
+                                <#elseif type==5>
+                                    <th>服务医院</th>
+                                </#if>
+                                <th>更新时间</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
 
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
 </div>
+
+<#include "add_home.ftl"/>
 <script>
-    var typeHome="${type}"
+    var typeHome="${type}";
+    $('.search_select').searchableSelect();
 </script>
 
 <script src="/js/content.min.js?v=1.0.0"></script>

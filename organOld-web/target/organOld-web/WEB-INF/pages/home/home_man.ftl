@@ -32,26 +32,29 @@
                         <input class="time" type="text" placeholder="模糊匹配">
                         <button id="search">搜索</button>
                     </div>
-                    <table class="table table-striped table-bordered table-hover dataTables-example">
-                        <thead>
-                        <tr>
-                            <th>老人编号</th>
-                            <th>老人姓名</th>
-                            <#--长护险-->
-                            <#if type==2>
-                                <th>是否获得服务</th>
-                            <#else >
-                                <th>服务开始时间</th>
-                                <th>服务结束时间</th>
-                            </#if>
-                            <th>更新时间</th>
-                            <th></th>
-                        </tr>
-                        </thead>
-                        <tbody>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-hover dataTables-example text-nowrap">
+                            <thead>
+                            <tr>
+                                <th>老人编号</th>
+                                <th>老人姓名</th>
+                                <#--长护险-->
+                                <#if type==2>
+                                    <th>是否获得服务</th>
+                                <#else >
+                                    <th>服务开始时间</th>
+                                    <th>服务结束时间</th>
+                                </#if>
+                                <th>服务机构</th>
+                                <th>更新时间</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
 
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

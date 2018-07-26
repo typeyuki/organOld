@@ -175,28 +175,3 @@ $(document).ready(function(){
 
 });
 
-function del(id) {
-    $.ajax({
-        url : "/oldman/base/del",
-        type : "post",
-        dataType : 'json',
-        data:{
-            id:id
-        },
-        success : function(data) {
-            if (data.success==true) {
-                start = $(".dataTables-example").dataTable().fnSettings()._iDisplayStart;
-                total = $(".dataTables-example").dataTable().fnSettings().fnRecordsDisplay();
-                window.location.reload();
-                if(total-start==1){
-                    if(start>0){
-                        $(".dataTables-example").dataTable().fnPageChange('previous',true);
-                    }
-                }
-
-            } else {
-                alert('删除失败！');
-            }
-        }
-    });
-}

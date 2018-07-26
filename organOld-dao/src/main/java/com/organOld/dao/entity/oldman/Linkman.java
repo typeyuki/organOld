@@ -14,16 +14,15 @@ public class Linkman extends Man implements DBInterface{
     private String relation;
     private Integer oldmanId;
     private Integer organId;//居委ID
+    private String search;
 
 
-    @Override
-    public String toString() {
-        return "Linkman{" +
-                "oldman=" + oldman +
-                ", relation='" + relation + '\'' +
-                ", oldmanId=" + oldmanId +
-                ", organId=" + organId +
-                '}';
+    public String getSearch() {
+        return search;
+    }
+
+    public void setSearch(String search) {
+        this.search = search;
     }
 
     public Integer getOldmanId() {

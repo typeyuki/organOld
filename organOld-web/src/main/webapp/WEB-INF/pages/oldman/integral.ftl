@@ -31,23 +31,27 @@
                 </div>
                 <div class="ibox-content">
                     <div>
+                        <a  onclick="oldman_edit(1,'/oldman/integral/getRule')" class="btn btn-primary ">规则管理</a>
+                        <a  href="javascript:void(0);" id="search" class="btn btn-primary ">搜索</a>
+                    <div>
                         <input class="id" type="text" placeholder="老人序号">
                         <input class="time" type="text" placeholder="模糊匹配">
-                        <button id="search">搜索</button>
                     </div>
-                    <table class="table table-striped table-bordered table-hover dataTables-example">
-                        <thead>
-                        <tr>
-                            <th>老人序号</th>
-                            <th>老人姓名</th>
-                            <th>积分</th>
-                            <th></th>
-                        </tr>
-                        </thead>
-                        <tbody>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-hover dataTables-example text-nowrap">
+                            <thead>
+                            <tr>
+                                <th>老人序号</th>
+                                <th>老人姓名</th>
+                                <th>积分</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
 
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
@@ -55,6 +59,7 @@
 
 </div>
 
+    <#include "edit_integral.ftl" />
 <script src="/js/content.min.js?v=1.0.0"></script>
 <script src="/static/js/common.js"></script>
 <script src="/static/js/oldman/integral.js" ></script>

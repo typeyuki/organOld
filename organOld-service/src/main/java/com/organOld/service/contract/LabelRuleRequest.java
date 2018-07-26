@@ -18,7 +18,25 @@ public class LabelRuleRequest {
     private String[] isHealth;
     private String[] chx;
     private String[] oldStatus;
+    private String[] zc;
+    private String[] sqzw;
 
+
+    public String[] getZc() {
+        return zc;
+    }
+
+    public void setZc(String[] zc) {
+        this.zc = zc;
+    }
+
+    public String[] getSqzw() {
+        return sqzw;
+    }
+
+    public void setSqzw(String[] sqzw) {
+        this.sqzw = sqzw;
+    }
 
     public String[] getOrgan() {
         return organ;

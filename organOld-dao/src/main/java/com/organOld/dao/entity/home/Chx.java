@@ -10,6 +10,15 @@ public class Chx extends DBEntity {
 
     private Integer level;//级别
     private String serviceTime;//服务时间
+    private int homeId;
+
+    public int getHomeId() {
+        return homeId;
+    }
+
+    public void setHomeId(int homeId) {
+        this.homeId = homeId;
+    }
 
     public Integer getLevel() {
         return level;

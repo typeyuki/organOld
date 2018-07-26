@@ -8,29 +8,31 @@
             <div class="col-lg-12">
                 <div class="ibox float-e-margins">
                     <div class="ibox-content">
-                        <table class="table table-striped table-bordered table-hover dataTables-example">
-                            <thead>
-                            <tr>
-                                <th>序号</th>
-                                <th>片区</th>
-                                <th>居委</th>
-                                <th>小区</th>
-                                <th>楼号</th>
-                                <th>姓名</th>
-                                <th>性别</th>
-                                <th>年龄</th>
-                                <th>政治面貌</th>
-                                <th>户籍</th>
-                                <th>电话</th>
-                                <th>地址</th>
-                                <th>身份证号码</th>
-                                <th>更新时间</th>
-                                <th></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered table-hover dataTables-example text-nowrap">
+                                <thead>
+                                <tr>
+                                    <th>序号</th>
+                                    <th>片区</th>
+                                    <th>居委</th>
+                                    <th>小区</th>
+                                    <th>楼号</th>
+                                    <th>姓名</th>
+                                    <th>性别</th>
+                                    <th>年龄</th>
+                                    <th>政治面貌</th>
+                                    <th>户籍</th>
+                                    <th>电话</th>
+                                    <th>地址</th>
+                                    <th>身份证号码</th>
+                                    <th>更新时间</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>

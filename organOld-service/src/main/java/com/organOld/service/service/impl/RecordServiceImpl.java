@@ -8,10 +8,7 @@ import com.organOld.dao.repository.ProductBookDao;
 import com.organOld.dao.repository.ProductDao;
 import com.organOld.dao.repository.RecordDao;
 import com.organOld.dao.util.Page;
-import com.organOld.service.contract.BTableRequest;
-import com.organOld.service.contract.ProductBookRequest;
-import com.organOld.service.contract.ProductRequest;
-import com.organOld.service.contract.RecordRequest;
+import com.organOld.service.contract.*;
 import com.organOld.service.enumModel.RecordTypeEnum;
 import com.organOld.service.model.ProductBookModel;
 import com.organOld.service.model.ProductModel;
@@ -52,6 +49,16 @@ public class RecordServiceImpl implements RecordService {
     }
 
     @Override
+    public String getByCardPage(BTableRequest bTableRequest, CardRecordRequest cardRecordRequest) {
+        Page<Record> page=commonService.getPage(bTableRequest,"record");
+        Record record= Wrappers.recordWrapper.unwrapCard(cardRecordRequest);
+        page.setEntity(record);
+        List<RecordModel> productModelList=recordDao.getByCardPage(page).stream().map(Wrappers.recordWrapper::wrap).collect(Collectors.toList());
+        Long size=recordDao.getSizeByCardPage(page);
+        return commonService.tableReturn(bTableRequest.getsEcho(),size,productModelList);
+    }
+
+    @Override
     public void save(int oldmanId, int organId, int type) {
         if(type== RecordTypeEnum.SIGN.getIndex()){
             //签到 增加积分
@@ -62,6 +69,12 @@ public class RecordServiceImpl implements RecordService {
         record.setOrganId(organId);
         record.setType(type);
         record.setOrganId(organId);
+        recordDao.save(record);
+    }
+
+
+    @Override
+    public void saveEntity(Record record) {
         recordDao.save(record);
     }
 }

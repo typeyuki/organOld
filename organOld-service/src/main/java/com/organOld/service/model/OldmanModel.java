@@ -1,6 +1,7 @@
 package com.organOld.service.model;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class OldmanModel extends ManModel{
@@ -15,9 +16,36 @@ public class OldmanModel extends ManModel{
     private String jName;//居委名称
     private String dName;//片区名称
     private String oldStatus;
+    private String zc;
+    private List<String> sqzw=new ArrayList<>();
+    private String sqzwString;
 
     private List<LabelManInfoModel> labelManInfoModelList;
 
+
+    public String getSqzwString() {
+        return sqzwString;
+    }
+
+    public void setSqzwString(String sqzwString) {
+        this.sqzwString = sqzwString;
+    }
+
+    public String getZc() {
+        return zc;
+    }
+
+    public void setZc(String zc) {
+        this.zc = zc;
+    }
+
+    public List<String> getSqzw() {
+        return sqzw;
+    }
+
+    public void setSqzw(List<String> sqzw) {
+        this.sqzw = sqzw;
+    }
 
     public String getOldStatus() {
         return oldStatus;
@@ -30,8 +58,6 @@ public class OldmanModel extends ManModel{
     public List<LabelManInfoModel> getLabelManInfoModelList() {
         return labelManInfoModelList;
     }
-
-
 
 
     public void setLabelManInfoModelList(List<LabelManInfoModel> labelManInfoModelList) {

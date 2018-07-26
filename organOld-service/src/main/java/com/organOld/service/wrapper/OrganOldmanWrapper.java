@@ -18,13 +18,14 @@ public class OrganOldmanWrapper implements Wrapper<OrganOldman,OrganOldmanModel,
         organOldmanModel.setId(organOldman.getId());
         organOldmanModel.setOrganId(organOldman.getOrgan().getId());
         organOldmanModel.setOrganName(organOldman.getOrgan().getName());
+        organOldmanModel.setOrgan(organOldman.getOrgan());
         organOldmanModel.setOldmanId(organOldman.getOldman().getId());
         organOldmanModel.setOldmanName(organOldman.getOldman().getName());
         organOldmanModel.setNum(organOldman.getNum());
         organOldmanModel.setTimeIn(Tool.dateToString(organOldman.getTimeIn(),"yyyy-MM-dd"));
         organOldmanModel.setTimeOut(Tool.dateToString(organOldman.getTimeOut(),"yyyy-MM-dd"));
         organOldmanModel.setTime(Tool.dateToString(organOldman.getTime(),"yyyy-MM-dd"));
-
+        organOldmanModel.setApplyTime(Tool.dateToString(organOldman.getApplyTime(),"yyyy-MM-dd"));
         return organOldmanModel;
     }
 
@@ -33,10 +34,13 @@ public class OrganOldmanWrapper implements Wrapper<OrganOldman,OrganOldmanModel,
         OrganOldman organOldman=new OrganOldman();
         Organ organ=new Organ();
         organ.setId(organOldmanRequest.getOrganId());
-        Oldman oldman=new Oldman();
-        oldman.setId(organOldmanRequest.getOldmanId());
+        if(organOldmanRequest.getOldmanId()!=null && organOldmanRequest.getOldmanId()!=0){
+            Oldman oldman=new Oldman();
+            oldman.setId(organOldmanRequest.getOldmanId());
+            organOldman.setOldman(oldman);
+        }
         organOldman.setOrgan(organ);
-        organOldman.setOldman(oldman);
+        organOldman.setIsPd(organOldmanRequest.getIsPd());
 
         if(!StringUtils.isEmpty(organOldmanRequest.getFirType())){
             if(organOldmanRequest.getFirType().equals("organ")){

@@ -27,9 +27,9 @@ $(document).ready(function(){
                 // 增加一列，包括删除和修改，同时将我们需要传递的数据传递到链接中
                 {
                     "targets": [4], // 目标列位置，下标从0开始
-                    "data": "oldmanId", // 数据列名
+                    "data": "id", // 数据列名
                     "render": function(data, type, full) { // 返回自定义内容
-                        return "<button class='btn btn-primary' id='"+data+"' onclick=newPage("+data+",$(this).parent().prev().prev().prev().text(),'/oldman/"+data+"/info')>查看</button><button class='btn btn-primary' id='"+data+"'>修改</button>";
+                        return "<button class='btn btn-primary' id='"+data+"' onclick=newPageChange("+data+",$(this).parent().prev().prev().prev().text(),'/oldman/?/info',$(this).parent().prev().prev().prev().prev().text())>查看</button><button class='btn btn-primary' onclick=oldman_edit_oldmanName("+data+",'/oldman/family/"+data+"/getById',$(this).parent().prev().prev().prev().text())>修改</button>";
                     }
                 },
                 //不进行排序的列
@@ -46,7 +46,9 @@ $(document).ready(function(){
                 "iDisplayLength" : aoData.iDisplayLength,
                 "iSortCol_0" : aoData.iSortCol_0,
                 "sEcho" : aoData.sEcho,
-                "sSortDir_0" : aoData.sSortDir_0
+                "sSortDir_0" : aoData.sSortDir_0,
+                "oldmanId":$("input[name='oldmanId']").val(),
+                "family_array":$("select[name='familyIndex']").val()
             },
             type: 'POST',
             dataType: 'json',
@@ -72,28 +74,9 @@ $(document).ready(function(){
 
 });
 
-function del(id) {
-    $.ajax({
-        url : "/oldman/family/del",
-        type : "post",
-        dataType : 'json',
-        data:{
-            id:id
-        },
-        success : function(data) {
-            if (data.success==true) {
-                start = $(".dataTables-example").dataTable().fnSettings()._iDisplayStart;
-                total = $(".dataTables-example").dataTable().fnSettings().fnRecordsDisplay();
-                window.location.reload();
-                if(total-start==1){
-                    if(start>0){
-                        $(".dataTables-example").dataTable().fnPageChange('previous',true);
-                    }
-                }
 
-            } else {
-                alert('删除失败！');
-            }
-        }
-    });
+
+function newPageChange(id,name,url,oldmanId) {
+    url=url.replace("?",oldmanId);
+    newPage(id,name,url);
 }

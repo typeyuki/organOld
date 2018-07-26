@@ -23,7 +23,25 @@ public class LabelRule extends DBEntity {
     private String isHealths;
     private String chxs;
     private String oldStatuses;
+    private String zcs;
+    private String sqzws;
 
+
+    public String getZcs() {
+        return zcs;
+    }
+
+    public void setZcs(String zcs) {
+        this.zcs = zcs;
+    }
+
+    public String getSqzws() {
+        return sqzws;
+    }
+
+    public void setSqzws(String sqzws) {
+        this.sqzws = sqzws;
+    }
 
     public int getLabelId() {
         return labelId;

@@ -29,7 +29,7 @@ $(document).ready(function(){
                     "targets": [0], // 目标列位置，下标从0开始
                     "data": "id", // 数据列名
                     "render": function(data, type, full) { // 返回自定义内容
-                        return "<input type='checkbox'>";
+                        return "<input type='checkbox' name='id' value='"+data+"'>";
                     }
                 }, {
                     "targets": [5], // 目标列位置，下标从0开始

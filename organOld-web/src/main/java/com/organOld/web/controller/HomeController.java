@@ -1,6 +1,7 @@
 package com.organOld.web.controller;
 
 import com.organOld.dao.entity.AutoValue;
+import com.organOld.dao.entity.home.Home;
 import com.organOld.service.contract.*;
 import com.organOld.service.enumModel.AutoValueEnum;
 import com.organOld.service.enumModel.HomeEnum;
@@ -13,9 +14,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,7 +32,8 @@ public class HomeController {
 
     @Autowired
     HomeService homeService;
-
+    @Autowired
+    OrganService organService;
 
     /**
      *
@@ -46,6 +51,9 @@ public class HomeController {
         ModelAndView mv=new ModelAndView("home/home");
         mv.addObject("title", HomeEnum.getValue(type));
         mv.addObject("type", type);
+        if(type==4|| type==5){
+            mv.addObject("organ",organService.getAll());
+        }
         return mv;
     }
 
@@ -78,4 +86,50 @@ public class HomeController {
     public String home_man(HomeOldmanRequest homeOldmanRequest,BTableRequest bTableRequest){
         return homeService.getManByPage(homeOldmanRequest,bTableRequest);
     }
+
+
+
+    /**
+     * 居家养老人员的导入 更新：先删除之前的再添加  先根据 身份证号码 检测该老人是否在系统中 不在的话不添加
+     * @param file
+     * @return
+     * @throws IOException
+     */
+    @RequestMapping(value = "/man/importExcel",method = RequestMethod.POST)
+    public ModelAndView importManExcel(@RequestParam MultipartFile file) throws IOException {
+        ModelAndView mv=new ModelAndView("oldman/home_oldman");
+        Result result=homeService.importManExcel(file);
+        mv.addObject("result",result);
+        return mv;
+    }
+
+
+    /**
+     * 添加
+     * @param home
+     * @return
+     */
+    @RequestMapping(value = "/{type}",method = RequestMethod.POST)
+    public ModelAndView addOrUpdate(@PathVariable String type,Home home){
+        ModelAndView mv=new ModelAndView("redirect:/home/"+home.getFirType());
+        homeService.addOrUpdate(home,type);
+        return mv;
+    }
+
+
+    @ResponseBody
+    @RequestMapping(value = "/{firType}/{id}/getById",method = RequestMethod.GET)
+    public Result getById(@PathVariable int id,@PathVariable int firType){
+        Result result=homeService.getById(id,firType);
+        return result;
+    }
+
+
+    @ResponseBody
+    @RequestMapping(value = "/{type}/del",method = RequestMethod.POST)
+    public Result dela(@PathVariable int type,@RequestParam("ids[]") String ids[]){
+        homeService.delByIds(ids,type);
+        return new Result(true);
+    }
+
 }

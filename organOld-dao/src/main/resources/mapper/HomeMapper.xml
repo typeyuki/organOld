@@ -15,6 +15,7 @@
         <association property="doctor" javaType="com.organOld.dao.entity.home.Doctor">
             <id property="id" column="did"/>
             <result property="name" column="name"/>
+            <result property="organId" column="organId" />
         </association>
         <association property="organ" javaType="com.organOld.dao.entity.organ.Organ">
             <id property="id" column="oid"/>
@@ -74,4 +75,62 @@
             WHERE h.fir_type=#{entity.firType}
         </if>
     </select>
+
+    <select id="getIdBySecType" resultType="java.lang.Integer">
+        SELECT h.id FROM home h
+        <if test="firType==1 or firType==3">
+            where sec_type=#{name}
+        </if>
+        <if test="firType==2">
+            ,chx c
+            where h.sec_type=c.id and c.level=#{name}
+        </if>
+        <if test="firType==4">
+            ,home_doctor hd
+            where h.sec_type=hd.id and hd.name=#{name}
+        </if>
+        <if test="firType==5">
+            ,organ o
+            where h.sec_type=o.id and o.name=#{name}
+        </if>
+    </select>
+
+
+    <insert id="save" parameterType="com.organOld.dao.entity.home.Home" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO home(fir_type,sec_type)
+        VALUES (#{firType},#{secType})
+    </insert>
+
+    <update id="updateById" parameterType="com.organOld.dao.entity.home.Home">
+        UPDATE home
+        SET sec_type=#{secType}
+        WHERE id=#{id}
+    </update>
+
+    <select id="getByIdAndFirType" resultMap="home">
+        SELECT
+        <if test="firType!=null and (firType==1 or firType==3 or firType==5)">
+            *
+            FROM home
+            WHERE id=#{id}
+        </if>
+        <if test="firType!=null and firType==2">
+            h.id,h.fir_type,h.sec_type,c.id cid,c.level,c.service_time
+            FROM home h,chx c
+            WHERE h.id=#{id} AND h.sec_type=c.id
+        </if>
+        <if test="firType!=null and firType==4">
+            h.id,h.fir_type,h.sec_type,d.id did,d.name,o.id organId
+            FROM home h,home_doctor d,organ o
+            WHERE h.id=#{id} AND h.sec_type=d.id AND d.organ_id=o.id
+        </if>
+    </select>
+
+
+    <delete id="delByIds">
+        DELETE from home where id in
+        <foreach collection="array" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
 </mapper>

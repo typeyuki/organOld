@@ -13,7 +13,8 @@ $(document).ready(function(){
             data:"oldmanName"
         },{
             data:"isService"
-        },{
+        },{}
+        ,{
             data:"time"
         }
         ];
@@ -21,7 +22,15 @@ $(document).ready(function(){
             // 列样式
             // 增加一列，包括删除和修改，同时将我们需要传递的数据传递到链接中
             {
-                "targets": [4], // 目标列位置，下标从0开始
+                "targets": [3], // 目标列位置，下标从0开始
+                "data": "organ", // 数据列名
+                "render": function(data, type, full) { // 返回自定义内容
+                    if(data!=null) return "<button class='btn btn-primary' onclick=newPage("+data.id+",'"+data.name+"','/organ/"+data.id+"/info?look=true')>"+data.name+"</button>";
+                    else return "";
+                }
+            },
+            {
+                "targets": [5], // 目标列位置，下标从0开始
                 "data": "oldmanId", // 数据列名
                 "render": function(data, type, full) { // 返回自定义内容
                     return "<span class='look' id='"+data+"'>查看</span>";
@@ -39,7 +48,7 @@ $(document).ready(function(){
             data:"timeIn"
         },{
             data:"timeOut"
-        },{
+        },{},{
             data:"time"
         }
         ];
@@ -47,7 +56,15 @@ $(document).ready(function(){
             // 列样式
             // 增加一列，包括删除和修改，同时将我们需要传递的数据传递到链接中
             {
-                "targets": [5], // 目标列位置，下标从0开始
+                "targets": [4], // 目标列位置，下标从0开始
+                "data": "organ", // 数据列名
+                "render": function(data, type, full) { // 返回自定义内容
+                    if(data!=null) return "<button class='btn btn-primary' onclick=newPage("+data.id+",'"+data.name+"','/organ/"+data.id+"/info?look=true')>"+data.name+"</button>";
+                    else return "";
+                }
+            },
+            {
+                "targets": [6], // 目标列位置，下标从0开始
                 "data": "oldmanId", // 数据列名
                 "render": function(data, type, full) { // 返回自定义内容
                     return "<span class='look' id='"+data+"'>查看</span>";

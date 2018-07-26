@@ -3,10 +3,7 @@ package com.organOld.service.service.impl;
 import com.organOld.dao.entity.AutoValue;
 import com.organOld.dao.entity.SysUser;
 import com.organOld.dao.entity.oldman.Oldman;
-import com.organOld.dao.entity.organ.Organ;
-import com.organOld.dao.entity.organ.OrganOldman;
-import com.organOld.dao.entity.organ.OrganReg;
-import com.organOld.dao.entity.organ.OrganType;
+import com.organOld.dao.entity.organ.*;
 import com.organOld.dao.repository.*;
 import com.organOld.dao.util.Page;
 import com.organOld.service.contract.*;
@@ -56,6 +53,10 @@ public class OrganServiceImpl implements OrganService{
     OldmanDao oldmanDao;
     @Autowired
     UserDao userDao;
+    @Autowired
+    OldmanKeyHandleDao oldmanKeyHandleDao;
+    @Autowired
+    OrganServiceRecordDao organServiceRecordDao;
 
 
     @Override
@@ -175,6 +176,10 @@ public class OrganServiceImpl implements OrganService{
         return sysUser;
     }
 
+    @Override
+    public List<Organ> getByType(int type) {
+        return organDao.getSimpleByType(2,0);
+    }
 
     @Override
     public OrganRegInfoModel getRegInfo() {
@@ -222,6 +227,12 @@ public class OrganServiceImpl implements OrganService{
         return organTypeDao.getByFirType(firType);
     }
 
+
+    @Override
+    public List<Organ> getByOrganFirType(int firType) {
+        return organDao.getByFirType(firType);
+    }
+
     @Override
     public Result importExcel(MultipartFile file, int type, HttpServletRequest request) throws IOException {
         List<Organ> organList=new ArrayList<>();
@@ -239,7 +250,6 @@ public class OrganServiceImpl implements OrganService{
         ExcelReturnModel excelReturnModel=new ExcelReturnModel();
         int numSuccess=0;//成功导入的数量
         int successAdd=0;//导入数量中  增加的个数
-        excelReturnModel.setTotal(sht0.getLastRowNum()-(start-1));//一共
 
         //得到所有的图片  一个机构一张图片  key是行号
         Map<Integer, PictureData> sheetIndexPicMap = getSheetPictrues03( (HSSFSheet) sht0, (HSSFWorkbook) wb0);
@@ -376,7 +386,7 @@ public class OrganServiceImpl implements OrganService{
         excelReturnModel.setNumFail(excelReturnModel.getFail().size());
         excelReturnModel.setSuccessAdd(successAdd);
         excelReturnModel.setNumSuccess(numSuccess);
-
+        excelReturnModel.setTotal(numSuccess+excelReturnModel.getNumFail());//一共
         organDao.saveAll(organList);
         return new Result(true,excelReturnModel);
     }
@@ -417,18 +427,20 @@ public class OrganServiceImpl implements OrganService{
         ExcelReturnModel excelReturnModel=new ExcelReturnModel();
         int numSuccess=0;//成功导入的数量
         int successAdd=0;//导入数量中  增加的个数
-        excelReturnModel.setTotal(sht0.getLastRowNum()-(start-1));//一共
 
         Integer organId=commonService.getIdBySession();
-        int oldStatus=0;;//养老状态
+        int oldStatus=0;//养老状态
         Organ organ=organDao.getById(organId);
-        if(organ.getOrganFirTypeId()==26){
+        if(organ.getOrganFirTypeId()==21){
             oldStatus= OldStatusEnum.JG.getIndex();
-        }else if(organ.getOrganFirTypeId()==27 || organ.getOrganFirTypeId()==28 || organ.getOrganFirTypeId()==29 || organ.getOrganFirTypeId()==34 || organ.getOrganFirTypeId()==35){
+        }else if(organ.getOrganFirTypeId()==22){
             oldStatus=OldStatusEnum.SQ.getIndex();
 
         }
         List<Oldman> oldmanList=new ArrayList<>();//用于更新老人 养老状态
+
+
+        List<Oldman> organExistOldman=organOldmanDao.getByOrganId(organId);//先存储 该机构所有的老人 ，筛选出去掉的老人
 
         for (Row r : sht0) {
             try {
@@ -444,11 +456,38 @@ public class OrganServiceImpl implements OrganService{
                         }
                         if (r.getCell(2).getStringCellValue() != null && !r.getCell(2).getStringCellValue().equals("")) {
                             Integer oldmanId=commonService.checkOldmanExiest(r.getCell(2).getStringCellValue());
+                            Oldman exiOldman = oldmanDao.getById(oldmanId);
                             if(oldmanId!=null && oldmanId!=0){
+                                if(oldStatus==2) {
+                                    //社区养老
+                                    switch (exiOldman.getOldStatus()) {
+                                        case 3:
+                                        case 4:
+                                            //之前是居家养老 或者社区居家
+                                            oldStatus = OldStatusEnum.SJ.getIndex();
+                                            break;
+                                    }
+                                }
                                 Oldman oldman=new Oldman();
                                 oldman.setId(oldmanId);
-                                //TODO 后面用于判断是否是 社区居家养老
-                                oldman.setOldStatus(oldStatus);
+                                oldman.setPid(r.getCell(2).getStringCellValue());
+                                oldman.setIsHandle(2);
+                                if (r.getCell(5).getStringCellValue() != null && r.getCell(5).getStringCellValue().equals("0")){
+                                    //排队的  保持以前的养老状态
+                                    organOldman.setNum(r.getCell(5).getStringCellValue());
+                                    oldman.setOldStatus(exiOldman.getOldStatus());
+                                    if (r.getCell(6).getStringCellValue() != null && !r.getCell(6).getStringCellValue().equals("")){
+                                        organOldman.setApplyTime(Tool.stringToDate(r.getCell(6).getStringCellValue()));
+                                        oldman.setIsHandle(exiOldman.getIsHandle());
+                                    }
+                                }else if(r.getCell(5).getStringCellValue() != null && !r.getCell(5).getStringCellValue().equals("") && !r.getCell(5).getStringCellValue().equals("0")){
+                                    oldman.setOldStatus(oldStatus);
+                                    organOldman.setNum(r.getCell(5).getStringCellValue());
+                                }
+
+                                if(organExistOldman.contains(oldman)){
+                                    organExistOldman.remove(oldman);
+                                }
                                 oldmanList.add(oldman);
                                 organOldman.setOldman(oldman);
                             }else{
@@ -464,9 +503,6 @@ public class OrganServiceImpl implements OrganService{
                         if (r.getCell(4).getStringCellValue() != null && !r.getCell(4).getStringCellValue().equals("")) {
                             organOldman.setTimeOut(Tool.stringToDate(r.getCell(4).getStringCellValue()));
                         }
-                        if (r.getCell(5).getStringCellValue() != null && !r.getCell(5).getStringCellValue().equals("")) {
-                            organOldman.setNum(r.getCell(5).getStringCellValue());
-                        }
 
                     organOldmanList.add(organOldman);
                     numSuccess++;
@@ -480,12 +516,35 @@ public class OrganServiceImpl implements OrganService{
         excelReturnModel.setNumFail(excelReturnModel.getFail().size());
         excelReturnModel.setSuccessAdd(successAdd);
         excelReturnModel.setNumSuccess(numSuccess);
+        excelReturnModel.setTotal(numSuccess+excelReturnModel.getNumFail());//一共
+        //该机构 删除的老人 的养老状态   之前是机构养老 则变为0 之前是社区养老的 看看之前的养老状态是不是居家社区 看看有没有在其他的社区养老机构
+        for(Oldman oldman:organExistOldman){
+            if(organ.getOrganFirTypeId()==21){
+                oldman.setOldStatus(0);
+                oldman.setIsHandle(0);
+            }else{
+                int orgNum=organOldmanDao.getNumByOldmanId(oldman.getId());
+                if(orgNum==1){
+                    //没有其他家 社区机构
+                    if(oldman.getOldStatus()==4){
+                        //之前是 社区居家
+                        oldman.setOldStatus(3);
+                        oldman.setIsHandle(2);
+                    }else if(oldman.getOldStatus()==2){
+                        oldman.setOldStatus(0);
+                        oldman.setIsHandle(0);
+                    }
+                }
+            }
+        }
 
         organOldmanDao.delByOrganId(organId);
         if(organOldmanList.size()>0){
             // 老人基本信息表  养老状态更新
-            oldmanDao.updateOldStatusByIds(oldmanList);
+            organExistOldman.addAll(oldmanList);//删除的老人 和 更新的 一起更新养老状态
+            oldmanDao.updateOrganExceLImportByIds(organExistOldman);
             organOldmanDao.saveAll(organOldmanList);
+            oldmanKeyHandleDao.delByOldman(oldmanList);
         }
         return new Result(true,excelReturnModel);
     }
@@ -507,5 +566,91 @@ public class OrganServiceImpl implements OrganService{
             case 4:if(organ.getAuthQueryIntegral()==1) return true;break;
         }
         return false;
+    }
+
+    @Override
+    public String getRecordByPage(OrganServiceRecordRequest organServiceRecordRequest, BTableRequest bTableRequest) {
+        Page<OrganServiceRecord> page=commonService.getPage(bTableRequest,"organ_service_record");
+        OrganServiceRecord organServiceRecord= Wrappers.organWrapper.unwrapServiceRecord(organServiceRecordRequest);
+        if(organServiceRecord.getOrganId()==null || organServiceRecord.getOrganId()==0){
+            //机构账号页面
+            commonService.checkIsOrgan(organServiceRecord);
+        }
+        page.setEntity(organServiceRecord);
+        List<OrganServiceRecordModel> productModelList=organServiceRecordDao.getByPage(page).stream().map(Wrappers.organWrapper::wrapServiceRecord).collect(Collectors.toList());
+        Long size=organServiceRecordDao.getSizeByPage(page);
+        return commonService.tableReturn(bTableRequest.getsEcho(),size,productModelList);
+    }
+
+
+    @Override
+    public Result importRecordExcel(MultipartFile file) throws IOException {
+        List<OrganServiceRecord> organServiceRecordList=new ArrayList<>();
+        Workbook wb0 = new HSSFWorkbook(file.getInputStream());
+        //获取Excel文档中的第一个表单
+        Sheet sht0 = wb0.getSheetAt(0);
+        int start=1;
+
+        ExcelReturnModel excelReturnModel=new ExcelReturnModel();
+        int numSuccess=0;//成功导入的数量
+        int successAdd=0;//导入数量中  增加的个数
+
+        Integer organId=commonService.getIdBySession();
+
+        for (Row r : sht0) {
+            try {
+                if (r.getRowNum() >= start) {
+                    //创建实体类
+                    OrganServiceRecord organServiceRecord=new OrganServiceRecord();
+                    organServiceRecord.setOrganId(organId);
+
+                    if (r.getCell(1).getStringCellValue() != null && !r.getCell(1).getStringCellValue().equals("")) {
+                        Integer oldmanId=commonService.checkOldmanExiest(r.getCell(1).getStringCellValue());
+                        if(oldmanId!=null && oldmanId!=0){
+                            organServiceRecord.setOldmanId(oldmanId);
+                        }else{
+                            throw new Exception();
+                        }
+                    }else{
+                        throw new Exception();
+                    }
+
+                    if (r.getCell(12).getStringCellValue() != null && !r.getCell(2).getStringCellValue().equals("")) {
+                        organServiceRecord.setData(r.getCell(2).getStringCellValue());
+                    }
+                    if (r.getCell(3).getStringCellValue() != null && !r.getCell(3).getStringCellValue().equals("")) {
+                        organServiceRecord.setTime(Tool.stringToDate(r.getCell(3).getStringCellValue()));
+                    }
+                    if (r.getCell(4).getStringCellValue() != null && !r.getCell(4).getStringCellValue().equals("")) {
+                        organServiceRecord.setOrder(r.getCell(4).getStringCellValue());
+                    }
+                    organServiceRecordList.add(organServiceRecord);
+                    numSuccess++;
+                    successAdd++;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                excelReturnModel.getFail().add(r.getRowNum() + 1);
+            }
+        }
+        excelReturnModel.setNumFail(excelReturnModel.getFail().size());
+        excelReturnModel.setSuccessAdd(successAdd);
+        excelReturnModel.setNumSuccess(numSuccess);
+        excelReturnModel.setTotal(numSuccess+excelReturnModel.getNumFail());//一共
+        if(organServiceRecordList.size()>0){
+            organServiceRecordDao.saveAll(organServiceRecordList);
+        }
+        return new Result(true,excelReturnModel);
+    }
+
+
+    @Override
+    public void delByIds(String[] ids) {
+        organDao.updateProps("disable","1",ids);
+    }
+
+    @Override
+    public List<Organ> getAll() {
+        return organDao.getAll();
     }
 }
