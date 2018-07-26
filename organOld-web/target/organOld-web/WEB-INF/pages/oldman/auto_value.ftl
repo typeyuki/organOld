@@ -32,9 +32,8 @@
                 <div class="ibox-content">
                     <div>
                         <#list autoValue as list>
-                            <#if list.index!=9 && list.index!=10>
+                            <#if list.index!=9 && list.index!=10 && list.index!=11 && list.index!=12>
                                 <button onclick=location.href="/autoValue/${list.index}" class="btn btn-primary auto" index="${list.index}" >${list.getName()}</button>
-
                             </#if>
                         </#list>
                     </div>

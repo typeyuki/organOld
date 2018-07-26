@@ -11,7 +11,11 @@ public enum AutoValueEnum {
     SZ("失智",7),//失智
     SL("视力",8),//视力
     YJBQ("一级标签",9),//一级标签
-    NL("年龄分布",10);//年龄分布
+    NL("年龄分布",10),
+    WDT("无电梯楼层",11),
+    JYLY("是否主动申请进养老院",12),
+    ZC("职称",13),
+    SQZW("社区职务",14),;//年龄分布
     private String name ;
     private int index ;
 

@@ -41,6 +41,7 @@
                 </div>
                 <div class="ibox-content">
                     <div>
+                        <button onclick=newPage(15,"管理","/autoValue/1") class="btn btn-primary" >管理</button>
                         <#--<a onclick=newPage("132","用户添加",'/oldman/add') href="javascript:void(0);" class="btn btn-primary ">添加</a>-->
                         <a  onclick="del('/oldman/base/del')" class="btn btn-primary ">删除</a>
                         <a  href="javascript:void(0);" id="search" class="btn btn-primary ">搜索</a>
@@ -174,10 +175,13 @@
                                     }
                                 });
                             </script>
-                    <table class="table table-striped table-bordered table-hover dataTables-example">
+
+
+                    <div class="table-responsive">
+                    <table id="table" class="table table-striped table-bordered table-hover dataTables-example text-nowrap">
                         <thead>
                         <tr>
-                            <th><input type='checkbox' onclick="thCheck(this)" /></th>
+                            <th style="width:15px;"><input type='checkbox' onclick="thCheck(this)" /></th>
                             <th index="id">序号</th>
                             <th>片区</th>
                             <th>居委</th>
@@ -190,6 +194,9 @@
                             <th>户籍</th>
                             <th>电话</th>
                             <th>身份证号码</th>
+                            <th>地址</th>
+                            <th>职称</th>
+                            <th>社区职务</th>
                             <th>标签</th>
                             <th>更新时间</th>
                             <th></th>
@@ -199,6 +206,7 @@
 
                         </tbody>
                     </table>
+                    </div>
                 </div>
             </div>
         </div>

@@ -7,7 +7,7 @@ $(document).ready(function(){
             "sPaginationType": "full_numbers",
             "bPaginite": true,
             "bInfo": true,
-            "bSort": true,
+            "bSort": false,
             "bFilter": false, //搜索栏
             "bStateSave": true,
             "bProcessing": true, //加载数据时显示正在加载信息
@@ -36,7 +36,11 @@ $(document).ready(function(){
                 data:"phone"
             },{
                 data:"pid"
-            },{},{
+            },{
+                data:"address"
+            },{
+                data:"zc"
+            },{},{},{
                 data:"time"
             }
             ],
@@ -60,14 +64,56 @@ $(document).ready(function(){
                             return data;
                         }
                     }
-                }, {
-                    "targets": [13], // 目标列位置，下标从0开始
+                },
+                {
+                    "targets": [11],
+                    "data": "phone",
+                    "render":function (data,type,full) {
+                        var newTelVal = '';
+                        if(data.length > 0){
+                            for(var i = 0; i < data.length; i++){
+                                if(i < 3 || i >= data.length-4){
+                                    newTelVal += data[i];
+                                }else{
+                                    if(i<6)
+                                        newTelVal += '*';
+                                }
+                            }
+                        }
+                        return newTelVal;
+
+                    }
+                },
+                {
+                    "targets": [12],
+                    "data": "pid",
+                    "render":function (data,type,full) {
+                        var k = '';
+                        if(data.length > 0){
+                            for(var i = 0; i < data.length; i++){
+                                if(i < 4 || i >= data.length-4){
+                                    k += data[i];
+                                }else{
+                                    if(i<7)
+                                    k += '*';
+                                }
+                            }
+                        }
+                        return k;
+
+                    }
+                },
+                {
+                    "targets": [16], // 目标列位置，下标从0开始
                     "data": "labelManInfoModelList", // 数据列名
                     "render": function(data, type, full) { // 返回自定义内容
                         if(data!=undefined && data.length>0){
                             var s="";
                             for(var i=0;i<data.length;i++){
-                                s+="<label style='margin: 5px'>"+data[i].labelName+"</label>"+data[i].isImplement+"<br>";
+                                s+="<label style='margin: 5px;color: #357ebd' >"+data[i].labelName+"</label>"+data[i].isImplement;
+                                if((i+1)%3==0){
+                                    s+="<br>";
+                                }
                             }
                             return s;
                         }else{
@@ -75,10 +121,20 @@ $(document).ready(function(){
                         }
                     }
                 },
-
-                // 增加一列，包括删除和修改，同时将我们需要传递的数据传递到链接中
                 {
                     "targets": [15], // 目标列位置，下标从0开始
+                    "data": "sqzw", // 数据列名
+                    "render": function(data, type, full) { // 返回自定义内容
+                        var s="";
+                        for(var i=0;i<data.length;i++){
+                            s+="<span style='margin: 5px'>"+data[i]+"</span>";
+                        }
+                        return s;
+                    }
+                },
+                // 增加一列，包括删除和修改，同时将我们需要传递的数据传递到链接中
+                {
+                    "targets": [18], // 目标列位置，下标从0开始
                     "data": "id", // 数据列名
                     "render": function(data, type, full) { // 返回自定义内容
                         return "<button class='btn btn-primary' id='"+data+"' onclick=newPage("+data+",$(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().prev().text(),'/oldman/"+data+"/info')>查看</button><button class='btn btn-primary' onclick=oldman_edit("+data+",'/oldman/base/"+data+"/getById')>修改</button>";

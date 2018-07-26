@@ -77,6 +77,28 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
+                                            <label class="col-sm-1 control-label">职务</label>
+                                            <div class="col-sm-8">
+                                                <select class="search_select" name="zw">
+                                                    <option></option>
+                                                <#list info.zc as list>
+                                                    <option type="checkbox" value="${list.id!}" >${list.value!}</option>
+                                                </#list>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-1 control-label">社区职务</label>
+                                            <div class="col-sm-8">
+                                                <select  class="selectpicker bla bla bli" multiple data-live-search="true" name="sqzw">
+                                                    <option></option>
+                                                    <#list info.sqzw as list>
+                                                        <option type="checkbox" value="${list.id!}" >${list.value!}</option>
+                                                    </#list>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
                                             <label class="col-sm-1 control-label">电话</label>
                                             <div class="col-sm-8">
                                                 <input type="text" class="form-control" name="phone"/>

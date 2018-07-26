@@ -63,4 +63,9 @@ public class AutoValueServiceImpl implements AutoValueService {
         }
         autoValueDao.delByIds(id);
     }
+
+    @Override
+    public List<AutoValue> getByIds(String[] sq) {
+        return autoValueDao.getByIds(sq);
+    }
 }

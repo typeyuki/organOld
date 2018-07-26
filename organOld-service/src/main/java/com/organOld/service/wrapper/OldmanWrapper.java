@@ -8,12 +8,16 @@ import com.organOld.dao.entity.organ.Organ;
 import com.organOld.service.constant.TimeConstant;
 import com.organOld.service.enumModel.*;
 import com.organOld.service.model.*;
+import com.organOld.service.service.AutoValueService;
 import com.organOld.service.service.CommonService;
+import com.organOld.service.service.impl.AutoValueServiceImpl;
 import com.organOld.service.util.Tool;
 import com.organOld.service.contract.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,6 +50,8 @@ public class OldmanWrapper implements Wrapper<Oldman,OldmanModel,OldmanRequest> 
         oldmanModel.setjName(oldman.getXq().getJwName());
         oldmanModel.setdName(oldman.getXq().getDistrictName());
         oldmanModel.setxName(oldman.getXq().getName());
+        oldmanModel.setZc(oldman.getZc());
+        oldmanModel.setSqzwString(oldman.getSqzw());
         oldmanModel.setPoliticalStatus(oldman.getPoliticalStatus());
         if(oldman.getOldStatus()!=null && oldman.getOldStatus()!=0)
             oldmanModel.setOldStatus(OldStatusEnum.getValue(oldman.getOldStatus()));
@@ -87,6 +93,12 @@ public class OldmanWrapper implements Wrapper<Oldman,OldmanModel,OldmanRequest> 
         for(AutoValue autoValue:autoValueList){
             if (autoValue.getType()== AutoValueEnum.HJ.getIndex()){
                 oldmanAddInfoModel.getCensus().add(autoValue);
+            }
+            if (autoValue.getType()== AutoValueEnum.SQZW.getIndex()){
+                oldmanAddInfoModel.getSqzw().add(autoValue);
+            }
+            if (autoValue.getType()== AutoValueEnum.ZC.getIndex()){
+                oldmanAddInfoModel.getZc().add(autoValue);
             }
             if (autoValue.getType()== AutoValueEnum.ZZMM.getIndex()){
                 oldmanAddInfoModel.getPoliticalStatuses().add(autoValue);

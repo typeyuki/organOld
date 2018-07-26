@@ -129,6 +129,8 @@ public class CommonService {
                 typeList.add(AutoValueEnum.SL.getIndex());
                 typeList.add(AutoValueEnum.SZ.getIndex());
                 typeList.add(AutoValueEnum.XQ.getIndex());
+                typeList.add(AutoValueEnum.SQZW.getIndex());
+                typeList.add(AutoValueEnum.ZC.getIndex());
                 break;
             case "organ_reg":
                 typeList.add(AutoValueEnum.PQ.getIndex());

@@ -16,6 +16,8 @@
         <result property="politicalStatus" column="political_status" />
         <result property="integral" column="integral"/>
         <result property="time" column="time" />
+        <result property="sqzw" column="sqzw" />
+        <result property="zc" column="zc" />
         <association property="xq" javaType="com.organOld.dao.entity.oldman.Xq">
             <id property="id" column="xid"/>
             <result property="name" column="xname"/>
@@ -30,11 +32,13 @@
     </resultMap>
     <!--不能简单的 limit 0，10  因为有1对多的关系  会补全   一条记录当多条使用（由于某个字段有多个值）-->
     <select id="getByPage" parameterType="com.organOld.dao.util.Page" resultMap="oldman">
-        SELECT o.id,o.name,o.sex,o.birthday,c.value census,p.value political_status,o.time,o.phone,o.address,o.pid,o.lou_num,o.old_status,
+        SELECT o.id,o.name,o.sqzw,z.value zc,o.sex,o.birthday,c.value census,p.value political_status,o.time,o.phone,o.address,o.pid,o.lou_num,o.old_status,
         x.value xname,org.name jname,d.value dname,lo.id lmid,l.name label_name,lo.is_implement
         FROM oldman_base o left join auto_value c on o.census=c.id
         left join auto_value p on o.political_status=p.id
-        left join label_oldman lo on lo.oldman_id=o.id left join label l on lo.label_id=l.id,
+        left join label_oldman lo on lo.oldman_id=o.id
+        left join label l on lo.label_id=l.id
+        left join auto_value z on o.zc=z.id,
         auto_value x,auto_value d,organ org
         WHERE  x.id=o.xq_id AND org.id=x.parent_index AND d.id=org.district_id and o.disable=0
 
@@ -165,7 +169,7 @@
     <select id="getSizeByPage" parameterType="com.organOld.dao.util.Page" resultType="java.lang.Long">
         SELECT count(1)
         FROM oldman_base o left join auto_value c on o.census=c.id
-        left join auto_value p on o.political_status=p.id,
+        left join auto_value p on o.political_status=p.id left join auto_value z on o.zc=z.id,
         auto_value x,auto_value d,organ org,oldman_family ofa,oldman_economic oe,oldman_health_base ohb
         WHERE  x.id=o.xq_id AND org.id=x.parent_index AND d.id=org.district_id and ofa.oldman_id=o.id and oe.oldman_id=o.id AND ohb.oldman_id=o.id and o.disable=0
         <if test="entity.birthdayStart!=null">
@@ -282,8 +286,8 @@
     </delete>
 
     <insert id="save" parameterType="com.organOld.dao.entity.oldman.Oldman" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO oldman_base(name,sex,birthday,pid,address,xq_id,census,political_status,phone,lou_num,floor,disable)
-        VALUE (#{name},#{sex},#{birthday},#{pid},#{address},#{xqId},#{census},#{politicalStatus},#{phone},#{louNum},#{floor},0)
+        INSERT INTO oldman_base(name,sex,birthday,pid,address,xq_id,census,political_status,phone,lou_num,floor,disable,zc,sqzw)
+        VALUE (#{name},#{sex},#{birthday},#{pid},#{address},#{xqId},#{census},#{politicalStatus},#{phone},#{louNum},#{floor},0,#{zc},#{sqzw})
     </insert>
 
 
@@ -338,7 +342,7 @@
     <update id="updateById" parameterType="com.organOld.dao.entity.oldman.Oldman">
         UPDATE oldman_base
         set name=#{name},birthday=#{birthday},sex=#{sex},pid=#{pid},address=#{address},census=#{census},political_status=#{politicalStatus},
-        phone=#{phone},xq_id=#{xqId},lou_num=#{louNum},floor=#{floor}
+        phone=#{phone},xq_id=#{xqId},lou_num=#{louNum},floor=#{floor},zc=#{zc},sqzw=#{sqzw}
         where id=#{id}
     </update>
 
@@ -386,6 +390,18 @@
             WHEN ${item.id} THEN #{item.census}
         </foreach>
         ELSE census
+        END,
+        zc= CASE id
+        <foreach collection="list" index="index" item="item" open="" separator=" " close="">
+            WHEN ${item.id} THEN #{item.zc}
+        </foreach>
+        ELSE zc
+        END,
+        sqzw= CASE id
+        <foreach collection="list" index="index" item="item" open="" separator=" " close="">
+            WHEN ${item.id} THEN #{item.sqzw}
+        </foreach>
+        ELSE sqzw
         END,
         political_status= CASE id
         <foreach collection="list" index="index" item="item" open="" separator=" " close="">

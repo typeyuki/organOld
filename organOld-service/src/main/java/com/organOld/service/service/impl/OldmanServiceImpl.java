@@ -32,9 +32,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -89,8 +87,25 @@ public class OldmanServiceImpl implements OldmanService {
         commonService.checkIsOrgan(oldman);
         page.setEntity(oldman);
         List<OldmanModel> oldmanList=oldmanBaseDao.getByPage(page).stream().map(Wrappers.oldmanWrapper::wrap).collect(Collectors.toList());
+        fillAutoValue(oldmanList,AutoValueEnum.SQZW.getIndex());
         Long size=oldmanBaseDao.getSizeByPage(page);
         return commonService.tableReturn(bTableRequest.getsEcho(),size,oldmanList);
+    }
+
+    private void fillAutoValue(List<OldmanModel> oldmanList, int type) {
+        List<AutoValue> autoValueList=autoValueDao.getByType(type);
+        Map<Integer,String> map=new HashMap<>();
+        autoValueList.forEach(s->map.put(s.getId(),s.getValue()));
+        for(OldmanModel oldmanModel:oldmanList){
+            if(oldmanModel.getSqzwString()!=null && !oldmanModel.getSqzwString().equals("")){
+                String[] sq=oldmanModel.getSqzwString().split("#");
+                List<String> sqzw=new ArrayList<>();
+                for(String s:sq){
+                    sqzw.add(map.get(Integer.parseInt(s)));
+                }
+                oldmanModel.setSqzw(sqzw);
+            }
+        }
     }
 
 
@@ -390,6 +405,30 @@ public class OldmanServiceImpl implements OldmanService {
                         oldman.setCensus(hjIndex + "");
                     }
 
+                    if (r.getCell(14).getStringCellValue().equals("1")) {
+                        Integer zcIndex = autoValueDao.getStringLikeIndex("高级", AutoValueEnum.ZC.getIndex(), "equals");
+                        oldman.setZc(zcIndex + "");
+                    }
+                    if (r.getCell(15).getStringCellValue().equals("1")) {
+                        Integer zcIndex = autoValueDao.getStringLikeIndex("副高级", AutoValueEnum.ZC.getIndex(), "equals");
+                        oldman.setZc(zcIndex + "");
+                    }
+                    if (r.getCell(16).getStringCellValue().equals("1")) {
+                        Integer zcIndex = autoValueDao.getStringLikeIndex("中级", AutoValueEnum.ZC.getIndex(), "equals");
+                        oldman.setZc(zcIndex + "");
+                    }
+                    String sqzw="";
+                    if (r.getCell(17).getStringCellValue().equals("1")) {
+                        Integer szIndex = autoValueDao.getStringLikeIndex("三长", AutoValueEnum.SQZW.getIndex(), "equals");
+                        sqzw=szIndex+"";
+                    }
+                    if (r.getCell(18).getStringCellValue().equals("1")) {
+                        Integer sqIndex = autoValueDao.getStringLikeIndex("社区团队负责人", AutoValueEnum.SQZW.getIndex(), "equals");
+                        if(sqzw.length()>1){
+                            sqzw+="#"+sqIndex;
+                        }
+                    }
+                    oldman.setSqzw(sqzw);
 
 
                     Linkman linkman = new Linkman();

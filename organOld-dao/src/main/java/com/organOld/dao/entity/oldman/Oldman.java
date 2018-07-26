@@ -28,6 +28,8 @@ public class Oldman extends Man implements DBInterface {
     private Integer isHandle;
     private Integer integral;
     private Integer oldStatus;
+    private String zc;
+    private String sqzw;
 
     private String birthdayTime;
     /**
@@ -397,5 +399,21 @@ public class Oldman extends Man implements DBInterface {
 
     public void setLouNum(Integer louNum) {
         this.louNum = louNum;
+    }
+
+    public String getZc() {
+        return zc;
+    }
+
+    public void setZc(String zc) {
+        this.zc = zc;
+    }
+
+    public String getSqzw() {
+        return sqzw;
+    }
+
+    public void setSqzw(String sqzw) {
+        this.sqzw = sqzw;
     }
 }

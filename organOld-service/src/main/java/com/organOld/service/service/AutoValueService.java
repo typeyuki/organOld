@@ -17,4 +17,6 @@ public interface AutoValueService {
     void handle(String type, AutoValue autoValue);
 
     void delByIds(String[] ids);
+
+    List<AutoValue> getByIds(String[] sq);
 }
