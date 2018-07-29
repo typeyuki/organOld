@@ -82,7 +82,7 @@
             <div class="zz"></div>
             <div class="row" style="border-bottom: 1px solid white;margin: 0!important;">
                 <div class="col-lg-5">
-                    <p class="title" style="margin-top: 15%;">老 人 身 份</p>
+                    <p class="title" style="margin-top: 15%;" onclick="showHeatMap()">老 人 身 份</p>
                 </div>
                 <div class="col-lg-7" >
                     <div class="row">
@@ -99,7 +99,7 @@
             </div>
             <div class="row" style="border-bottom: 1px solid white;margin: 0!important;">
                 <div class="col-lg-5">
-                    <p class="title" style="margin-top: 20%;">老 有 所 养</p>
+                    <p class="title" style="margin-top: 20%;" onclick="picChange(1)">老 有 所 养</p>
                 </div>
                 <div class="col-lg-7">
                     <div class="row">
@@ -121,7 +121,7 @@
             </div>
             <div class="row" style="border-bottom: 1px solid white;margin: 0!important;">
                 <div class="col-lg-5">
-                    <p class="title" style="margin-top: 50%;" >老 有 所 医</p>
+                    <p class="title" style="margin-top: 50%;" onclick="picChange(2)">老 有 所 医</p>
                 </div>
                 <div class="col-lg-7">
                     <div class="row">
@@ -154,7 +154,7 @@
             </div>
             <div class="row" style="border-bottom: 1px solid white;margin: 0!important;">
                 <div class="col-lg-5">
-                    <p class="title" style="margin-top: 5%;">老 有 所 为</p>
+                    <p class="title" style="margin-top: 5%;" onclick="picChange(3)">老 有 所 为</p>
                 </div>
                 <div class="col-lg-7">
                     <div class="row">
@@ -167,7 +167,7 @@
             </div>
             <div class="row" style="border-bottom: 1px solid white;margin: 0!important;">
                 <div class="col-lg-5">
-                    <p class="title" style="margin-top: 5%;">老 有 所 学</p>
+                    <p class="title" style="margin-top: 5%;" onclick="picChange(4)">老 有 所 学</p>
                 </div>
                 <div class="col-lg-7">
                     <div class="row">
@@ -180,7 +180,7 @@
             </div>
             <div class="row" style="margin: 0!important;">
                 <div class="col-lg-5">
-                    <p class="title" style="margin-top: 5%;">老 有 所 乐</p>
+                    <p class="title" style="margin-top: 5%;" onclick="picChange(5)">老 有 所 乐</p>
                 </div>
                 <div class="col-lg-7">
                     <div class="row">
@@ -448,32 +448,210 @@
     }];
     var label_option_sex_pie = chartPie(title_text,legend_data,series);
     //片区人数分布
-    legend_data="";
-    title_text='片区人口分布柱状';
-    yAxis_data=['东兰','古龙','平南','平阳','平吉','古美'];
-    series=[
-        {
-            name: '',
-            type: 'bar',
-            stack: '总量',
-            label: {
+    // legend_data="";
+    // title_text='片区人口分布柱状';
+    // yAxis_data=['东兰','古龙','平南','平阳','平吉','古美'];
+    // series=[
+    //     {
+    //         name: '',
+    //         type: 'bar',
+    //         stack: '总量',
+    //         label: {
+    //             normal: {
+    //                 show: true,
+    //                 position: 'right',
+    //                 textStyle:{
+    //                     fontSize:20
+    //                 }
+    //             }
+    //         },
+    //         itemStyle:{
+    //             normal: {
+    //                 color:series_color_1
+    //             }
+    //         },
+    //         data: [67,134,234,534,263,231]
+    //     }
+    // ];
+    // var label_option_pq_bar=chartBar(title_text,legend_data,yAxis_data,series);
+    //aa
+    var posList = [
+        'left', 'right', 'top', 'bottom',
+        'inside',
+        'insideTop', 'insideLeft', 'insideRight', 'insideBottom',
+        'insideTopLeft', 'insideTopRight', 'insideBottomLeft', 'insideBottomRight'
+    ];
+
+    label_pqBar.configParameters = {
+        rotate: {
+            min: -90,
+            max: 90
+        },
+        align: {
+            options: {
+                left: 'left',
+                center: 'center',
+                right: 'right'
+            }
+        },
+        verticalAlign: {
+            options: {
+                top: 'top',
+                middle: 'middle',
+                bottom: 'bottom'
+            }
+        },
+        position: {
+            options: echarts.util.reduce(posList, function (map, pos) {
+                map[pos] = pos;
+                return map;
+            }, {})
+        },
+        distance: {
+            min: 0,
+            max: 100
+        }
+    };
+
+    label_pqBar.config = {
+        rotate: 90,
+        align: 'left',
+        verticalAlign: 'middle',
+        position: 'insideBottom',
+        distance: 15,
+        onChange: function () {
+            var labelOption = {
                 normal: {
-                    show: true,
-                    position: 'right',
-                    textStyle:{
-                        fontSize:20
+                    rotate: label_pqBar.config.rotate,
+                    align: label_pqBar.config.align,
+                    verticalAlign: label_pqBar.config.verticalAlign,
+                    position: label_pqBar.config.position,
+                    distance: label_pqBar.config.distance
+                }
+            };
+            label_pqBar.setOption({
+                series: [{
+                    label: labelOption
+                }, {
+                    label: labelOption
+                }, {
+                    label: labelOption
+                }, {
+                    label: labelOption
+                }]
+            });
+        }
+    };
+
+
+    var labelOption = {
+        normal: {
+            show: true,
+            position: label_pqBar.config.position,
+            distance: label_pqBar.config.distance,
+            align: label_pqBar.config.align,
+            verticalAlign: label_pqBar.config.verticalAlign,
+            rotate: label_pqBar.config.rotate,
+            formatter: '{c}',
+            fontSize: 16,
+            rich: {
+                name: {
+                    textBorderColor: '#fff'
+                }
+            }
+        }
+    };
+
+    option = {
+        //color: ['#003366', '#006699', '#4cabce', '#e5323e'],
+        title: {
+            text:'片区人口分布柱状',
+            textStyle:{
+                color:'#fff',
+                fontSize:title_fontSize,
+                fontWeight:100
+            },
+            x:'0%',
+            y:'0%',
+        },
+        color: ['#ffd289'],
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'shadow'
+            }
+        },
+        legend: {
+            data: ['']
+        },
+        toolbox: {
+            show: true,
+            orient: 'vertical',
+            left: 'right',
+            top: 'center',
+            feature: {
+                mark: {show: true},
+                dataView: {show: true, readOnly: false},
+                magicType: {show: true, type: ['line', 'bar', 'stack', 'tiled']},
+                restore: {show: true},
+                saveAsImage: {show: true}
+            }
+        },
+        calculable: true,
+        xAxis: [
+            {
+                type: 'category',
+                axisTick: {show: false},
+                data: ['东兰','古龙','平南','平阳','平吉','古美'],
+                axisLine:{
+                    lineStyle:{
+                        color:'white',
+                        fontSize: 20
+                    }
+                },
+            }
+        ],
+        yAxis: [
+            {
+                type: 'value',
+                axisLine:{
+                    lineStyle:{
+                        color:'white',
+                        fontSize: 20
+                    }
+                },
+            }
+        ],
+        series: [
+            {
+                type: 'bar',
+                barGap: 0,
+                label: labelOption,
+                data: [320, 332, 301, 334, 390,440],
+                barWidth: 20,//柱图宽度
+                itemStyle: {
+                    normal: {
+                        barBorderRadius: 20,
+                        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                            offset: 0,
+                            color: '#99d9ea'
+                        }, {
+                            offset: 1,
+                            color: 'rgba(0,188,226, 0.5)'
+                        }]),
+                        shadowColor: 'rgba(0, 0, 0, 0.4)',
+                        shadowBlur: 20,
                     }
                 }
+
             },
-            itemStyle:{
-                normal: {
-                    color:series_color_1
-                }
-            },
-            data: [67,134,234,534,263,231]
-        }
-    ];
-    var label_option_pq_bar=chartBar(title_text,legend_data,yAxis_data,series);
+
+        ]
+    };
+    //pqBar.setOption(option);
+    label_pqBar.setOption(option);
+
+
     title_text="户籍分布饼图";
     legend_data=[{name:'户籍',textStyle:{color:legend_color}},{name:'非户籍',textStyle:{color:legend_color}}];
     series=[{
@@ -505,17 +683,87 @@
     var label_option_hj_pie = chartPie(title_text,legend_data,series);
     label_ageBar.setOption(label_option_age_bar);
     label_sexPie.setOption(label_option_sex_pie);
-    label_pqBar.setOption(label_option_pq_bar);
+
     label_hjPie.setOption(label_option_hj_pie)
 </script>
 
  <script>
 
+
+
+     function picChange(index){
+         for(var i=0;i<markerArr.length;i++){
+             var json = markerArr[i];
+             var p0 = json.point.split("|")[0];
+             var p1 = json.point.split("|")[1];
+             var point = new BMap.Point(p0,p1);
+             var iconImg = createIcon(json.icon);
+             var marker = new BMap.Marker(point,{icon:iconImg});
+             var iw = createInfoWindow(i);
+             var label = new BMap.Label(json.title,{"offset":new BMap.Size(json.icon.lb-json.icon.x+10,-20)});
+             marker.setLabel(label);
+             map.addOverlay(marker);
+             label.setStyle({
+                 borderColor:"#808080",
+                 color:"#333",
+                 cursor:"pointer",
+                 maxWidth:"none"
+             });
+
+             (function(){
+                 var index = i;
+                 var _iw = createInfoWindow(i);
+                 var _marker = marker;
+                 _marker.addEventListener("click",function(){
+                     this.openInfoWindow(_iw);
+                 });
+                 _iw.addEventListener("open",function(){
+                     _marker.getLabel().hide();
+                 })
+                 _iw.addEventListener("close",function(){
+                     _marker.getLabel().show();
+                 })
+                 label.addEventListener("click",function(){
+                     _marker.openInfoWindow(_iw);
+                 })
+                 if(!!json.isOpen){
+                     label.hide();
+                     _marker.openInfoWindow(_iw);
+                 }
+             })()
+         }
+         var allOverlay = map.getOverlays();
+         var len = map.getOverlays().length;
+         var str = null;
+         if(index == 1) str="养老院";//老有所养
+         else if(index == 2) str="社区卫生站";//所医
+         else if(index == 3) str="助餐点";//所为
+         else if(index == 4) str="老年人学校";//所学
+         else if(index == 5) str="社区卫生站";//所乐
+         for (var i = len; i >0; i--){
+             if (allOverlay[i] instanceof BMap.Marker)
+                 if(allOverlay[i].getLabel().content.indexOf(str) == -1)
+                 {
+                     map.removeOverlay(map.getOverlays()[i]);
+
+                 }
+
+         }
+
+     }
+
+     function showHeatMap(){
+         document.getElementById("dituContent").style.display="none";
+         document.getElementById("container").style.display="";
+     }
+
      function label3Show(index) {
+
          $("#label1").hide();
          $(".aa").css("display","none");
          $("#label3").show();
          $("#label3"+index).show();
+
      }
 
      function butt() {
@@ -534,50 +782,50 @@
 
      var la=[];
      $("span.label").click(
-         function () {
-             if($(this).attr("class").indexOf("select")>0){
-                 var cl=$(this).attr("class").split(" ")[1];
-                 $(this).attr("class","label "+cl);
-                 var laa=$(this).text().trim();
-                 $("#selectLabel span").each(function () {
-                    if($(this).text().trim()==laa){
-                        $("#label3").hide();
-                        $("#label1").show();
+             function () {
+                 if($(this).attr("class").indexOf("select")>0){
+                     var cl=$(this).attr("class").split(" ")[1];
+                     $(this).attr("class","label "+cl);
+                     var laa=$(this).text().trim();
+                     $("#selectLabel span").each(function () {
+                         if($(this).text().trim()==laa){
+                             $("#label3").hide();
+                             $("#label1").show();
 
-                        $(this).remove();
-                        ageBar = echarts.init(document.getElementById('ageBar'));
-                        sexPie= echarts.init(document.getElementById('sexPie'));
-                        pqBar= echarts.init(document.getElementById('pqBar'));
-                        hjPie= echarts.init(document.getElementById('hjPie'));
-                        ageBar.setOption(option_age_bar);
-                        sexPie.setOption(option_sex_pie);
-                        pqBar.setOption(option_pq_bar);
-                        hjPie.setOption(option_hj_pie);
+                             $(this).remove();
+                             ageBar = echarts.init(document.getElementById('ageBar'));
+                             sexPie= echarts.init(document.getElementById('sexPie'));
+                             pqBar= echarts.init(document.getElementById('pqBar'));
+                             hjPie= echarts.init(document.getElementById('hjPie'));
+                             ageBar.setOption(option_age_bar);
+                             sexPie.setOption(option_sex_pie);
+                             pqBar.setOption(option_pq_bar);
+                             hjPie.setOption(option_hj_pie);
 
 
-                        return;
-                    }
-                 });
-             }else {
+                             return;
+                         }
+                     });
+                 }else {
 
-                 $(this).addClass("select");
-                 var text = $(this).text();
-                 var cl=$(this).attr("class").split(" ")[1];
-                 $("#selectLabel").append($("<span class='bl label "+cl+"'>" + text + "</span>"));
-                 la.push(text);
+                     $(this).addClass("select");
+                     var text = $(this).text();
+                     var cl=$(this).attr("class").split(" ")[1];
+                     $("#selectLabel").append($("<span class='bl label "+cl+"'>" + text + "</span>"));
+                     la.push(text);
 //             table.fnFilter();
-                 $("#label3").hide();
-                 $("#label1").show();
+                     $("#label3").hide();
+                     $("#label1").show();
 
-                 ageBar = echarts.init(document.getElementById('ageBar'));
-                 sexPie = echarts.init(document.getElementById('sexPie'));
-                 pqBar = echarts.init(document.getElementById('pqBar'));
-                 hjPie = echarts.init(document.getElementById('hjPie'));
-                 ageBar.setOption(option_age_bar);
-                 sexPie.setOption(option_sex_pie);
-                 pqBar.setOption(option_pq_bar);
-                 hjPie.setOption(option_hj_pie);
+                     ageBar = echarts.init(document.getElementById('ageBar'));
+                     sexPie = echarts.init(document.getElementById('sexPie'));
+                     pqBar = echarts.init(document.getElementById('pqBar'));
+                     hjPie = echarts.init(document.getElementById('hjPie'));
+                     ageBar.setOption(option_age_bar);
+                     sexPie.setOption(option_sex_pie);
+                     pqBar.setOption(option_pq_bar);
+                     hjPie.setOption(option_hj_pie);
+                 }
              }
-         }
      );
  </script>

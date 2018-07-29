@@ -9,7 +9,6 @@
 
     <link href="/css/style.min.css?v=4.0.0" rel="stylesheet">
     <link href="/static/css/common_table.css" rel="stylesheet">
-    <link href="/static/css/oldman/base.css" rel="stylesheet">
     <style>
         .odd{
             background-color: #f9f9f9!important;
@@ -39,25 +38,37 @@
                 <div class="ibox-content">
                     <div>
                         <a  href="javascript:void(0);" class="btn btn-primary ">删除</a>
+                        <a  href="javascript:void(0);" id="search" class="btn btn-primary ">搜索</a>
                     </div>
-                    <div>
-                        <input class="time" type="text" placeholder="模糊匹配">
-                        <button id="search">搜索</button>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <input class="search form-control inp" type="text" placeholder="模糊匹配">
+                        </div>
+                        <div class="col-sm-3">
+                            <label>类型：</label>
+                            <select name="type" class="form-control inp" style="width: 80%">
+                                <option></option>
+                                <option value="1">系统消息</option>
+                                <option value="2">服务平台反馈</option>
+                            </select>
+                        </div>
                     </div>
-                    <table class="table table-striped table-bordered table-hover dataTables-example">
-                        <thead>
-                        <tr>
-                            <th><input type='checkbox' /></th>
-                            <th>序号</th>
-                            <th>类型</th>
-                            <th>消息</th>
-                            <th>针对的机构</th>
-                            <th>时间</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-hover dataTables-example text-nowrap">
+                            <thead>
+                            <tr>
+                                <th><input type='checkbox' /></th>
+                                <th>序号</th>
+                                <th>类型</th>
+                                <th>消息</th>
+                                <th>针对的机构</th>
+                                <th>时间</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

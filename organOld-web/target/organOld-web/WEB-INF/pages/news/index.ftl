@@ -34,20 +34,22 @@
                         <input class="time" type="text" placeholder="发布时间">
                         <button id="search">搜索</button>
                     </div>
-                    <table class="table table-striped table-bordered table-hover dataTables-example">
-                        <thead>
-                        <tr>
-                            <th>序号</th>
-                            <th>标题</th>
-                            <th>作者</th>
-                            <th>是否置顶</th>
-                            <th>发布时间</th>
-                            <th></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-hover dataTables-example text-nowrap">
+                            <thead>
+                            <tr>
+                                <th>序号</th>
+                                <th>标题</th>
+                                <th>作者</th>
+                                <th>是否置顶</th>
+                                <th>发布时间</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

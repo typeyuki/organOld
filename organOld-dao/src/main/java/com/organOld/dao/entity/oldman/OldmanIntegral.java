@@ -8,6 +8,17 @@ public class OldmanIntegral extends DBEntity implements DBInterface{
     private Integer integral;
     private Integer organId;
 
+
+    private String search;
+
+    public String getSearch() {
+        return search;
+    }
+
+    public void setSearch(String search) {
+        this.search = search;
+    }
+
     public Integer getOrganId() {
         return organId;
     }

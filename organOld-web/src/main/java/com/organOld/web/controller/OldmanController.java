@@ -7,14 +7,20 @@ import com.organOld.service.enumModel.AutoValueEnum;
 import com.organOld.service.model.Model;
 import com.organOld.service.service.AutoValueService;
 import com.organOld.service.service.OldmanService;
+import com.organOld.service.util.ExcelUtil;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 
 /**
  * Created by netlab606 on 2018/4/1.
@@ -411,6 +417,58 @@ public class OldmanController {
         ModelAndView mv=new ModelAndView("redirect:/oldman/integral");
         oldmanService.updateIntegral(sign,consume);
         return mv;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/export", method = RequestMethod.POST)
+    public void export(HttpServletRequest request,HttpServletResponse response, ExportTableThRequest exportTableThRequest) throws Exception {
+        //excel标题
+        String[] title = {"名称","性别","年龄","学校","班级"};
+
+        //excel文件名
+        String fileName = "学生信息表"+System.currentTimeMillis()+".xls";
+
+        String sheetName = "学生信息表";
+        String[][] content=new String[1][];
+        content[0] = new String[5];
+        content[0][0] = "1";
+        content[0][1] ="2";
+        content[0][2] = "3";
+        content[0][3] = "4";
+        content[0][4] ="5";
+//创建HSSFWorkbook
+        HSSFWorkbook wb = ExcelUtil.getHSSFWorkbook(sheetName, title, content, null);
+
+//响应到客户端
+        try {
+            this.setResponseHeader(response, fileName);
+            OutputStream os = response.getOutputStream();
+            wb.write(os);
+            os.flush();
+            os.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void setResponseHeader(HttpServletResponse response, String fileName) {
+        try {
+            try {
+                fileName = new String(fileName.getBytes(),"ISO8859-1");
+            } catch (UnsupportedEncodingException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            response.setContentType("application/vnd.ms-excel");
+            response.setHeader("Content-disposition", "attachment;filename="+fileName);
+//            response.setContentType("application/octet-stream;charset=ISO8859-1");
+//            response.setHeader("Content-Disposition", "attachment;filename="+ fileName);
+//            response.addHeader("Pargam", "no-cache");
+//            response.addHeader("Cache-Control", "no-cache");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
 }

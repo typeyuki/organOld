@@ -46,3 +46,27 @@
         margin-top: 10%;
     }
 }
+
+/*@media only screen and (min-width: 1401px) and ( max-width: 1699px){*/
+    /*#ditu{*/
+        /*width:70%;*/
+    /*}*/
+
+    /*.title{*/
+        /*font-size: 28px;*/
+        /*color: white;*/
+        /*line-height: 48px;*/
+    /*}*/
+    /*.number{*/
+        /*font-size: 35px;*/
+        /*color: orange!important;*/
+        /*font-weight: bold;*/
+        /*padding: 16px 8px;*/
+    /*}*/
+    /*#Date{*/
+        /*font-size: 23px;*/
+    /*}*/
+    /*#ttt{*/
+        /*margin-top: 10%;*/
+    /*}*/
+/*}*/

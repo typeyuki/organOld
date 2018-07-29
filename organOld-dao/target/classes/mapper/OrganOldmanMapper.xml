@@ -51,6 +51,10 @@
         <if test="entity!=null and entity.oldman!=null and entity.oldman.id!=null and entity.oldman.id!=0">
             and o.id=#{entity.oldman.id}
         </if>
+        <if test="entity!=null and entity.search!=null and entity.search!=''">
+            and ( org.name LIKE  concat('%',#{entity.search},'%')
+            OR o.name LIKE  concat('%',#{entity.search},'%') OR o.id=#{entity.search})
+        </if>
         <if test="sortType!=null and sortType!=''">
             ORDER BY ${sortType}
         </if>
@@ -84,7 +88,10 @@
             WHERE o.id=#{entity.organId}
             )
         </if>
-
+        <if test="entity!=null and entity.search!=null and entity.search!=''">
+            and ( org.name LIKE  concat('%',#{entity.search},'%')
+            OR o.name LIKE  concat('%',#{entity.search},'%') OR o.id=#{entity.search})
+        </if>
     </select>
 
     <update id="updateById" parameterType="com.organOld.dao.entity.organ.OrganOldman">

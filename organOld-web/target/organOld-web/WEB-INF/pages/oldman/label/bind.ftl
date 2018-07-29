@@ -134,30 +134,32 @@
                             </select>
                         </div>
                     </div>
-                    <table class="table table-striped table-bordered table-hover dataTables-example">
-                        <thead>
-                        <tr>
-                            <#if type=="bind">
-                                <th><input type='checkbox' onclick="thCheck(this)" /></th>
-                            </#if>
-                             <th>序号</th>
-                            <th>片区</th>
-                            <th>居委</th>
-                            <th>小区</th>
-                            <th>姓名</th>
-                            <th>性别</th>
-                            <th>年龄</th>
-                            <th>政治面貌</th>
-                            <th>户籍</th>
-                            <th>更新时间</th>
-                            <th></th>
-                            <th>备注</th>
-                        </tr>
-                        </thead>
-                        <tbody>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-hover dataTables-example text-nowrap">
+                            <thead>
+                            <tr>
+                                <#if type=="bind">
+                                    <th><input type='checkbox' onclick="thCheck(this)" /></th>
+                                </#if>
+                                 <th>老人序号</th>
+                                <th>片区</th>
+                                <th>居委</th>
+                                <th>小区</th>
+                                <th>姓名</th>
+                                <th>性别</th>
+                                <th>年龄</th>
+                                <th>政治面貌</th>
+                                <th>户籍</th>
+                                <th>更新时间</th>
+                                <th></th>
+                                <th>备注</th>
+                            </tr>
+                            </thead>
+                            <tbody>
 
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

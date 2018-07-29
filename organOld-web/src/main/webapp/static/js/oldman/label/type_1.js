@@ -89,6 +89,6 @@ function edit(id,obj) {
     $("#firModal input[name='value']").val($(obj).parent().prev().prev().text());
     $("#firModal form").attr("action","/oldman/label/type/1/update");
     $("#firModal h5").html("一级标签<small>修改</small>");
-    $("#firModal .firSub").html("修改");
+    $("#firModal .firSub").html("保存");
     $("#firModal").modal();
 }

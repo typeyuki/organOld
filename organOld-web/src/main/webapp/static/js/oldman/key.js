@@ -151,7 +151,7 @@ $(document).ready(function(){
                 "future":$("input[name=future]").val(),
                 "goalEnd":$("input[name='goalEnd']").val(),
                 "goalStart":$("input[name='goalStart']").val(),
-                "oldmanId":$("input[name='oldmanId']").val(),
+                "search":$("input[name='search']").val(),
                 "isActivity":$("select[name='isActivity']").val(),
                 "isHandle":$("select[name='isHandle']").val()
             },

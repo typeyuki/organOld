@@ -12,6 +12,15 @@ public class Home extends DBEntity{
     private Organ organ;//家庭病床、家庭医生对应的 医院啊
     private Doctor doctor;//家庭医生
 
+    private String search;
+
+    public String getSearch() {
+        return search;
+    }
+
+    public void setSearch(String search) {
+        this.search = search;
+    }
 
     public int getFirType() {
         return firType;

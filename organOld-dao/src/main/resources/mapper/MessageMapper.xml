@@ -26,6 +26,13 @@
         SELECT m.id,m.time,m.type,m.content,o.id oid,o.name,m.is_read
         FROM message m left join organ o on m.organ_id=o.id,sysuser u
         WHERE u.username=#{entity.username} and u.id=m.user_id
+        <if test="entity!=null and entity.search!=null and entity.search!=''">
+            and (m.content LIKE  concat('%',#{entity.search},'%')
+            OR (o.name LIKE  concat('%',#{entity.search},'%'))
+        </if>
+        <if test="entity.type!=null and entity.type!=0">
+            and m.type=#{entity.type}
+        </if>
         <if test="sortType!=null and sortType!='' and sortType=='init'">
             ORDER BY m.is_read desc
         </if>
@@ -39,8 +46,15 @@
 
     <select id="getSizeByPage" parameterType="com.organOld.dao.util.Page" resultType="java.lang.Long">
         SELECT count(1)
-        FROM message m,sysuser u
+        FROM message m left join organ o on m.organ_id=o.id,sysuser u
         WHERE u.username=#{entity.username} and u.id=m.user_id
+        <if test="entity.type!=null and entity.type!=0">
+            and m.type=#{entity.type}
+        </if>
+        <if test="entity!=null and entity.search!=null and entity.search!=''">
+            and (m.content LIKE  concat('%',#{entity.search},'%')
+            OR (o.name LIKE  concat('%',#{entity.search},'%'))
+        </if>
     </select>
 
     <update id="readByUsername">

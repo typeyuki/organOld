@@ -4,7 +4,7 @@
 $(document).ready(function(){
     var columns;
     var columnDefs;
-    if(type==1){
+    if(type==1 && organId==0){
         columns=[{
             data:"id"
         },{},{
@@ -13,6 +13,8 @@ $(document).ready(function(){
             data:"data"
         },{
             data:"moneyChange"
+        },{
+            data:"order"
         }
         ];
         columnDefs=[
@@ -24,6 +26,28 @@ $(document).ready(function(){
                     return data.name
                 }
             }
+        ];
+    }else if(type==1 && organId!=0){
+        columns=[{
+            data:"id"
+        },{},{
+            data:"time"
+        },{
+          data:"data"
+        },{
+            data:"order"
+        }
+        ];
+        columnDefs=[
+            // 列样式
+            {
+                "targets": [1], // 目标列位置，下标从0开始
+                "data": "oldman", // 数据列名
+                "render": function(data, type, full) { // 返回自定义内容
+                    return data.name
+                }
+            }
+
         ];
     }else{
         columns=[{
@@ -49,13 +73,13 @@ $(document).ready(function(){
         columns.push({});
         if(type==1){
             columnDefs.push({
-                "targets": [5], // 目标列位置，下标从0开始
+                "targets": [6], // 目标列位置，下标从0开始
                 "data": "organ", // 数据列名
                 "render": function(data, type, full) { // 返回自定义内容
                     return data.name
                 }
             });
-            columnDefs.push({ "bSortable": false, "aTargets": [1,2,3,4] });
+            // columnDefs.push({ "bSortable": false, "aTargets": [1,2,3,4] });
         }else{
             columnDefs.push({
                 "targets": [3], // 目标列位置，下标从0开始
@@ -64,14 +88,14 @@ $(document).ready(function(){
                     return data.name
                 }
             });
-            columnDefs.push(columnDefs.push({ "bSortable": false, "aTargets": [1,2,3] }));
+            // columnDefs.push(columnDefs.push({ "bSortable": false, "aTargets": [1,2,3] }));
         }
     }else{
-        if(type==1){
-            columnDefs.push({ "bSortable": false, "aTargets": [1,2,3] });
-        }else{
-            columnDefs.push(columnDefs.push({ "bSortable": false, "aTargets": [1,2] }));
-        }
+        // if(type==1){
+        //     columnDefs.push({ "bSortable": false, "aTargets": [1,2,3] });
+        // }else{
+        //     columnDefs.push(columnDefs.push({ "bSortable": false, "aTargets": [1,2] }));
+        // }
     }
 
 

@@ -257,6 +257,7 @@ public class OldmanServiceImpl implements OldmanService {
 
         page.setEntity(oldman);
         List<OldmanModel> oldmanModelList=oldmanBaseDao.getByPage(page).stream().map(Wrappers.oldmanWrapper::wrap).collect(Collectors.toList());
+        fillAutoValue(oldmanModelList,AutoValueEnum.SQZW.getIndex());
         if(oldmanModelList!=null && oldmanModelList.size()>0)
             oldmanAllInfoModel.setOldman(oldmanModelList.get(0));
 

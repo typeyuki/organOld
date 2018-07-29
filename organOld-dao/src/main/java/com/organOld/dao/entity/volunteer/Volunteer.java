@@ -11,6 +11,15 @@ public class Volunteer extends DBEntity implements DBInterface {
 
     private Integer organId;
 
+    private String search;
+
+    public String getSearch() {
+        return search;
+    }
+
+    public void setSearch(String search) {
+        this.search = search;
+    }
 
     public Oldman getOldman() {
         return oldman;

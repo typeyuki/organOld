@@ -72,6 +72,7 @@
         </div>
     </div>
 </div>
+<script src="../../../static/js/echarts.js"></script>
 <script type="text/javascript">
     var organOldman_tu_w,organOldman_tu_h;
     var organOldman_width=$("#organ").width();
@@ -138,30 +139,32 @@
     var organOldman_option_sub_pie = chartPie(title_text,legend_data,series);
 
     title_text="";
-    legend_data=[];
-    series=[
-        {
-            name:'未来空余',
-            type:'pie',
-            radius: ['50%', '65%'],
-            avoidLabelOverlap: false,
-            label: {
-                normal : {
-                    position:"center",
-                    formatter: '{a}\n{c}',
-                    textStyle : {
-                        fontWeight : 'normal',
-                        fontSize : 18,
-                        color:"#f2f989"
-                    }
-                }
-            },
-            data:[
-                {value:40, name:'未来空余'}
-            ]
-        }
-    ];
-    var organOldman_option_sub_wl = chartPie(title_text,legend_data,series);
+    // legend_data=[];
+    // series=[
+    //     {
+    //         name:'未来空余',
+    //         type:'pie',
+    //         radius: ['50%', '65%'],
+    //         avoidLabelOverlap: false,
+    //         label: {
+    //             normal : {
+    //                 position:"center",
+    //                 formatter: '{a}\n{c}',
+    //                 textStyle : {
+    //                     fontWeight : 'normal',
+    //                     fontSize : 18,
+    //                     color:"#f2f989"
+    //                 }
+    //             }
+    //         },
+    //         data:[
+    //             {value:40, name:'未来空余'}
+    //         ]
+    //     }
+    // ];
+    // var organOldman_option_sub_wl = chartPie(title_text,legend_data,series);
+    var organOldman_option_sub_wl = gauge(title_text);
+
     title_text="";
     legend_data=[{name:'已入住',textStyle:{color:legend_color,fontSize:18}},{name:'剩余',textStyle:{color:legend_color,fontSize:18}}];
     series=[{
@@ -192,31 +195,32 @@
     }];
     var organOldman_option_1_pie = chartPie(title_text,legend_data,series);
 
-    title_text="";
-    legend_data=[];
-    series=[
-        {
-            name:'未来空余',
-            type:'pie',
-            radius: ['50%', '65%'],
-            avoidLabelOverlap: false,
-            label: {
-                normal : {
-                    position:"center",
-                    formatter: '{a}\n{c}',
-                    textStyle : {
-                        fontWeight : 'normal',
-                        fontSize : 18,
-                        color:"#f2f989"
-                    }
-                }
-            },
-            data:[
-                {value:40, name:'未来空余'}
-            ]
-        }
-    ];
-    var organOldman_option_1_wl = chartPie(title_text,legend_data,series);
+    // title_text="";
+    // legend_data=[];
+    // series=[
+    //     {
+    //         name:'未来空余',
+    //         type:'pie',
+    //         radius: ['50%', '65%'],
+    //         avoidLabelOverlap: false,
+    //         label: {
+    //             normal : {
+    //                 position:"center",
+    //                 formatter: '{a}\n{c}',
+    //                 textStyle : {
+    //                     fontWeight : 'normal',
+    //                     fontSize : 18,
+    //                     color:"#f2f989"
+    //                 }
+    //             }
+    //         },
+    //         data:[
+    //             {value:40, name:'未来空余'}
+    //         ]
+    //     }
+    // ];
+    // var organOldman_option_1_wl = chartPie(title_text,legend_data,series);
+    var organOldman_option_1_wl = gauge(title_text);
     title_text="";
     legend_data=[{name:'已入住',textStyle:{color:legend_color,fontSize:18}},{name:'剩余',textStyle:{color:legend_color,fontSize:18}}];
     series=[{
@@ -247,31 +251,33 @@
     }];
     var organOldman_option_2_pie = chartPie(title_text,legend_data,series);
 
-    title_text="";
-    legend_data=[];
-    series=[
-        {
-            name:'未来空余',
-            type:'pie',
-            radius: ['50%', '65%'],
-            avoidLabelOverlap: false,
-            label: {
-                normal : {
-                    position:"center",
-                    formatter: '{a}\n{c}',
-                    textStyle : {
-                        fontWeight : 'normal',
-                        fontSize : 18,
-                        color:"#f2f989"
-                    }
-                }
-            },
-            data:[
-                {value:40, name:'未来空余'}
-            ]
-        }
-    ];
-    var organOldman_option_2_wl = chartPie(title_text,legend_data,series);
+    // title_text="";
+    // legend_data=[];
+    // series=[
+    //     {
+    //         name:'未来空余',
+    //         type:'pie',
+    //         radius: ['50%', '65%'],
+    //         avoidLabelOverlap: false,
+    //         label: {
+    //             normal : {
+    //                 position:"center",
+    //                 formatter: '{a}\n{c}',
+    //                 textStyle : {
+    //                     fontWeight : 'normal',
+    //                     fontSize : 18,
+    //                     color:"#f2f989"
+    //                 }
+    //             }
+    //         },
+    //         data:[
+    //             {value:40, name:'未来空余'}
+    //         ]
+    //     }
+    // ];
+    // var organOldman_option_2_wl = chartPie(title_text,legend_data,series);
+    var organOldman_option_2_wl = gauge(title_text);
+
     title_text="";
     legend_data=[{name:'已入住',textStyle:{color:legend_color,fontSize:18}},{name:'剩余',textStyle:{color:legend_color,fontSize:18}}];
     series=[{
@@ -302,31 +308,32 @@
     }];
     var organOldman_option_3_pie = chartPie(title_text,legend_data,series);
 
-    title_text="";
-    legend_data=[];
-    series=[
-        {
-            name:'未来空余',
-            type:'pie',
-            radius: ['50%', '65%'],
-            avoidLabelOverlap: false,
-            label: {
-                normal : {
-                    position:"center",
-                    formatter: '{a}\n{c}',
-                    textStyle : {
-                        fontWeight : 'normal',
-                        fontSize : 18,
-                        color:"#f2f989"
-                    }
-                }
-            },
-            data:[
-                {value:40, name:'未来空余'}
-            ]
-        }
-    ];
-    var organOldman_option_3_wl = chartPie(title_text,legend_data,series);
+    // title_text="";
+    // legend_data=[];
+    // series=[
+    //     {
+    //         name:'未来空余',
+    //         type:'pie',
+    //         radius: ['50%', '65%'],
+    //         avoidLabelOverlap: false,
+    //         label: {
+    //             normal : {
+    //                 position:"center",
+    //                 formatter: '{a}\n{c}',
+    //                 textStyle : {
+    //                     fontWeight : 'normal',
+    //                     fontSize : 18,
+    //                     color:"#f2f989"
+    //                 }
+    //             }
+    //         },
+    //         data:[
+    //             {value:40, name:'未来空余'}
+    //         ]
+    //     }
+    // ];
+    // var organOldman_option_3_wl = chartPie(title_text,legend_data,series);
+    var organOldman_option_3_wl = gauge(title_text);
 
     organOldman_jg_sub_pie.setOption(organOldman_option_sub_pie);
     organOldman_jg_sub_wl.setOption(organOldman_option_sub_wl);

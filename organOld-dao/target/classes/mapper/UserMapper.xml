@@ -36,9 +36,19 @@
 
 
     <select id="getByPage" parameterType="com.organOld.dao.util.Page" resultType="com.organOld.dao.entity.SysUser">
-        SELECT u.id,u.username,u.password,r.desc,u.time,o.name organ_name
+        SELECT u.id,u.username,u.password,u.disable,r.desc,u.time,o.name organ_name
         FROM sysuser u left join user_organ uo on uo.user_id=u.id left join organ o on o.id=uo.organ_id,sysrole r,user_role ur
         WHERE u.id=ur.user_id and r.id=ur.role_id
+        <if test="entity!=null and entity.search!=null and entity.search!=''">
+            and (u.username LIKE  concat('%',#{entity.search},'%')
+            OR o.name  LIKE  concat('%',#{entity.search},'%') OR u.id=#{entity.search})
+        </if>
+        <if test="entity.disable!=null">
+           and u.disable=#{entity.disable}
+        </if>
+        <if test="entity.roleId!=null and entity.roleId!=0">
+           and r.id=#{entity.roleId}
+        </if>
         <if test="sortType!=null and sortType!=''">
             ORDER BY ${sortType}
         </if>
@@ -51,8 +61,18 @@
     </select>
     <select id="getSizeByPage" parameterType="com.organOld.dao.util.Page" resultType="java.lang.Long">
         SELECT count(1)
-        FROM sysuser u,sysrole r,user_role ur
+        FROM sysuser u left join user_organ uo on uo.user_id=u.id left join organ o on o.id=uo.organ_id,sysrole r,user_role ur
         WHERE u.id=ur.user_id and r.id=ur.role_id
+        <if test="entity!=null and entity.search!=null and entity.search!=''">
+            and (u.username LIKE  concat('%',#{entity.search},'%')
+            OR o.name  LIKE  concat('%',#{entity.search},'%') OR u.id=#{entity.search})
+        </if>
+        <if test="entity.disable!=null">
+            and u.disable=#{entity.disable}
+        </if>
+        <if test="entity.roleId!=null and entity.roleId!=0">
+            and r.id=#{entity.roleId}
+        </if>
     </select>
 
     <select id="getAllRole" resultType="com.organOld.dao.entity.SysRole">

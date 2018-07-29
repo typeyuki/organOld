@@ -26,10 +26,25 @@ public class LabelRequest {
     private String[] intelligence;
     private String[] eyesight;
     private String[] oldStatusArray;
+    private String[] zcArray;
+    private String[] sqzwArray;
 
 
+    public String[] getZcArray() {
+        return zcArray;
+    }
 
+    public void setZcArray(String[] zcArray) {
+        this.zcArray = zcArray;
+    }
 
+    public String[] getSqzwArray() {
+        return sqzwArray;
+    }
+
+    public void setSqzwArray(String[] sqzwArray) {
+        this.sqzwArray = sqzwArray;
+    }
 
     public String[] getCensusArray() {
         return censusArray;

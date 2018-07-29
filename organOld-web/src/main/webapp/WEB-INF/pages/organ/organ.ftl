@@ -48,44 +48,47 @@
                             </form>
                         </#if>
                     </div>
-                    <div>
-                        <input class="id" type="text" placeholder="序号">
-                        <input class="time" type="text" placeholder="模糊匹配">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <input class="search form-control inp" type="text" placeholder="模糊匹配">
+                        </div>
                     </div>
-                    <table class="table table-striped table-bordered table-hover dataTables-example">
-                        <thead>
-                        <tr>
-                            <#if status?? && (status=="1" || status=="3")>
-                            <#else >
-                                <th><input type='checkbox' onclick="thCheck(this)" /></th> <!-- checkbox-->
-                            </#if>
-                            <th>编号</th>
-                            <th>类型</th>
-                            <th>名称</th>
-                            <th>简介</th>
-                            <#if type==21 || type==22 || type==3>
-                                <th>床（席）位数</th>
-                            </#if>
-                            <#if type==21 || type==22 >
-                                <th>入住数</th>
-                                <th>剩余床数</th>
-                            </#if>
-                            <th>工作时间</th>
-                            <th>地址</th>
-                            <th>联系方式</th>
-                            <th>所属片区</th>
-                            <#if status?? && (status=="3" )>
-                            <th>被拒绝状态</th>
-                            </#if>
-                            <th>权限</th>
-                            <th>更新时间</th>
-                            <th></th>
-                        </tr>
-                        </thead>
-                        <tbody>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-hover dataTables-example text-nowrap">
+                            <thead>
+                            <tr>
+                                <#if status?? && (status=="1" || status=="3")>
+                                <#else >
+                                    <th><input type='checkbox' onclick="thCheck(this)" /></th> <!-- checkbox-->
+                                </#if>
+                                <th>编号</th>
+                                <th>类型</th>
+                                <th>名称</th>
+                                <th>简介</th>
+                                <#if type==21 || type==22 || type==3>
+                                    <th>床（席）位数</th>
+                                </#if>
+                                <#if type==21 || type==22 >
+                                    <th>入住数</th>
+                                    <th>剩余床数</th>
+                                </#if>
+                                <th>工作时间</th>
+                                <th>地址</th>
+                                <th>联系方式</th>
+                                <th>所属片区</th>
+                                <#if status?? && (status=="3" )>
+                                <th>被拒绝状态</th>
+                                </#if>
+                                <th>权限</th>
+                                <th>更新时间</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
 
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

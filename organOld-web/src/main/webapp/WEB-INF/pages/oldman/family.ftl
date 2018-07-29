@@ -36,8 +36,8 @@
                         <a  href="javascript:void(0);" id="search" class="btn btn-primary ">搜索</a>
                     </div>
                     <div class="row">
-                        <div class="col-sm-2">
-                            <input class="form-control inp" name="oldmanId" type="text" placeholder="老人序号">
+                        <div class="col-sm-4">
+                            <input class="search form-control inp" type="text" placeholder="模糊匹配">
                         </div>
                         <div class="col-sm-3">
                             <label>家庭结构：</label>
@@ -48,20 +48,22 @@
                             </select>
                         </div>
                     </div>
-                    <table class="table table-striped table-bordered table-hover dataTables-example">
-                        <thead>
-                        <tr>
-                            <th>老人序号</th>
-                            <th>老人姓名</th>
-                            <th>家庭结构</th>
-                            <th>更新时间</th>
-                            <th></th>
-                        </tr>
-                        </thead>
-                        <tbody>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-hover dataTables-example text-nowrap">
+                            <thead>
+                            <tr>
+                                <th>老人序号</th>
+                                <th>老人姓名</th>
+                                <th>家庭结构</th>
+                                <th>更新时间</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
 
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

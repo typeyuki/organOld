@@ -148,6 +148,7 @@ public class CommonService {
     public Integer getIdBySession() {
         try {
             Integer organId= userDao.getOrganIdByUsername(getUserNameBySession());
+            if(organId==null) return 0;
             return organId;
         }catch (Exception e){
             return 0;

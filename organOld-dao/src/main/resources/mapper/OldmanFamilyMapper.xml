@@ -35,6 +35,10 @@
                 #{item}
             </foreach>
         </if>
+        <if test="entity!=null and entity.search!=null and entity.search!=''">
+            and (ob.name LIKE  concat('%',#{entity.search},'%')
+            OR ob.id=#{entity.search})
+        </if>
         <if test="sortType!=null and sortType!=''">
             ORDER BY ob.${sortType}
         </if>
@@ -60,6 +64,10 @@
             from organ o left join organ child on child.parent=o.id
             WHERE o.id=#{entity.organId}
             )
+        </if>
+        <if test="entity!=null and entity.search!=null and entity.search!=''">
+            and (ob.name LIKE  concat('%',#{entity.search},'%')
+            OR ob.id=#{entity.search})
         </if>
         <if test="entity!=null and entity.oldman!=null and entity.oldman.id!=null and entity.oldman.id!=0">
             and o.oldman_id=#{entity.oldman.id}

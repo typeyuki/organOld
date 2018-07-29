@@ -61,32 +61,34 @@
                             <input class="form-control inp" type="date" name="endDate" style="width: 40%">
                         </div>
                     </div>
-                    <table class="table table-striped table-bordered table-hover dataTables-example">
-                        <thead>
-                        <tr>
-                            <th>序号</th>
-                            <th>时间</th>
-                        <#if type?? && type=9>
-                            <th>增加方式</th>
-                        <#else >
-                            <th>类型</th>
-                        </#if>
-                        <#if type?? && type!=0>
-                        <#else>
-                            <th>机构</th>
-                        </#if>
-                            <th>${(type?? && type!=0)?string("增加积分","金额")}</th>
-                            <th>${(type?? && type!=0)?string("积分变动","金额变动")}</th>
-                        <#if type?? && type!=0>
-                        <#else>
-                            <th>单号</th>
-                        </#if>
-                        </tr>
-                        </thead>
-                        <tbody>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-hover dataTables-example  text-nowrap">
+                            <thead>
+                            <tr>
+                                <th>序号</th>
+                                <th>时间</th>
+                            <#if type?? && type=9>
+                                <th>增加方式</th>
+                            <#else >
+                                <th>类型</th>
+                            </#if>
+                            <#if type?? && type!=0>
+                            <#else>
+                                <th>机构</th>
+                            </#if>
+                                <th>${(type?? && type!=0)?string("增加积分","金额")}</th>
+                                <th>${(type?? && type!=0)?string("积分变动","金额变动")}</th>
+                            <#if type?? && type!=0>
+                            <#else>
+                                <th>单号</th>
+                            </#if>
+                            </tr>
+                            </thead>
+                            <tbody>
 
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

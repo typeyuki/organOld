@@ -16,8 +16,17 @@ public class OldmanFamily extends DBEntity implements DBInterface {
 
     private Integer familyIndex;
 
+    private String search;
 
     private String[] familyArray;
+
+    public String getSearch() {
+        return search;
+    }
+
+    public void setSearch(String search) {
+        this.search = search;
+    }
 
     public String[] getFamilyArray() {
         return familyArray;

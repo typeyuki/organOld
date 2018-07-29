@@ -98,6 +98,13 @@
             tu_pie_h=winHeight/4.35;
             num_pie_w=winWidth/3;
             num_pie_h=winHeight/1.65;
+        }else if(winWidth<1700 && winWidth>1400){
+            tu_w=winWidth/7;
+            tu_h=winHeight/4.35;
+            tu_pie_w=winWidth/4.5;
+            tu_pie_h=winHeight/4.35;
+            num_pie_w=winWidth/3;
+            num_pie_h=winHeight/1.65;
         }
 
 

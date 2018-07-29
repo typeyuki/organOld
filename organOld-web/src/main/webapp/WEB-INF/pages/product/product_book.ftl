@@ -33,20 +33,22 @@
                         <input class="id" type="text" placeholder="模糊搜索">
                         <button id="search">搜索</button>
                     </div>
-                    <table class="table table-striped table-bordered table-hover dataTables-example">
-                        <thead>
-                        <tr>
-                            <th>序号</th>
-                            <th>老人</th>
-                            <th>商品</th>
-                            <th>下单时间</th>
-                            <th></th>
-                        </tr>
-                        </thead>
-                        <tbody>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-hover dataTables-example text-nowrap">
+                            <thead>
+                            <tr>
+                                <th>序号</th>
+                                <th>老人</th>
+                                <th>商品</th>
+                                <th>下单时间</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
 
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

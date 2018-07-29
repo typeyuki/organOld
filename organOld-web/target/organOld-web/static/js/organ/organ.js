@@ -39,6 +39,18 @@ $(document).ready(function(){
                 "render": function(data, type, full) { // 返回自定义内容
                     return"<input type='checkbox' name='id' value='"+data+"'/>"
                 }
+            },{
+                "targets": [4], // 目标列位置，下标从0开始
+                "data": "intro", // 数据列名
+                "render": function(data, type, full) { // 返回自定义内容
+                    if(data!=null && data.length>60){
+                        data=data.substr(0,60)+"......";
+                    }
+                    if(data!=null){
+                        data=data.substr(0,35)+"<br>"+data.substr(35);
+                    }
+                    return data;
+                }
             },
             {
                 "targets": [12], // 目标列位置，下标从0开始
@@ -108,6 +120,18 @@ $(document).ready(function(){
                 "data": "id", // 数据列名
                 "render": function(data, type, full) { // 返回自定义内容
                     return"<input type='checkbox' name='id' value='"+data+"'/>"
+                }
+            },{
+                "targets": [4], // 目标列位置，下标从0开始
+                "data": "intro", // 数据列名
+                "render": function(data, type, full) { // 返回自定义内容
+                    if(data!=null && data.length>60){
+                        data=data.substr(0,60)+"......";
+                    }
+                    if(data!=null){
+                        data=data.substr(0,35)+"<br>"+data.substr(35);
+                    }
+                    return data;
                 }
             },
             {
@@ -179,6 +203,18 @@ $(document).ready(function(){
                 "render": function(data, type, full) { // 返回自定义内容
                     return"<input type='checkbox' name='id' value='"+data+"' />"
                 }
+            },{
+                "targets": [4], // 目标列位置，下标从0开始
+                "data": "intro", // 数据列名
+                "render": function(data, type, full) { // 返回自定义内容
+                    if(data!=null && data.length>60){
+                        data=data.substr(0,60)+"......";
+                    }
+                    if(data!=null){
+                        data=data.substr(0,35)+"<br>"+data.substr(35);
+                    }
+                    return data;
+                }
             },
             {
                 "targets": [10], // 目标列位置，下标从0开始
@@ -247,7 +283,19 @@ $(document).ready(function(){
         }
         ];
         columnDefs= [
-
+            {
+                "targets": [3], // 目标列位置，下标从0开始
+                "data": "intro", // 数据列名
+                "render": function(data, type, full) { // 返回自定义内容
+                    if(data!=null && data.length>60){
+                        data=data.substr(0,60)+"......";
+                    }
+                    if(data!=null){
+                        data=data.substr(0,35)+"<br>"+data.substr(35);
+                    }
+                    return data;
+                }
+            },
             {
                 "targets": [10], // 目标列位置，下标从0开始
                 "data": "organ", // 数据列名
@@ -331,6 +379,19 @@ $(document).ready(function(){
         columnDefs= [
             // 列样式
             {
+                "targets": [3], // 目标列位置，下标从0开始
+                "data": "intro", // 数据列名
+                "render": function(data, type, full) { // 返回自定义内容
+                    if(data!=null && data.length>60){
+                        data=data.substr(0,60)+"......";
+                    }
+                    if(data!=null){
+                        data=data.substr(0,35)+"<br>"+data.substr(35);
+                    }
+                    return data;
+                }
+            },
+            {
                 "targets": [9], // 目标列位置，下标从0开始
                 "data": "organ", // 数据列名
                 "render": function(data, type, full) { // 返回自定义内容
@@ -396,7 +457,8 @@ $(document).ready(function(){
                 "sEcho" : aoData.sEcho,
                 "sSortDir_0" : aoData.sSortDir_0,
                 "type" : firType,
-                "status":status
+                "status":status,
+                "search" : $('.search').val()
             },
             type: 'POST',
             dataType: 'json',

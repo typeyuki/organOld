@@ -56,7 +56,7 @@
                     <div>
                         <input type="date" id="futureTime">
                         <input type="hidden" name="future">
-                        <input name="oldmanId" type="text" placeholder="老人序号">
+                        <input name="search" type="text" placeholder="老人序号">
                         <input name="goalStart" type="text" placeholder="最低分">-
                         <input name="goalEnd" type="text" placeholder="最高分">
                         <label >是否主动申请进养老院</label>
@@ -73,27 +73,29 @@
                         </select>
                         <button id="search">搜索</button>
                     </div>
-                    <table class="table table-striped table-bordered table-hover dataTables-example">
-                        <thead>
-                        <tr>
-                            <th><input type="checkbox"></th>
-                            <th>老人序号</th>
-                            <th>姓名</th>
-                            <th id="goal">分数</th>
-                            <th>状态</th>
-                            <th>已安排的情况</th>
-                            <th></th>
-                            <th>已处理的情况</th>
-                            <th></th>
-                            <th>主动申请的机构</th>
-                            <th>申请时间</th>
-                            <th></th>
-                        </tr>
-                        </thead>
-                        <tbody>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-hover dataTables-example text-nowrap">
+                            <thead>
+                            <tr>
+                                <th><input type="checkbox"></th>
+                                <th>老人序号</th>
+                                <th>姓名</th>
+                                <th id="goal">分数</th>
+                                <th>状态</th>
+                                <th>已安排的情况</th>
+                                <th></th>
+                                <th>已处理的情况</th>
+                                <th></th>
+                                <th>主动申请的机构</th>
+                                <th>申请时间</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
 
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

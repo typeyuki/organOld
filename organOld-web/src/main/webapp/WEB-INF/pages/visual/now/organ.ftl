@@ -86,8 +86,54 @@
     organ_zbPie.setOption(organ_option_zb_pie);
 
 
-    title.text="机构养老";
-    title.link="javascript: change('child_organ','child_organOldman')";
+    // var title="机构养老";
+    // title.text="机构养老";
+    //
+    // title.link="javascript: change('child_organ','child_organOldman')";
+    // legend_data=[{name:'古美养老院',textStyle:{color:legend_color,fontSize:18}},{name:'东兰养老院',textStyle:{color:legend_color,fontSize:18}},{name:'平阳养老院',textStyle:{color:legend_color,fontSize:18}}];
+    // series=[{
+    //     name: '老人户籍',
+    //     type: 'pie',
+    //     radius : '65%',
+    //     center: ['48%', '50%'],
+    //     label : {
+    //         normal : {
+    //             formatter: '{d}%\n({c})',
+    //             textStyle : {
+    //                 fontWeight : 'normal',
+    //                 fontSize : 14
+    //             }
+    //         }
+    //     },
+    //     data:[
+    //         {value:476, name:'古美养老院'},
+    //         {value:376, name:'东兰养老院'},
+    //         {value:376, name:'平阳养老院'}
+    //     ],
+    //     itemStyle: {
+    //         emphasis: {
+    //             shadowBlur: 10,
+    //             shadowOffsetX: 0,
+    //             shadowColor: 'rgba(0, 0, 0, 0.5)'
+    //         }
+    //     }
+    // }];
+    // var organ_option_jg_pie = chartPieClick(title,legend_data,series);
+    // organ_jg_pie.setOption(organ_option_jg_pie);
+
+    //return
+    var title_organOldman_1={
+        text: "机构养老",
+        link:"javascript: change('child_organ','child_organOldman')",
+        target: "self",
+        textStyle:{
+            color:title_color,
+            fontSize:title_fontSize,
+            fontWeight:100
+        },
+        x:'0%',
+        y:'0%'
+    };
     legend_data=[{name:'古美养老院',textStyle:{color:legend_color,fontSize:18}},{name:'东兰养老院',textStyle:{color:legend_color,fontSize:18}},{name:'平阳养老院',textStyle:{color:legend_color,fontSize:18}}];
     series=[{
         name: '老人户籍',
@@ -116,40 +162,59 @@
             }
         }
     }];
-    var organ_option_jg_pie = chartPieClick(title,legend_data,series);
+    var organ_option_jg_pie = chartPieClick(title_organOldman_1,legend_data,series);
     organ_jg_pie.setOption(organ_option_jg_pie);
 
 
+
+    // title.text="机构养老";
+    // title.link="javascript: location.href='/visual/now/part/organOldman'";
+    // var data=[
+    //     {value:335, name:'东兰养老院'},
+    //     {value:310, name:'平阳养老院'},
+    //     {value:400, name:'古美养老院'},
+    // ];
+    //
+    // var organ_option_jg_pie = customizedPieClick(title,data);
+    // organ_jg_pie.setOption(organ_option_jg_pie);
+
+
+    // title_text="社区养老";
+    // legend_data=[{name:'长者照护之家',textStyle:{color:legend_color,fontSize:18}},{name:'日照中心',textStyle:{color:legend_color,fontSize:18}},{name:'助餐点',textStyle:{color:legend_color,fontSize:18}}];
+    // series=[{
+    //     name: '老人户籍',
+    //     type: 'pie',
+    //     radius : '65%',
+    //     center: ['48%', '50%'],
+    //     label : {
+    //         normal : {
+    //             formatter: '{d}%\n({c})',
+    //             textStyle : {
+    //                 fontWeight : 'normal',
+    //                 fontSize : 14
+    //             }
+    //         }
+    //     },
+    //     data:[
+    //         {value:476, name:'长者照护之家'},
+    //         {value:376, name:'日照中心'},
+    //         {value:376, name:'助餐点'}
+    //     ],
+    //     itemStyle: {
+    //         emphasis: {
+    //             shadowBlur: 10,
+    //             shadowOffsetX: 0,
+    //             shadowColor: 'rgba(0, 0, 0, 0.5)'
+    //         }
+    //     }
+    // }];
     title_text="社区养老";
-    legend_data=[{name:'长者照护之家',textStyle:{color:legend_color,fontSize:18}},{name:'日照中心',textStyle:{color:legend_color,fontSize:18}},{name:'助餐点',textStyle:{color:legend_color,fontSize:18}}];
-    series=[{
-        name: '老人户籍',
-        type: 'pie',
-        radius : '65%',
-        center: ['48%', '50%'],
-        label : {
-            normal : {
-                formatter: '{d}%\n({c})',
-                textStyle : {
-                    fontWeight : 'normal',
-                    fontSize : 14
-                }
-            }
-        },
-        data:[
-            {value:476, name:'长者照护之家'},
-            {value:376, name:'日照中心'},
-            {value:376, name:'助餐点'}
-        ],
-        itemStyle: {
-            emphasis: {
-                shadowBlur: 10,
-                shadowOffsetX: 0,
-                shadowColor: 'rgba(0, 0, 0, 0.5)'
-            }
-        }
-    }];
-    var organ_option_sq_sub_pie = chartPie(title_text,legend_data,series);
+    data=[
+        {value:476, name:'长者照护之家'},
+        {value:376, name:'日照中心'},
+        {value:376, name:'助餐点'},
+    ];
+    var organ_option_sq_sub_pie = customizedPie(title_text,data);
     organ_sq_sub_pie.setOption(organ_option_sq_sub_pie);
 
     //legend 点击事件
@@ -165,44 +230,52 @@
     });
 
 
+    // title_text="居家养老";
+    // legend_data=[{name:'家庭养老',textStyle:{color:legend_color,fontSize:18}},
+    //     {name:'长护险',textStyle:{color:legend_color,fontSize:18}},
+    //     {name:'智能化应用',textStyle:{color:legend_color,fontSize:18}},
+    //     {name:'家庭医生',textStyle:{color:legend_color,fontSize:18}},
+    //     {name:'家庭病床',textStyle:{color:legend_color,fontSize:18}}];
+    // series=[{
+    //     name: '居家养老',
+    //     type: 'pie',
+    //     radius : '65%',
+    //     center: ['48%', '50%'],
+    //     label : {
+    //         normal : {
+    //             formatter: '{d}%\n({c})',
+    //             textStyle : {
+    //                 fontWeight : 'normal',
+    //                 fontSize : 14
+    //             }
+    //         }
+    //     },
+    //     data:[
+    //         {value:476, name:'家庭养老'},
+    //         {value:376, name:'长护险'},
+    //         {value:376, name:'智能化应用'},
+    //         {value:376, name:'家庭医生'},
+    //         {value:376, name:'家庭病床'}
+    //     ],
+    //     itemStyle: {
+    //         emphasis: {
+    //             shadowBlur: 10,
+    //             shadowOffsetX: 0,
+    //             shadowColor: 'rgba(0, 0, 0, 0.5)'
+    //         }
+    //     }
+    // }];
     title_text="居家养老";
-    legend_data=[{name:'家庭养老',textStyle:{color:legend_color,fontSize:18}},
-        {name:'长护险',textStyle:{color:legend_color,fontSize:18}},
-        {name:'智能化应用',textStyle:{color:legend_color,fontSize:18}},
-        {name:'家庭医生',textStyle:{color:legend_color,fontSize:18}},
-        {name:'家庭病床',textStyle:{color:legend_color,fontSize:18}}];
-    series=[{
-        name: '居家养老',
-        type: 'pie',
-        radius : '65%',
-        center: ['48%', '50%'],
-        label : {
-            normal : {
-                formatter: '{d}%\n({c})',
-                textStyle : {
-                    fontWeight : 'normal',
-                    fontSize : 14
-                }
-            }
-        },
-        data:[
-            {value:476, name:'家庭养老'},
-            {value:376, name:'长护险'},
-            {value:376, name:'智能化应用'},
-            {value:376, name:'家庭医生'},
-            {value:376, name:'家庭病床'}
-        ],
-        itemStyle: {
-            emphasis: {
-                shadowBlur: 10,
-                shadowOffsetX: 0,
-                shadowColor: 'rgba(0, 0, 0, 0.5)'
-            }
-        }
-    }];
+    data=[
+        {value:476, name:'家庭养老'},
+        {value:676, name:'长护险'},
+        {value:576, name:'智能化应用'},
+        {value:476, name:'家庭医生'},
+        {value:676, name:'家庭病床'}
+    ];
 
 
-    var organ_option_jj_pie = chartPie(title_text,legend_data,series);
+    var organ_option_jj_pie = customizedPie(title_text,data);
     organ_jj_pie.setOption(organ_option_jj_pie);
 
 

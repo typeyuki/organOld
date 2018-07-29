@@ -41,19 +41,21 @@
                         <a href="javascript:void(0);" class="btn btn-primary " onclick="add()">添加</a>
                         <a onclick="del('/autoValue/del')"  href="javascript:void(0);" class="btn btn-primary ">删除</a>
                     </div>
-                    <table class="table table-striped table-bordered table-hover dataTables-example">
-                        <thead>
-                        <tr>
-                            <th><input type="checkbox" onclick="thCheck(this)" ></th>
-                            <th>序号</th>
-                            <th>名称</th>
-                            <th></th>
-                        </tr>
-                        </thead>
-                        <tbody>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-hover dataTables-example text-nowrap">
+                            <thead>
+                            <tr>
+                                <th><input type="checkbox" onclick="thCheck(this)" ></th>
+                                <th>序号</th>
+                                <th>名称</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
 
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

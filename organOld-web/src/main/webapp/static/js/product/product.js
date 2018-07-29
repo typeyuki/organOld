@@ -110,6 +110,6 @@ function edit(id,obj) {
     $("#productModal img").attr("src",($(obj).parent().prev().prev().find("img").attr("src")));
     $("#productModal form").attr("action","/product/update");
     $("#productModal small").html("修改");
-    $("#productModal .sub").html("修改");
+    $("#productModal .sub").html("保存");
     $("#productModal").modal();
 }

@@ -31,35 +31,55 @@
                 </div>
                 <div class="ibox-content">
                     <div>
+                        <button onclick="createCode()" class="btn btn-primary" >生成二维码</button>
                         <a onclick="$('#addModal').modal()" href="javascript:void(0);" class="btn btn-primary ">充钱</a>
                         <a onclick="changeStatus('3')" href="javascript:void(0);" class="btn btn-primary ">设置为不可用</a>
                         <a onclick="changeStatus('1')" href="javascript:void(0);" class="btn btn-primary ">设置为可用</a>
                         <a onclick="changeStatus('2')" href="javascript:void(0);" class="btn btn-primary ">挂失</a>
                         <a  href="javascript:void(0);" id="search" class="btn btn-primary ">搜索</a>
                     </div>
-                    <div>
-                        <input class="id" type="text" placeholder="老人序号">
-                        <input class="time" type="text" placeholder="状态">
-                        <input class="time" type="text" placeholder="模糊">
-                        <button id="search">搜索</button>
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <label >状态</label>
+                            <select class="form-control inp" style="width: 80%" name="status">
+                                <option></option>
+                                <option value="1">正常</option>
+                                <option value="2">挂失</option>
+                                <option value="3">不可用</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-2">
+                            <label >是否生成二维码</label>
+                            <select class="form-control inp" style="width: 50%" name="isCreate">
+                                <option></option>
+                                <option value="1">是</option>
+                                <option value="0">否</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-2">
+                            <input name="search" class="form-control inp" type="text" placeholder="模糊搜索">
+                        </div>
                     </div>
-                    <table class="table table-striped table-bordered table-hover dataTables-example">
-                        <thead>
-                        <tr>
-                            <th><input type='checkbox' onclick="thCheck(this)"/></th>
-                            <th>卡号</th>
-                            <th>老人</th>
-                            <th>密码</th>
-                            <th>金额</th>
-                            <th>状态</th>
-                            <th>更新时间</th>
-                            <th></th>
-                        </tr>
-                        </thead>
-                        <tbody>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-hover dataTables-example  text-nowrap">
+                            <thead>
+                            <tr>
+                                <th><input type='checkbox' onclick="thCheck(this)"/></th>
+                                <th>卡号</th>
+                                <th>老人</th>
+                                <th>密码</th>
+                                <th>金额</th>
+                                <th>状态</th>
+                                <th>是否已生成二维码</th>
+                                <th>更新时间</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
 
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
@@ -71,6 +91,7 @@
 <script src="/static/js/common.js"></script>
 
 <#include "add_money.ftl"/>
+<#include "edit_card.ftl" />
 <script src="/static/js/card/card.js" ></script>
 <script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
 

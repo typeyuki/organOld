@@ -22,11 +22,16 @@ public class UserWrapper implements Wrapper<SysUser,UserModel,UserRequest> {
         userModel.setRoleDesc(sysUser.getDesc());
         userModel.setOrganName(sysUser.getOrganName());
         userModel.setTime(Tool.dateToString(sysUser.getTime(), TimeConstant.DATA_FORMAT_YMD));
+        userModel.setStatus((sysUser.getDisable()==0)?"正常":"禁用");
         return userModel;
     }
 
     @Override
     public SysUser unwrap(UserRequest userRequest) {
-        return null;
+        SysUser sysUser=new SysUser();
+        sysUser.setRoleId(userRequest.getRole());
+        sysUser.setSearch(userRequest.getSearch());
+        sysUser.setDisable(userRequest.getDisable());
+        return sysUser;
     }
 }

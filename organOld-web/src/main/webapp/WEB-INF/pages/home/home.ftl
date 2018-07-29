@@ -30,31 +30,44 @@
                     <div>
                         <a onclick="addHome()" href="javascript:void(0);" class="btn btn-primary ">添加</a>
                         <a onclick="del('/home/${type}/del')" href="javascript:void(0);" class="btn btn-primary ">删除</a>
+                        <a  href="javascript:void(0);" id="search" class="btn btn-primary dd " style="display: none">搜索</a>
                     </div>
-                    <table class="table table-striped table-bordered table-hover dataTables-example">
-                        <thead>
-                        <tr>
-                            <th><input type='checkbox' onclick="thCheck(this)" /></th>
-                            <th>编号</th>
-                            <#if type==1 || type==3>
-                                <th>名称</th>
-                            <#elseif type==2>
-                                <th>级别</th>
-                                <th>服务时间</th>
-                            <#elseif type==4>
-                                <th>医生姓名</th>
-                                <th>所在医院</th>
-                            <#elseif type==5>
-                                <th>服务医院</th>
-                            </#if>
-                            <th>更新时间</th>
-                            <th></th>
-                        </tr>
-                        </thead>
-                        <tbody>
+                    <div class="row dd" style="display: none">
+                        <div class="col-sm-4">
+                            <input class="search form-control inp" type="text" placeholder="模糊匹配">
+                        </div>
+                    </div>
+<#if type==4 || type==5>
+<script>
+    $(".dd").show();
+</script>
+</#if>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-hover dataTables-example text-nowrap">
+                            <thead>
+                            <tr>
+                                <th><input type='checkbox' onclick="thCheck(this)" /></th>
+                                <th>编号</th>
+                                <#if type==1 || type==3>
+                                    <th>名称</th>
+                                <#elseif type==2>
+                                    <th>级别</th>
+                                    <th>服务时间</th>
+                                <#elseif type==4>
+                                    <th>医生姓名</th>
+                                    <th>所在医院</th>
+                                <#elseif type==5>
+                                    <th>服务医院</th>
+                                </#if>
+                                <th>更新时间</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
 
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

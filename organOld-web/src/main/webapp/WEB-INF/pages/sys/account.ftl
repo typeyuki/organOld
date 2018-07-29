@@ -31,29 +31,51 @@
                     <div>
                         <a onclick="add()" href="javascript:void(0);" class="btn btn-primary ">添加</a>
                         <a onclick="del('/user/del')" href="javascript:void(0);" class="btn btn-primary ">禁用</a>
+                        <a onclick="del('/user/undel')" href="javascript:void(0);" class="btn btn-primary ">启用</a>
+                        <a  href="javascript:void(0);" id="search" class="btn btn-primary ">搜索</a>
                     </div>
-                    <div>
-                        <input class="id" type="text" placeholder="账号">
-                        <input class="id" type="text" placeholder="角色">
-                        <button id="search">搜索</button>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <input class="search form-control inp" type="text" placeholder="模糊匹配">
+                        </div>
+                        <div class="col-sm-3">
+                            <label>角色：</label>
+                            <select name="role" class="form-control inp" style="width: 80%">
+                                <option></option>
+                                <#list roles as list>
+                                    <option value="${list.id}">${list.desc}</option>
+                                </#list>
+                            </select>
+                        </div>
+                        <div class="col-sm-3">
+                            <label>状态：</label>
+                            <select name="disable" class="form-control inp" style="width: 80%">
+                                <option></option>
+                                <option value="0">正常</option>
+                                <option value="1">禁用</option>
+                            </select>
+                        </div>
                     </div>
-                    <table class="table table-striped table-bordered table-hover dataTables-example">
-                        <thead>
-                        <tr>
-                            <th><input type='checkbox' onclick="thCheck(this)"/></th>
-                            <th>序号</th>
-                            <th>账号</th>
-                            <th>密码</th>
-                            <th>角色</th>
-                            <th>对应机构</th>
-                            <th>更新时间</th>
-                            <th></th>
-                        </tr>
-                        </thead>
-                        <tbody>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-hover dataTables-example text-nowrap">
+                            <thead>
+                            <tr>
+                                <th><input type='checkbox' onclick="thCheck(this)"/></th>
+                                <th>序号</th>
+                                <th>账号</th>
+                                <th>密码</th>
+                                <th>角色</th>
+                                <th>对应机构</th>
+                                <th>状态</th>
+                                <th>更新时间</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
 
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

@@ -522,6 +522,10 @@
             WHERE o.id=#{entity.organId}
             )
         </if>
+        <if test="entity!=null and entity.search!=null and entity.search!=''">
+            and (o.name LIKE  concat('%',#{entity.search},'%')
+            OR o.id=#{entity.search})
+        </if>
         <if test="sortType!=null and sortType!=''">
             ORDER BY ${sortType}
         </if>
@@ -548,6 +552,10 @@
             from organ o left join organ child on child.parent=o.id
             WHERE o.id=#{entity.organId}
             )
+        </if>
+        <if test="entity!=null and entity.search!=null and entity.search!=''">
+            and (o.name LIKE  concat('%',#{entity.search},'%')
+            OR o.id=#{entity.search})
         </if>
     </select>
 

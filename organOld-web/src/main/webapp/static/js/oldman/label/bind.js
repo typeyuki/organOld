@@ -73,7 +73,7 @@ $(document).ready(function(){
                 "targets": [11], // 目标列位置，下标从0开始
                 "data": "isImplement", // 数据列名
                 "render": function(data, type, full) { // 返回自定义内容
-                    var s="<span class='btn btn-primary'>查看</span>";
+                    var s="<span class='btn btn-primary'  onclick=newPageBefore($(this).parent().prev().prev().prev().prev().prev().prev().text(),$(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().text(),'/oldman/?/info') >查看</span>";
                     if(data==0){
                         s+="<button class='btn btn-primary' onclick='implement($(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().text(),$(this).parent().prev().prev().prev().prev().prev().prev().text())'>未操作</button>";
                     }else if(data==1){
@@ -89,7 +89,7 @@ $(document).ready(function(){
         ]
     }else{
         columns=[{
-                data:"id"
+                data:"oldmanId"
             },{
                 data:"dName"
             },{
@@ -141,7 +141,7 @@ $(document).ready(function(){
                 "targets": [10], // 目标列位置，下标从0开始
                 "data": "isImplement", // 数据列名
                 "render": function(data, type, full) { // 返回自定义内容
-                    var s="<span class='btn btn-primary'>查看</span>";
+                    var s="<span class='btn btn-primary' onclick=newPageBefore($(this).parent().prev().prev().prev().prev().prev().prev().text(),$(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().text(),'/oldman/?/info')>查看</span>";
                     if(data==0){
                         s+="<button class='btn btn-primary' onclick='implement($(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().text(),$(this).parent().prev().prev().prev().prev().prev().prev().text())'>未操作</button>";
                     }else if(data==1){
@@ -365,4 +365,9 @@ function subImple() {
             }
         }
     });
+}
+
+function newPageBefore(name,id,url) {
+    var url_new=url.replace("?",id);
+    newPage(id,name,url_new);
 }

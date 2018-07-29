@@ -34,6 +34,7 @@ public class OrganOldmanWrapper implements Wrapper<OrganOldman,OrganOldmanModel,
         OrganOldman organOldman=new OrganOldman();
         Organ organ=new Organ();
         organ.setId(organOldmanRequest.getOrganId());
+        organOldman.setSearch(organOldmanRequest.getSearch());
         if(organOldmanRequest.getOldmanId()!=null && organOldmanRequest.getOldmanId()!=0){
             Oldman oldman=new Oldman();
             oldman.setId(organOldmanRequest.getOldmanId());

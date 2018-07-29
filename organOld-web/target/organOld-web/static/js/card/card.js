@@ -21,6 +21,8 @@ $(document).ready(function(){
             },{
               data:"status"
             },{
+                data:"isCreate"
+            },{
                 data:"time"
             }
             ],
@@ -42,10 +44,11 @@ $(document).ready(function(){
                 },
                 // 增加一列，包括删除和修改，同时将我们需要传递的数据传递到链接中
                 {
-                    "targets": [7], // 目标列位置，下标从0开始
+                    "targets": [8], // 目标列位置，下标从0开始
                     "data": "id", // 数据列名
                     "render": function(data, type, full) { // 返回自定义内容
-                        return "<span class='btn btn-primary' onclick=newPage("+data+",$(this).parent().prev().prev().prev().prev().prev().text(),'/card/"+data+"/record')>查看记录</span>";
+                        return "<span class='btn btn-primary' onclick=newPage("+data+",$(this).parent().prev().prev().prev().prev().prev().prev().text(),'/card/"+data+"/record')>查看记录</span>"+
+                            "<span class='btn btn-primary' onclick=oldman_edit(753,'/card/"+data+"/getById')>修改</span>";
                     }
                 }
             ],
@@ -60,7 +63,10 @@ $(document).ready(function(){
                 "iDisplayLength" : aoData.iDisplayLength,
                 "iSortCol_0" : aoData.iSortCol_0,
                 "sEcho" : aoData.sEcho,
-                "sSortDir_0" : aoData.sSortDir_0
+                "sSortDir_0" : aoData.sSortDir_0,
+                "search":$("input[name='search']").val(),
+                "status":$("select[name='status']").val(),
+                "isCreate":$("select[name='isCreate']").val()
             },
             type: 'POST',
             dataType: 'json',
@@ -102,6 +108,37 @@ function changeStatus(status) {
                 tableUpdate();
             } else {
                 alert('充值失败！');
+            }
+        }
+    });
+}
+
+
+function createCode() {
+    var ids=[];
+    $("input[name='id']:checked").each(function () {
+        ids.push($(this).val());
+    });
+    $.ajax({
+        url : "/card/create",
+        type : "post",
+        dataType : 'json',
+        data:{
+            ids:ids
+        },
+        success : function(data) {
+            if (data.success==true) {
+                alert("一共操作："+data.data.total+"个老人\n其中共："+data.data.numSuccess+"个老人未生成二维码\n已生成数："+data.data.successAdd+"\n失败数："+data.data.numFail);
+                var start = $(".dataTables-example").dataTable().fnSettings()._iDisplayStart;
+                var total = $(".dataTables-example").dataTable().fnSettings().fnRecordsDisplay();
+                window.location.reload();
+                if(total-start==1){
+                    if(start>0){
+                        $(".dataTables-example").dataTable().fnPageChange('previous',true);
+                    }
+                }
+            } else {
+                alert('删除失败！');
             }
         }
     });

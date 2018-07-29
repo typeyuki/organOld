@@ -34,7 +34,8 @@
                         <button id="search">搜索</button>
 
                     </div>
-                    <table class="table table-striped table-bordered table-hover dataTables-example">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-hover dataTables-example text-nowrap">
                         <thead>
                         <tr>
                             <th>机构序号</th>
@@ -54,7 +55,8 @@
                         <tbody>
 
                         </tbody>
-                    </table>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

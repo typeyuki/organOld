@@ -10,6 +10,15 @@ public class CardModel {
     private Oldman oldman;
     private String time;
     private int id;
+    private String isCreate;
+
+    public String getIsCreate() {
+        return isCreate;
+    }
+
+    public void setIsCreate(String isCreate) {
+        this.isCreate = isCreate;
+    }
 
     public int getId() {
         return id;

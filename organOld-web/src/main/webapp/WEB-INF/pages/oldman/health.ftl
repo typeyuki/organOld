@@ -40,9 +40,6 @@
                         <a  href="javascript:void(0);" id="search" class="btn btn-primary ">搜索</a>
                     </div>
                     <div class="row">
-                        <div class="col-sm-2">
-                            <input class="oldmanId form-control inp" type="text" placeholder="老人序号">
-                        </div>
                         <div class="col-sm-4">
                             <input class="search form-control inp" type="text" placeholder="模糊匹配">
                         </div>
@@ -60,28 +57,32 @@
                             }
                         });
                     </script>
-                    <table class="table table-striped table-bordered table-hover dataTables-example">
-                        <thead>
-                        <tr>
-                            <th>老人序号</th>
-                            <th>姓名</th>
-                            <th>血型</th>
-                            <th>失智</th>
-                            <th>视力</th>
-                            <th>慢病</th>
-                            <th>失能</th>
-                            <th>药物反应</th>
-                            <th>恶性肿瘤史</th>
-                            <th>骨折史</th>
-                            <th>残疾情况</th>
-                            <th>更新时间</th>
-                            <th></th>
-                        </tr>
-                        </thead>
-                        <tbody>
+                    <div class="table-responsive">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered table-hover dataTables-example text-nowrap text-nowrap">
+                                <thead>
+                                <tr>
+                                    <th>老人序号</th>
+                                    <th>姓名</th>
+                                    <th>血型</th>
+                                    <th>失智</th>
+                                    <th>视力</th>
+                                    <th>慢病</th>
+                                    <th>失能</th>
+                                    <th>药物反应</th>
+                                    <th>恶性肿瘤史</th>
+                                    <th>骨折史</th>
+                                    <th>残疾情况</th>
+                                    <th>更新时间</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
 
-                        </tbody>
-                    </table>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

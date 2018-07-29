@@ -160,6 +160,20 @@
             </foreach>
             )
         </if>
+        <if test="entity!=null and entity.zc!=null and entity.zc.length > 0">
+            and (
+            <foreach collection="entity.zc" index="index" item="item" open="(" separator="and" close=")">
+                lr.zcs  LIKE  concat('%',${item},'%')
+            </foreach>
+            )
+        </if>
+        <if test="entity!=null and entity.sqzw!=null and entity.sqzw.length > 0">
+            and (
+            <foreach collection="entity.sqzw" index="index" item="item" open="(" separator="and" close=")">
+                lr.sqzws  LIKE  concat('%',${item},'%')
+            </foreach>
+            )
+        </if>
         <if test="entity!=null and entity.oldStatusArray!=null and entity.oldStatusArray.length > 0">
             and (
             <foreach collection="entity.oldStatusArray" index="index" item="item" open="(" separator="and" close=")">

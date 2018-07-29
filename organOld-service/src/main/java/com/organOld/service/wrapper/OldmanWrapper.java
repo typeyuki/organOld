@@ -156,6 +156,7 @@ public class OldmanWrapper implements Wrapper<Oldman,OldmanModel,OldmanRequest> 
 
     public OldmanIntegral unwrapIntegral(OldmanIntegralRequest oldmanIntegralRequest) {
         OldmanIntegral oldmanIntegral=new OldmanIntegral();
+        BeanUtils.copyProperties(oldmanIntegralRequest,oldmanIntegral);
         return oldmanIntegral;
     }
 

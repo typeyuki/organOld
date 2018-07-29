@@ -30,6 +30,7 @@ public class ProductWrapper implements Wrapper<Product,ProductModel,ProductReque
         if(productRequest.getId()!=null)
         product.setId(productRequest.getId());
         product.setName(productRequest.getName());
+        product.setOrganId(productRequest.getOrganId());
         return product;
     }
 }

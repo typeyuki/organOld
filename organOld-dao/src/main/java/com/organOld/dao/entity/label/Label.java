@@ -55,8 +55,26 @@ public class Label extends DBEntity implements DBInterface{
     private String[] isHealth;
     private String[] intelligence;
     private String[] eyesight;
+    private String[] zc;
+    private String[] sqzw;
     private String[] oldStatusArray;
 
+
+    public String[] getZc() {
+        return zc;
+    }
+
+    public void setZc(String[] zc) {
+        this.zc = zc;
+    }
+
+    public String[] getSqzw() {
+        return sqzw;
+    }
+
+    public void setSqzw(String[] sqzw) {
+        this.sqzw = sqzw;
+    }
 
     public Integer getFirIndex() {
         return firIndex;

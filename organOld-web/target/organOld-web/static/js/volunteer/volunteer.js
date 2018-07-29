@@ -7,12 +7,12 @@ $(document).ready(function(){
             "sPaginationType": "full_numbers",
             "bPaginite": true,
             "bInfo": true,
-            "bSort": true,
+            "bSort": false,
             "bFilter": false, //搜索栏
             "bStateSave": true,
             "bProcessing": true, //加载数据时显示正在加载信息
             "bServerSide": true, //指定从服务器端获取数据
-            "columns":[{},{
+            "columns":[{
                 data:"oldmanId"
             },{
                 data:"oldmanName"
@@ -20,26 +20,16 @@ $(document).ready(function(){
                 data:"time"
             }
             ],
-            "order":[[0,"asc"]],
             "columnDefs": [
                 // 列样式
-                {
-                    "targets": [0], // 目标列位置，下标从0开始
-                    "data": "id", // 数据列名
-                    "render": function(data, type, full) { // 返回自定义内容
-                        return"<input type='checkbox' />"
-                    }
-                },
                 // 增加一列，包括删除和修改，同时将我们需要传递的数据传递到链接中
                 {
-                    "targets": [4], // 目标列位置，下标从0开始
+                    "targets": [3], // 目标列位置，下标从0开始
                     "data": "id", // 数据列名
                     "render": function(data, type, full) { // 返回自定义内容
                         return "<span class='mod' id='"+data+"'>查看</span>";
                     }
-                },
-                //不进行排序的列
-                { "bSortable": false, "aTargets": [ 0,1,2,3,4] }
+                }
             ],
             "sAjaxSource": "/volunteer/man/data",//这个是请求的地址
             "fnServerData": retrieveData
@@ -52,7 +42,8 @@ $(document).ready(function(){
                 "iDisplayLength" : aoData.iDisplayLength,
                 "iSortCol_0" : aoData.iSortCol_0,
                 "sEcho" : aoData.sEcho,
-                "sSortDir_0" : aoData.sSortDir_0
+                "sSortDir_0" : aoData.sSortDir_0,
+                "search":$('.search').val()
             },
             type: 'POST',
             dataType: 'json',

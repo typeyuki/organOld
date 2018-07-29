@@ -278,28 +278,30 @@
                                 </div>
                         </#if>
                     </div>
-                    <table class="table table-striped table-bordered table-hover dataTables-example">
-                        <thead>
-                        <tr>
-                            <th><input type='checkbox' onclick="thCheck(this)" /></th>
-                            <th>序号</th>
-                            <th>所属机构</th>
-                            <th>一级菜单</th>
-                            <th>二级菜单</th>
-                            <th>名称</th>
-                            <th>条件</th>
-                            <th>内容</th>
-                            <th>文号</th>
-                            <th>开始时间</th>
-                            <th>结束时间</th>
-                            <th>更新时间</th>
-                            <th></th>
-                        </tr>
-                        </thead>
-                        <tbody>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-hover dataTables-example text-nowrap">
+                            <thead>
+                            <tr>
+                                <th><input type='checkbox' onclick="thCheck(this)" /></th>
+                                <th>序号</th>
+                                <th>所属机构</th>
+                                <th>一级菜单</th>
+                                <th>二级菜单</th>
+                                <th>名称</th>
+                                <th>条件</th>
+                                <th>内容</th>
+                                <th>文号</th>
+                                <th>开始时间</th>
+                                <th>结束时间</th>
+                                <th>更新时间</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
 
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

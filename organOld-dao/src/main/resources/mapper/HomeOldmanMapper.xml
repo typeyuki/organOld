@@ -58,6 +58,11 @@
         <if test="entity.homeId!=null and entity.homeId!=0">
             AND ho.home_id=#{entity.homeId}
         </if>
+        <if test="entity!=null and entity.search!=null and entity.search!=''">
+            and ( orgDy.name LIKE  concat('%',#{entity.search},'%') OR hd.name LIKE  concat('%',#{entity.search},'%') OR org.name LIKE  concat('%',#{entity.search},'%')
+            OR h.sec_type LIKE  concat('%',#{entity.search},'%')
+            OR o.name LIKE  concat('%',#{entity.search},'%') OR o.id=#{entity.search})
+        </if>
         <if test="sortType!=null and sortType!=''">
             ORDER BY ${sortType}
         </if>
@@ -71,8 +76,9 @@
 
     <select id="getSizeByPage" parameterType="com.organOld.dao.util.Page" resultType="java.lang.Long">
         SELECT count(1)
-        FROM home_oldman ho,oldman_base o,organ jw,auto_value x,home h
-        WHERE ho.oldman_id=o.id AND x.id=o.xq_id AND jw.id=x.parent_index and o.disable=0 and ho.home_id=h.id
+        FROM home_oldman ho left join organ orgDy on ho.organ_id=orgDy.id and orgDy.disable=0
+        ,oldman_base o,organ jw,auto_value x,home h left join chx c on c.id=h.sec_type left join organ org on org.id=h.sec_type left join home_doctor hd on hd.id=h.sec_type
+        WHERE ho.oldman_id=o.id AND x.id=o.xq_id AND jw.id=x.parent_index and ho.home_id=h.id and o.disable=0
         <if test="entity!=null and entity.oldmanId!=null and entity.oldmanId!=0">
             and o.id=#{entity.oldmanId}
         </if>
@@ -95,6 +101,11 @@
         </if>
         <if test="entity.homeId!=null and entity.homeId!=0">
             AND ho.home_id=#{entity.homeId}
+        </if>
+        <if test="entity!=null and entity.search!=null and entity.search!=''">
+            and ( orgDy.name LIKE  concat('%',#{entity.search},'%') OR hd.name LIKE  concat('%',#{entity.search},'%') OR org.name LIKE  concat('%',#{entity.search},'%')
+            OR h.sec_type LIKE  concat('%',#{entity.search},'%')
+            OR o.name LIKE  concat('%',#{entity.search},'%') OR o.id=#{entity.search})
         </if>
     </select>
 

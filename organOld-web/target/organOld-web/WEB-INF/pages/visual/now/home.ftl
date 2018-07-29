@@ -2,6 +2,7 @@
 <html>
 <head>
 <#include "../head.ftl" />
+<script src="../../../static/js/chart_part.js"></script>
 
 </head>
 

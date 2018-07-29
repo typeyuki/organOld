@@ -1,18 +1,26 @@
 package com.organOld.web.controller;
 
 
+import com.organOld.service.contract.ExportTableThRequest;
 import com.organOld.service.service.MessageService;
 import com.organOld.service.service.SystemService;
+import com.organOld.service.util.ExcelUtil;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 /**
@@ -53,6 +61,12 @@ public class SystemController {
         return mv;
     }
 
+    @ResponseBody
+    @RequestMapping(value = "/export", method = RequestMethod.GET)
+    public void export(HttpServletResponse response) throws Exception {
+            int a=1;
+
+    }
 
 
 }
