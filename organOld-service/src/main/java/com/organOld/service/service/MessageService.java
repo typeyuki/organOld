@@ -10,4 +10,6 @@ public interface MessageService {
     Result read();
 
     int getNoReadNum();
+
+    void delByIds(String[] ids);
 }

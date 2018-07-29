@@ -22,6 +22,9 @@
         <if test="entity!=null and entity.id!=null and entity.id!=0">
             and id=#{entity.id}
         </if>
+        <if test="entity!=null and entity.oldman!=null and entity.oldman.id!=0">
+            and o.id=#{entity.oldman.id}
+        </if>
         <if test="entity!=null and entity.organId!=null and entity.organId!=0">
             and org.id in (
             SELECT

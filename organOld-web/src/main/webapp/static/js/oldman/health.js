@@ -122,7 +122,7 @@ $(document).ready(function(){
                     "targets": [12], // 目标列位置，下标从0开始
                     "data": "oldmanId", // 数据列名
                     "render": function(data, type, full) { // 返回自定义内容
-                        return "<button class='btn btn-primary' id='"+data+"' onclick=newPage("+data+",$(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().text(),'/oldman/"+data+"/info')>查看</button><button class='btn btn-primary' id='"+data+"'>修改</button>";
+                        return "<button class='btn btn-primary' id='"+data+"' onclick=newPage("+data+",$(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().text(),'/oldman/"+data+"/info')>查看</button><button onclick='edit_health("+data+")' class='btn btn-primary' id='"+data+"'>修改</button>";
                     }
                 },
                 //不进行排序的列
@@ -130,14 +130,6 @@ $(document).ready(function(){
             ],
             "sAjaxSource": "/oldman/healthData",//这个是请求的地址
             "fnServerData": retrieveData
-            // "fnServerParams": function (aoData) {  //查询条件
-            //     aoData.push(
-            //         { "name": "id", "value": $('.id').val() },
-            //         { "name": "sex", "value": $('.sex').val() },
-            //         { "name": "age", "value": $('.age').val() },
-            //         { "name": "time", "value": $('.time').val() }
-            //     );
-            // }
         });
     function retrieveData(url, aoData, fnCallback) {
         $.ajax({
@@ -174,3 +166,43 @@ $(document).ready(function(){
 
 });
 
+function edit_health(id) {
+    $(".searchable-select").remove();
+    $("#editModal input[type='checkbox']").prop("checked",false);
+    var url="/oldman/health/"+id+"/getById";
+    $.ajax({
+        url: url,
+        type: "get",
+        async:false,
+        success: function (result) {
+            var data=result.data;
+            for(key in data){
+                if(key=="healthSelect"){
+                    if(data[key]!=null && data[key].length>0){
+                        for(var i=0;i<data[key].length;i++){
+                            $("#editModal input[name='"+key+"'][type='checkbox'][value='"+data[key][i].id+"']").prop("checked",true);
+                        }
+                    }
+                }else if(key=="healthAdd"){
+                    if(data[key]!=null && data[key].length>0){
+                        for(var i=0;i<data[key].length;i++){
+                            var $input=$("<input name='healthAdd' value=''/>");
+                            $("#editModal input[name='"+key+"'][type='checkbox'][value='"+data[key][i].id+"']").prop("checked",true);
+                        }
+                    }
+                }else{
+                    if(data[key]!=null){
+                        $("#editModal input[name='"+key+"'][type='hidden']").val(data[key]);
+                        $("#editModal input[name='"+key+"'][type='text']").val(data[key]);
+                        $("#editModal select[name='"+key+"'] option[value='"+data[key]+"']").prop("selected",true);
+                    }else{
+                        $("#editModal select[name='"+key+"'] option:first-child").prop("selected",true);
+                    }
+                }
+            }
+
+            $('.search_select').searchableSelect();
+            $("#editModal").modal();
+        }
+    });
+}

@@ -89,7 +89,7 @@
     </div>
 
 </div>
-
+<#include  "edit_health.ftl"/>
 <script src="/js/content.min.js?v=1.0.0"></script>
 <script src="/static/js/common.js"></script>
 <script src="/static/js/oldman/health.js" ></script>

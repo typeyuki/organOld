@@ -18,5 +18,4 @@ public interface SystemService {
 
     void importExcel(MultipartFile file, String cType, String pType) throws IOException;
 
-    void export(HttpServletResponse response, ExportTableThRequest exportTableThRequest);
 }

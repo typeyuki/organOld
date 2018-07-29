@@ -30,8 +30,8 @@ $(document).ready(function(){
                         var id=data.split("#")[0];
                         var read=data.split("#")[1];
                         if(read=="1")
-                        return"<input type='checkbox' class='read' />";
-                        else return"<input type='checkbox' class='noRead' />";
+                        return"<input type='checkbox' class='read'  name='id' value='"+data+"'/>";
+                        else return"<input type='checkbox' class='noRead'  name='id' value='"+data+"'/>";
                     }
                 },
                 {

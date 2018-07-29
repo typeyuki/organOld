@@ -61,12 +61,6 @@ public class SystemController {
         return mv;
     }
 
-    @ResponseBody
-    @RequestMapping(value = "/export", method = RequestMethod.GET)
-    public void export(HttpServletResponse response) throws Exception {
-            int a=1;
-
-    }
 
 
 }

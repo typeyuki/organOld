@@ -68,4 +68,12 @@
         from message m,sysuser u
         WHERE u.username=#{username} and u.id=m.user_id and m.is_read=0
     </select>
+
+
+    <delete id="delByIds">
+        DELETE from message where id in
+        <foreach collection="array" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
 </mapper>

@@ -83,56 +83,5 @@ public class SystemServiceImpl implements SystemService {
         systemDao.importExcel(temp,cType,pType);
     }
 
-    @Override
-    public void export(HttpServletResponse response, ExportTableThRequest exportTableThRequest) {
 
-        //excel标题
-        String[] title = {"名称","性别","年龄","学校","班级"};
-
-        //excel文件名
-        String fileName = "学生信息表"+System.currentTimeMillis()+".xls";
-
-        String sheetName = "学生信息表";
-        String[][] content=new String[1][];
-        content[0] = new String[5];
-        content[0][0] = "1";
-        content[0][1] ="2";
-        content[0][2] = "3";
-        content[0][3] = "4";
-        content[0][4] ="5";
-//创建HSSFWorkbook
-        HSSFWorkbook wb = ExcelUtil.getHSSFWorkbook(sheetName, title, content, null);
-
-//响应到客户端
-        try {
-            this.setResponseHeader(response, fileName);
-            OutputStream os = response.getOutputStream();
-            wb.write(os);
-            os.flush();
-            os.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    //发送响应流方法
-    public void setResponseHeader(HttpServletResponse response, String fileName) {
-        try {
-            try {
-                fileName = new String(fileName.getBytes(),"ISO8859-1");
-            } catch (UnsupportedEncodingException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-            response.setContentType("application/vnd.ms-excel");
-            response.setHeader("Content-disposition", "attachment;filename="+fileName);
-//            response.setContentType("application/octet-stream;charset=ISO8859-1");
-//            response.setHeader("Content-Disposition", "attachment;filename="+ fileName);
-//            response.addHeader("Pargam", "no-cache");
-//            response.addHeader("Cache-Control", "no-cache");
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
 }

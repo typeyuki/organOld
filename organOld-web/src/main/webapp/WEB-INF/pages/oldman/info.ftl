@@ -164,9 +164,9 @@
                             <label class="col-sm-2 control-label label_title">应急联系人</label>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">姓名：${info.linkman.name!}</label>
-                            <label class="col-sm-2 control-label">电话：${info.linkman.phone!}</label>
-                            <label class="col-sm-2 control-label">关系：${info.linkman.relation!}</label>
+                            <label class="col-sm-2 control-label">姓名：${(info.linkman.name)!}</label>
+                            <label class="col-sm-2 control-label">电话：${(info.linkman.phone)!}</label>
+                            <label class="col-sm-2 control-label">关系：${(info.linkman.relation)!}</label>
                         </div>
                         <div class="hr-line-dashed"></div>
                         <div class="form-group">

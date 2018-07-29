@@ -165,22 +165,22 @@ $(document).ready(function(){
                 "sEcho" : aoData.sEcho,
                 "sSortDir_0" : aoData.sSortDir_0,
                 "id" : ($('input[name="id"]').val()==""?"0":$('input[name="id"]').val()),//参数不能是空 400
-                "census_array":$("select[name='census']").val(),
+                "census_array":$("select[name='censusArray']").val(),
                 "ageStart":$("input[name='ageStart']").val(),
                 "ageEnd":$("input[name='ageEnd']").val(),
-                "family_array":$("select[name='familyIndex']").val(),
-                "economic_array":$("select[name='economicIndex']").val(),
+                "family_array":$("select[name='family']").val(),
+                "economic_array":$("select[name='economic']").val(),
                 "sex":$("select[name='sex']").val(),
                 "search":$("input[name='search']").val(),
-                "politicalStatus_array":$("select[name='politicalStatuses']").val(),
+                "politicalStatus_array":$("select[name='politicalStatusArray']").val(),
                 "isHealth_array":$("select[name='isHealth']").val(),
                 "intelligence_array":$("select[name='intelligence']").val(),
                 "eyesight_array":$("select[name='eyesight']").val(),
                 "district_array":$("select[name='district']").val(),
                 "jw_array":$("select[name='jw']").val(),
-                "sqzw_array":$("select[name='sqzw']").val(),
-                "zc_array":$("select[name='zc']").val(),
-                "oldStatus_array":$("select[name='oldStatus']").val()
+                "sqzw_array":$("select[name='sqzwArray']").val(),
+                "zc_array":$("select[name='zcArray']").val(),
+                "oldStatus_array":$("select[name='oldStatusArray']").val()
             },
             type: 'POST',
             dataType: 'json',
@@ -208,11 +208,11 @@ $(document).ready(function(){
 
 
 function exportTable() {
-    // $.ajax({
-    //     url : "/oldman/export",
-    //     type : "post",
-    //     success : function(data) {
-    //     }
-    // });
+    $("#exportModal input").prop("checked",true);
+    $("#exportModal").modal("hide");
+    $("#exportModal input:checked").each(function () {
+        var $input=$('<input type="hidden" name="th" value="'+$(this).val()+'">');
+        $("#exportForm").append($input);
+    });
     $("#exportForm").submit();
 }

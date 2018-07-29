@@ -6,7 +6,6 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <#include "../common/head.ftl" />
-
     <link href="/css/style.min.css?v=4.0.0" rel="stylesheet">
     <link href="/static/css/common_table.css" rel="stylesheet">
     <style>
@@ -37,7 +36,7 @@
                 </div>
                 <div class="ibox-content">
                     <div>
-                        <a  href="javascript:void(0);" class="btn btn-primary ">删除</a>
+                        <a onclick="del('/message/del')"  href="javascript:void(0);" class="btn btn-primary ">删除</a>
                         <a  href="javascript:void(0);" id="search" class="btn btn-primary ">搜索</a>
                     </div>
                     <div class="row">
@@ -57,7 +56,7 @@
                         <table class="table table-striped table-bordered table-hover dataTables-example text-nowrap">
                             <thead>
                             <tr>
-                                <th><input type='checkbox' /></th>
+                                <th><input type='checkbox' onclick="thCheck(this)"/></th>
                                 <th>序号</th>
                                 <th>类型</th>
                                 <th>消息</th>

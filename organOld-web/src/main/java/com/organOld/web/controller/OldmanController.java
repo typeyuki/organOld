@@ -88,6 +88,8 @@ public class OldmanController {
     }
 
 
+
+
     /**
      * 导入的话  已有老人更新，没有的添加，去掉的设置为不可用    不能先删除之前的再添加，因为老人表涉及其他多个表 不能单纯的删除
      * @param file
@@ -140,7 +142,9 @@ public class OldmanController {
      */
     @RequestMapping(value = "/health",method = RequestMethod.GET)
     public ModelAndView health(){
-        return new ModelAndView("oldman/health");
+        ModelAndView mv=new ModelAndView("oldman/health");
+        mv.addObject("info",oldmanService.getAllHealthInfo());
+        return mv;
     }
 
     /**
@@ -421,54 +425,10 @@ public class OldmanController {
 
     @ResponseBody
     @RequestMapping(value = "/export", method = RequestMethod.POST)
-    public void export(HttpServletRequest request,HttpServletResponse response, ExportTableThRequest exportTableThRequest) throws Exception {
-        //excel标题
-        String[] title = {"名称","性别","年龄","学校","班级"};
-
-        //excel文件名
-        String fileName = "学生信息表"+System.currentTimeMillis()+".xls";
-
-        String sheetName = "学生信息表";
-        String[][] content=new String[1][];
-        content[0] = new String[5];
-        content[0][0] = "1";
-        content[0][1] ="2";
-        content[0][2] = "3";
-        content[0][3] = "4";
-        content[0][4] ="5";
-//创建HSSFWorkbook
-        HSSFWorkbook wb = ExcelUtil.getHSSFWorkbook(sheetName, title, content, null);
-
-//响应到客户端
-        try {
-            this.setResponseHeader(response, fileName);
-            OutputStream os = response.getOutputStream();
-            wb.write(os);
-            os.flush();
-            os.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
+    public void export(HttpServletResponse response, ExportTableThRequest exportTableThRequest)
+            throws Exception{
+        oldmanService.export(response,exportTableThRequest);
     }
 
-    public void setResponseHeader(HttpServletResponse response, String fileName) {
-        try {
-            try {
-                fileName = new String(fileName.getBytes(),"ISO8859-1");
-            } catch (UnsupportedEncodingException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-            response.setContentType("application/vnd.ms-excel");
-            response.setHeader("Content-disposition", "attachment;filename="+fileName);
-//            response.setContentType("application/octet-stream;charset=ISO8859-1");
-//            response.setHeader("Content-Disposition", "attachment;filename="+ fileName);
-//            response.addHeader("Pargam", "no-cache");
-//            response.addHeader("Cache-Control", "no-cache");
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
 
 }

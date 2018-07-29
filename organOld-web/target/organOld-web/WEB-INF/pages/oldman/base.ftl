@@ -20,6 +20,7 @@
                 width: 45%;
             }
         }
+
     </style>
 </head>
 
@@ -45,7 +46,7 @@
                         <#--<a onclick=newPage("132","用户添加",'/oldman/add') href="javascript:void(0);" class="btn btn-primary ">添加</a>-->
                         <a  onclick="del('/oldman/base/del')" class="btn btn-primary ">删除</a>
                         <a  href="javascript:void(0);" id="search" class="btn btn-primary ">搜索</a>
-                        <a  onclick="exportTable()" class="btn btn-primary ">导出</a>
+                        <a  onclick="$('#exportModal').modal()" class="btn btn-primary ">导出</a>
                         <form action="/oldman/importExcel" method="post" enctype="multipart/form-data" id="importForm" style="display: inline">
                             <input type="button" style="display:inline" class="btn btn-primary" onclick="$('.wrapper').hide();$('#process').show();$('#importForm').submit()" value="导入">
                             <input type="file" name="file" style="display:inline">
@@ -76,7 +77,7 @@
                         <div class="row">
                             <div class="col-sm-2">
                                 <label >户<span style="color: white">填充</span>籍：</label>
-                                <select name="census"  class="selectpicker bla bla bli" multiple data-live-search="true">
+                                <select name="censusArray"  class="selectpicker bla bla bli" multiple data-live-search="true">
                                 <#list info.census as census>
                                     <option type="checkbox" value="${census.id!}" >${census.value!}</option>
                                 </#list>
@@ -84,7 +85,7 @@
                             </div>
                             <div class="col-sm-2">
                                 <label >政治面貌：</label>
-                                <select name="politicalStatuses" class="selectpicker bla bla bli" multiple data-live-search="true">
+                                <select name="politicalStatusArray" class="selectpicker bla bla bli" multiple data-live-search="true">
                                 <#list info.politicalStatuses as politicalStatuses>
                                     <option value="${politicalStatuses.id!}">${politicalStatuses.value!}</option>
                                 </#list>
@@ -92,7 +93,7 @@
                             </div>
                             <div class="col-sm-2">
                                 <label>家庭结构：</label>
-                                <select name="familyIndex"  class="selectpicker bla bla bli" multiple data-live-search="true">
+                                <select name="family"  class="selectpicker bla bla bli" multiple data-live-search="true">
                                 <#list info.family as family>
                                     <option value="${family.id!}"> <i></i> ${family.value!}</option>
                                 </#list>
@@ -100,7 +101,7 @@
                             </div>
                             <div class="col-sm-2">
                                 <label >经济条件：</label>
-                                <select name="economicIndex" class="selectpicker bla bla bli" multiple data-live-search="true">
+                                <select name="economic" class="selectpicker bla bla bli" multiple data-live-search="true">
                                 <#list info.economic as economic>
                                     <option type="checkbox" value="${economic.id!}" > <i></i> ${economic.value!}</option>
                                 </#list>
@@ -119,7 +120,7 @@
                             </div>
                             <div class="col-sm-2">
                                 <label >职<span style="color: white">填充</span>称：</label>
-                                <select name="zc" class="selectpicker bla bla bli" multiple data-live-search="true">
+                                <select name="zcArray" class="selectpicker bla bla bli" multiple data-live-search="true">
                                 <#list info.zc as list>
                                     <option value="${list.id!}" > ${list.value!}</option>
                                 </#list>
@@ -129,7 +130,7 @@
                         <div class="row">
                             <div class="col-sm-2">
                                 <label >社区职务：</label>
-                                <select name="sqzw" class="selectpicker bla bla bli" multiple data-live-search="true">
+                                <select name="sqzwArray" class="selectpicker bla bla bli" multiple data-live-search="true">
                                 <#list info.sqzw as list>
                                     <option value="${list.id!}" > ${list.value!}</option>
                                 </#list>
@@ -153,7 +154,7 @@
                             </div>
                             <div class="col-sm-2">
                                 <label>养老状态：</label>
-                                <select name="oldStatus" class="selectpicker bla bla bli" multiple data-live-search="true">
+                                <select name="oldStatusArray" class="selectpicker bla bla bli" multiple data-live-search="true">
                                 <#list (info.oldStatus)?keys as key>
                                     <option  value="${key!}"> ${(info.oldStatus)?values[key_index]!}</option>
                                 </#list>
@@ -236,6 +237,7 @@
 </div>
 <#include  "../spinner.ftl"/>
 <#include  "edit_base.ftl"/>
+<#include  "base_export.ftl"/>
 <#--<script src="/js/plugins/jeditable/jquery.jeditable.js"></script>-->
 
 <script>
