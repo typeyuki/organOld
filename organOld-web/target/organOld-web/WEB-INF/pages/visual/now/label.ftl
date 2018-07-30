@@ -775,6 +775,8 @@
      function showHeatMap(){
          document.getElementById("dituContent").style.display="none";
          document.getElementById("container").style.display="";
+
+
      }
 
      function label3Show(index) {
