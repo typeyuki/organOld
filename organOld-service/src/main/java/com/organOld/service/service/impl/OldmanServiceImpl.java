@@ -989,8 +989,8 @@ public class OldmanServiceImpl implements OldmanService {
                 break;
             case "family":
                 OldmanFamily oldmanFamily=(OldmanFamily)dbEntity;
-                if(oldmanFamily.getFamilyTypeIndex()!=null && !oldmanFamily.getFamilyTypeIndex().equals(""))
-                    oldmanFamily.setFamilyTypeIndex(oldmanFamily.getFamilyTypeIndex().replace(",","#"));
+//                if(oldman.getSqzw()!=null && !oldman.getSqzw().equals(""))
+//                    oldman.setSqzw(oldman.getSqzw().replace(",","#"));
                 oldmanFamilyDao.updateById(oldmanFamily);
                 break;
             case "economic":
