@@ -21,6 +21,15 @@ public class ExportTableThRequest {
     private String[] oldStatusArray;
     private String[] zcArray;
     private String[] sqzwArray;
+    private String[] familyType;
+
+    public String[] getFamilyType() {
+        return familyType;
+    }
+
+    public void setFamilyType(String[] familyType) {
+        this.familyType = familyType;
+    }
 
     public String[] getCensusArray() {
         return censusArray;

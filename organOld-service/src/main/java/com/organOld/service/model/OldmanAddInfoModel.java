@@ -21,6 +21,7 @@ public class OldmanAddInfoModel {
     private List<AutoValue> politicalStatuses=new ArrayList<>();
     private List<AutoValue> economic=new ArrayList<>();
     private List<AutoValue> family=new ArrayList<>();
+    private List<AutoValue> familyType=new ArrayList<>();
     private List<AutoValue> intelligence=new ArrayList<>();
     private List<AutoValue> eyesight=new ArrayList<>();
     private List<AutoValue> zc=new ArrayList<>();
@@ -31,6 +32,14 @@ public class OldmanAddInfoModel {
 
     private Map<Integer,String> oldStatus;
 
+
+    public List<AutoValue> getFamilyType() {
+        return familyType;
+    }
+
+    public void setFamilyType(List<AutoValue> familyType) {
+        this.familyType = familyType;
+    }
 
     public List<AutoValue> getZc() {
         return zc;

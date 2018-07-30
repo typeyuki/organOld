@@ -169,6 +169,7 @@ $(document).ready(function(){
                 "ageStart":$("input[name='ageStart']").val(),
                 "ageEnd":$("input[name='ageEnd']").val(),
                 "family_array":$("select[name='family']").val(),
+                "familyType_array":$("select[name='familyTypeArray']").val(),
                 "economic_array":$("select[name='economic']").val(),
                 "sex":$("select[name='sex']").val(),
                 "search":$("input[name='search']").val(),

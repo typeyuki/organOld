@@ -132,8 +132,8 @@ public class OldmanServiceImpl implements OldmanService {
             k=0;
             content[j]=new String[exportTableThRequest.getTh().size()];
             for(String eng:engTitle){
-                if(eng.equals("getSqzw")){
-                    fillExportAutoValue(exportOldman,AutoValueEnum.SQZW.getIndex());
+                if(eng.equals("getSqzw") || eng.equals("getFamilyType")){
+                    fillExportAutoValue(exportOldman,AutoValueEnum.SQZW.getIndex(),eng);
                 }
                 Method method = exportOldman.getClass().getMethod(eng, null);
                 content[j][k++]= (String) method.invoke(exportOldman,null);
@@ -156,17 +156,22 @@ public class OldmanServiceImpl implements OldmanService {
         }
     }
 
-    private void fillExportAutoValue(ExportOldman exportOldman, int type) {
+    private void fillExportAutoValue(ExportOldman exportOldman, int type,String method) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         List<AutoValue> autoValueList=autoValueDao.getByType(type);
         Map<Integer,String> map=new HashMap<>();
         autoValueList.forEach(s->map.put(s.getId(),s.getValue()));
-            if(exportOldman.getSqzw()!=null && !exportOldman.getSqzw().equals("")){
-                String[] sq=exportOldman.getSqzw().split("#");
-                exportOldman.setSqzw("");
+        String getM=method;
+        String setM=getM.replace("get","set");
+
+        Method setMethod = exportOldman.getClass().getMethod(setM, String.class);
+        Method getMethod = exportOldman.getClass().getMethod(getM, null);
+            if((String)getMethod.invoke(exportOldman,null)!=null && !((String)getMethod.invoke(exportOldman,null)).equals("")){
+                String[] sq=((String)getMethod.invoke(exportOldman,null)).split("#");
+                setMethod.invoke(exportOldman,"");
                 for(String s:sq){
-                    exportOldman.setSqzw(exportOldman.getSqzw()+","+map.get(Integer.parseInt(s)));
+                    setMethod.invoke(exportOldman,getMethod.invoke(exportOldman,null)+","+map.get(Integer.parseInt(s)));
                 }
-                exportOldman.setSqzw(exportOldman.getSqzw().substring(1));
+                setMethod.invoke(exportOldman,(String)((String) getMethod.invoke(exportOldman,null)).substring(1));
             }
 
     }
@@ -989,8 +994,8 @@ public class OldmanServiceImpl implements OldmanService {
                 break;
             case "family":
                 OldmanFamily oldmanFamily=(OldmanFamily)dbEntity;
-//                if(oldman.getSqzw()!=null && !oldman.getSqzw().equals(""))
-//                    oldman.setSqzw(oldman.getSqzw().replace(",","#"));
+                if(oldmanFamily.getFamilyTypeIndex()!=null && !oldmanFamily.getFamilyTypeIndex().equals(""))
+                    oldmanFamily.setFamilyTypeIndex(oldmanFamily.getFamilyTypeIndex().replace(",","#"));
                 oldmanFamilyDao.updateById(oldmanFamily);
                 break;
             case "economic":

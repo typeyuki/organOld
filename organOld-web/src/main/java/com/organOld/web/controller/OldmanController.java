@@ -71,7 +71,8 @@ public class OldmanController {
                        @RequestParam(value = "jw_array[]",required = false) String jw[],
                        @RequestParam(value = "oldStatus_array[]",required = false) String oldStatus[],
                        @RequestParam(value = "sqzw_array[]",required = false) String sqzw[],
-                       @RequestParam(value = "zc_array[]",required = false) String zc[]){
+                       @RequestParam(value = "zc_array[]",required = false) String zc[],
+                       @RequestParam(value = "familyType_array[]",required = false) String familyType[]){
         oldmanRequest.setCensusArray(census);
         oldmanRequest.setFamily(family);
         oldmanRequest.setEconomic(economic);
@@ -84,6 +85,7 @@ public class OldmanController {
         oldmanRequest.setOldStatusArray(oldStatus);
         oldmanRequest.setSqzwArray(sqzw);
         oldmanRequest.setZcArray(zc);
+        oldmanRequest.setFamilyType(familyType);
         return oldmanService.getOldmanByPage(oldmanRequest,bTableRequest);
     }
 
@@ -340,7 +342,11 @@ public class OldmanController {
         return mv;
     }
 
-
+    @ResponseBody
+    @RequestMapping(value = "/{oldmanId}/info",method = RequestMethod.POST)
+    public Result info_post(@PathVariable int oldmanId){
+        return new Result(true,oldmanService.getOldmanInfo(oldmanId));
+    }
 
     /**
      * 积分管理

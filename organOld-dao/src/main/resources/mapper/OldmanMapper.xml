@@ -152,6 +152,12 @@
                     ${item}
                 </foreach>
             </if>
+            <if test="entity!=null and entity.familyType!=null and entity.familyType.length > 0">
+                and ofa.family_type_index in
+                <foreach collection="entity.familyType" index="index" item="item" open="(" separator="," close=")">
+                    ${item}
+                </foreach>
+            </if>
             <if test="entity!=null and entity.intelligence!=null and entity.intelligence.length > 0">
                 and ohb.intelligence in
                 <foreach collection="entity.intelligence" index="index" item="item" open="(" separator="," close=")">
@@ -297,6 +303,12 @@
         <if test="entity!=null and entity.family!=null and entity.family.length > 0">
             and ofa.family_index in
             <foreach collection="entity.family" index="index" item="item" open="(" separator="," close=")">
+                ${item}
+            </foreach>
+        </if>
+        <if test="entity!=null and entity.familyType!=null and entity.familyType.length > 0">
+            and ofa.family_type_index in
+            <foreach collection="entity.familyType" index="index" item="item" open="(" separator="," close=")">
                 ${item}
             </foreach>
         </if>
@@ -697,6 +709,12 @@
             <if test="family!=null and family.length > 0">
                 and ofa.family_index in
                 <foreach collection="family" index="index" item="item" open="(" separator="," close=")">
+                    ${item}
+                </foreach>
+            </if>
+            <if test="familyType!=null and familyType.length > 0">
+                and ofa.family_type_index in
+                <foreach collection="familyType" index="index" item="item" open="(" separator="," close=")">
                     ${item}
                 </foreach>
             </if>

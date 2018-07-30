@@ -73,6 +73,14 @@
                             <div class="col-sm-4">
                                 <input name="search" class="form-control inp"  type="text" placeholder="模糊匹配">
                             </div>
+                            <div class="col-sm-2" style="position: relative;bottom: 25px">
+                                <label >家庭类别：</label>
+                                <select name="familyTypeArray" class="selectpicker bla bla bli" multiple data-live-search="true">
+                                <#list info.familyType as list>
+                                    <option value="${list.id!}">${list.value!}</option>
+                                </#list>
+                                </select>
+                            </div>
                         </div>
                         <div class="row">
                             <div class="col-sm-2">

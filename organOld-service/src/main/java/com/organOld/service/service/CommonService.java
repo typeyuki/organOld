@@ -111,6 +111,7 @@ public class CommonService {
                 typeList.add(AutoValueEnum.SZ.getIndex());
                 typeList.add(AutoValueEnum.SQZW.getIndex());
                 typeList.add(AutoValueEnum.ZC.getIndex());
+                typeList.add(AutoValueEnum.JTLB.getIndex());
                 break;
             case "labelFilter":
                 typeList.add(AutoValueEnum.PQ.getIndex());
@@ -123,6 +124,7 @@ public class CommonService {
                 typeList.add(AutoValueEnum.YJBQ.getIndex());
                 typeList.add(AutoValueEnum.SQZW.getIndex());
                 typeList.add(AutoValueEnum.ZC.getIndex());
+                typeList.add(AutoValueEnum.JTLB.getIndex());
                 break;
             case "oldman_add":
                 typeList.add(AutoValueEnum.PQ.getIndex());
@@ -135,6 +137,7 @@ public class CommonService {
                 typeList.add(AutoValueEnum.XQ.getIndex());
                 typeList.add(AutoValueEnum.SQZW.getIndex());
                 typeList.add(AutoValueEnum.ZC.getIndex());
+                typeList.add(AutoValueEnum.JTLB.getIndex());
                 break;
             case "health_add":
                 typeList.add(AutoValueEnum.SL.getIndex());
