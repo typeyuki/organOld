@@ -28,6 +28,7 @@
                                         <div class="form-group">
                                             <label class="col-sm-1 control-label">家庭类别</label>
                                             <div class="col-sm-8">
+
                                                 <select  class="selectpicker bla bla bli" multiple data-live-search="true" name="familyTypeIndex">
                                                     <option></option>
                                                 <#list familyType as list>

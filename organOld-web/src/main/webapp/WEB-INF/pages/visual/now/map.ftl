@@ -59,7 +59,7 @@
                 <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=Lak4ThuxodnoDdL3ZrfK5t91UR4uDmGm"></script>
                 <script type="text/javascript" src="http://api.map.baidu.com/library/Heatmap/2.0/src/Heatmap_min.js"></script>
 
-                <div class="col-lg-15" style="width:1100px;height:1200px;border:#ccc solid 1px;" id="dituContent" align="center"></div>
+                <div class="col-lg-15" style="width:1600px;height:1200px;border:#ccc solid 1px;" id="dituContent" align="center"></div>
                 <script type="text/javascript">
                     //创建和初始化地图函数：
                     function initMap(){
@@ -266,7 +266,7 @@
                     initMap();//创建和初始化地图
                 </script>
             <#--heatmap-->
-                <div id="container" style="display: none;width:1100px;height:1200px;border:#ccc solid 1px;" class="col-lg-15" ></div>
+                <div id="container" style="display: none;width:1600px;height:1200px;border:#ccc solid 1px;" class="col-lg-15" ></div>
                 <script type="text/javascript">
                     var hmap = new BMap.Map("container");          // 创建地图实例
 
