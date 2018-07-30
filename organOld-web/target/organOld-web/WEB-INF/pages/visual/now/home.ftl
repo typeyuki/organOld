@@ -21,7 +21,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-4">
+        <div class="col-lg-4" style="position: relative;left: -1.5%">
             <div class="row">
                 <div class="col-lg-12" id="map">
                     <#include "map.ftl" />
@@ -33,7 +33,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-5">
+        <div class="col-lg-5" style="position: relative;left: -1.5%">
             <div class="row">
                 <div class="col-lg-6"  id="total">
                     <#include "total.ftl" />
