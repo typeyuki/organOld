@@ -37,7 +37,7 @@
     ul,li{list-style: none;margin:0;padding:0;float:left;}
     html{height:100%}
     body{height:100%;margin:0px;padding:0px;font-family:"微软雅黑";}
-    #container{height:650px;width:100%;}
+    #container{height:650px;width:100%;max-width: none;}
     #r-result{width:100%;}
 </style>
         <div class="row">
@@ -59,7 +59,7 @@
                 <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=Lak4ThuxodnoDdL3ZrfK5t91UR4uDmGm"></script>
                 <script type="text/javascript" src="http://api.map.baidu.com/library/Heatmap/2.0/src/Heatmap_min.js"></script>
 
-                <div class="col-lg-15" style="width:1100px;height:1200px;border:#ccc solid 1px;" id="dituContent" align="center"></div>
+                <div class="col-lg-15" style="width:1600px;height:1200px;border:#ccc solid 1px;" id="dituContent" align="center"></div>
                 <script type="text/javascript">
                     //创建和初始化地图函数：
                     function initMap(){
@@ -266,13 +266,28 @@
                     initMap();//创建和初始化地图
                 </script>
             <#--heatmap-->
-                <div id="container" style="display: none;width:1100px;height:1200px;border:#ccc solid 1px;" class="col-lg-15" ></div>
+                <div id="container" style="display: none;width:1600px;height:1200px;border:#ccc solid 1px;" class="col-lg-15" ></div>
                 <script type="text/javascript">
                     var hmap = new BMap.Map("container");          // 创建地图实例
 
                     var hpoint = new BMap.Point(121.404295,31.151234);
                     hmap.centerAndZoom(hpoint, 16);             // 初始化地图，设置中心点坐标和地图级别
                     hmap.enableScrollWheelZoom(); // 允许滚轮缩放
+                    window.hmap =hmap;
+
+                    hmap.enableDragging();//启用地图拖拽事件，默认启用(可不写)
+                    hmap.enableScrollWheelZoom();//启用地图滚轮放大缩小
+                    hmap.enableDoubleClickZoom();//启用鼠标双击放大，默认启用(可不写)
+                    hmap.enableKeyboard();//启用键盘上下左右键移动地图
+
+                    var ctrl_nav = new BMap.NavigationControl({anchor:BMAP_ANCHOR_TOP_LEFT,type:BMAP_NAVIGATION_CONTROL_LARGE});
+                    hmap.addControl(ctrl_nav);
+                    //向地图中添加缩略图控件
+                    var ctrl_ove = new BMap.OverviewMapControl({anchor:BMAP_ANCHOR_BOTTOM_RIGHT,isOpen:1});
+                    hmap.addControl(ctrl_ove);
+                    //向地图中添加比例尺控件
+                    var ctrl_sca = new BMap.ScaleControl({anchor:BMAP_ANCHOR_BOTTOM_LEFT});
+                    hmap.addControl(ctrl_sca);
 
                     var hpoints =[
 
