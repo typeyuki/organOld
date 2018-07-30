@@ -7,7 +7,7 @@ $(document).ready(function(){
             "sPaginationType": "full_numbers",
             "bPaginite": true,
             "bInfo": true,
-            "bSort": true,
+            "bSort": false,
             "bFilter": false, //搜索栏
             "bStateSave": true,
             "bProcessing": true, //加载数据时显示正在加载信息
@@ -19,6 +19,8 @@ $(document).ready(function(){
             },{
                 data:"family"
             },{
+                data:"familyType"
+            },{
                 data:"time"
             }
             ],
@@ -26,10 +28,10 @@ $(document).ready(function(){
             "columnDefs": [
                 // 增加一列，包括删除和修改，同时将我们需要传递的数据传递到链接中
                 {
-                    "targets": [4], // 目标列位置，下标从0开始
+                    "targets": [5], // 目标列位置，下标从0开始
                     "data": "id", // 数据列名
                     "render": function(data, type, full) { // 返回自定义内容
-                        return "<button class='btn btn-primary' id='"+data+"' onclick=newPageChange("+data+",$(this).parent().prev().prev().prev().text(),'/oldman/?/info',$(this).parent().prev().prev().prev().prev().text())>查看</button><button class='btn btn-primary' onclick=oldman_edit_oldmanName("+data+",'/oldman/family/"+data+"/getById',$(this).parent().prev().prev().prev().text())>修改</button>";
+                        return "<button class='btn btn-primary' id='"+data+"' onclick=newPageChange("+data+",$(this).parent().prev().prev().prev().prev().text(),'/oldman/?/info',$(this).parent().prev().prev().prev().prev().prev().text())>查看</button><button class='btn btn-primary' onclick=oldman_edit_oldmanName("+data+",'/oldman/family/"+data+"/getById',$(this).parent().prev().prev().prev().text())>修改</button>";
                     }
                 },
                 //不进行排序的列
@@ -48,6 +50,7 @@ $(document).ready(function(){
                 "sEcho" : aoData.sEcho,
                 "sSortDir_0" : aoData.sSortDir_0,
                 "family_array":$("select[name='familyIndex']").val(),
+                "family_type_array":$("select[name='familyTypeIndex']").val(),
                 "search" : $('.search').val()
             },
             type: 'POST',

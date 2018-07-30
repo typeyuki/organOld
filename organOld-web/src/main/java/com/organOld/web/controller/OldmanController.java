@@ -202,6 +202,7 @@ public class OldmanController {
     public ModelAndView family(){
         ModelAndView mv= new ModelAndView("oldman/family");
         mv.addObject("family",autoValueService.getByType(AutoValueEnum.JJJG.getIndex()));
+        mv.addObject("familyType",autoValueService.getByType(AutoValueEnum.JTLB.getIndex()));
         return mv;
     }
 
@@ -212,8 +213,10 @@ public class OldmanController {
     @ResponseBody
     @RequestMapping(value = "/familyData",method = RequestMethod.POST)
     public String family_data(OldmanFamilyRequest familyRequest, BTableRequest bTableRequest,
-                              @RequestParam(value = "family_array[]",required = false) String family[]){
+                              @RequestParam(value = "family_array[]",required = false) String family[],
+                              @RequestParam(value = "family_type_array[]",required = false) String familyType[]){
         familyRequest.setFamilyArray(family);
+        familyRequest.setFamilyTypeArray(familyType);
         return oldmanService.getFamilyByPage(familyRequest,bTableRequest);
     }
 

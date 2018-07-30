@@ -47,6 +47,14 @@
                             </#list>
                             </select>
                         </div>
+                        <div class="col-sm-3">
+                            <label>家庭类别：</label>
+                            <select name="familyTypeIndex"  class="selectpicker bla bla bli" multiple data-live-search="true">
+                            <#list familyType as list>
+                                <option value="${list.id!}"> <i></i> ${list.value!}</option>
+                            </#list>
+                            </select>
+                        </div>
                     </div>
                     <div class="table-responsive">
                         <table class="table table-striped table-bordered table-hover dataTables-example text-nowrap">
@@ -55,6 +63,7 @@
                                 <th>老人序号</th>
                                 <th>老人姓名</th>
                                 <th>家庭结构</th>
+                                <th>家庭类别</th>
                                 <th>更新时间</th>
                                 <th></th>
                             </tr>

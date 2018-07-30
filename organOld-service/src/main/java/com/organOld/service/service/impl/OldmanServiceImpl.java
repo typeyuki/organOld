@@ -94,7 +94,15 @@ public class OldmanServiceImpl implements OldmanService {
         commonService.checkIsOrgan(oldman);
         page.setEntity(oldman);
         List<OldmanModel> oldmanList=oldmanBaseDao.getByPage(page).stream().map(Wrappers.oldmanWrapper::wrap).collect(Collectors.toList());
-        fillAutoValue(oldmanList,AutoValueEnum.SQZW.getIndex());
+        try {
+            fillAutoValue(oldmanList,AutoValueEnum.SQZW.getIndex(),"Sqzw");
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
         Long size=oldmanBaseDao.getSizeByPage(page);
         return commonService.tableReturn(bTableRequest.getsEcho(),size,oldmanList);
     }
@@ -183,18 +191,23 @@ public class OldmanServiceImpl implements OldmanService {
     }
 
 
-    private void fillAutoValue(List<OldmanModel> oldmanList, int type) {
+    private void fillAutoValue(List<? extends Model> list, int type,String method) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         List<AutoValue> autoValueList=autoValueDao.getByType(type);
         Map<Integer,String> map=new HashMap<>();
         autoValueList.forEach(s->map.put(s.getId(),s.getValue()));
-        for(OldmanModel oldmanModel:oldmanList){
-            if(oldmanModel.getSqzwString()!=null && !oldmanModel.getSqzwString().equals("")){
-                String[] sq=oldmanModel.getSqzwString().split("#");
-                List<String> sqzw=new ArrayList<>();
-                for(String s:sq){
-                    sqzw.add(map.get(Integer.parseInt(s)));
+        for(Model model : list){
+            String setM="set"+method;
+            String getM="get"+method+"String";
+            Method setMethod = model.getClass().getMethod(setM, List.class);
+            Method getMethod = model.getClass().getMethod(getM, null);
+
+            if((String)getMethod.invoke(model,null)!=null && !((String)getMethod.invoke(model,null)).equals("")){
+                String[] s=((String)getMethod.invoke(model,null)).split("#");
+                List<String> sList=new ArrayList<>();
+                for(String ss:s){
+                    sList.add(map.get(Integer.parseInt(ss)));
                 }
-                oldmanModel.setSqzw(sqzw);
+                setMethod.invoke(model,sList);
             }
         }
     }
@@ -260,6 +273,15 @@ public class OldmanServiceImpl implements OldmanService {
         page.setEntity(family);
         List<OldmanFamilyModel> familyModelList=familyDao.getByPage(page).stream().map(Wrappers.familyWrapper::wrap).collect(Collectors.toList());
         Long size=familyDao.getSizeByPage(page);
+        try {
+            fillAutoValue(familyModelList,AutoValueEnum.JTLB.getIndex(),"FamilyType");
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
         return commonService.tableReturn(bTableRequest.getsEcho(),size,familyModelList);
     }
 
@@ -356,7 +378,15 @@ public class OldmanServiceImpl implements OldmanService {
 
         page.setEntity(oldman);
         List<OldmanModel> oldmanModelList=oldmanBaseDao.getByPage(page).stream().map(Wrappers.oldmanWrapper::wrap).collect(Collectors.toList());
-        fillAutoValue(oldmanModelList,AutoValueEnum.SQZW.getIndex());
+        try {
+            fillAutoValue(oldmanModelList,AutoValueEnum.SQZW.getIndex(),"Sqzw");
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
         if(oldmanModelList!=null && oldmanModelList.size()>0)
             oldmanAllInfoModel.setOldman(oldmanModelList.get(0));
 
@@ -479,7 +509,9 @@ public class OldmanServiceImpl implements OldmanService {
 
                     //创建实体类
                     oldman.setName(r.getCell(3).getStringCellValue());
-                    oldman.setSex((r.getCell(4).getStringCellValue().equals("男")) ? 2 : 1);
+                    String sex=r.getCell(4).getStringCellValue();
+                    sex=sex.replace("性","");
+                    oldman.setSex((sex.equals("男")) ? 2 : 1);
                     oldman.setBirthday(Tool.stringToDate((r.getCell(5).getStringCellValue())));
                     oldman.setPid(r.getCell(6).getStringCellValue());
                     oldman.setAddress(r.getCell(7).getStringCellValue());
@@ -521,12 +553,12 @@ public class OldmanServiceImpl implements OldmanService {
                     String sqzw="";
                     if (r.getCell(17).getStringCellValue().equals("1")) {
                         Integer szIndex = autoValueDao.getStringLikeIndex("三长", AutoValueEnum.SQZW.getIndex(), "equals");
-                        sqzw="s"+szIndex+"s";
+                        sqzw=szIndex+"";
                     }
                     if (r.getCell(18).getStringCellValue().equals("1")) {
                         Integer sqIndex = autoValueDao.getStringLikeIndex("社区团队负责人", AutoValueEnum.SQZW.getIndex(), "equals");
                         if(sqzw.length()>1){
-                            sqzw+="#s"+sqIndex+"s";
+                            sqzw+="#"+sqIndex;
                         }
                     }
                     oldman.setSqzw(sqzw);
@@ -733,6 +765,29 @@ public class OldmanServiceImpl implements OldmanService {
                         family.setFamilyIndex(autoValueDao.getStringLikeIndex("其他", AutoValueEnum.JJJG.getIndex(), "like"));
                     }
 
+                    String familyType="";
+                    if (r.getCell(20).getStringCellValue().equals("1")) {
+                       familyType+=autoValueDao.getStringLikeIndex("独生子女家庭", AutoValueEnum.JTLB.getIndex(), "like")+"#";
+                    }
+                    if (r.getCell(21).getStringCellValue().equals("1")) {
+                        familyType+=autoValueDao.getStringLikeIndex("军属", AutoValueEnum.JTLB.getIndex(), "like")+"#";
+                    }
+                    if (r.getCell(22).getStringCellValue().equals("1")) {
+                        familyType+=autoValueDao.getStringLikeIndex("烈士家庭", AutoValueEnum.JTLB.getIndex(), "like")+"#";
+                    }
+                    if (r.getCell(23).getStringCellValue().equals("1")) {
+                        familyType+=autoValueDao.getStringLikeIndex("离休干部", AutoValueEnum.JTLB.getIndex(), "like")+"#";
+                    }
+                    if (r.getCell(24).getStringCellValue().equals("1")) {
+                        familyType+=autoValueDao.getStringLikeIndex("侨属", AutoValueEnum.JTLB.getIndex(), "like")+"#";
+                    }
+                    if(!familyType.equals("")){
+                        familyType=familyType.substring(0,familyType.length()-1);
+                        family.setFamilyTypeIndex(familyType);
+                    }
+
+
+
                     OldmanEconomic economic = new OldmanEconomic();
                     if (r.getCell(69).getStringCellValue().equals("1")) {
                         economic.setEconomicIndex(autoValueDao.getStringLikeIndex("帮困", AutoValueEnum.JJTJ.getIndex(), "like"));
@@ -856,7 +911,8 @@ public class OldmanServiceImpl implements OldmanService {
         if(familyList_add.size()>0)
             oldmanFamilyDao.saveAll(familyList_add);
 
-        healthSelectManDao.delByOldmanIds(existOldmanIds);
+        if(existOldmanIds.size()>0)
+            healthSelectManDao.delByOldmanIds(existOldmanIds);
         if(healthSelectManList_add.size()>0) {
             //先把之前的记录删掉
             healthSelectManDao.saveAll(healthSelectManList_add);
@@ -933,6 +989,8 @@ public class OldmanServiceImpl implements OldmanService {
                 break;
             case "family":
                 OldmanFamily oldmanFamily=(OldmanFamily)dbEntity;
+                if(oldman.getSqzw()!=null && !oldman.getSqzw().equals(""))
+                    oldman.setSqzw(oldman.getSqzw().replace(",","#"));
                 oldmanFamilyDao.updateById(oldmanFamily);
                 break;
             case "economic":

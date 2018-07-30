@@ -10,7 +10,7 @@
         </foreach>
     </insert>
 
-    <delete id="delByOldmanId" parameterType="java.util.List">
+    <delete id="delByOldmanIds" parameterType="java.util.List">
         DELETE from health_select_oldman
         WHERE oldman_id IN
         <foreach collection="list" index="index" item="item" separator="," open="(" close=")">

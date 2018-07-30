@@ -3,7 +3,16 @@ package com.organOld.service.contract;
 public class OldmanFamilyRequest {
     private Integer oldmanId;
     private String[] familyArray;
+    private String[] familyTypeArray;
     private String search;
+
+    public String[] getFamilyTypeArray() {
+        return familyTypeArray;
+    }
+
+    public void setFamilyTypeArray(String[] familyTypeArray) {
+        this.familyTypeArray = familyTypeArray;
+    }
 
     public String getSearch() {
         return search;

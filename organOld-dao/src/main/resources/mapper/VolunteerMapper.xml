@@ -33,7 +33,7 @@
         SELECT o.id FROM oldman_base o,auto_value x,organ org
         WHERE o.xq_id=x.id and x.parent_index=org.id
          <if test="organId!=null and organId!=0">
-             and org.id=#{orgaId}
+             and org.id=#{organId}
          </if>
         )
 

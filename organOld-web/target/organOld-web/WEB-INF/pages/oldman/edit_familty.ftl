@@ -25,6 +25,17 @@
                                                 </select>
                                             </div>
                                         </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-1 control-label">家庭类别</label>
+                                            <div class="col-sm-8">
+                                                <select name="familyTypeIndex"  class="search_select" data-live-search="true">
+                                                    <option></option>
+                                                <#list familyType as list>
+                                                    <option type="checkbox" value="${list.id!}" >${list.value!}</option>
+                                                </#list>
+                                                </select>
+                                            </div>
+                                        </div>
                                     </form>
                                 </div>
                             </div>

@@ -28,6 +28,15 @@ public class Tool {
         if(str.contains("\\")){
             str=str.replace("\\\\","-");
         }
+        if(str.contains("年")){
+            str=str.replace("年","-");
+        }
+        if(str.contains("月")){
+            str=str.replace("月","-");
+        }
+        if(str.contains("日")){
+            str=str.replace("日","-");
+        }
 
         if(str.split("-").length<3){
             //年月

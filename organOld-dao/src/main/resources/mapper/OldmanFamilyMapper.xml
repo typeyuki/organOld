@@ -5,6 +5,7 @@
     <resultMap id="oldmanFamily" type="com.organOld.dao.entity.oldman.OldmanFamily">
         <id property="id" column="id" />
         <result property="family" column="family"/>
+        <result property="familyTypeIndex" column="family_type_index"/>
         <result property="time" column="time" />
         <association property="oldman" javaType="com.organOld.dao.entity.oldman.Oldman">
             <id property="id" column="oid" />
@@ -12,7 +13,7 @@
         </association>
     </resultMap>
     <select id="getByPage" parameterType="com.organOld.dao.util.Page" resultMap="oldmanFamily">
-        SELECT ofa.id,ob.id oid,f.value family,ofa.time,ob.name
+        SELECT ofa.id,ob.id oid,f.value family,ofa.time,ob.name,ofa.family_type_index
         FROM oldman_family ofa left join auto_value f on f.id=ofa.family_index,oldman_base ob,organ org,auto_value x
         WHERE ob.id=ofa.oldman_id AND x.id=ob.xq_id AND org.id=x.parent_index and ob.disable=0
         <if test="entity!=null and entity.organId!=null and entity.organId!=0">
@@ -33,6 +34,12 @@
             and ofa.family_index IN
             <foreach collection="entity.familyArray" index="index" item="item" separator="," open="(" close=")">
                 #{item}
+            </foreach>
+        </if>
+        <if test="entity!=null and entity.familyTypeArray!=null and entity.familyTypeArray.length > 0">
+            and
+            <foreach collection="entity.familyTypeArray" index="index" item="item" open="(" separator="or" close=")">
+                (ofa.family_type_index like concat('%',#{item},'%'))
             </foreach>
         </if>
         <if test="entity!=null and entity.search!=null and entity.search!=''">
@@ -65,6 +72,18 @@
             WHERE o.id=#{entity.organId}
             )
         </if>
+        <if test="entity!=null and entity.familyTypeArray!=null and entity.familyTypeArray.length > 0">
+            and
+            <foreach collection="entity.familyTypeArray" index="index" item="item" open="(" separator="or" close=")">
+                (ofa.family_type_index like concat('%',#{item},'%'))
+            </foreach>
+        </if>
+        <if test="entity!=null and entity.familyArray!=null and entity.familyArray.length > 0">
+            and ofa.family_index IN
+            <foreach collection="entity.familyArray" index="index" item="item" separator="," open="(" close=")">
+                #{item}
+            </foreach>
+        </if>
         <if test="entity!=null and entity.search!=null and entity.search!=''">
             and (ob.name LIKE  concat('%',#{entity.search},'%')
             OR ob.id=#{entity.search})
@@ -76,7 +95,7 @@
 
     <update id="updateById" parameterType="com.organOld.dao.entity.oldman.OldmanFamily">
         UPDATE oldman_family
-        SET family_index=#{familyIndex}
+        SET family_index=#{familyIndex},family_type_index=#{familyTypeIndex}
         WHERE id=#{id}
     </update>
 
@@ -88,6 +107,13 @@
         <foreach collection="list" index="index" item="item" open="" separator=" " close="">
             WHEN ${item.oldmanId} THEN #{item.familyIndex}
         </foreach>
+        ELSE family_index
+        END,
+        family_type_index= CASE oldman_id
+        <foreach collection="list" index="index" item="item" open="" separator=" " close="">
+            WHEN ${item.oldmanId} THEN #{item.familyTypeIndex}
+        </foreach>
+        ELSE family_type_index
         END
         where oldman_id in
         <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
@@ -97,10 +123,10 @@
 
 
     <insert id="saveAll" parameterType="java.util.List">
-        INSERT into oldman_family(oldman_id,family_index)
+        INSERT into oldman_family(oldman_id,family_index,family_type_index)
         VALUES
         <foreach collection="list" item="item" index="index" separator=",">
-            (#{item.oldmanId}, #{item.familyIndex})
+            (#{item.oldmanId}, #{item.familyIndex},#{item.familyTypeIndex})
         </foreach>
     </insert>
 
