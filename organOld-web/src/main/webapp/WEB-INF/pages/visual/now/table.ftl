@@ -1,5 +1,8 @@
 <style>
-
+    #table{
+        position: relative;
+        top:100px;
+    }
 </style>
 
     <div class="wrapper wrapper-content animated fadeInRight box">
@@ -8,7 +11,6 @@
             <div class="col-lg-12">
                 <div class="ibox float-e-margins">
                     <div class="ibox-content">
-                        <div class="table-responsive">
                             <table class="table table-striped table-bordered table-hover dataTables-example text-nowrap">
                                 <thead>
                                 <tr>
@@ -32,13 +34,44 @@
                                 <tbody>
                                 </tbody>
                             </table>
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
+
+
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog" style="width: 80%">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="wrapper wrapper-content animated fadeInRight">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="ibox float-e-margins">
+                                <div class="ibox-title">
+                                    <h5></h5>
+                                </div>
+                                <div class="ibox-content">
+                                    <form method="post" id="oldmanEdit" class="form-horizontal" action="/oldman/family/update">
+                                        <input type="hidden" name="id">
+
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a onclick="$('#oldmanEdit').submit()" href="javascript:void(0);" class="btn btn-primary ">修改</a>
+                <a data-dismiss="modal" href="javascript:void(0);" class="btn btn-primary ">关闭</a>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
 
 <script>
     var label=[];//用于标签页面
@@ -50,7 +83,7 @@
                     "sPaginationType": "full_numbers",
                     "bPaginite": true,
                     "bInfo": true,
-                    "bSort": true,
+                    "bSort": false,
                     "bFilter": false, //搜索栏
                     "bStateSave": true,
                     "bProcessing": true, //加载数据时显示正在加载信息
@@ -87,16 +120,13 @@
                     ],
                     "iDisplayLength" : iDisplayLength,
                     "columnDefs": [
-                        // 增加一列，包括删除和修改，同时将我们需要传递的数据传递到链接中
                         {
-                            "targets": [14], // 目标列位置，下标从0开始
-                            "data": "id", // 数据列名
+                            "targets": [5], // 目标列位置，下标从0开始
+                            "data": "name", // 数据列名
                             "render": function(data, type, full) { // 返回自定义内容
-                                return "<span class='look' id='"+data+"'>查看</span><span class='mod' id='"+data+"'>修改</span>";
+                                return "<span class='btn btn-primary' onclick=look($(this).parent().prev().prev().prev().prev().prev().text()) id='"+data+"'>"+data+"</span>";
                             }
-                        },
-                        //不进行排序的列
-                        { "bSortable": false, "aTargets": [ 0,1,2,3 ,4, 5,6, 7,9,10,11,12,13,14] }
+                        }
                     ],
                     "sAjaxSource": "/oldman/baseData",//这个是请求的地址
                     "fnServerData": retrieveData
@@ -133,4 +163,32 @@
                 "column":oTable.fnGetPosition(this)[2]}},"width":"90%","height":"100%"});
 
     });
+
+
+    function look(id) {
+        $.ajax({
+            url : "/oldman/"+id+"/info",
+            type : "post",
+            dataType : 'json',
+            data:{
+                ids:ids
+            },
+            success : function(data) {
+                if (data.success==true) {
+                    var start = $(".dataTables-example").dataTable().fnSettings()._iDisplayStart;
+                    var total = $(".dataTables-example").dataTable().fnSettings().fnRecordsDisplay();
+                    window.location.reload();
+                    if(total-start==1){
+                        if(start>0){
+                            $(".dataTables-example").dataTable().fnPageChange('previous',true);
+                        }
+                    }
+
+                } else {
+                    alert('删除失败！');
+                }
+            }
+        });
+        $('#editModal').modal();
+    }
 </script>

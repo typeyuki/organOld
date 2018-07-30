@@ -214,7 +214,7 @@
         {value:376, name:'日照中心'},
         {value:376, name:'助餐点'},
     ];
-    var organ_option_sq_sub_pie = customizedPie(title_text,data);
+    var organ_option_sq_sub_pie = customizedPie2(title_text,data);
     organ_sq_sub_pie.setOption(organ_option_sq_sub_pie);
 
     //legend 点击事件

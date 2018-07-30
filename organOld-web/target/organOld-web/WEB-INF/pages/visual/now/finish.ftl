@@ -49,31 +49,80 @@
     var finish_jw_all_bar = echarts.init(document.getElementById('finish_jw_all_bar'));
 </script>
 <script>
-    title_text='各片区完成度对比';
-    legend_data=[];
-    xAxis_data=['平阳','东兰','古龙','平吉','平南','古美'];
-    series=[
-        {
-            name: '已安排',
-            type: 'bar',
-            label:{
-                normal:{
-                    show:true,
-                    position:'top',
-                    textStyle:{
-                        fontSize:20
-                    }
-                }
-            },
-            itemStyle:{
-                normal: {
-                    color:series_color_1,
-                    fontSize:20
-                },
-            },
-            data: [56,34,24,74,45,23]
-        }
-    ];
+    // title_text='各片区完成度对比';
+    // legend_data=[];
+    // xAxis_data=['平阳','东兰','古龙','平吉','平南','古美'];
+    // series=[
+    //     {
+    //         name: '已安排',
+    //         type: 'bar',
+    //         label:{
+    //             normal:{
+    //                 show:true,
+    //                 position:'top',
+    //                 textStyle:{
+    //                     fontSize:20
+    //                 }
+    //             }
+    //         },
+    //         itemStyle:{
+    //             normal: {
+    //                 color:series_color_1,
+    //                 fontSize:20
+    //             },
+    //         },
+    //         data: [56,34,24,74,45,23]
+    //     }
+    // ];
+    // option = {
+    //     title: {
+    //         text: '各片区完成度对比',
+    //         textStyle: {
+    //             fontWeight: 'normal',      //标题颜色
+    //             color: '#FFFFFF',
+    //             fontSize: 26
+    //         },
+    //         x: 'center',
+    //         textAlign:'right'
+    //     },
+    //     angleAxis: {
+    //         type: 'category',
+    //         data: ['平阳','东兰','古龙','平吉','平南','古美'],
+    //         z: 10,
+    //         //textSize:20,
+    //         axisLine:{
+    //             lineStyle:{
+    //                 color:'white',
+    //                 fontSize: 80
+    //             }
+    //         },
+    //     },
+    //     radiusAxis: {
+    //     },
+    //     polar: {
+    //     },
+    //     series: [{
+    //         type: 'bar',
+    //         data: [1, 2, 3, 4, 3, 5, 1],
+    //         coordinateSystem: 'polar',
+    //         name: '已完成',
+    //         fontSize: 40,
+    //         color:series_color_5,
+    //         stack: 'a'
+    //     }],
+    //     legend: {
+    //         show: true,
+    //         data: ['已完成'],
+    //         x: 'right',
+    //         textStyle:{
+    //             color:'white',
+    //         },
+    //
+    //     }
+    // };
+    // //使用制定的配置项和数据显示图表
+    // var finish_option_pq_bar=chartBarHei(title_text,legend_data,xAxis_data,series);
+    // finish_pq_bar.setOption(finish_option_pq_bar);
     option = {
         title: {
             text: '各片区完成度对比',
@@ -121,8 +170,8 @@
         }
     };
     //使用制定的配置项和数据显示图表
-    var finish_option_pq_bar=chartBarHei(title_text,legend_data,xAxis_data,series);
-    finish_pq_bar.setOption(finish_option_pq_bar);
+    //var finish_option_pq_bar=chartBarHei(title_text,legend_data,xAxis_data,series);
+    finish_pq_bar.setOption(option);
 
     title_text='平阳片区居委完成度对比';
     legend_data=[];
@@ -145,7 +194,8 @@
                     color:series_color_2
                 }
             },
-            data: [56,34,24,74,45,23]
+            data: [56,34,24,74,45,23],
+            barWidth : 30,//柱图宽度
         }
     ];
     var finish_option_jw_bar=chartBarHei(title_text,legend_data,xAxis_data,series);
@@ -178,9 +228,8 @@
     // ];
     // var finish_option_jw_all_bar=chartBarHeiSimpleAll(title_text,legend_data,xAxis_data,series);
     // finish_jw_all_bar.setOption(finish_option_jw_all_bar);
+
     var colors = ['#5793f3', '#d14a61', '#675bba'];
-
-
     option = {
         // title: {
         //     text: '标题',
