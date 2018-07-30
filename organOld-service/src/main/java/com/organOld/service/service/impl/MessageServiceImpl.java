@@ -48,4 +48,13 @@ public class MessageServiceImpl implements MessageService {
         String username=commonService.getUserNameBySession();
         return messageDao.getNoReadNumByUsername(username);
     }
+
+    @Override
+    public void delByIds(String[] ids) {
+            Integer[] id=new Integer[ids.length];
+            for(int i=0;i<ids.length;i++){
+                id[i]=Integer.parseInt(ids[i]);
+            }
+            messageDao.delByIds(id);
+    }
 }

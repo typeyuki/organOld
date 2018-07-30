@@ -102,4 +102,12 @@ public class UserController {
     public Result getById(@PathVariable int id){
         return userService.getById(id);
     }
+
+
+    @RequestMapping(value = "/password/edit",method = RequestMethod.GET)
+    public ModelAndView password(){
+        ModelAndView mv=new ModelAndView("sys/password_edit");
+        mv.addObject("user",userService.getBySession());
+        return mv;
+    }
 }

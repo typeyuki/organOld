@@ -36,4 +36,9 @@
         WHERE organ_id=#{entity.organId}
     </select>
 
+    <update id="updateProp">
+        UPDATE product_book
+        SET ${prop}=#{value}
+        WHERE id=#{id}
+    </update>
 </mapper>

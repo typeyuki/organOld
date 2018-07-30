@@ -61,6 +61,18 @@
                             <label class="col-sm-2 control-label">楼号：${info.oldman.louNum!}</label>
                             <label class="col-sm-2 control-label">地址：${info.oldman.address!}</label>
                         </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">职称：${info.oldman.zc!}</label>
+                            <label class="col-sm-2 control-label">社区职务：
+                            <#if info.oldman.sqzw?? && info.oldman.sqzw?size &gt; 0>
+                                <#list info.oldman.sqzw as list>
+                                    <label>${list}</label>
+                                </#list>
+                            <#else >
+                                无
+                            </#if>
+                            </label>
+                        </div>
                         <div class="hr-line-dashed"></div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label label_title">健康档案</label>
@@ -152,9 +164,9 @@
                             <label class="col-sm-2 control-label label_title">应急联系人</label>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">姓名：${info.linkman.name!}</label>
-                            <label class="col-sm-2 control-label">电话：${info.linkman.phone!}</label>
-                            <label class="col-sm-2 control-label">关系：${info.linkman.relation!}</label>
+                            <label class="col-sm-2 control-label">姓名：${(info.linkman.name)!}</label>
+                            <label class="col-sm-2 control-label">电话：${(info.linkman.phone)!}</label>
+                            <label class="col-sm-2 control-label">关系：${(info.linkman.relation)!}</label>
                         </div>
                         <div class="hr-line-dashed"></div>
                         <div class="form-group">

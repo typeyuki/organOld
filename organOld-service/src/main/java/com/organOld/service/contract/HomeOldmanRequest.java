@@ -4,6 +4,16 @@ public class HomeOldmanRequest {
     private int homeId;
     private Integer oldmanId;
     private String[] type;
+    private String search;
+
+
+    public String getSearch() {
+        return search;
+    }
+
+    public void setSearch(String search) {
+        this.search = search;
+    }
 
     public int getHomeId() {
         return homeId;

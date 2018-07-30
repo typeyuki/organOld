@@ -13,11 +13,46 @@ public class OldmanFamily extends DBEntity implements DBInterface {
     private Oldman oldman;
     private Integer oldmanId;
     private Integer organId;
-
+    private String familyType;
+    private String familyTypeIndex;
     private Integer familyIndex;
 
+    private String search;
 
     private String[] familyArray;
+    private String[] familyTypeArray;
+
+    public String[] getFamilyTypeArray() {
+        return familyTypeArray;
+    }
+
+    public void setFamilyTypeArray(String[] familyTypeArray) {
+        this.familyTypeArray = familyTypeArray;
+    }
+
+    public String getFamilyType() {
+        return familyType;
+    }
+
+    public void setFamilyType(String familyType) {
+        this.familyType = familyType;
+    }
+
+    public String getFamilyTypeIndex() {
+        return familyTypeIndex;
+    }
+
+    public void setFamilyTypeIndex(String familyTypeIndex) {
+        this.familyTypeIndex = familyTypeIndex;
+    }
+
+    public String getSearch() {
+        return search;
+    }
+
+    public void setSearch(String search) {
+        this.search = search;
+    }
 
     public String[] getFamilyArray() {
         return familyArray;

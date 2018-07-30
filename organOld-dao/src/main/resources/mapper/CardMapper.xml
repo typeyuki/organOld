@@ -8,6 +8,7 @@
         <id property="status" column="status" />
         <id property="money" column="money" />
         <id property="password" column="password" />
+        <id property="isCreate" column="is_create" />
         <result property="time" column="time" />
         <association property="oldman" javaType="com.organOld.dao.entity.oldman.Oldman">
             <id property="id" column="oid" />
@@ -33,9 +34,18 @@
 
 
     <select id="getByPage" parameterType="com.organOld.dao.util.Page" resultMap="card">
-        SELECT c.id,c.cid,c.password,c.status,ob.id oid,ob.name,c.time,c.money
+        SELECT c.id,c.cid,c.password,c.status,c.is_create,ob.id oid,ob.name,c.time,c.money
         FROM card c,oldman_base ob
         WHERE ob.id=c.oldman_id
+        <if test="entity.status!=null and entity.status!=0">
+            and c.status=#{entity.status}
+        </if>
+        <if test="entity.isCreate!=null">
+            and c.is_create=#{entity.isCreate}
+        </if>
+        <if test="entity!=null and entity.search!=null and entity.search!=''">
+            and (c.cid LIKE  concat('%',#{entity.search},'%') OR ob.name LIKE  concat('%',#{entity.search},'%'))
+        </if>
         <if test="sortType!=null and sortType!=''">
             ORDER BY ob.${sortType}
         </if>
@@ -49,7 +59,17 @@
 
     <select id="getSizeByPage" parameterType="com.organOld.dao.util.Page" resultType="java.lang.Long">
         SELECT count(1)
-        FROM card
+        FROM card c,oldman_base ob
+        WHERE ob.id=c.oldman_id
+        <if test="entity.status!=null and entity.status!=0">
+            and c.status=#{entity.status}
+        </if>
+        <if test="entity.isCreate!=null">
+            and c.is_create=#{entity.isCreate}
+        </if>
+        <if test="entity!=null and entity.search!=null and entity.search!=''">
+            and (c.cid LIKE  concat('%',#{entity.search},'%') OR ob.name LIKE  concat('%',#{entity.search},'%'))
+        </if>
     </select>
 
 
@@ -92,4 +112,19 @@
         SET ${prop}=#{value}
         WHERE id=#{id}
     </update>
+
+
+    <select id="getQrDataByIds" resultType="com.organOld.dao.util.bean.QrCodeData">
+        SELECT c.id,c.cid,o.name FROM card c,oldman_base o where c.oldman_id=o.id  and is_create=0  and c.id IN
+        <foreach collection="array" index="index" item="item" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <update id="updateById" parameterType="com.organOld.dao.entity.Card">
+        UPDATE card
+        SET password=#{password},is_create=#{isCreate}
+        WHERE id=#{id}
+    </update>
+
 </mapper>

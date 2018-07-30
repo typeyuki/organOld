@@ -143,6 +143,8 @@ $(document).ready(function(){
                 "eyesight_array":$("select[name='eyesight_array']").val(),
                 "district_array":$("select[name='district_array']").val(),
                 "jw_array":$("select[name='jw_array']").val(),
+                "zc_array":$("select[name='zc_array']").val(),
+                "sqzw_array":$("select[name='sqzw_array']").val(),
                 "oldStatus_array":$("select[name='oldStatus_array']").val(),
                 "chx_array":$("select[name='chx_array']").val(),
                 "belongOrgan":$("select[name='belongOrgan']").val(),

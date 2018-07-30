@@ -7,7 +7,15 @@ public class OldmanKeyRequest {
     private String future;//是否查询的是未来的
     private Integer isActivity;//是否主动进养老院
     private Integer isHandle;//是否处理
+    private String search;
 
+    public String getSearch() {
+        return search;
+    }
+
+    public void setSearch(String search) {
+        this.search = search;
+    }
 
     public Integer getIsActivity() {
         return isActivity;

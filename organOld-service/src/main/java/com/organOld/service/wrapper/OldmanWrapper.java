@@ -1,10 +1,12 @@
 package com.organOld.service.wrapper;
 
 import com.organOld.dao.entity.AutoValue;
+import com.organOld.dao.entity.oldman.HealthAdd;
 import com.organOld.dao.entity.oldman.HealthSelect;
 import com.organOld.dao.entity.oldman.Oldman;
 import com.organOld.dao.entity.oldman.OldmanIntegral;
 import com.organOld.dao.entity.organ.Organ;
+import com.organOld.dao.util.bean.ExportOldman;
 import com.organOld.service.constant.TimeConstant;
 import com.organOld.service.enumModel.*;
 import com.organOld.service.model.*;
@@ -156,6 +158,7 @@ public class OldmanWrapper implements Wrapper<Oldman,OldmanModel,OldmanRequest> 
 
     public OldmanIntegral unwrapIntegral(OldmanIntegralRequest oldmanIntegralRequest) {
         OldmanIntegral oldmanIntegral=new OldmanIntegral();
+        BeanUtils.copyProperties(oldmanIntegralRequest,oldmanIntegral);
         return oldmanIntegral;
     }
 
@@ -165,5 +168,79 @@ public class OldmanWrapper implements Wrapper<Oldman,OldmanModel,OldmanRequest> 
         oldmanIntegralModel.setIntegral(oldman.getIntegral());
         oldmanIntegralModel.setOldmanName(oldman.getName());
         return oldmanIntegralModel;
+    }
+
+    public ExportOldman wrapAll(ExportOldman exportOldman){
+        if(exportOldman.getLinkman()!=null)
+            exportOldman.setLink(exportOldman.getLinkman().getName()+"-"+exportOldman.getLinkman().getPhone()+"-"+exportOldman.getLinkman().getRelation());
+        exportOldman.setSex(SexEnum.getValue(Integer.parseInt(exportOldman.getSex())));
+        if(exportOldman.getHealthAdd()!=null &&exportOldman.getHealthAdd().size()>0){
+            for(HealthAdd healthAdd:exportOldman.getHealthAdd()){
+                if(healthAdd.getType()== HealthEnum.EXZL.getIndex()) {
+                    exportOldman.setExzl(exportOldman.getExzl()+","+healthAdd.getDesc());
+                }else if(healthAdd.getType()==HealthEnum.GZ.getIndex()){
+                    exportOldman.setGz(exportOldman.getGz()+","+healthAdd.getDesc());
+                }else{
+                    exportOldman.setCj(exportOldman.getCj()+","+healthAdd.getDesc());
+                }
+            }
+            if(exportOldman.getExzl().length()>0)
+                exportOldman.setExzl(exportOldman.getExzl().substring(1));
+            if(exportOldman.getGz().length()>0)
+                exportOldman.setGz(exportOldman.getGz().substring(1));
+            if(exportOldman.getCj().length()>0)
+                exportOldman.setCj(exportOldman.getCj().substring(1));
+        }
+        if(exportOldman.getHealthSelect()!=null &&exportOldman.getHealthSelect().size()>0){
+            for(HealthSelect healthSelect:exportOldman.getHealthSelect()){
+                if(healthSelect.getFirType()== HealthEnum.MB.getIndex()) {
+                    exportOldman.setMb(exportOldman.getExzl()+","+healthSelect.getSecTypeName());
+                }else if(healthSelect.getFirType()==HealthEnum.SN.getIndex()){
+                    exportOldman.setSn(exportOldman.getSn()+","+healthSelect.getSecTypeName());
+                }else{
+                    exportOldman.setYwfy(exportOldman.getYwfy()+","+healthSelect.getSecTypeName());
+                }
+            }
+            if(exportOldman.getMb().length()>0)
+                exportOldman.setMb(exportOldman.getMb().substring(1));
+            if(exportOldman.getSn().length()>0)
+                exportOldman.setSn(exportOldman.getSn().substring(1));
+            if(exportOldman.getYwfy().length()>0)
+                exportOldman.setYwfy(exportOldman.getYwfy().substring(1));
+        }
+
+
+        return  exportOldman;
+    }
+
+    public Oldman unwrapAll(ExportTableThRequest exportTableThRequest) {
+        Oldman oldman=new Oldman();
+        BeanUtils.copyProperties(exportTableThRequest,oldman);
+        return oldman;
+    }
+
+    public HealthSelectInfoModel wrapHealthSelectInfo(List<AutoValue> autoValueList, List<HealthSelect> healthSelectList) {
+        HealthSelectInfoModel healthSelectInfoModel=new HealthSelectInfoModel();
+        for(AutoValue autoValue:autoValueList){
+            if (autoValue.getType()== AutoValueEnum.SZ.getIndex()){
+                healthSelectInfoModel.getIntelligence().add(autoValue);
+            }
+            if (autoValue.getType()== AutoValueEnum.SL.getIndex()){
+                healthSelectInfoModel.getEyesight().add(autoValue);
+            }
+        }
+
+        for (HealthSelect healthSelect:healthSelectList){
+            if (healthSelect.getFirType()== HealthEnum.MB.getIndex()){
+                healthSelectInfoModel.getMb().add(healthSelect);
+            }
+            if (healthSelect.getFirType()== HealthEnum.SN.getIndex()){
+                healthSelectInfoModel.getSn().add(healthSelect);
+            }
+            if (healthSelect.getFirType()== HealthEnum.YW.getIndex()){
+                healthSelectInfoModel.getYwfy().add(healthSelect);
+            }
+        }
+        return healthSelectInfoModel;
     }
 }

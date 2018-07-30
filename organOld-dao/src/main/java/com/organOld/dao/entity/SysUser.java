@@ -23,11 +23,29 @@ public class SysUser extends DBEntity implements UserDetails,Serializable{
     private Integer authSign;
     private Integer authQueryInfo;
     private Integer authQueryIntegral;
-
+    private Integer disable;
     private String desc;
 
     Collection<GrantedAuthority> authorities;
 
+    private String search;
+
+
+    public Integer getDisable() {
+        return disable;
+    }
+
+    public void setDisable(Integer disable) {
+        this.disable = disable;
+    }
+
+    public String getSearch() {
+        return search;
+    }
+
+    public void setSearch(String search) {
+        this.search = search;
+    }
 
     @Override
     public int hashCode() {

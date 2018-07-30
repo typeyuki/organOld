@@ -5,6 +5,7 @@ import com.organOld.service.contract.ProductBookRequest;
 import com.organOld.service.contract.ProductRequest;
 import com.organOld.service.contract.RecordRequest;
 import com.organOld.service.enumModel.RecordTypeEnum;
+import com.organOld.service.service.CommonService;
 import com.organOld.service.service.OrganService;
 import com.organOld.service.service.ProductService;
 import com.organOld.service.service.RecordService;
@@ -23,6 +24,8 @@ public class RecordController {
     RecordService recordService;
     @Autowired
     OrganService organService;
+    @Autowired
+    CommonService commonService;
 
     /**
      *type  看RecordTypeEnum
@@ -34,7 +37,8 @@ public class RecordController {
     public ModelAndView index(@RequestParam(required = false) Integer organId, @PathVariable int type){
         ModelAndView mv;
         Boolean result=organService.checkHaveAuthByAuthType(type,organId);
-
+        if(organId==null || organId==0)
+            organId=commonService.getIdBySession();
         if(result) {
             mv = new ModelAndView("record/record");
             mv.addObject("organId", organId);

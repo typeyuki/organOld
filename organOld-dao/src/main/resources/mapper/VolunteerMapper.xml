@@ -33,7 +33,7 @@
         SELECT o.id FROM oldman_base o,auto_value x,organ org
         WHERE o.xq_id=x.id and x.parent_index=org.id
          <if test="organId!=null and organId!=0">
-             and org.id=#{orgaId}
+             and org.id=#{organId}
          </if>
         )
 
@@ -54,6 +54,10 @@
             WHERE o.id=#{entity.organId}
             )
         </if>
+        <if test="entity!=null and entity.search!=null and entity.search!=''">
+            and (ob.name LIKE  concat('%',#{entity.search},'%')
+            OR ob.id=#{entity.search})
+        </if>
         <if test="sortType!=null and sortType!=''">
             ORDER BY ob.${sortType}
         </if>
@@ -69,6 +73,10 @@
         SELECT count(1)
         FROM volunteer v,oldman_base ob,organ org,auto_value x
         WHERE ob.id=v.oldman_id AND x.id=ob.xq_id AND org.id=x.parent_index and ob.disable=0
+        <if test="entity!=null and entity.search!=null and entity.search!=''">
+            and (ob.name LIKE  concat('%',#{entity.search},'%')
+            OR ob.id=#{entity.search})
+        </if>
         <if test="entity!=null and entity.organId!=null and entity.organId!=0">
             and org.id in (
             SELECT

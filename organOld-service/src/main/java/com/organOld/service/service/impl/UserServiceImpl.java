@@ -83,7 +83,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public String getByPage(UserRequest userRequest, BTableRequest bTableRequest) {
         Page<SysUser> page=commonService.getPage(bTableRequest,"user");
-        SysUser sysUser=new SysUser();
+        SysUser sysUser=Wrappers.userWrapper.unwrap(userRequest);
         page.setEntity(sysUser);
         List<UserModel> userModelList=userDao.getByPage(page).stream().map(Wrappers.userWrapper::wrap).collect(Collectors.toList());
         Long size=userDao.getSizeByPage(page);
@@ -190,5 +190,12 @@ public class UserServiceImpl implements UserService {
         }
         userDao.updateById(sysUser);
         organDao.updateAuth(sysUser.getOrganId(),sysUser.getAuthConsume(),sysUser.getAuthProduct(),sysUser.getAuthSign(),sysUser.getAuthQueryInfo(),sysUser.getAuthQueryIntegral());
+    }
+
+    @Override
+    public SysUser getBySession() {
+        Integer organId=commonService.getIdBySession();
+        SysUser user=userDao.getByOrganId(organId);
+        return user;
     }
 }

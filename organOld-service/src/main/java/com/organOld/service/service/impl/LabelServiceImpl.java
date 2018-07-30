@@ -175,7 +175,7 @@ public class LabelServiceImpl implements LabelService {
 
         String content="您有新的规则制定标签："+label.getName()+"" +
                 "<br>有效时间："+Tool.dateToString(label.getStart(),TimeConstant.DATA_FORMAT_YMD)+"-"+Tool.dateToString(label.getEnd(),TimeConstant.DATA_FORMAT_YMD)+"" +
-                "<br><button class='btn btn-primary' onclick=newPageBefore("+label.getId()+","+label.getName()+",'/oldman/label/rule/"+label.getId()+"/man')>查看人员</button>";
+                "<br><button class='btn btn-primary' onclick=newPage("+label.getId()+",'"+label.getName()+"','/oldman/label/rule/"+label.getId()+"/man')>查看人员</button>";
         commonService.informJwAndPq(content);
 
     }
@@ -217,7 +217,7 @@ public class LabelServiceImpl implements LabelService {
             //人员绑定
             String content="您有新的人员绑定标签："+label.getName()+"" +
                     "<br>有效时间："+Tool.dateToString(label.getStart(),TimeConstant.DATA_FORMAT_YMD)+"-"+Tool.dateToString(label.getEnd(),TimeConstant.DATA_FORMAT_YMD)+"" +
-                    "<br><button class='btn btn-primary' onclick=newPageBefore("+label.getId()+","+label.getName()+",'/oldman/label/bind/"+label.getId()+"/man')>查看人员</button>";
+                    "<br><button class='btn btn-primary' onclick=newPage("+label.getId()+",'"+label.getName()+"','/oldman/label/bind/"+label.getId()+"/man')>查看人员</button>";
             commonService.informJwAndPq(content);
         }
     }

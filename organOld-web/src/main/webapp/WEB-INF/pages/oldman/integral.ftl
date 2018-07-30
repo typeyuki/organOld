@@ -33,9 +33,10 @@
                     <div>
                         <a  onclick="oldman_edit(1,'/oldman/integral/getRule')" class="btn btn-primary ">规则管理</a>
                         <a  href="javascript:void(0);" id="search" class="btn btn-primary ">搜索</a>
-                    <div>
-                        <input class="id" type="text" placeholder="老人序号">
-                        <input class="time" type="text" placeholder="模糊匹配">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <input class="search form-control inp" type="text" placeholder="模糊匹配">
+                        </div>
                     </div>
                     <div class="table-responsive">
                         <table class="table table-striped table-bordered table-hover dataTables-example text-nowrap">

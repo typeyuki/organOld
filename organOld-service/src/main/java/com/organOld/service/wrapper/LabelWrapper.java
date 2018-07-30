@@ -279,6 +279,12 @@ public class LabelWrapper implements Wrapper<Label,LabelModel,LabelRequest> {
             if (autoValue.getType()== AutoValueEnum.YJBQ.getIndex()){
                 labelFilterModel.getFirLabel().add(autoValue);
             }
+            if (autoValue.getType()== AutoValueEnum.ZC.getIndex()){
+                labelFilterModel.getZc().add(autoValue);
+            }
+            if (autoValue.getType()== AutoValueEnum.SQZW.getIndex()){
+                labelFilterModel.getSqzw().add(autoValue);
+            }
         }
 
         labelFilterModel.setBelongOrgan(belongOrgan);

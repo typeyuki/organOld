@@ -19,6 +19,16 @@ public class OldmanEconomic extends DBEntity implements DBInterface {
 
     private String[] economicArray;
 
+    private String search;
+
+
+    public String getSearch() {
+        return search;
+    }
+
+    public void setSearch(String search) {
+        this.search = search;
+    }
 
     public String[] getEconomicArray() {
         return economicArray;

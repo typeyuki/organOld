@@ -136,6 +136,10 @@ public class CommonService {
                 typeList.add(AutoValueEnum.SQZW.getIndex());
                 typeList.add(AutoValueEnum.ZC.getIndex());
                 break;
+            case "health_add":
+                typeList.add(AutoValueEnum.SL.getIndex());
+                typeList.add(AutoValueEnum.SZ.getIndex());
+                break;
             case "organ_reg":
                 typeList.add(AutoValueEnum.PQ.getIndex());
                 break;
@@ -148,6 +152,7 @@ public class CommonService {
     public Integer getIdBySession() {
         try {
             Integer organId= userDao.getOrganIdByUsername(getUserNameBySession());
+            if(organId==null) return 0;
             return organId;
         }catch (Exception e){
             return 0;

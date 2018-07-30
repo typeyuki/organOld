@@ -22,6 +22,9 @@
         <if test="entity!=null and entity.id!=null and entity.id!=0">
             and id=#{entity.id}
         </if>
+        <if test="entity!=null and entity.oldman!=null and entity.oldman.id!=0">
+            and o.id=#{entity.oldman.id}
+        </if>
         <if test="entity!=null and entity.organId!=null and entity.organId!=0">
             and org.id in (
             SELECT
@@ -33,13 +36,10 @@
             WHERE o.id=#{entity.organId}
             )
         </if>
-        <if test="entity!=null and entity.oldmanId!=null and entity.oldmanId!=0">
-            and o.id=#{entity.oldmanId}
-        </if>
         <if test="entity!=null and entity.search!=null and entity.search!=''">
             and (l.name LIKE  concat('%',#{entity.search},'%')
             OR l.phone LIKE  concat('%',#{entity.search},'%') OR l.relation LIKE  concat('%',#{entity.search},'%')
-            OR o.name LIKE  concat('%',#{entity.search},'%'))
+            OR o.name LIKE  concat('%',#{entity.search},'%') OR o.id=#{entity.search})
         </if>
         <if test="sortType!=null and sortType!=''">
             ORDER BY ${sortType}
@@ -70,13 +70,10 @@
             WHERE o.id=#{entity.organId}
             )
         </if>
-        <if test="entity!=null and entity.oldmanId!=null and entity.oldmanId!=0">
-            and o.id=#{entity.oldmanId}
-        </if>
         <if test="entity!=null and entity.search!=null and entity.search!=''">
             and (l.name LIKE  concat('%',#{entity.search},'%')
             OR l.phone LIKE  concat('%',#{entity.search},'%') OR l.relation LIKE  concat('%',#{entity.search},'%')
-            OR o.name LIKE  concat('%',#{entity.search},'%'))
+            OR o.name LIKE  concat('%',#{entity.search},'%') OR o.id=#{entity.search})
         </if>
     </select>
 

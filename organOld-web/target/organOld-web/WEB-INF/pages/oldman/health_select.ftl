@@ -31,10 +31,6 @@
                     <div>
                         <a href="javascript:void(0);" class="btn btn-primary " onclick="add()">添加</a>
                         <a  href="javascript:void(0);" class="btn btn-primary" onclick="del('/oldman/health/select/del')">删除</a>
-                        <a  href="javascript:void(0);" id="search" class="btn btn-primary ">搜索</a>
-                    </div>
-                    <div>
-                        <input class="time" type="text" placeholder="模糊匹配">
                     </div>
                     <div class="table-responsive">
                         <div class="table-responsive">

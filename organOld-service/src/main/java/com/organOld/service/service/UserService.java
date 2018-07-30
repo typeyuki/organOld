@@ -39,4 +39,6 @@ public interface UserService {
     Result getById(int id);
 
     void update(UserAddRequest sysUser);
+
+    SysUser getBySession();
 }

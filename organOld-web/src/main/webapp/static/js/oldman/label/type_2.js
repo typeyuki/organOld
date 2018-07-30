@@ -90,12 +90,12 @@ function edit(id,obj) {
     $("#secModal input[name='id']").val(id);
     $("#secModal select[name='firIndex'] option").each(function () {
         if($(this).text().trim()==$(obj).parent().prev().prev().prev().text().trim()){
-            $(this).prop("selected",true)
+            $(this).prop("selected",true);
         }
     });
     $("#secModal input[name='secName']").val($(obj).parent().prev().prev().text());
     $("#secModal form").attr("action","/oldman/label/type/2/update");
     $("#secModal h5").html("二级标签<small>修改</small>");
-    $("#secModal .firSub").html("修改");
+    $("#secModal .firSub").html("保存");
     $("#secModal").modal();
 }

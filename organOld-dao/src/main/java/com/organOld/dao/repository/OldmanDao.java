@@ -4,6 +4,7 @@ package com.organOld.dao.repository;
 import com.organOld.dao.entity.oldman.Oldman;
 import com.organOld.dao.entity.oldman.OldmanIntegral;
 import com.organOld.dao.util.Page;
+import com.organOld.dao.util.bean.ExportOldman;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -34,4 +35,6 @@ public interface OldmanDao extends BaseDao<Oldman,Integer>{
 
 
     List<Oldman> getByJwId(Integer jwId);
+
+    List<ExportOldman> getAll(Oldman oldman);
 }

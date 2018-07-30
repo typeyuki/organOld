@@ -1,5 +1,6 @@
 package com.organOld.web.controller;
 
+import com.organOld.dao.entity.Card;
 import com.organOld.dao.entity.SysUser;
 import com.organOld.service.contract.*;
 import com.organOld.service.enumModel.RecordTypeEnum;
@@ -13,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.io.IOException;
 
 /**
  * 一卡通
@@ -38,6 +41,19 @@ public class CardController {
         return mv;
     }
 
+    @ResponseBody
+    @RequestMapping(value = "/{id}/getById",method = RequestMethod.GET)
+    public Result getById(@PathVariable Integer id){
+        Result result=cardService.getById(id);
+        return result;
+    }
+
+    @RequestMapping(value = "/update",method = RequestMethod.POST)
+    public ModelAndView update(Card card){
+        cardService.updateById(card);
+        ModelAndView mv=new ModelAndView("redirect:/card");
+        return mv;
+    }
 
     @ResponseBody
     @RequestMapping(value = "/data",method = RequestMethod.POST)
@@ -173,5 +189,18 @@ public class CardController {
         }else{
             return new Result(false,"没有权限");
         }
+    }
+
+
+    /**
+     * 生成二维码
+     * @param
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/create",method = RequestMethod.POST)
+    public Result create(@RequestParam("ids[]") String ids[]){
+        Result result=cardService.create(ids);
+        return result;
     }
 }

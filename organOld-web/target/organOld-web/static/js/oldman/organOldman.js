@@ -73,7 +73,7 @@ $(document).ready(function(){
                 "sEcho" : aoData.sEcho,
                 "sSortDir_0" : aoData.sSortDir_0,
                 "firType" : firType,
-                "oldmanId":$("input[name='oldmanId']").val(),
+                "search" : $('.search').val(),
                 "isPd":$("select[name='isPd']").val()
             },
             type: 'POST',

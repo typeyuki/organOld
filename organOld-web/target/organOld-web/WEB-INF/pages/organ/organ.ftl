@@ -48,9 +48,10 @@
                             </form>
                         </#if>
                     </div>
-                    <div>
-                        <input class="id" type="text" placeholder="序号">
-                        <input class="time" type="text" placeholder="模糊匹配">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <input class="search form-control inp" type="text" placeholder="模糊匹配">
+                        </div>
                     </div>
                     <div class="table-responsive">
                         <table class="table table-striped table-bordered table-hover dataTables-example text-nowrap">

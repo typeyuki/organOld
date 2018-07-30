@@ -59,7 +59,6 @@ $(document).ready(function(){
                 "iSortCol_0" : aoData.iSortCol_0,
                 "sEcho" : aoData.sEcho,
                 "sSortDir_0" : aoData.sSortDir_0,
-                "oldmanId" : ($('.oldmanId').val()==""?"0":$('.oldmanId').val()),//参数不能是空 400
                 "search" : $('.search').val()
             },
             type: 'POST',

@@ -5,7 +5,16 @@ public class OrganOldmanRequest {
     private Integer oldmanId;
     private String firType;//用于养老状态  organ机构养老 community 社区养老
     private Integer isPd;
+    private String search;
 
+
+    public String getSearch() {
+        return search;
+    }
+
+    public void setSearch(String search) {
+        this.search = search;
+    }
 
     public Integer getIsPd() {
         return isPd;

@@ -25,6 +25,8 @@ public class VolunteerWrapper implements Wrapper<Volunteer,VolunteerModel,Volunt
 
     @Override
     public Volunteer unwrap(VolunteerRequest volunteerRequest) {
-        return null;
+        Volunteer volunteer=new Volunteer();
+        BeanUtils.copyProperties(volunteerRequest,volunteer);
+        return volunteer;
     }
 }

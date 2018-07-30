@@ -1,10 +1,30 @@
 package com.organOld.service.model;
 
 
+import java.util.List;
+
 public class OldmanFamilyModel extends Model{
     private int oldmanId;
     private String family;
     private String oldmanName;
+    private String familyTypeString;
+    private List<String> familyType;
+
+    public String getFamilyTypeString() {
+        return familyTypeString;
+    }
+
+    public void setFamilyTypeString(String familyTypeString) {
+        this.familyTypeString = familyTypeString;
+    }
+
+    public List<String> getFamilyType() {
+        return familyType;
+    }
+
+    public void setFamilyType(List<String> familyType) {
+        this.familyType = familyType;
+    }
 
     public int getOldmanId() {
         return oldmanId;

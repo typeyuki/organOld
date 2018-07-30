@@ -83,6 +83,8 @@ public class LabelController {
                        @RequestParam(value = "eyesight_array[]",required = false) String eyesight[],
                        @RequestParam(value = "district_array[]",required = false) String district[],
                        @RequestParam(value = "jw_array[]",required = false) String jw[],
+                       @RequestParam(value = "zc_array[]",required = false) String zc[],
+                       @RequestParam(value = "sqzw_array[]",required = false) String sqzw[],
                        @RequestParam(value = "oldStatus_array[]",required = false) String oldStatus[]){
         labelRequest.setCensusArray(census);
         labelRequest.setFamily(family);
@@ -94,6 +96,8 @@ public class LabelController {
         labelRequest.setJw(jw);
         labelRequest.setIsHealth(isHealth);
         labelRequest.setOldStatusArray(oldStatus);
+        labelRequest.setSqzwArray(sqzw);
+        labelRequest.setZcArray(zc);
         return labelService.getByPage(labelRequest,bTableRequest);
     }
 

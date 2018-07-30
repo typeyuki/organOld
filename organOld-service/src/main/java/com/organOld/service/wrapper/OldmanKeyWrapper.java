@@ -85,6 +85,7 @@ public class OldmanKeyWrapper implements Wrapper<Oldman,OldmanKeyModel,OldmanKey
         oldman.setGoalEnd(oldmanKeyRequest.getGoalEnd());
         oldman.setGoalStart(oldmanKeyRequest.getGoalStart());
         oldman.setIsActivity(oldmanKeyRequest.getIsActivity());
+        oldman.setSearch(oldmanKeyRequest.getSearch());
         return oldman;
     }
 

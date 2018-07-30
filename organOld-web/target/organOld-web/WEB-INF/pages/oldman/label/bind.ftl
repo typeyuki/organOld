@@ -141,7 +141,7 @@
                                 <#if type=="bind">
                                     <th><input type='checkbox' onclick="thCheck(this)" /></th>
                                 </#if>
-                                 <th>序号</th>
+                                 <th>老人序号</th>
                                 <th>片区</th>
                                 <th>居委</th>
                                 <th>小区</th>

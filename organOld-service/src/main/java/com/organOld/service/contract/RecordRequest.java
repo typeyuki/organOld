@@ -3,6 +3,24 @@ package com.organOld.service.contract;
 public class RecordRequest {
     private Integer organId;
     private Integer type;
+    private String start;
+    private String end;
+
+    public String getStart() {
+        return start;
+    }
+
+    public void setStart(String start) {
+        this.start = start;
+    }
+
+    public String getEnd() {
+        return end;
+    }
+
+    public void setEnd(String end) {
+        this.end = end;
+    }
 
     public Integer getOrganId() {
         return organId;

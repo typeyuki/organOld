@@ -10,6 +10,7 @@ import com.organOld.dao.entity.organ.OrganOldman;
 import com.organOld.dao.entity.volunteer.Volunteer;
 import com.organOld.dao.repository.*;
 import com.organOld.dao.util.Page;
+import com.organOld.dao.util.bean.ExportOldman;
 import com.organOld.service.constant.TimeConstant;
 import com.organOld.service.constant.ValueConstant;
 import com.organOld.service.enumModel.AutoValueEnum;
@@ -17,6 +18,7 @@ import com.organOld.service.enumModel.HealthEnum;
 import com.organOld.service.model.*;
 import com.organOld.service.service.CommonService;
 import com.organOld.service.service.OldmanService;
+import com.organOld.service.util.ExcelUtil;
 import com.organOld.service.util.Tool;
 import com.organOld.service.wrapper.Wrappers;
 import com.organOld.service.contract.*;
@@ -30,8 +32,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -87,24 +94,120 @@ public class OldmanServiceImpl implements OldmanService {
         commonService.checkIsOrgan(oldman);
         page.setEntity(oldman);
         List<OldmanModel> oldmanList=oldmanBaseDao.getByPage(page).stream().map(Wrappers.oldmanWrapper::wrap).collect(Collectors.toList());
-        fillAutoValue(oldmanList,AutoValueEnum.SQZW.getIndex());
+        try {
+            fillAutoValue(oldmanList,AutoValueEnum.SQZW.getIndex(),"Sqzw");
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
         Long size=oldmanBaseDao.getSizeByPage(page);
         return commonService.tableReturn(bTableRequest.getsEcho(),size,oldmanList);
     }
 
-    private void fillAutoValue(List<OldmanModel> oldmanList, int type) {
+    @Override
+    public void export(HttpServletResponse response, ExportTableThRequest exportTableThRequest) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        Oldman oldman= Wrappers.oldmanWrapper.unwrapAll(exportTableThRequest);
+        commonService.checkIsOrgan(oldman);
+        List<ExportOldman> exportOldmanList=oldmanBaseDao.getAll(oldman).stream().map(Wrappers.oldmanWrapper::wrapAll).collect(Collectors.toList());
+
+        //excel标题
+        String[] title =new String[exportTableThRequest.getTh().size()];
+        String[] engTitle=new String[exportTableThRequest.getTh().size()];
+        int i=0,j=0,k;
+        for(String t:exportTableThRequest.getTh()){
+            String ct=t.split("#")[1];
+            String engt=t.split("#")[0];
+            title[i]=ct;
+            engTitle[i]=engt;
+            i++;
+        }
+        //excel文件名
+        String fileName = "老人信息表.xls";
+        String sheetName = "老人信息表";
+        String[][] content=new String[exportOldmanList.size()][];
+        for(ExportOldman exportOldman:exportOldmanList){
+            k=0;
+            content[j]=new String[exportTableThRequest.getTh().size()];
+            for(String eng:engTitle){
+                if(eng.equals("getSqzw")){
+                    fillExportAutoValue(exportOldman,AutoValueEnum.SQZW.getIndex());
+                }
+                Method method = exportOldman.getClass().getMethod(eng, null);
+                content[j][k++]= (String) method.invoke(exportOldman,null);
+            }
+            j++;
+        }
+
+//创建HSSFWorkbook
+        HSSFWorkbook wb = ExcelUtil.getHSSFWorkbook(sheetName, title, content, null);
+
+//响应到客户端
+        try {
+            this.setResponseHeader(response, fileName);
+            OutputStream os = response.getOutputStream();
+            wb.write(os);
+            os.flush();
+            os.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void fillExportAutoValue(ExportOldman exportOldman, int type) {
         List<AutoValue> autoValueList=autoValueDao.getByType(type);
         Map<Integer,String> map=new HashMap<>();
         autoValueList.forEach(s->map.put(s.getId(),s.getValue()));
-        for(OldmanModel oldmanModel:oldmanList){
-            if(oldmanModel.getSqzwString()!=null && !oldmanModel.getSqzwString().equals("")){
-                String[] sq=oldmanModel.getSqzwString().split("#");
-                List<String> sqzw=new ArrayList<>();
+            if(exportOldman.getSqzw()!=null && !exportOldman.getSqzw().equals("")){
+                String[] sq=exportOldman.getSqzw().split("#");
+                exportOldman.setSqzw("");
                 for(String s:sq){
-//                    s=s.replace("s","");
-                    sqzw.add(map.get(Integer.parseInt(s)));
+                    exportOldman.setSqzw(exportOldman.getSqzw()+","+map.get(Integer.parseInt(s)));
                 }
-                oldmanModel.setSqzw(sqzw);
+                exportOldman.setSqzw(exportOldman.getSqzw().substring(1));
+            }
+
+    }
+
+    public void setResponseHeader(HttpServletResponse response, String fileName) {
+        try {
+            try {
+                fileName = new String(fileName.getBytes(),"ISO8859-1");
+            } catch (UnsupportedEncodingException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            response.setContentType("application/vnd.ms-excel");
+            response.setHeader("Content-disposition", "attachment;filename="+fileName);
+//            response.setContentType("application/octet-stream;charset=ISO8859-1");
+//            response.setHeader("Content-Disposition", "attachment;filename="+ fileName);
+//            response.addHeader("Pargam", "no-cache");
+//            response.addHeader("Cache-Control", "no-cache");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+
+    private void fillAutoValue(List<? extends Model> list, int type,String method) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        List<AutoValue> autoValueList=autoValueDao.getByType(type);
+        Map<Integer,String> map=new HashMap<>();
+        autoValueList.forEach(s->map.put(s.getId(),s.getValue()));
+        for(Model model : list){
+            String setM="set"+method;
+            String getM="get"+method+"String";
+            Method setMethod = model.getClass().getMethod(setM, List.class);
+            Method getMethod = model.getClass().getMethod(getM, null);
+
+            if((String)getMethod.invoke(model,null)!=null && !((String)getMethod.invoke(model,null)).equals("")){
+                String[] s=((String)getMethod.invoke(model,null)).split("#");
+                List<String> sList=new ArrayList<>();
+                for(String ss:s){
+                    sList.add(map.get(Integer.parseInt(ss)));
+                }
+                setMethod.invoke(model,sList);
             }
         }
     }
@@ -170,6 +273,15 @@ public class OldmanServiceImpl implements OldmanService {
         page.setEntity(family);
         List<OldmanFamilyModel> familyModelList=familyDao.getByPage(page).stream().map(Wrappers.familyWrapper::wrap).collect(Collectors.toList());
         Long size=familyDao.getSizeByPage(page);
+        try {
+            fillAutoValue(familyModelList,AutoValueEnum.JTLB.getIndex(),"FamilyType");
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
         return commonService.tableReturn(bTableRequest.getsEcho(),size,familyModelList);
     }
 
@@ -233,6 +345,15 @@ public class OldmanServiceImpl implements OldmanService {
 
 
     @Override
+    public HealthSelectInfoModel getAllHealthInfo() {
+        List<Integer> typeList=commonService.getAutoValueTypes("health_add");
+        List<AutoValue> autoValueList=autoValueDao.getByTypeList(typeList);
+        List<HealthSelect> healthSelectList=oldmanHealthDao.getAllHealthSelect();
+        HealthSelectInfoModel healthSelectInfoModel=Wrappers.oldmanWrapper.wrapHealthSelectInfo(autoValueList,healthSelectList);
+        return healthSelectInfoModel;
+    }
+
+    @Override
     public String getHomeOldmanByPage(HomeOldmanRequest homeOldmanRequest, BTableRequest bTableRequest) {
         Page<HomeOldman> page=commonService.getPage(bTableRequest,"oldman_homeOldman");
         HomeOldman homeOldman=Wrappers.homeOldmanWrapper.unwrap(homeOldmanRequest);
@@ -257,6 +378,15 @@ public class OldmanServiceImpl implements OldmanService {
 
         page.setEntity(oldman);
         List<OldmanModel> oldmanModelList=oldmanBaseDao.getByPage(page).stream().map(Wrappers.oldmanWrapper::wrap).collect(Collectors.toList());
+        try {
+            fillAutoValue(oldmanModelList,AutoValueEnum.SQZW.getIndex(),"Sqzw");
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
         if(oldmanModelList!=null && oldmanModelList.size()>0)
             oldmanAllInfoModel.setOldman(oldmanModelList.get(0));
 
@@ -379,7 +509,9 @@ public class OldmanServiceImpl implements OldmanService {
 
                     //创建实体类
                     oldman.setName(r.getCell(3).getStringCellValue());
-                    oldman.setSex((r.getCell(4).getStringCellValue().equals("男")) ? 2 : 1);
+                    String sex=r.getCell(4).getStringCellValue();
+                    sex=sex.replace("性","");
+                    oldman.setSex((sex.equals("男")) ? 2 : 1);
                     oldman.setBirthday(Tool.stringToDate((r.getCell(5).getStringCellValue())));
                     oldman.setPid(r.getCell(6).getStringCellValue());
                     oldman.setAddress(r.getCell(7).getStringCellValue());
@@ -421,12 +553,12 @@ public class OldmanServiceImpl implements OldmanService {
                     String sqzw="";
                     if (r.getCell(17).getStringCellValue().equals("1")) {
                         Integer szIndex = autoValueDao.getStringLikeIndex("三长", AutoValueEnum.SQZW.getIndex(), "equals");
-                        sqzw="s"+szIndex+"s";
+                        sqzw=szIndex+"";
                     }
                     if (r.getCell(18).getStringCellValue().equals("1")) {
                         Integer sqIndex = autoValueDao.getStringLikeIndex("社区团队负责人", AutoValueEnum.SQZW.getIndex(), "equals");
                         if(sqzw.length()>1){
-                            sqzw+="#s"+sqIndex+"s";
+                            sqzw+="#"+sqIndex;
                         }
                     }
                     oldman.setSqzw(sqzw);
@@ -633,6 +765,29 @@ public class OldmanServiceImpl implements OldmanService {
                         family.setFamilyIndex(autoValueDao.getStringLikeIndex("其他", AutoValueEnum.JJJG.getIndex(), "like"));
                     }
 
+                    String familyType="";
+                    if (r.getCell(20).getStringCellValue().equals("1")) {
+                       familyType+=autoValueDao.getStringLikeIndex("独生子女家庭", AutoValueEnum.JTLB.getIndex(), "like")+"#";
+                    }
+                    if (r.getCell(21).getStringCellValue().equals("1")) {
+                        familyType+=autoValueDao.getStringLikeIndex("军属", AutoValueEnum.JTLB.getIndex(), "like")+"#";
+                    }
+                    if (r.getCell(22).getStringCellValue().equals("1")) {
+                        familyType+=autoValueDao.getStringLikeIndex("烈士家庭", AutoValueEnum.JTLB.getIndex(), "like")+"#";
+                    }
+                    if (r.getCell(23).getStringCellValue().equals("1")) {
+                        familyType+=autoValueDao.getStringLikeIndex("离休干部", AutoValueEnum.JTLB.getIndex(), "like")+"#";
+                    }
+                    if (r.getCell(24).getStringCellValue().equals("1")) {
+                        familyType+=autoValueDao.getStringLikeIndex("侨属", AutoValueEnum.JTLB.getIndex(), "like")+"#";
+                    }
+                    if(!familyType.equals("")){
+                        familyType=familyType.substring(0,familyType.length()-1);
+                        family.setFamilyTypeIndex(familyType);
+                    }
+
+
+
                     OldmanEconomic economic = new OldmanEconomic();
                     if (r.getCell(69).getStringCellValue().equals("1")) {
                         economic.setEconomicIndex(autoValueDao.getStringLikeIndex("帮困", AutoValueEnum.JJTJ.getIndex(), "like"));
@@ -756,7 +911,8 @@ public class OldmanServiceImpl implements OldmanService {
         if(familyList_add.size()>0)
             oldmanFamilyDao.saveAll(familyList_add);
 
-        healthSelectManDao.delByOldmanId(existOldmanIds);
+        if(existOldmanIds.size()>0)
+            healthSelectManDao.delByOldmanIds(existOldmanIds);
         if(healthSelectManList_add.size()>0) {
             //先把之前的记录删掉
             healthSelectManDao.saveAll(healthSelectManList_add);
@@ -814,6 +970,9 @@ public class OldmanServiceImpl implements OldmanService {
             case "linkman":
                 Linkman linkman=linkmanDao.getById(id);
                 return new Result(true,linkman);
+            case "health":
+                OldmanHealth oldmanHealth=oldmanHealthDao.getByOldmanId(id);
+                return new Result(true,oldmanHealth);
         }
         return null;
     }
@@ -830,6 +989,8 @@ public class OldmanServiceImpl implements OldmanService {
                 break;
             case "family":
                 OldmanFamily oldmanFamily=(OldmanFamily)dbEntity;
+                if(oldman.getSqzw()!=null && !oldman.getSqzw().equals(""))
+                    oldman.setSqzw(oldman.getSqzw().replace(",","#"));
                 oldmanFamilyDao.updateById(oldmanFamily);
                 break;
             case "economic":
@@ -839,6 +1000,14 @@ public class OldmanServiceImpl implements OldmanService {
             case "linkman":
                 Linkman linkman=(Linkman) dbEntity;
                 linkmanDao.updateById(linkman);
+                break;
+            case "health":
+                OldmanHealth oldmanHealth=(OldmanHealth) dbEntity;
+                oldmanHealthDao.updateById(oldmanHealth);
+                healthSelectManDao.delByOldmanId(oldmanHealth.getOldman().getId());
+                healthAddDao.delByOldmanId(oldmanHealth.getOldman().getId());
+                List<HealthAdd> healthAddList=new ArrayList<>();
+
         }
         return new Result(true);
     }

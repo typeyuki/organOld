@@ -41,6 +41,8 @@ public class RecordWrapper implements Wrapper<Record,RecordModel,RecordRequest> 
     public Record unwrap(RecordRequest recordRequest) {
         Record record=new Record();
         BeanUtils.copyProperties(recordRequest,record);
+        record.setStart(Tool.stringToDate(recordRequest.getStart()));
+        record.setEnd(Tool.stringToDate(recordRequest.getEnd()));
         return record;
     }
 

@@ -69,7 +69,9 @@ function oldman_edit(id,url) {
                 }
                 else{
                     if(data[key]!=null){
-                        $("#editModal input[name='"+key+"']").val(data[key]);
+                        $("#editModal input[name='"+key+"'][type='hidden']").val(data[key]);
+                        $("#editModal input[name='"+key+"'][type='text']").val(data[key]);
+                        $("#editModal input[name='"+key+"'][type='radio'][value='"+data[key]+"']").prop("checked",true);
                         $("#editModal select[name='"+key+"'] option[value='"+data[key]+"']").prop("selected",true);
                     }else{
                         $("#editModal select[name='"+key+"'] option:first-child").prop("selected",true);
@@ -96,6 +98,7 @@ function del(url) {
     $("input[name='id']:checked").each(function () {
        ids.push($(this).val());
     });
+
     $.ajax({
         url : url,
         type : "post",

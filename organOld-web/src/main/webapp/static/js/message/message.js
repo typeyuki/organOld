@@ -30,8 +30,8 @@ $(document).ready(function(){
                         var id=data.split("#")[0];
                         var read=data.split("#")[1];
                         if(read=="1")
-                        return"<input type='checkbox' class='read' />";
-                        else return"<input type='checkbox' class='noRead' />";
+                        return"<input type='checkbox' class='read'  name='id' value='"+data+"'/>";
+                        else return"<input type='checkbox' class='noRead'  name='id' value='"+data+"'/>";
                     }
                 },
                 {
@@ -63,7 +63,9 @@ $(document).ready(function(){
                 "iDisplayLength" : aoData.iDisplayLength,
                 "iSortCol_0" : aoData.iSortCol_0,
                 "sEcho" : aoData.sEcho,
-                "sSortDir_0" : aoData.sSortDir_0
+                "sSortDir_0" : aoData.sSortDir_0,
+                "search" : $('.search').val(),
+                "type":$("select[name='type']").val()
             },
             type: 'POST',
             dataType: 'json',

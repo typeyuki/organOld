@@ -83,6 +83,6 @@ function add() {
 function edit(url) {
     $("#editModal form").attr("action","/autoValue/"+type+"/update");
     $("#editModal small").html("修改");
-    $("#editModal .firSub").html("修改");
+    $("#editModal .firSub").html("保存");
     oldman_edit(1,url);
 }

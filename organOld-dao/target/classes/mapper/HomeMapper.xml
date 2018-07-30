@@ -40,11 +40,17 @@
             h.id,h.fir_type,h.sec_type,d.id did,d.name,o.id oid,o.name oname,d.time
             FROM home h,home_doctor d,organ o
             WHERE h.fir_type=#{entity.firType} AND h.sec_type=d.id AND d.organ_id=o.id
+            <if test="entity!=null and entity.search!=null and entity.search!=''">
+                and (d.name LIKE  concat('%',#{entity.search},'%') OR o.name LIKE  concat('%',#{entity.search},'%'))
+            </if>
         </if>
         <if test="entity.firType!=null and entity.firType==5">
             h.id,h.fir_type,h.sec_type,o.id oid,o.name oname,o.time
             FROM home h,organ o
             WHERE h.fir_type=#{entity.firType} AND h.sec_type=o.id
+            <if test="entity!=null and entity.search!=null and entity.search!=''">
+                and (o.name LIKE  concat('%',#{entity.search},'%'))
+            </if>
         </if>
         <if test="sortType!=null and sortType!=''">
             ORDER BY ${sortType}

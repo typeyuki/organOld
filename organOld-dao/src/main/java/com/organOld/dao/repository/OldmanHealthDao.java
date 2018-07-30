@@ -18,4 +18,6 @@ public interface OldmanHealthDao extends BaseDao<OldmanHealth,Integer>{
     Integer getSelectStringLikeIndex(@Param("str") String str, @Param("type") int index);
 
     void updateByOldmanIds(List<OldmanHealth> healthList_update);
+
+    OldmanHealth getByOldmanId(int id);
 }

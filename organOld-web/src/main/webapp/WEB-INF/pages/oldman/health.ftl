@@ -37,12 +37,10 @@
                 <div class="ibox-content">
                     <div class="jw">
                         <a onclick=newPage("134","健康管理",'/oldman/health/select') href="javascript:void(0);" class="btn btn-primary ">管理</a>
-                        <a  href="javascript:void(0);" id="search" class="btn btn-primary ">搜索</a>
+
                     </div>
+                    <a  href="javascript:void(0);" id="search" class="btn btn-primary ">搜索</a>
                     <div class="row">
-                        <div class="col-sm-2">
-                            <input class="oldmanId form-control inp" type="text" placeholder="老人序号">
-                        </div>
                         <div class="col-sm-4">
                             <input class="search form-control inp" type="text" placeholder="模糊匹配">
                         </div>
@@ -92,7 +90,7 @@
     </div>
 
 </div>
-
+<#include  "edit_health.ftl"/>
 <script src="/js/content.min.js?v=1.0.0"></script>
 <script src="/static/js/common.js"></script>
 <script src="/static/js/oldman/health.js" ></script>

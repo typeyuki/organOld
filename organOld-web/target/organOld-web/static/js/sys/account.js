@@ -23,6 +23,8 @@ $(document).ready(function(){
             },{
               data:"organName"
             },{
+                data:"status"
+            },{
                 data:"time"
             }
             ],
@@ -38,14 +40,14 @@ $(document).ready(function(){
                 },
                 // 增加一列，包括删除和修改，同时将我们需要传递的数据传递到链接中
                 {
-                    "targets": [7], // 目标列位置，下标从0开始
+                    "targets": [8], // 目标列位置，下标从0开始
                     "data": "id", // 数据列名
                     "render": function(data, type, full) { // 返回自定义内容
                         return "<span class='btn btn-primary' onclick='editUser("+data+")'>修改</span>";
                     }
                 },
                 //不进行排序的列
-                { "bSortable": false, "aTargets": [0,1,2,3,4,5,6,7] }
+                { "bSortable": false, "aTargets": [0,1,2,3,4,5,6,7,8] }
             ],
             "sAjaxSource": "/user/data",//这个是请求的地址
             "fnServerData": retrieveData
@@ -58,7 +60,10 @@ $(document).ready(function(){
                 "iDisplayLength" : aoData.iDisplayLength,
                 "iSortCol_0" : aoData.iSortCol_0,
                 "sEcho" : aoData.sEcho,
-                "sSortDir_0" : aoData.sSortDir_0
+                "sSortDir_0" : aoData.sSortDir_0,
+                "search" : $('.search').val(),
+                "role":$("select[name='role']").val(),
+                "disable":$("select[name='disable']").val()
             },
             type: 'POST',
             dataType: 'json',

@@ -5,10 +5,20 @@ import com.organOld.dao.entity.organ.Organ;
 public class Message extends DBEntity{
     private String username;
     private int userId;
-    private int type;
+    private Integer type;
     private String content;
     private Organ organ;
     private int isRead;
+
+    private String search;
+
+    public String getSearch() {
+        return search;
+    }
+
+    public void setSearch(String search) {
+        this.search = search;
+    }
 
     public int getIsRead() {
         return isRead;
@@ -42,11 +52,11 @@ public class Message extends DBEntity{
         this.userId = userId;
     }
 
-    public int getType() {
+    public Integer getType() {
         return type;
     }
 
-    public void setType(int type) {
+    public void setType(Integer type) {
         this.type = type;
     }
 

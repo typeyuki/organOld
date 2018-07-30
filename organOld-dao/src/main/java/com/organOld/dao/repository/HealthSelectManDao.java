@@ -5,5 +5,7 @@ import com.organOld.dao.entity.oldman.HealthSelectMan;
 import java.util.List;
 
 public interface HealthSelectManDao extends BaseDao<HealthSelectMan,Number> {
-    void delByOldmanId(List<Integer> existOldmanIds);
+    void delByOldmanIds(List<Integer> existOldmanIds);
+
+    void delByOldmanId(int oldmanId);
 }

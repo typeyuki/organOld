@@ -22,6 +22,13 @@
         <if test="entity.status!=null and entity.status!='' and entity.status!='3'.toString()">
             AND o.status=#{entity.status}
         </if>
+        <if test="entity!=null and entity.search!=null and entity.search!=''">
+            and (
+            o.name LIKE  concat('%',#{entity.search},'%') OR o.intro LIKE  concat('%',#{entity.search},'%')
+            OR o.address LIKE  concat('%',#{entity.search},'%') OR o.phone LIKE  concat('%',#{entity.search},'%')
+            OR o.id=#{entity.search}
+            )
+        </if>
         <if test="sortType!=null and sortType!=''">
             ORDER BY ${sortType}
         </if>
@@ -42,6 +49,13 @@
         </if>
         <if test="entity.status!=null and entity.status!='' and entity.status!='3'.toString()">
             AND o.status=#{entity.status}
+        </if>
+        <if test="entity!=null and entity.search!=null and entity.search!=''">
+            and (
+            o.name LIKE  concat('%',#{entity.search},'%') OR o.intro LIKE  concat('%',#{entity.search},'%')
+            OR o.address LIKE  concat('%',#{entity.search},'%') OR o.phone LIKE  concat('%',#{entity.search},'%')
+            OR o.id=#{entity.search}
+            )
         </if>
     </select>
 

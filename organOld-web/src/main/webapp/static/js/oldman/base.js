@@ -137,7 +137,7 @@ $(document).ready(function(){
                     "targets": [18], // 目标列位置，下标从0开始
                     "data": "id", // 数据列名
                     "render": function(data, type, full) { // 返回自定义内容
-                        return "<button class='btn btn-primary' id='"+data+"' onclick=newPage("+data+",$(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().text(),'/oldman/"+data+"/info')>查看</button><button class='btn btn-primary' onclick=oldman_edit("+data+",'/oldman/base/"+data+"/getById')>修改</button>";
+                        return "<button class='btn btn-primary' id='"+data+"' onclick=newPage("+data+",$(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().text(),'/oldman/"+data+"/info')>查看</button><button class='btn btn-primary' onclick=oldman_edit("+data+",'/oldman/base/"+data+"/getById')>修改</button>";
                     }
                 },
                 //不进行排序的列
@@ -165,22 +165,22 @@ $(document).ready(function(){
                 "sEcho" : aoData.sEcho,
                 "sSortDir_0" : aoData.sSortDir_0,
                 "id" : ($('input[name="id"]').val()==""?"0":$('input[name="id"]').val()),//参数不能是空 400
-                "census_array":$("select[name='census']").val(),
+                "census_array":$("select[name='censusArray']").val(),
                 "ageStart":$("input[name='ageStart']").val(),
                 "ageEnd":$("input[name='ageEnd']").val(),
-                "family_array":$("select[name='familyIndex']").val(),
-                "economic_array":$("select[name='economicIndex']").val(),
+                "family_array":$("select[name='family']").val(),
+                "economic_array":$("select[name='economic']").val(),
                 "sex":$("select[name='sex']").val(),
                 "search":$("input[name='search']").val(),
-                "politicalStatus_array":$("select[name='politicalStatuses']").val(),
+                "politicalStatus_array":$("select[name='politicalStatusArray']").val(),
                 "isHealth_array":$("select[name='isHealth']").val(),
                 "intelligence_array":$("select[name='intelligence']").val(),
                 "eyesight_array":$("select[name='eyesight']").val(),
                 "district_array":$("select[name='district']").val(),
                 "jw_array":$("select[name='jw']").val(),
-                "sqzw_array":$("select[name='sqzw']").val(),
-                "zc_array":$("select[name='zc']").val(),
-                "oldStatus_array":$("select[name='oldStatus']").val()
+                "sqzw_array":$("select[name='sqzwArray']").val(),
+                "zc_array":$("select[name='zcArray']").val(),
+                "oldStatus_array":$("select[name='oldStatusArray']").val()
             },
             type: 'POST',
             dataType: 'json',
@@ -207,3 +207,12 @@ $(document).ready(function(){
 });
 
 
+function exportTable() {
+    $("#exportModal input").prop("checked",true);
+    $("#exportModal").modal("hide");
+    $("#exportModal input:checked").each(function () {
+        var $input=$('<input type="hidden" name="th" value="'+$(this).val()+'">');
+        $("#exportForm").append($input);
+    });
+    $("#exportForm").submit();
+}

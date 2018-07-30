@@ -7,14 +7,20 @@ import com.organOld.service.enumModel.AutoValueEnum;
 import com.organOld.service.model.Model;
 import com.organOld.service.service.AutoValueService;
 import com.organOld.service.service.OldmanService;
+import com.organOld.service.util.ExcelUtil;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 
 /**
  * Created by netlab606 on 2018/4/1.
@@ -82,6 +88,8 @@ public class OldmanController {
     }
 
 
+
+
     /**
      * 导入的话  已有老人更新，没有的添加，去掉的设置为不可用    不能先删除之前的再添加，因为老人表涉及其他多个表 不能单纯的删除
      * @param file
@@ -134,7 +142,9 @@ public class OldmanController {
      */
     @RequestMapping(value = "/health",method = RequestMethod.GET)
     public ModelAndView health(){
-        return new ModelAndView("oldman/health");
+        ModelAndView mv=new ModelAndView("oldman/health");
+        mv.addObject("info",oldmanService.getAllHealthInfo());
+        return mv;
     }
 
     /**
@@ -192,6 +202,7 @@ public class OldmanController {
     public ModelAndView family(){
         ModelAndView mv= new ModelAndView("oldman/family");
         mv.addObject("family",autoValueService.getByType(AutoValueEnum.JJJG.getIndex()));
+        mv.addObject("familyType",autoValueService.getByType(AutoValueEnum.JTLB.getIndex()));
         return mv;
     }
 
@@ -202,8 +213,10 @@ public class OldmanController {
     @ResponseBody
     @RequestMapping(value = "/familyData",method = RequestMethod.POST)
     public String family_data(OldmanFamilyRequest familyRequest, BTableRequest bTableRequest,
-                              @RequestParam(value = "family_array[]",required = false) String family[]){
+                              @RequestParam(value = "family_array[]",required = false) String family[],
+                              @RequestParam(value = "family_type_array[]",required = false) String familyType[]){
         familyRequest.setFamilyArray(family);
+        familyRequest.setFamilyTypeArray(familyType);
         return oldmanService.getFamilyByPage(familyRequest,bTableRequest);
     }
 
@@ -398,6 +411,12 @@ public class OldmanController {
         return mv;
     }
 
+    @RequestMapping(value = "/health/update",method = RequestMethod.POST)
+    public ModelAndView health_update(OldmanHealth oldmanHealth){
+        ModelAndView mv=new ModelAndView("redirect:/oldman/health");
+        oldmanService.updateById(oldmanHealth,"health");
+        return mv;
+    }
 
 
     @ResponseBody
@@ -412,5 +431,13 @@ public class OldmanController {
         oldmanService.updateIntegral(sign,consume);
         return mv;
     }
+
+    @ResponseBody
+    @RequestMapping(value = "/export", method = RequestMethod.POST)
+    public void export(HttpServletResponse response, ExportTableThRequest exportTableThRequest)
+            throws Exception{
+        oldmanService.export(response,exportTableThRequest);
+    }
+
 
 }

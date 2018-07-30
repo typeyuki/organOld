@@ -20,7 +20,15 @@ public class HomeOldman extends DBEntity implements DBInterface{
     private Home home;
 
     private Integer organId;//居委ID
+    private String search;
 
+    public String getSearch() {
+        return search;
+    }
+
+    public void setSearch(String search) {
+        this.search = search;
+    }
 
     public String[] getType() {
         return type;

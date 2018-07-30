@@ -7,6 +7,16 @@ public class UserModel {
     private String organName;
     private String roleDesc;
     private String time;
+    private String status;
+
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public String getOrganName() {
         return organName;

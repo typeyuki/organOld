@@ -36,13 +36,21 @@
                         <a  href="javascript:void(0);" id="search" class="btn btn-primary ">搜索</a>
                     </div>
                     <div class="row">
-                        <div class="col-sm-2">
-                            <input class="form-control inp" name="oldmanId" type="text" placeholder="老人序号">
+                        <div class="col-sm-4">
+                            <input class="search form-control inp" type="text" placeholder="模糊匹配">
                         </div>
                         <div class="col-sm-3">
                             <label>家庭结构：</label>
                             <select name="familyIndex"  class="selectpicker bla bla bli" multiple data-live-search="true">
                             <#list family as list>
+                                <option value="${list.id!}"> <i></i> ${list.value!}</option>
+                            </#list>
+                            </select>
+                        </div>
+                        <div class="col-sm-3">
+                            <label>家庭类别：</label>
+                            <select name="familyTypeIndex"  class="selectpicker bla bla bli" multiple data-live-search="true">
+                            <#list familyType as list>
                                 <option value="${list.id!}"> <i></i> ${list.value!}</option>
                             </#list>
                             </select>
@@ -55,6 +63,7 @@
                                 <th>老人序号</th>
                                 <th>老人姓名</th>
                                 <th>家庭结构</th>
+                                <th>家庭类别</th>
                                 <th>更新时间</th>
                                 <th></th>
                             </tr>

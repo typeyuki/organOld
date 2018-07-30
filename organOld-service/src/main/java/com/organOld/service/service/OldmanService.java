@@ -4,11 +4,15 @@ package com.organOld.service.service;
 import com.organOld.dao.entity.DBEntity;
 import com.organOld.dao.entity.oldman.HealthSelect;
 import com.organOld.service.contract.*;
+import com.organOld.service.model.HealthSelectInfoModel;
 import com.organOld.service.model.OldmanAddInfoModel;
 import com.organOld.service.model.OldmanAllInfoModel;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * Created by netlab606 on 2018/4/1.
@@ -59,4 +63,8 @@ public interface OldmanService {
     Result getIntegralRule();
 
     void updateIntegral(int sign, int consume);
+
+    void export(HttpServletResponse response, ExportTableThRequest exportTableThRequest) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, IllegalAccessException;
+
+    HealthSelectInfoModel getAllHealthInfo();
 }

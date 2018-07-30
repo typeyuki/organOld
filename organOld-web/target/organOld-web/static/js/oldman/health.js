@@ -122,7 +122,7 @@ $(document).ready(function(){
                     "targets": [12], // 目标列位置，下标从0开始
                     "data": "oldmanId", // 数据列名
                     "render": function(data, type, full) { // 返回自定义内容
-                        return "<button class='btn btn-primary' id='"+data+"' onclick=newPage("+data+",$(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().text(),'/oldman/"+data+"/info')>查看</button><button class='btn btn-primary' id='"+data+"'>修改</button>";
+                        return "<button class='btn btn-primary' id='"+data+"' onclick=newPage("+data+",$(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().text(),'/oldman/"+data+"/info')>查看</button><button onclick='edit_health("+data+")' class='btn btn-primary' id='"+data+"'>修改</button>";
                     }
                 },
                 //不进行排序的列
@@ -130,14 +130,6 @@ $(document).ready(function(){
             ],
             "sAjaxSource": "/oldman/healthData",//这个是请求的地址
             "fnServerData": retrieveData
-            // "fnServerParams": function (aoData) {  //查询条件
-            //     aoData.push(
-            //         { "name": "id", "value": $('.id').val() },
-            //         { "name": "sex", "value": $('.sex').val() },
-            //         { "name": "age", "value": $('.age').val() },
-            //         { "name": "time", "value": $('.time').val() }
-            //     );
-            // }
         });
     function retrieveData(url, aoData, fnCallback) {
         $.ajax({
@@ -148,7 +140,6 @@ $(document).ready(function(){
                 "iSortCol_0" : aoData.iSortCol_0,
                 "sEcho" : aoData.sEcho,
                 "sSortDir_0" : aoData.sSortDir_0,
-                "oldmanId" : ($('.oldmanId').val()==""?"0":$('.oldmanId').val()),//参数不能是空 400
                 "search" : $('.search').val()
             },
             type: 'POST',
@@ -175,3 +166,58 @@ $(document).ready(function(){
 
 });
 
+function edit_health(id) {
+    $(".searchable-select").remove();
+    $("#editModal input[type='checkbox']").prop("checked",false);
+    $("#exzl").find("input").remove();
+    $("#gz").find("input").remove();
+    $("#cj").find("input").remove();
+    var url="/oldman/health/"+id+"/getById";
+    $.ajax({
+        url: url,
+        type: "get",
+        async:false,
+        success: function (result) {
+            var data=result.data;
+            for(key in data){
+                if(key=="oldman"){
+                    $("#editModal input[name='oldman.id']").val(data[key].id);
+                }else if(key=="healthSelect"){
+                    if(data[key]!=null && data[key].length>0){
+                        for(var i=0;i<data[key].length;i++){
+                            $("#editModal input[name='"+key+"'][type='checkbox'][value='"+data[key][i].id+"']").prop("checked",true);
+                        }
+                    }
+                }else if(key=="healthAdd"){
+                    if(data[key]!=null && data[key].length>0){
+                        for(var i=0;i<data[key].length;i++){
+                            var $input
+                            if(data[key][i].type==4){
+                                $input=$("<input name='healthAdd_exzl'  class='form-control inp healthAdd' db='"+data[key][i].id+"' value='"+data[key][i].desc+"'/>");
+                                $("#exzl").append($input);
+                            }else if(data[key][i].type==5){
+                                $input=$("<input name='healthAdd_gz'  class='form-control inp healthAdd' db='"+data[key][i].id+"' value='"+data[key][i].desc+"'/>");
+                                $("#gz").append($input);
+                            }else{
+                                $input=$("<input name='healthAdd_cj'  class='form-control inp healthAdd' db='"+data[key][i].id+"' value='"+data[key][i].desc+"'/>");
+                                $("#cj").append($input);
+                            }
+                            $("#editModal input[name='"+key+"'][type='checkbox'][value='"+data[key][i].id+"']").prop("checked",true);
+                        }
+                    }
+                }else{
+                    if(data[key]!=null){
+                        $("#editModal input[name='"+key+"'][type='hidden']").val(data[key]);
+                        $("#editModal input[name='"+key+"'][type='text']").val(data[key]);
+                        $("#editModal select[name='"+key+"'] option[value='"+data[key]+"']").prop("selected",true);
+                    }else{
+                        $("#editModal select[name='"+key+"'] option:first-child").prop("selected",true);
+                    }
+                }
+            }
+
+            $('.search_select').searchableSelect();
+            $("#editModal").modal();
+        }
+    });
+}

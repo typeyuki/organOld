@@ -151,7 +151,8 @@ $(document).ready(function(){
                 "sEcho" : aoData.sEcho,
                 "sSortDir_0" : aoData.sSortDir_0,
                 "firType" : typeHome,
-                "status":status
+                "status":status,
+                "search":$('.search').val()
             },
             type: 'POST',
             dataType: 'json',

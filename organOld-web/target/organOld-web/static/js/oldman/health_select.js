@@ -96,6 +96,6 @@ function edit(id,obj) {
     $("#healthModal input[name='secTypeName']").val($(obj).parent().prev().prev().text());
     $("#healthModal form").attr("action","/oldman/health/select/update");
     $("#healthModal small").html("修改");
-    $("#healthModal .sub").html("修改");
+    $("#healthModal .sub").html("保存");
     $("#healthModal").modal();
 }

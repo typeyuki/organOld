@@ -33,8 +33,8 @@
                         <a  href="javascript:void(0);" id="search" class="btn btn-primary ">搜索</a>
                     </div>
                     <div class="row">
-                        <div class="col-sm-2">
-                            <input class="form-control inp" name="oldmanId" type="text" placeholder="老人序号">
+                        <div class="col-sm-4">
+                            <input class="search form-control inp" type="text" placeholder="模糊匹配">
                         </div>
                         <div class="col-sm-2">
                             <label >是否在排队</label>

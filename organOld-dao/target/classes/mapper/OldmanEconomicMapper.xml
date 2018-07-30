@@ -41,6 +41,10 @@
                 #{item}
             </foreach>
         </if>
+        <if test="entity!=null and entity.search!=null and entity.search!=''">
+            and (ob.name LIKE  concat('%',#{entity.search},'%')
+            OR ob.id=#{entity.search})
+        </if>
         <if test="sortType!=null and sortType!=''">
             ORDER BY ob.${sortType}
         </if>
@@ -73,6 +77,10 @@
         <if test="entity!=null and entity.oldmanId!=null and entity.oldmanId!=0">
             and ob.id=#{entity.oldmanId}
         </if>
+        <if test="entity!=null and entity.search!=null and entity.search!=''">
+            and (ob.name LIKE  concat('%',#{entity.search},'%')
+            OR ob.id=#{entity.search})
+        </if>
         <if test="entity!=null and entity.economicArray!=null and entity.economicArray.length > 0">
             and oe.economic_index IN
             <foreach collection="entity.economicArray" index="index" item="item" separator="," open="(" close=")">
@@ -95,6 +103,7 @@
         <foreach collection="list" index="index" item="item" open="" separator=" " close="">
             WHEN ${item.oldmanId} THEN #{item.economicIndex}
         </foreach>
+        ELSE economic_index
         END
         where oldman_id in
         <foreach collection="list" index="index" item="item" separator="," open="(" close=")">

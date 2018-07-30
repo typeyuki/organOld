@@ -13,7 +13,27 @@ public class Card extends DBEntity{
     private Double money;
     private Integer status;
     private Oldman oldman;
+    private Integer isCreate;
 
+
+    private String search;
+
+
+    public String getSearch() {
+        return search;
+    }
+
+    public void setSearch(String search) {
+        this.search = search;
+    }
+
+    public Integer getIsCreate() {
+        return isCreate;
+    }
+
+    public void setIsCreate(Integer isCreate) {
+        this.isCreate = isCreate;
+    }
 
     public Oldman getOldman() {
         return oldman;

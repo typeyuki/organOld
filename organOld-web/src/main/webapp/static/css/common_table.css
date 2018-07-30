@@ -30,3 +30,21 @@
     min-width: 100%!important;
 }
 
+.searchable-select-items,.bootstrap-select.btn-group .dropdown-menu.inner{
+    background-color:#1ab394 !important;
+    color: white !important;
+}
+
+.searchable-select-item.selected{
+    background-color:white !important;
+    color: black !important;
+}
+
+.table .btn{
+    padding: 3px 6px!important;
+
+}
+
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th{
+    padding: 3px 8px!important;
+}

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -42,5 +43,12 @@ public class MessageController {
     public Result read(){
         Result result=messageService.read();
         return result;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/del",method = RequestMethod.POST)
+    public Result del(@RequestParam("ids[]") String ids[]){
+        messageService.delByIds(ids);
+        return new Result(true);
     }
 }

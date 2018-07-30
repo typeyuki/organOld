@@ -13,16 +13,24 @@ import com.organOld.service.contract.CardRequest;
 import com.organOld.service.contract.Result;
 import com.organOld.service.enumModel.RecordTypeEnum;
 import com.organOld.service.model.CardModel;
+import com.organOld.service.model.ExcelReturnModel;
 import com.organOld.service.model.OldmanAllInfoModel;
 import com.organOld.service.service.CardService;
 import com.organOld.service.service.CommonService;
 import com.organOld.service.service.OldmanService;
 import com.organOld.service.service.RecordService;
+import com.organOld.dao.util.bean.QrCodeData;
 import com.organOld.service.wrapper.Wrappers;
+import com.swetake.util.Qrcode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -170,5 +178,80 @@ public class CardServiceImpl implements CardService {
         }else{
             return new Result(true);
         }
+    }
+
+    @Override
+    public Result create(String[] ids) {
+        List<QrCodeData> qrCodeData=cardDao.getQrDataByIds(ids);
+        ExcelReturnModel excelReturnModel=createCode(qrCodeData);
+        excelReturnModel.setTotal(ids.length);
+        excelReturnModel.setNumSuccess(qrCodeData.size());
+        return new Result(true,excelReturnModel);
+
+    }
+
+    public ExcelReturnModel createCode(List<QrCodeData> qrCodeDataList){
+       ExcelReturnModel excelReturnModel=new ExcelReturnModel();
+       int sucessAdd=0,failNum=0;
+       try {
+           for (QrCodeData qrCodeData : qrCodeDataList) {
+               Qrcode qrcode = new Qrcode();
+               qrcode.setQrcodeErrorCorrect('M');//纠错等级（分为L、M、H三个等级）
+               qrcode.setQrcodeEncodeMode('B');//N代表数字，A代表a-Z，B代表其它字符
+               qrcode.setQrcodeVersion(7);//版本
+               //生成二维码中要存储的信息
+               String qrData = qrCodeData.getCid();
+               //设置一下二维码的像素
+               int width = 67 + 12 * (7 - 1);
+               int height = 67 + 12 * (7 - 1);
+               BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+               //绘图
+               Graphics2D gs = bufferedImage.createGraphics();
+               gs.setBackground(Color.WHITE);
+               gs.setColor(Color.BLACK);
+               gs.clearRect(0, 0, width, height);//清除下画板内容
+
+               //设置下偏移量,如果不加偏移量，有时会导致出错。
+               int pixoff = 2;
+
+               byte[] d = qrData.getBytes("gb2312");
+               if (d.length > 0 && d.length < 120) {
+                   boolean[][] s = qrcode.calQrcode(d);
+                   for (int i = 0; i < s.length; i++) {
+                       for (int j = 0; j < s.length; j++) {
+                           if (s[j][i]) {
+                               gs.fillRect(j * 3 + pixoff, i * 3 + pixoff, 3, 3);
+                           }
+                       }
+                   }
+               }
+               gs.dispose();
+               bufferedImage.flush();
+               File file=new File(ValueConstant.CODE_CREATE_PATH + qrCodeData.getName() + ".png");
+               if (!file.getParentFile().exists()) {
+                   file.getParentFile().mkdirs();
+               }
+               ImageIO.write(bufferedImage, "png", file);
+               sucessAdd++;
+               cardDao.updateProp("is_create","1",qrCodeData.getId());
+           }
+       }catch (Exception e){
+           e.printStackTrace();
+           failNum++;
+       }
+       excelReturnModel.setSuccessAdd(sucessAdd);
+       excelReturnModel.setNumFail(failNum);
+        return excelReturnModel;
+    }
+
+
+    @Override
+    public Result getById(Integer id) {
+        return new Result(true,cardDao.getById(id));
+    }
+
+    @Override
+    public void updateById(Card card) {
+        cardDao.updateById(card);
     }
 }

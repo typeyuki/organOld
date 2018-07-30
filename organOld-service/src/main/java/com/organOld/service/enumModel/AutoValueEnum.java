@@ -15,7 +15,8 @@ public enum AutoValueEnum {
     WDT("无电梯楼层",11),
     JYLY("是否主动申请进养老院",12),
     ZC("职称",13),
-    SQZW("社区职务",14),;//年龄分布
+    SQZW("社区职务",14),
+    JTLB("家庭类别",15);
     private String name ;
     private int index ;
 

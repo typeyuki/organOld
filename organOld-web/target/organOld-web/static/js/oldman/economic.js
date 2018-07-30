@@ -46,8 +46,8 @@ $(document).ready(function(){
                 "iSortCol_0" : aoData.iSortCol_0,
                 "sEcho" : aoData.sEcho,
                 "sSortDir_0" : aoData.sSortDir_0,
-                "oldmanId":$("input[name='oldmanId']").val(),
-                "economic_array":$("select[name='economicIndex']").val()
+                "economic_array":$("select[name='economicIndex']").val(),
+                "search" : $('.search').val()
             },
             type: 'POST',
             dataType: 'json',

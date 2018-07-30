@@ -24,7 +24,7 @@ $(document).ready(function(){
                     "targets": [1], // 目标列位置，下标从0开始
                     "data": "oldman", // 数据列名
                     "render": function(data, type, full) { // 返回自定义内容
-                        return "<label class='control-label man' onclick=newPage('"+data.id+"','"+data.name+"','/oldman/"+data.id+"/info/base')>"+data.name+"</label>";
+                        return "<label class='control-label man'>"+data.name+"</label>";
                     }
                 },
                 // 增加一列，包括删除和修改，同时将我们需要传递的数据传递到链接中
@@ -34,7 +34,7 @@ $(document).ready(function(){
                     "render": function(data, type, full) { // 返回自定义内容
                         var s="";
                         for(var i=0;i<data.length;i++){
-                            s+="<span id='product_'"+data[i].id+">"+data[i].name+"</span>"
+                            s+="<span id='product_'"+data[i].id+" style='margin: 5px'>"+data[i].name+"</span>"
                         }
                         return s;
                     }
@@ -45,9 +45,9 @@ $(document).ready(function(){
                     "data": "status", // 数据列名
                     "render": function(data, type, full) { // 返回自定义内容
                         if(data=="0"){
-                            return "<span class='mod' id='"+data+"'>处理</span>";
+                            return "<span class='btn btn-primary'onclick='handle($(this).parent().prev().prev().prev().prev().text())'>处理</span>";
                         } else{
-                            return "<span class='mod' id='"+data+"'>已处理</span>";
+                            return "<span class='btn btn-default' id='"+data+"'>已处理</span>";
                         }
                     }
                 }
@@ -90,3 +90,27 @@ $(document).ready(function(){
 
 });
 
+function handle(id) {
+    $.ajax({
+        url :"/product/book/handle",
+        type : "post",
+        dataType : 'json',
+        data:{
+            id:id
+        },
+        success : function(data) {
+            if (data.success==true) {
+                var start = $(".dataTables-example").dataTable().fnSettings()._iDisplayStart;
+                var total = $(".dataTables-example").dataTable().fnSettings().fnRecordsDisplay();
+                window.location.reload();
+                if(total-start==1){
+                    if(start>0){
+                        $(".dataTables-example").dataTable().fnPageChange('previous',true);
+                    }
+                }
+            } else {
+                alert('处理失败！');
+            }
+        }
+    });
+}
