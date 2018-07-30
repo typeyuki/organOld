@@ -408,6 +408,12 @@ public class OldmanController {
         return mv;
     }
 
+    @RequestMapping(value = "/health/update",method = RequestMethod.POST)
+    public ModelAndView health_update(OldmanHealth oldmanHealth){
+        ModelAndView mv=new ModelAndView("redirect:/oldman/health");
+        oldmanService.updateById(oldmanHealth,"health");
+        return mv;
+    }
 
 
     @ResponseBody

@@ -4,6 +4,7 @@ import com.organOld.dao.entity.product.Product;
 import com.organOld.service.contract.BTableRequest;
 import com.organOld.service.contract.ProductBookRequest;
 import com.organOld.service.contract.ProductRequest;
+import com.organOld.service.contract.Result;
 import com.organOld.service.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -62,5 +63,12 @@ public class ProductController {
     @RequestMapping(value = "/book/data",method = RequestMethod.POST)
     public String data(ProductBookRequest productBookRequest, BTableRequest bTableRequest){
         return productService.getBookByPage(productBookRequest,bTableRequest);
+    }
+
+    @ResponseBody
+    @RequestMapping("/book/handle")
+    public Result bookHandle(@RequestParam Integer id){
+        Result result=productService.bookHandle(id);
+        return result;
     }
 }

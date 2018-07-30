@@ -29,9 +29,14 @@
                 </div>
                 <div class="ibox-content">
                     <div>
-                        <input class="id" type="text" placeholder="序号">
-                        <input class="id" type="text" placeholder="模糊搜索">
-                        <button id="search">搜索</button>
+                        <a  href="javascript:void(0);" id="search" class="btn btn-primary ">搜索</a>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-5">
+                            <label >时间范围</label>
+                            <input class="form-control inp" type="date" name="startDate" style="width: 40%">-
+                            <input class="form-control inp" type="date" name="endDate" style="width: 40%">
+                        </div>
                     </div>
                     <div class="table-responsive">
                         <table class="table table-striped table-bordered table-hover dataTables-example text-nowrap">

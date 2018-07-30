@@ -26,11 +26,21 @@
         <if test="entity.organId!=null and entity.organId!=0">
             and r.organ_id=#{entity.organId}
         </if>
+        <if test="entity.start!=null">
+            <![CDATA[
+            and DATE_FORMAT(r.time,'%Y%m%d') >= DATE_FORMAT(#{entity.start},'%Y%m%d')
+            ]]>
+        </if>
+        <if test="entity.end!=null">
+            <![CDATA[
+            and DATE_FORMAT(r.time,'%Y%m%d') <= DATE_FORMAT(#{entity.end},'%Y%m%d')
+            ]]>
+        </if>
         <if test="sortType!=null and sortType!=''">
-            ORDER BY o.${sortType}
+            ORDER BY r.time
         </if>
         <if test="sort!=null and sort!=''">
-            ${sort}
+            desc
         </if>
         <if test="length!=null and length!=0">
             limit #{start},#{length}

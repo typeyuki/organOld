@@ -12,10 +12,11 @@
                                 <div class="ibox-content">
                                     <form method="post" id="oldmanEdit" class="form-horizontal" action="/oldman/base/update">
                                         <input type="hidden" name="id">
+                                        <input type="hidden" name="oldman.id">
                                         <div class="form-group">
                                             <label class="col-sm-1 control-label">血型</label>
                                             <div class="col-sm-8">
-                                                <input type="text" name="bloodType">
+                                                <input type="text" class="form-control inp" name="bloodType">
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -77,17 +78,25 @@
                                             </div>
                                         </#list>
                                         </div>
-                                        <div class="form-group" id="exzl">
+                                        <div class="form-group" >
                                             <label class="col-sm-2 control-label">恶性肿瘤史
                                             </label>
+                                            <div class="col-sm-8" id="exzl">
+                                            </div>
                                         </div>
-                                        <div class="form-group" id="gz">
+                                        <div class="form-group" >
                                             <label class="col-sm-2 control-label">骨折史
                                             </label>
+                                            <div class="col-sm-8" id="gz">
+
+                                            </div>
                                         </div>
-                                        <div class="form-group" id="cjqk">
+                                        <div class="form-group">
                                             <label class="col-sm-2 control-label">残疾情况
                                             </label>
+                                            <div class="col-sm-8" id="cj">
+
+                                            </div>
                                         </div>
                                     </form>
                                 </div>
@@ -98,11 +107,20 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <a onclick="$('#oldmanEdit').submit()" href="javascript:void(0);" class="btn btn-primary ">保存</a>
+                <a onclick="healthSub()" href="javascript:void(0);" class="btn btn-primary ">保存</a>
                 <a data-dismiss="modal" href="javascript:void(0);" class="btn btn-primary ">关闭</a>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div>
 
+
+<script>
+    function healthSub() {
+        $(".healthAdd").each(function () {
+            $(this).val($(this).attr("db")+"#"+$(this).val());
+        });
+        $("#oldmanEdit").submit();
+    }
+</script>
 

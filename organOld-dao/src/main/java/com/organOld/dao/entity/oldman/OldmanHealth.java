@@ -36,25 +36,37 @@ public class OldmanHealth extends DBEntity implements DBInterface{
     private Integer organId;//居委Id
 
 
-    @Override
-    public String toString() {
-        return "OldmanHealth{" +
-                "bloodType='" + bloodType + '\'' +
-                ", intelligence='" + intelligence + '\'' +
-                ", eyesight='" + eyesight + '\'' +
-                ", healthAdd=" + healthAdd +
-                ", healthSelect=" + healthSelect +
-                ", oldman=" + oldman +
-                ", isMb=" + isMb +
-                ", isSn=" + isSn +
-                ", isYwfy=" + isYwfy +
-                ", isExzl=" + isExzl +
-                ", isGz=" + isGz +
-                ", isCj=" + isCj +
-                ", search='" + search + '\'' +
-                ", oldmanId=" + oldmanId +
-                ", organId=" + organId +
-                '}';
+    /**
+     * 接受更新的
+     * @return
+     */
+    private List<String> healthAdd_exzl;
+    private List<String> healthAdd_gz;
+    private List<String> healthAdd_cj;
+
+
+    public List<String> getHealthAdd_exzl() {
+        return healthAdd_exzl;
+    }
+
+    public void setHealthAdd_exzl(List<String> healthAdd_exzl) {
+        this.healthAdd_exzl = healthAdd_exzl;
+    }
+
+    public List<String> getHealthAdd_gz() {
+        return healthAdd_gz;
+    }
+
+    public void setHealthAdd_gz(List<String> healthAdd_gz) {
+        this.healthAdd_gz = healthAdd_gz;
+    }
+
+    public List<String> getHealthAdd_cj() {
+        return healthAdd_cj;
+    }
+
+    public void setHealthAdd_cj(List<String> healthAdd_cj) {
+        this.healthAdd_cj = healthAdd_cj;
     }
 
     public int getIsMb() {

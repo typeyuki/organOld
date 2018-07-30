@@ -119,4 +119,9 @@ UPDATE sysuser SET username=#{username},password=#{password} where id=#{id};
 UPDATE user_role SET role_id=#{roleId} where user_id=#{id};
 UPDATE user_organ SET organ_id=#{organId} where user_id=#{id}
     </update>
+
+    <select id="getByOrganId" resultType="com.organOld.dao.entity.SysUser">
+         SELECT u.id,u.username,u.password
+         FROM sysuser u left join user_organ uo on uo.user_id=u.id and uo.organ_id=#{organId}
+    </select>
 </mapper>

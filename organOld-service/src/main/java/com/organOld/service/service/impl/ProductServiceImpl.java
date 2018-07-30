@@ -8,6 +8,7 @@ import com.organOld.dao.util.Page;
 import com.organOld.service.contract.BTableRequest;
 import com.organOld.service.contract.ProductBookRequest;
 import com.organOld.service.contract.ProductRequest;
+import com.organOld.service.contract.Result;
 import com.organOld.service.model.ProductBookModel;
 import com.organOld.service.model.ProductModel;
 import com.organOld.service.service.CommonService;
@@ -95,5 +96,11 @@ public class ProductServiceImpl implements ProductService {
             productDao.save(product);
         else
             productDao.updateById(product);
+    }
+
+    @Override
+    public Result bookHandle(Integer id) {
+        productBookDao.updateProp("status","1",id);
+        return new Result(true);
     }
 }

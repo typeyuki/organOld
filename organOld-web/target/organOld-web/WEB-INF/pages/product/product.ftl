@@ -28,18 +28,16 @@
                     </div>
                 </div>
                 <div class="ibox-content">
-                    <#--<#if organId?? && organId!=0>-->
-                    <#--<#else >-->
                         <div>
                             <a onclick="add()" href="javascript:void(0);" class="btn btn-primary ">添加</a>
                             <a onclick="" href="javascript:void(0);" class="btn btn-primary ">删除</a>
+                            <a  href="javascript:void(0);" id="search" class="btn btn-primary ">搜索</a>
                         </div>
-                    <#--</#if>-->
-                    <div>
-                        <input class="id" type="text" placeholder="序号">
-                        <input class="id" type="text" placeholder="模糊搜索">
-                        <button id="search">搜索</button>
-                    </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <input class="search form-control inp" type="text" placeholder="模糊匹配">
+                            </div>
+                        </div>
                     <div class="table-responsive">
                         <table class="table table-striped table-bordered table-hover dataTables-example text-nowrap">
                             <thead>

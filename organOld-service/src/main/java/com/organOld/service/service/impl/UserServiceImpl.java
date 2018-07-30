@@ -191,4 +191,11 @@ public class UserServiceImpl implements UserService {
         userDao.updateById(sysUser);
         organDao.updateAuth(sysUser.getOrganId(),sysUser.getAuthConsume(),sysUser.getAuthProduct(),sysUser.getAuthSign(),sysUser.getAuthQueryInfo(),sysUser.getAuthQueryIntegral());
     }
+
+    @Override
+    public SysUser getBySession() {
+        Integer organId=commonService.getIdBySession();
+        SysUser user=userDao.getByOrganId(organId);
+        return user;
+    }
 }

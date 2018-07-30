@@ -42,6 +42,7 @@
                         <a onclick="newPage(999,'重点老人规则','/oldman/key/rule')" href="javascript:void(0);" class="btn btn-primary ">规则</a>
                     </div>
                     <a onclick="noHandle()" href="#" class="btn btn-primary ">设置为未处理</a>
+                    <a  href="javascript:void(0);" id="search" class="btn btn-primary ">搜索</a>
                     <script>
                         $.ajax({
                             url: "/user/checkUserOrganType",
@@ -53,25 +54,35 @@
                             }
                         });
                     </script>
-                    <div>
-                        <input type="date" id="futureTime">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <input type="date" class="form-control inp" id="futureTime">
+                        </div>
+                        <div class="col-sm-2">
+                            <label >是否主动申请进养老院</label>
+                            <select name="isActivity" class="form-control inp" style="width: 40%">
+                                <option></option>
+                                <option value="1">是</option>
+                                <option value="0">否</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-2">
+                            <label >是否处理</label>
+                            <select name="isHandle" class="form-control inp" style="width: 40%">
+                                <option></option>
+                                <option value="1">是</option>
+                                <option value="0">否</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-2">
+                            <input name="goalStart" class="form-control inp" type="text" placeholder="最低分" style="width: 40%">-
+                            <input name="goalEnd" class="form-control inp" type="text" placeholder="最高分" style="width: 40%">
+                        </div>
+                        <div class="col-sm-3">
+                            <input name="search"  class="form-control inp" type="text" placeholder="模糊搜索">
+                        </div>
                         <input type="hidden" name="future">
-                        <input name="search" type="text" placeholder="老人序号">
-                        <input name="goalStart" type="text" placeholder="最低分">-
-                        <input name="goalEnd" type="text" placeholder="最高分">
-                        <label >是否主动申请进养老院</label>
-                        <select name="isActivity">
-                            <option></option>
-                            <option value="1">是</option>
-                            <option value="0">否</option>
-                        </select>
-                        <label >是否处理</label>
-                        <select name="isHandle">
-                            <option></option>
-                            <option value="1">是</option>
-                            <option value="0">否</option>
-                        </select>
-                        <button id="search">搜索</button>
+
                     </div>
                     <div class="table-responsive">
                         <table class="table table-striped table-bordered table-hover dataTables-example text-nowrap">

@@ -856,7 +856,7 @@ public class OldmanServiceImpl implements OldmanService {
         if(familyList_add.size()>0)
             oldmanFamilyDao.saveAll(familyList_add);
 
-        healthSelectManDao.delByOldmanId(existOldmanIds);
+        healthSelectManDao.delByOldmanIds(existOldmanIds);
         if(healthSelectManList_add.size()>0) {
             //先把之前的记录删掉
             healthSelectManDao.saveAll(healthSelectManList_add);
@@ -942,6 +942,14 @@ public class OldmanServiceImpl implements OldmanService {
             case "linkman":
                 Linkman linkman=(Linkman) dbEntity;
                 linkmanDao.updateById(linkman);
+                break;
+            case "health":
+                OldmanHealth oldmanHealth=(OldmanHealth) dbEntity;
+                oldmanHealthDao.updateById(oldmanHealth);
+                healthSelectManDao.delByOldmanId(oldmanHealth.getOldman().getId());
+                healthAddDao.delByOldmanId(oldmanHealth.getOldman().getId());
+                List<HealthAdd> healthAddList=new ArrayList<>();
+
         }
         return new Result(true);
     }

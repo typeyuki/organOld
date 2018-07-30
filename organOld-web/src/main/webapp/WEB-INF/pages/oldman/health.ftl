@@ -37,8 +37,9 @@
                 <div class="ibox-content">
                     <div class="jw">
                         <a onclick=newPage("134","健康管理",'/oldman/health/select') href="javascript:void(0);" class="btn btn-primary ">管理</a>
-                        <a  href="javascript:void(0);" id="search" class="btn btn-primary ">搜索</a>
+
                     </div>
+                    <a  href="javascript:void(0);" id="search" class="btn btn-primary ">搜索</a>
                     <div class="row">
                         <div class="col-sm-4">
                             <input class="search form-control inp" type="text" placeholder="模糊匹配">
