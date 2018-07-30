@@ -2,7 +2,7 @@
 
 </style>
 
-    <div class="wrapper wrapper-content animated fadeInRight box">
+    <div class="wrapper wrapper-content animated fadeInRight box" style="margin-top: 100px">
         <div class="zz"></div>
         <div class="row">
             <div class="col-lg-12">

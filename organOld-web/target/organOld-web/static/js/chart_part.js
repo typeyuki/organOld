@@ -703,6 +703,87 @@ function customizedPie(title_text,data) {
     return option;
 }
 
+function customizedPie_2(title_text,data) {
+    var option = {
+
+        title : {
+            text:title_text,
+            textStyle:{
+                color:title_color,
+                fontSize:title_fontSize,
+                fontWeight:100
+            },
+            x:'0%',
+            y:'0%'
+        },
+        tooltip : {
+            trigger: 'item',
+            formatter: ""
+        },
+
+        tooltip : {
+            trigger: 'item',
+            formatter: "{a} <br/>{b} : {c} ({d}%)"
+        },
+
+        visualMap: {
+            show: false,
+            min: 80,
+            max: 600,
+            inRange: {
+                colorLightness: [0, 1]
+            }
+        },
+        series : [
+            {
+                name:'访问来源',
+                type:'pie',
+                radius : '65%',
+                center: ['50%', '50%'],
+                // data:[
+                //     {value:335, name:dataName1},
+                //     {value:310, name:dataName2},
+                //     {value:400, name:dataName3},
+                // ].sort(function (a, b) { return a.value - b.value; }),
+                data:data,
+                roseType: 'radius',
+                label: {
+                    normal: {
+                        textStyle: {
+                            fontWeight: 'normal',      //标题颜色
+                            color: '#FFFFFF',
+                            fontSize: 12
+                        }
+                    }
+                },
+                labelLine: {
+                    normal: {
+                        lineStyle: {
+                            color: 'rgba(255, 255, 255, 0.3)'
+                        },
+                        smooth: 0.2,
+                        length: 10,
+                        length2: 20
+                    }
+                },
+                itemStyle: {
+                    normal: {
+                        color: series_color_4,
+                        shadowBlur: 200,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                },
+
+                animationType: 'scale',
+                animationEasing: 'elasticOut',
+                animationDelay: function (idx) {
+                    return Math.random() * 200;
+                }
+            }
+        ]
+    };
+    return option;
+}
 function toolTip(title_text,legend_data,name1,name2) {
     var base = +new Date(2016, 9, 3);
     var oneDay = 24 * 3600 * 1000;

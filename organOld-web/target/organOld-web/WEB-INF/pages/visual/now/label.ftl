@@ -77,27 +77,27 @@
         }
     </style>
 <div class="row">
-    <div class="col-lg-5" id="label1" >
-        <div class="row box">
+    <div class="col-lg-5">
+        <div class="row box" id="label1">
             <div class="zz"></div>
-            <div class="row" style="border-bottom: 1px solid white;margin: 0!important;">
-                <div class="col-lg-5">
-                    <p class="title" style="margin-top: 15%;" onclick="showHeatMap()">老 人 身 份</p>
-                </div>
-                <div class="col-lg-7" >
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <button class="qk_1 color_1" onclick="label3Show(1)">基  本  情  况</button>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <button class="qk_1 color_1" onclick="label3Show(2)">家  庭  结  构</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row" style="border-bottom: 1px solid white;margin: 0!important;">
+            <#--<div class="row" style="border-bottom: 1px solid white;margin: 0!important;">-->
+                <#--<div class="col-lg-5">-->
+                    <#--<p class="title" style="margin-top: 15%;" onclick="showHeatMap()">老 人 身 份</p>-->
+                <#--</div>-->
+                <#--<div class="col-lg-7" >-->
+                    <#--<div class="row">-->
+                        <#--<div class="col-lg-12">-->
+                            <#--<button class="qk_1 color_1" onclick="label3Show(1)">基  本  情  况</button>-->
+                        <#--</div>-->
+                    <#--</div>-->
+                    <#--<div class="row">-->
+                        <#--<div class="col-lg-12">-->
+                            <#--<button class="qk_1 color_1" onclick="label3Show(2)">家  庭  结  构</button>-->
+                        <#--</div>-->
+                    <#--</div>-->
+                <#--</div>-->
+            <#--</div>-->
+            <div class="row" style="border-bottom: 1px solid white;margin: 0!important;" id="l1">
                 <div class="col-lg-5">
                     <p class="title" style="margin-top: 20%;" onclick="picChange(1)">老 有 所 养</p>
                 </div>
@@ -119,7 +119,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row" style="border-bottom: 1px solid white;margin: 0!important;">
+            <div class="row" style="border-bottom: 1px solid white;margin: 0!important;" id="l2">
                 <div class="col-lg-5">
                     <p class="title" style="margin-top: 50%;" onclick="picChange(2)">老 有 所 医</p>
                 </div>
@@ -152,7 +152,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row" style="border-bottom: 1px solid white;margin: 0!important;">
+            <div class="row" style="border-bottom: 1px solid white;margin: 0!important;" id="l3">
                 <div class="col-lg-5">
                     <p class="title" style="margin-top: 5%;" onclick="picChange(3)">老 有 所 为</p>
                 </div>
@@ -165,7 +165,7 @@
 
                 </div>
             </div>
-            <div class="row" style="border-bottom: 1px solid white;margin: 0!important;">
+            <div class="row" style="border-bottom: 1px solid white;margin: 0!important;" id="l4">
                 <div class="col-lg-5">
                     <p class="title" style="margin-top: 5%;" onclick="picChange(4)">老 有 所 学</p>
                 </div>
@@ -178,7 +178,7 @@
 
                 </div>
             </div>
-            <div class="row" style="margin: 0!important;">
+            <div class="row" style="border-bottom: 1px solid white;margin: 0!important;" id="l5">
                 <div class="col-lg-5">
                     <p class="title" style="margin-top: 5%;" onclick="picChange(5)">老 有 所 乐</p>
                 </div>
@@ -189,6 +189,23 @@
                         </div>
                     </div>
 
+                </div>
+            </div>
+            <div class="row" style="margin: 0!important;" id="l6">
+                <div class="col-lg-5">
+                    <p class="title" style="margin-top: 15%;" onclick="showHeatMap()">老 人 身 份</p>
+                </div>
+                <div class="col-lg-7" >
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <button class="qk_1 color_1" onclick="label3Show(1)">基  本  情  况</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <button class="qk_1 color_1" onclick="label3Show(2)">家  庭  结  构</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -760,6 +777,12 @@
      function label3Show(index) {
 
          $("#label1").hide();
+         // document.getElementById("l1").style.visibility="hidden";
+         // document.getElementById("l2").style.display="none";
+         // document.getElementById("l3").style.display="none";
+         // document.getElementById("l4").style.display="none";
+         // document.getElementById("l5").style.display="none";
+         // document.getElementById("l6").style.display="none";
          $(".aa").css("display","none");
          $("#label3").show();
          $("#label3"+index).show();
