@@ -8,7 +8,6 @@
             <div class="col-lg-12">
                 <div class="ibox float-e-margins">
                     <div class="ibox-content">
-                        <div class="table-responsive">
                             <table class="table table-striped table-bordered table-hover dataTables-example text-nowrap">
                                 <thead>
                                 <tr>
@@ -32,13 +31,44 @@
                                 <tbody>
                                 </tbody>
                             </table>
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
+
+
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog" style="width: 80%">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="wrapper wrapper-content animated fadeInRight">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="ibox float-e-margins">
+                                <div class="ibox-title">
+                                    <h5></h5>
+                                </div>
+                                <div class="ibox-content">
+                                    <form method="post" id="oldmanEdit" class="form-horizontal" action="/oldman/family/update">
+                                        <input type="hidden" name="id">
+
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a onclick="$('#oldmanEdit').submit()" href="javascript:void(0);" class="btn btn-primary ">修改</a>
+                <a data-dismiss="modal" href="javascript:void(0);" class="btn btn-primary ">关闭</a>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
 
 <script>
     var label=[];//用于标签页面
@@ -87,6 +117,13 @@
                     ],
                     "iDisplayLength" : iDisplayLength,
                     "columnDefs": [
+                        {
+                            "targets": [0], // 目标列位置，下标从0开始
+                            "data": "id", // 数据列名
+                            "render": function(data, type, full) { // 返回自定义内容
+                                return "<span class='btn btn-primary'onclick=$('#editModal').modal() id='"+data+"'>"+data+"</span>";
+                            }
+                        },
                         // 增加一列，包括删除和修改，同时将我们需要传递的数据传递到链接中
                         {
                             "targets": [14], // 目标列位置，下标从0开始

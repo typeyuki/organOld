@@ -74,9 +74,12 @@
         }
         #label3{
             display: none;
+            margin-top: 20%;
+            padding: 50px;
         }
     </style>
 <div class="row">
+    <div class="col-lg-1" style="width: 5%"></div>
     <div class="col-lg-5" id="label1" >
         <div class="row box">
             <div class="zz"></div>
@@ -317,8 +320,8 @@
             <span class="label color_7">老年艺术中心</span>
         </div>
     </div>
-
-    <div class="col-lg-7">
+    <div class="col-lg-1" style="width: 5%"></div>
+    <div class="col-lg-5">
         <div class="row">
             <div class="col-lg-12 box" align="center">
                 <div class="zz"></div>
@@ -347,10 +350,10 @@
             var label_tu_w,label_tu_h;
             var label_width=$("#label").width();
             if(winWidth>=1900){
-                label_tu_w=label_width/2;
+                label_tu_w=label_width/3;
                 label_tu_h=winHeight/5.5;
             }else if(winWidth<=1400 && winWidth>=1300){
-                label_tu_w=winWidth/3.7;
+                label_tu_w=winWidth/3;
                 label_tu_h=winHeight/5.5;
             }
             $(".label_tu").css('width',label_tu_w);
