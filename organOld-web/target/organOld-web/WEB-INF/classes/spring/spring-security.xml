@@ -25,6 +25,7 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
     <sec:http pattern="/login*" security="none"></sec:http>
     <sec:http pattern="/getCode" security="none" /><!-- 不过滤验证码 -->
     <sec:http pattern="/card/**" security="none" />
+    <sec:http pattern="/organ/organReg" security="none" />
 
     <sec:http auto-config="true" access-decision-manager-ref="accessDecisionManager">
         <sec:access-denied-handler error-page="/WEB-INF/pages/error/403.ftl"/>
