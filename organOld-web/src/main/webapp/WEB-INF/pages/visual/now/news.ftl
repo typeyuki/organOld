@@ -1,16 +1,38 @@
 <style>
     @media only screen and (min-width: 6000px){
         #news p{
-            font-size: 30px;
+            font-size: 38px;
         }
         #news img{
             padding-top: 30px;
         }
         .newsp{
-            margin-top: 60px;
+            margin-top: 40px;
+        }
+        #logo{
+            margin-top: 20px;
+            width: 100px;
+            height: 150px;
+            display: inline;
+        }
+        #logo-title{
+            margin-top: 40px;
+            width: 250px;
+            height: 110px;
+            display: inline;
         }
     }
 </style>
+<div class="row">
+    <div class="col-lg-1" style="width: 5%"></div>
+    <div class="col-lg-4">
+        <img src="/static/img/news/logo.png" id="logo" >
+        <img src="/static/img/news/logo_title.png"  id="logo-title">
+    </div>
+    <#--<div class="col-lg-4">-->
+        <#--<img src="/static/img/news/logo_title.png"  id="logo-title">-->
+    <#--</div>-->
+</div>
 <div class="row" id="news">
     <div class="col-lg-1" style="width: 3%"></div>
     <div class="col-lg-6" align="center" id="community">
@@ -51,9 +73,9 @@
 
 <script>
     $("#myCarousel").carousel('cycle');
-    $("#news").css("height",winHeight/5.2);
-    $("#news img").css("height",winHeight/5.7);
-    $("#news img").css("width",winWidth/8.8);
+    $("#news").css("height",winHeight/4);
+    $("#news img").css("height",winHeight/4.5);
+    $("#news img").css("width",winWidth/8);
 
     var i=1;
     $('#myCarousel').on('slide.bs.carousel', function () {

@@ -5,6 +5,12 @@
             font-size: 35px;
             font-weight: bold;
         }
+        #label .ta{
+            margin-top: 55%;
+            font-size: 50px;
+            position: relative;
+            left: 20%;
+        }
         #label .secTitle{
             text-align: center;
             font-size: 15px;
@@ -18,11 +24,11 @@
             border: none;
             border-radius: 10px;
             margin: 10px;
-            width: 100%;
+            width: 80%;
         }
         #label .label{
             font-size: 30px;
-            padding:10px!important;
+            padding:5px!important;
             margin: 5px!important;
             line-height: 2!important;
         }
@@ -45,9 +51,9 @@
              border: none;
              border-radius: 10px;
              margin-bottom: 10px;
-            position: fixed;
-            bottom: 5%;
-            left:3%
+            /*position: fixed;*/
+            /*bottom: 5%;*/
+            /*left:3%*/
          }
 
         .bl{
@@ -77,12 +83,308 @@
             margin-top: 20%;
             padding: 50px;
         }
+    .daohang{
+        font-size: 40px;
+        color: white;
+        background-color: transparent;
+        border: 15px solid #47e3d8;
+        padding: 20px 40px;
+        border-radius: 100%;
+        font-weight: bold;
+    }
     </style>
 <div class="row">
     <div class="col-lg-1" style="width: 5%"></div>
-    <div class="col-lg-5" id="label1" >
-        <div class="row box">
+    <div class="col-lg-5">
+        <div class="row">
+            <div class="col-lg-12 box">
+                <div class="zz"></div>
+                <div class="row">
+                    <div class="col-lg-3"></div>
+                    <div class="col-lg-6" align="center">
+                        <button class="daohang">老有<br>所养</button>
+                    </div>
+                    <div class="col-lg-3"></div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6" align="left">
+                        <button class="daohang">老有<br>所医</button>
+                    </div>
+                    <div class="col-lg-6" align="right">
+                        <button class="daohang">老有<br>所为</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-1"></div>
+                    <div class="col-lg-5" align="center">
+                        <button class="daohang">老有<br>所学</button>
+                    </div>
+                    <div class="col-lg-5" align="center">
+                        <button class="daohang">老有<br>所乐</button>
+                    </div>
+                    <div class="col-lg-1"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row box" style="margin-top: 20px" id="label1">
             <div class="zz"></div>
+            <div class="row" style="border-bottom: 1px solid white;margin: 0!important;">
+                <div class="col-lg-5" >
+                    <p class="title ta"  onclick="picChange(1)">身份标签</p>
+                </div>
+                <div class="col-lg-7">
+                    <div class="row">
+                        <div class="col-lg-12" align="right">
+                             <button class="qk_1 color_2" onclick="label3Show(31)">基 本 信 息</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12" align="right">
+                            <button class="qk_1 color_2" onclick="label3Show(32)">健 康 档 案</button>
+                        </div>
+                     </div>
+                    <div class="row">
+                        <div class="col-lg-12" align="right">
+                            <button class="qk_1 color_2" onclick="label3Show(33)">经 济 条 件</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12" align="right">
+                            <button class="qk_1 color_2" onclick="label3Show(34)">家 庭 结 构</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12" align="right">
+                            <button class="qk_1 color_2" onclick="label3Show(35)">养 老 状 态</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+            <div id="label31" class="row box label3" style="display: none;margin-top: 20px">
+                <div class="zz"></div>
+                <div class="col-lg-12">
+                    <span class="label color_1">男</span>
+                    <span class="label color_1">女</span>
+                    <span class="label color_1">60-70岁</span>
+                    <span class="label color_1">70-80岁</span>
+                    <span class="label color_1">90岁以上</span>
+                    <span class="label color_1">东兰</span>
+                    <span class="label color_1">平阳</span>
+                    <span class="label color_1">古美</span>
+                    <span class="label color_1">平吉</span>
+                    <span class="label color_1">平南</span>
+                    <span class="label color_1">古龙</span>
+                    <span class="label color_1">户籍</span>
+                    <span class="label color_1">非户籍</span>
+                    <span class="label color_1">人户分离</span>
+                    <span class="label color_1">群众</span>
+                    <span class="label color_1">党员</span>
+                </div>
+            </div>
+        <div id="label32" class="row box label3" style="display: none;margin-top: 20px">
+            <div class="zz"></div>
+            <div class="col-lg-12">
+                <span class="label color_2">智力正常</span>
+                <span class="label color_2">痴呆</span>
+                <span class="label color_2">智障</span>
+                <span class="label color_2">视力正常</span>
+                <span class="label color_2">失明</span>
+                <span class="label color_2">有光感</span>
+                <span class="label color_2">严重障碍</span>
+                <span class="label color_2">一般障碍</span>
+                <span class="label color_2">有慢病</span>
+                <span class="label color_2">有失能情况</span>
+                <span class="label color_2">有药物反应</span>
+                <span class="label color_2">有恶性肿瘤史</span>
+                <span class="label color_2">有骨折史</span>
+                <span class="label color_2">有残疾史</span>
+            </div>
+        </div>
+        <div id="label33" class="row box label3" style="display: none;margin-top: 20px">
+            <div class="zz"></div>
+            <div class="col-lg-12">
+                <span class="label color_3">帮困人员</span>
+                <span class="label color_3">低保</span>
+                <span class="label color_3">城乡居民养老保险</span>
+                <span class="label color_3">医疗救助金</span>
+                <span class="label color_3">城镇居民基本医疗保险</span>
+                <span class="label color_3">其他</span>
+            </div>
+        </div>
+        <div id="label34" class="row box label3" style="display: none;margin-top: 20px">
+            <div class="zz"></div>
+            <div class="col-lg-12">
+            <span class="label color_4">纯老</span>
+            <span class="label color_4">独居</span>
+            <span class="label color_4">孤老</span>
+            <span class="label color_4">一老养一老</span>
+            <span class="label color_4">失独家庭</span>
+            <span class="label color_4">三支人员</span>
+                <span class="label color_4">独生子女家庭</span>
+                <span class="label color_4">军属</span>
+                <span class="label color_4">烈士家庭</span>
+                <span class="label color_4">离休干部</span>
+                <span class="label color_4">侨属</span>
+            </div>
+        </div>
+        <div id="label35" class="row box label3" style="display: none;margin-top: 20px">
+            <div class="zz"></div>
+            <div class="col-lg-12">
+                <span class="label color_5">东兰养老院</span>
+                <span class="label color_5">古美养老院</span>
+                <span class="label color_5">平阳养老院</span>
+                <span class="label color_5">东兰长者照护之家</span>
+                <span class="label color_5">古美长者照护之家</span>
+                <span class="label color_5">平阳长者照护之家</span>
+                <span class="label color_5">东兰日照中心</span>
+                <span class="label color_5">古美日照中心</span>
+                <span class="label color_5">平阳日照中心</span>
+                <span class="label color_5">东兰助餐点</span>
+                <span class="label color_5">古美助餐点</span>
+                <span class="label color_5">平阳助餐点</span>
+                <span class="label color_5">2-3级</span>
+                <span class="label color_5">4级</span>
+                <span class="label color_5">5级</span>
+                <span class="label color_5">6级</span>
+                <span class="label color_5">7级</span>
+                <span class="label color_5">2-3级</span>
+                <span class="label color_5">4级</span>
+                <span class="label color_5">5级</span>
+                <span class="label color_5">6级</span>
+                <span class="label color_5">7级</span>
+                <span class="label color_5">助餐</span>
+                <span class="label color_5">助洁</span>
+                <span class="label color_5">助急</span>
+                <span class="label color_5">助浴</span>
+                <span class="label color_5">助行</span>
+                <span class="label color_5">康复辅助</span>
+                <span class="label color_5">助医</span>
+                <span class="label color_5">相谈</span>
+                <span class="label color_5">洗涤</span>
+                <span class="label color_5">生活护理</span>
+            </div>
+        </div>
+        <div class="row box selectLabel" style="margin-top: 5px;">
+            <div class="zz"></div>
+            <div class="col-lg-12">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <p class="title">所选标签</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div id="selectLabel"></div>
+                    </div>
+                </div>
+                <div class="row" align="center">
+                    <div class="col-lg-12">
+                        <button class="qk" style="background-color: #47e6da" onclick="butt()">确认</button>
+                        <button class="qk" onclick="butt()">清空</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <#--<div class="col-lg-5" id="label1" >-->
+        <#--<div class="row box">-->
+            <#--<div class="zz"></div>-->
+            <#--<div class="row" style="border-bottom: 1px solid white;margin: 0!important;">-->
+                <#--<div class="col-lg-5">-->
+                    <#--<p class="title" style="margin-top: 20%;" onclick="picChange(1)">老 有 所 养</p>-->
+                <#--</div>-->
+                <#--<div class="col-lg-7">-->
+                    <#--<div class="row">-->
+                        <#--<div class="col-lg-12">-->
+                            <#--<button class="qk_1 color_2" onclick="label3Show(3)">机 构 养 老</button>-->
+                        <#--</div>-->
+                    <#--</div>-->
+                    <#--<div class="row">-->
+                        <#--<div class="col-lg-12">-->
+                            <#--<button class="qk_1 color_2" onclick="label3Show(4)">社  区 养 老</button>-->
+                        <#--</div>-->
+                    <#--</div>-->
+                    <#--<div class="row">-->
+                        <#--<div class="col-lg-12">-->
+                            <#--<button class="qk_1 color_2" onclick="label3Show(5)">经 济 条 件</button>-->
+                        <#--</div>-->
+                    <#--</div>-->
+                <#--</div>-->
+            <#--</div>-->
+            <#--<div class="row" style="border-bottom: 1px solid white;margin: 0!important;">-->
+                <#--<div class="col-lg-5">-->
+                    <#--<p class="title" style="margin-top: 50%;" onclick="picChange(2)">老 有 所 医</p>-->
+                <#--</div>-->
+                <#--<div class="col-lg-7">-->
+                    <#--<div class="row">-->
+                        <#--<div class="col-lg-12">-->
+                            <#--<button class="qk_1 color_4" onclick="label3Show(6)">慢 病</button>-->
+                        <#--</div>-->
+                    <#--</div>-->
+                    <#--<div class="row">-->
+                        <#--<div class="col-lg-12">-->
+                            <#--<button class="qk_1 color_4" onclick="label3Show(7)">长 护 险</button>-->
+                        <#--</div>-->
+                    <#--</div>-->
+
+                    <#--<div class="row">-->
+                        <#--<div class="col-lg-12">-->
+                            <#--<button class="qk_1 color_4" onclick="label3Show(8)">失 能 情 况</button>-->
+                        <#--</div>-->
+                    <#--</div>-->
+                    <#--<div class="row">-->
+                        <#--<div class="col-lg-12">-->
+                            <#--<button class="qk_1 color_4" onclick="label3Show(9)">智 力</button>-->
+                        <#--</div>-->
+                    <#--</div>-->
+                    <#--<div class="row">-->
+                        <#--<div class="col-lg-12">-->
+                            <#--<button class="qk_1 color_4" onclick="label3Show(10)">视 力</button>-->
+                        <#--</div>-->
+                    <#--</div>-->
+                <#--</div>-->
+            <#--</div>-->
+            <#--<div class="row" style="border-bottom: 1px solid white;margin: 0!important;">-->
+                <#--<div class="col-lg-5">-->
+                    <#--<p class="title" style="margin-top: 5%;" onclick="picChange(3)">老 有 所 为</p>-->
+                <#--</div>-->
+                <#--<div class="col-lg-7">-->
+                    <#--<div class="row">-->
+                        <#--<div class="col-lg-12">-->
+                            <#--<button class="qk_1 color_5" onclick="label3Show(11)">志 愿 者</button>-->
+                        <#--</div>-->
+                    <#--</div>-->
+
+                <#--</div>-->
+            <#--</div>-->
+            <#--<div class="row" style="border-bottom: 1px solid white;margin: 0!important;">-->
+                <#--<div class="col-lg-5">-->
+                    <#--<p class="title" style="margin-top: 5%;" onclick="picChange(4)">老 有 所 学</p>-->
+                <#--</div>-->
+                <#--<div class="col-lg-7">-->
+                    <#--<div class="row">-->
+                        <#--<div class="col-lg-12">-->
+                            <#--<button class="qk_1 color_6" onclick="label3Show(12)">学 校</button>-->
+                        <#--</div>-->
+                    <#--</div>-->
+
+                <#--</div>-->
+            <#--</div>-->
+            <#--<div class="row" style="margin: 0!important;border-bottom: 1px solid white;">-->
+                <#--<div class="col-lg-5">-->
+                    <#--<p class="title" style="margin-top: 5%;" onclick="picChange(5)">老 有 所 乐</p>-->
+                <#--</div>-->
+                <#--<div class="col-lg-7">-->
+                    <#--<div class="row">-->
+                        <#--<div class="col-lg-12">-->
+                            <#--<button class="qk_1 color_7" onclick="label3Show(13)">俱 乐 部</button>-->
+                        <#--</div>-->
+                    <#--</div>-->
+
+                <#--</div>-->
+            <#--</div>-->
             <#--<div class="row" style="border-bottom: 1px solid white;margin: 0!important;">-->
                 <#--<div class="col-lg-5">-->
                     <#--<p class="title" style="margin-top: 15%;" onclick="showHeatMap()">老 人 身 份</p>-->
@@ -100,245 +402,134 @@
                     <#--</div>-->
                 <#--</div>-->
             <#--</div>-->
-            <div class="row" style="border-bottom: 1px solid white;margin: 0!important;">
-                <div class="col-lg-5">
-                    <p class="title" style="margin-top: 20%;" onclick="picChange(1)">老 有 所 养</p>
-                </div>
-                <div class="col-lg-7">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <button class="qk_1 color_2" onclick="label3Show(3)">机 构 养 老</button>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <button class="qk_1 color_2" onclick="label3Show(4)">社  区 养 老</button>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <button class="qk_1 color_2" onclick="label3Show(5)">经 济 条 件</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row" style="border-bottom: 1px solid white;margin: 0!important;">
-                <div class="col-lg-5">
-                    <p class="title" style="margin-top: 50%;" onclick="picChange(2)">老 有 所 医</p>
-                </div>
-                <div class="col-lg-7">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <button class="qk_1 color_4" onclick="label3Show(6)">慢 病</button>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <button class="qk_1 color_4" onclick="label3Show(7)">长 护 险</button>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <button class="qk_1 color_4" onclick="label3Show(8)">失 能 情 况</button>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <button class="qk_1 color_4" onclick="label3Show(9)">智 力</button>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <button class="qk_1 color_4" onclick="label3Show(10)">视 力</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row" style="border-bottom: 1px solid white;margin: 0!important;">
-                <div class="col-lg-5">
-                    <p class="title" style="margin-top: 5%;" onclick="picChange(3)">老 有 所 为</p>
-                </div>
-                <div class="col-lg-7">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <button class="qk_1 color_5" onclick="label3Show(11)">志 愿 者</button>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-            <div class="row" style="border-bottom: 1px solid white;margin: 0!important;">
-                <div class="col-lg-5">
-                    <p class="title" style="margin-top: 5%;" onclick="picChange(4)">老 有 所 学</p>
-                </div>
-                <div class="col-lg-7">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <button class="qk_1 color_6" onclick="label3Show(12)">学 校</button>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-            <div class="row" style="margin: 0!important;border-bottom: 1px solid white;">
-                <div class="col-lg-5">
-                    <p class="title" style="margin-top: 5%;" onclick="picChange(5)">老 有 所 乐</p>
-                </div>
-                <div class="col-lg-7">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <button class="qk_1 color_7" onclick="label3Show(13)">俱 乐 部</button>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-            <div class="row" style="border-bottom: 1px solid white;margin: 0!important;">
-                <div class="col-lg-5">
-                    <p class="title" style="margin-top: 15%;" onclick="showHeatMap()">老 人 身 份</p>
-                </div>
-                <div class="col-lg-7" >
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <button class="qk_1 color_1" onclick="label3Show(1)">基  本  情  况</button>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <button class="qk_1 color_1" onclick="label3Show(2)">家  庭  结  构</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row box" style="margin-top: 5px">
-            <div class="zz"></div>
-            <div class="col-lg-12">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <p class="title">所选标签</p>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div id="selectLabel"></div>
-                    </div>
-                </div>
-                <div class="row" align="center">
-                    <div class="col-lg-12">
-                        <button class="qk" onclick="butt()">清空</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-5 box" id="label3" >
-        <div class="zz"></div>
-        <div id="label31" class="aa" style="display: none">
-            <span class="label color_1">男</span>
-            <span class="label color_1">女</span>
-            <span class="label color_1">60-70岁</span>
-            <span class="label color_1">70-80岁</span>
-            <span class="label color_1">90岁以上</span>
-            <span class="label color_1">东兰</span>
-            <span class="label color_1">平阳</span>
-            <span class="label color_1">古美</span>
-            <span class="label color_1">平吉</span>
-            <span class="label color_1">平南</span>
-            <span class="label color_1">古龙</span>
-        </div>
-        <div id="label32" class="aa" style="display: none">
-            <span class="label color_1">户籍</span>
-            <span class="label color_1">非户籍</span>
-            <span class="label color_1">纯老</span>
-            <span class="label color_1">独居</span>
-            <span class="label color_1">孤老</span>
-            <span class="label color_1">一老养一老</span>
-            <span class="label color_1">失独家庭</span>
-            <span class="label color_1">三支人员</span>
-            <span class="label color_1">离休干部</span>
-        </div>
-        <div id="label33" class="aa" style="display: none">
-            <span class="label color_2">东兰养老院</span>
-            <span class="label color_2">古美养老院</span>
-            <span class="label color_2">平阳养老院</span>
-        </div>
-        <div id="label34" class="aa" style="display: none">
-            <span class="label color_2">东兰长者照护之家</span>
-            <span class="label color_2">古美长者照护之家</span>
-            <span class="label color_2">平阳长者照护之家</span>
-            <span class="label color_2">东兰日照中心</span>
-            <span class="label color_2">古美日照中心</span>
-            <span class="label color_2">平阳日照中心</span>
-            <span class="label color_2">东兰助餐点</span>
-            <span class="label color_2">古美助餐点</span>
-            <span class="label color_2">平阳助餐点</span>
-        </div>
-        <div id="label35" class="aa" style="display: none">
-            <span class="label color_2">帮困人员</span>
-            <span class="label color_2">低保</span>
-            <span class="label color_2">城乡居民养老保险</span>
-            <span class="label color_2">医疗救助金</span>
-            <span class="label color_2">城镇居民基本医疗保险</span>
-        </div>
-        <div id="label36" class="aa" style="display: none">
-            <span class="label color_4">高血压</span>
-            <span class="label color_4">糖尿病</span>
-            <span class="label color_4">脑卒中</span>
-            <span class="label color_4">帕金森</span>
-            <span class="label color_4">癫痫</span>
-            <span class="label color_4">肺炎</span>
-            <span class="label color_4">慢阻肺</span>
-            <span class="label color_4">冠心病</span>
-            <span class="label color_4">慢性肾功能障碍</span>
-            <span class="label color_4">甲亢/甲减</span>
-            <span class="label color_4">肝炎/肝硬化</span>
-            <span class="label color_4">恶性肿瘤</span>
-            <span class="label color_4">骨折</span>
-            <span class="label color_4">其他消化道疾病</span>
-            <span class="label color_4">类风关</span>
-        </div>
-        <div id="label37" class="aa" style="display: none">
-            <span class="label color_4">2-3级</span>
-            <span class="label color_4">4级</span>
-            <span class="label color_4">5级</span>
-            <span class="label color_4">6级</span>
-            <span class="label color_4">7级</span>
-        </div>
-        <div id="label38" class="aa" style="display: none">
-            <span class="label color_4">上厕所</span>
-            <span class="label color_4">洗澡</span>
-            <span class="label color_4">穿衣</span>
-            <span class="label color_4">上下床</span>
-            <span class="label color_4">室内行走</span>
-            <span class="label color_4">吃饭</span>
-        </div>
-        <div id="label39" class="aa" style="display: none">
-            <span class="label color_4">痴呆</span>
-            <span class="label color_4">智障</span>
-            <span class="label color_4">正常</span>
-        </div>
-        <div id="label310" class="aa" style="display: none">
-            <span class="label color_4">失明</span>
-            <span class="label color_4">有光感</span>
-            <span class="label color_4">有障碍</span>
-            <span class="label color_4">正常</span>
-        </div>
-        <div id="label311" class="aa" style="display: none">
-            <span class="label color_5">志愿者</span>
-        </div>
-        <div id="label312" class="aa" style="display: none">
-            <span class="label color_6">老年大学</span>
-            <span class="label color_6">老年培训中心</span>
-        </div>
-        <div id="label313" class="aa" style="display: none">
-            <span class="label color_7">老年俱乐部</span>
-            <span class="label color_7">老年艺术中心</span>
-        </div>
-    </div>
-    <div class="col-lg-1" style="width: 5%"></div>
-    <div class="col-lg-5">
+        <#--</div>-->
+        <#--<div class="row box" style="margin-top: 5px">-->
+            <#--<div class="zz"></div>-->
+            <#--<div class="col-lg-12">-->
+                <#--<div class="row">-->
+                    <#--<div class="col-lg-12">-->
+                        <#--<p class="title">所选标签</p>-->
+                    <#--</div>-->
+                <#--</div>-->
+                <#--<div class="row">-->
+                    <#--<div class="col-lg-12">-->
+                        <#--<div id="selectLabel"></div>-->
+                    <#--</div>-->
+                <#--</div>-->
+                <#--<div class="row" align="center">-->
+                    <#--<div class="col-lg-12">-->
+                        <#--<button class="qk" onclick="butt()">清空</button>-->
+                    <#--</div>-->
+                <#--</div>-->
+            <#--</div>-->
+        <#--</div>-->
+    <#--</div>-->
+    <#--<div class="col-lg-5 box" id="label3" >-->
+        <#--<div class="zz"></div>-->
+        <#--<div id="label31" class="aa" style="display: none">-->
+            <#--<span class="label color_1">男</span>-->
+            <#--<span class="label color_1">女</span>-->
+            <#--<span class="label color_1">60-70岁</span>-->
+            <#--<span class="label color_1">70-80岁</span>-->
+            <#--<span class="label color_1">90岁以上</span>-->
+            <#--<span class="label color_1">东兰</span>-->
+            <#--<span class="label color_1">平阳</span>-->
+            <#--<span class="label color_1">古美</span>-->
+            <#--<span class="label color_1">平吉</span>-->
+            <#--<span class="label color_1">平南</span>-->
+            <#--<span class="label color_1">古龙</span>-->
+        <#--</div>-->
+        <#--<div id="label32" class="aa" style="display: none">-->
+            <#--<span class="label color_1">户籍</span>-->
+            <#--<span class="label color_1">非户籍</span>-->
+            <#--<span class="label color_1">纯老</span>-->
+            <#--<span class="label color_1">独居</span>-->
+            <#--<span class="label color_1">孤老</span>-->
+            <#--<span class="label color_1">一老养一老</span>-->
+            <#--<span class="label color_1">失独家庭</span>-->
+            <#--<span class="label color_1">三支人员</span>-->
+            <#--<span class="label color_1">离休干部</span>-->
+        <#--</div>-->
+        <#--<div id="label33" class="aa" style="display: none">-->
+            <#--<span class="label color_2">东兰养老院</span>-->
+            <#--<span class="label color_2">古美养老院</span>-->
+            <#--<span class="label color_2">平阳养老院</span>-->
+        <#--</div>-->
+        <#--<div id="label34" class="aa" style="display: none">-->
+            <#--<span class="label color_2">东兰长者照护之家</span>-->
+            <#--<span class="label color_2">古美长者照护之家</span>-->
+            <#--<span class="label color_2">平阳长者照护之家</span>-->
+            <#--<span class="label color_2">东兰日照中心</span>-->
+            <#--<span class="label color_2">古美日照中心</span>-->
+            <#--<span class="label color_2">平阳日照中心</span>-->
+            <#--<span class="label color_2">东兰助餐点</span>-->
+            <#--<span class="label color_2">古美助餐点</span>-->
+            <#--<span class="label color_2">平阳助餐点</span>-->
+        <#--</div>-->
+        <#--<div id="label35" class="aa" style="display: none">-->
+            <#--<span class="label color_2">帮困人员</span>-->
+            <#--<span class="label color_2">低保</span>-->
+            <#--<span class="label color_2">城乡居民养老保险</span>-->
+            <#--<span class="label color_2">医疗救助金</span>-->
+            <#--<span class="label color_2">城镇居民基本医疗保险</span>-->
+        <#--</div>-->
+        <#--<div id="label36" class="aa" style="display: none">-->
+            <#--<span class="label color_4">高血压</span>-->
+            <#--<span class="label color_4">糖尿病</span>-->
+            <#--<span class="label color_4">脑卒中</span>-->
+            <#--<span class="label color_4">帕金森</span>-->
+            <#--<span class="label color_4">癫痫</span>-->
+            <#--<span class="label color_4">肺炎</span>-->
+            <#--<span class="label color_4">慢阻肺</span>-->
+            <#--<span class="label color_4">冠心病</span>-->
+            <#--<span class="label color_4">慢性肾功能障碍</span>-->
+            <#--<span class="label color_4">甲亢/甲减</span>-->
+            <#--<span class="label color_4">肝炎/肝硬化</span>-->
+            <#--<span class="label color_4">恶性肿瘤</span>-->
+            <#--<span class="label color_4">骨折</span>-->
+            <#--<span class="label color_4">其他消化道疾病</span>-->
+            <#--<span class="label color_4">类风关</span>-->
+        <#--</div>-->
+        <#--<div id="label37" class="aa" style="display: none">-->
+            <#--<span class="label color_4">2-3级</span>-->
+            <#--<span class="label color_4">4级</span>-->
+            <#--<span class="label color_4">5级</span>-->
+            <#--<span class="label color_4">6级</span>-->
+            <#--<span class="label color_4">7级</span>-->
+        <#--</div>-->
+        <#--<div id="label38" class="aa" style="display: none">-->
+            <#--<span class="label color_4">上厕所</span>-->
+            <#--<span class="label color_4">洗澡</span>-->
+            <#--<span class="label color_4">穿衣</span>-->
+            <#--<span class="label color_4">上下床</span>-->
+            <#--<span class="label color_4">室内行走</span>-->
+            <#--<span class="label color_4">吃饭</span>-->
+        <#--</div>-->
+        <#--<div id="label39" class="aa" style="display: none">-->
+            <#--<span class="label color_4">痴呆</span>-->
+            <#--<span class="label color_4">智障</span>-->
+            <#--<span class="label color_4">正常</span>-->
+        <#--</div>-->
+        <#--<div id="label310" class="aa" style="display: none">-->
+            <#--<span class="label color_4">失明</span>-->
+            <#--<span class="label color_4">有光感</span>-->
+            <#--<span class="label color_4">有障碍</span>-->
+            <#--<span class="label color_4">正常</span>-->
+        <#--</div>-->
+        <#--<div id="label311" class="aa" style="display: none">-->
+            <#--<span class="label color_5">志愿者</span>-->
+        <#--</div>-->
+        <#--<div id="label312" class="aa" style="display: none">-->
+            <#--<span class="label color_6">老年大学</span>-->
+            <#--<span class="label color_6">老年培训中心</span>-->
+        <#--</div>-->
+        <#--<div id="label313" class="aa" style="display: none">-->
+            <#--<span class="label color_7">老年俱乐部</span>-->
+            <#--<span class="label color_7">老年艺术中心</span>-->
+        <#--</div>-->
+    <#--</div>-->
+    <div class="col-lg-1" style="width: 3%"></div>
+    <div class="col-lg-5" style="width: 46%;position: relative;left: -1.5%">
         <div class="row">
             <div class="col-lg-12 box" align="center">
                 <div class="zz"></div>
@@ -367,8 +558,8 @@
             var label_tu_w,label_tu_h;
             var label_width=$("#label").width();
             if(winWidth>=1900){
-                label_tu_w=label_width/3;
-                label_tu_h=winHeight/5.5;
+                label_tu_w=label_width/2.5;
+                label_tu_h=winHeight/6.5;
             }else if(winWidth<=1400 && winWidth>=1300){
                 label_tu_w=winWidth/3;
                 label_tu_h=winHeight/5.5;
@@ -708,9 +899,9 @@
 </script>
 
  <script>
-
-
-
+        $(".selectLabel").css("height",winHeight/8.4);
+        $("#label1").css("height",winHeight/5);
+        $(".label3").css("height",winHeight/5);
      function picChange(index){
          for(var i=0;i<markerArr.length;i++){
              var json = markerArr[i];
@@ -992,9 +1183,9 @@
      function label3Show(index) {
 
          $("#label1").hide();
-         $(".aa").css("display","none");
-         $("#label3").show();
-         $("#label3"+index).show();
+//         $(".aa").css("display","none");
+//         $("#label").show();
+         $("#label"+index).show();
 
      }
 
@@ -1021,7 +1212,7 @@
                      var laa=$(this).text().trim();
                      $("#selectLabel span").each(function () {
                          if($(this).text().trim()==laa){
-                             $("#label3").hide();
+                             $(".label3").hide();
                              $("#label1").show();
 
                              $(this).remove();
@@ -1046,7 +1237,7 @@
                      $("#selectLabel").append($("<span class='bl label "+cl+"'>" + text + "</span>"));
                      la.push(text);
 //             table.fnFilter();
-                     $("#label3").hide();
+                     $(".label3").hide();
                      $("#label1").show();
 
                      ageBar = echarts.init(document.getElementById('ageBar'));

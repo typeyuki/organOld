@@ -289,16 +289,7 @@ function chartPie_1(title_text,legend_data,series) {
 
 function chartPie_1Click(title,legend_data,series) {
     var option = {
-        title : {
-            text: title_text,
-            textStyle:{
-                color:title_color,
-                fontSize:title_fontSize,
-                fontWeight:100
-            },
-            x:'0%',
-            y:'0%'
-        },
+        title : title,
         graphic:{
             type:'text',
             left:'center',

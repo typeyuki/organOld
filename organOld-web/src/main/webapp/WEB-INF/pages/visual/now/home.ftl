@@ -2,7 +2,7 @@
 <html>
 <head>
 <#include "../head.ftl" />
-<script src="../../../static/js/chart_part.js"></script>
+<script src="/static/js/chart_part.js"></script>
 
 </head>
 
@@ -11,7 +11,7 @@
     <div class="row">
         <div class="col-lg-3">
             <div class="row">
-                <div class="col-lg-12" id="news">
+                <div class="col-lg-12" >
                     <#include "news.ftl" />
                 </div>
             </div>

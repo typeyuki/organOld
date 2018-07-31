@@ -175,7 +175,7 @@
             ]
         }
     ];
-    var chx_option_num_pie = chartPie_1Click(title,legend_data,series);
+    var chx_option_num_pie = chartPieClick(title,legend_data,series);
     chx_num_pie.setOption(chx_option_num_pie);
 
     //片区人数分布
