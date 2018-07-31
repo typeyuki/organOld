@@ -29,6 +29,7 @@ public class ExportOldman {
     private String link;
 
     private String family;
+    private String familyType;
     private String economic;
     private String bloodType;
     private String intelligence;//失智
@@ -46,6 +47,14 @@ public class ExportOldman {
     private String cj="";
     private String ywfy="";
 
+
+    public String getFamilyType() {
+        return familyType;
+    }
+
+    public void setFamilyType(String familyType) {
+        this.familyType = familyType;
+    }
 
     public String getLink() {
         return link;

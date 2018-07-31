@@ -132,6 +132,13 @@
             </foreach>
             )
         </if>
+        <if test="entity!=null and entity.familyType!=null and entity.familyType.length > 0">
+            and (
+            <foreach collection="entity.familyType" index="index" item="item" open="(" separator="and" close=")">
+                lr.family_types  LIKE  concat('%',${item},'%')
+            </foreach>
+            )
+        </if>
         <if test="entity!=null and entity.intelligence!=null and entity.intelligence.length > 0">
             and (
             <foreach collection="entity.intelligence" index="index" item="item" open="(" separator="and" close=")">
@@ -240,6 +247,13 @@
         </if>
         <if test="entity!=null and entity.belongOrgan!=null and entity.belongOrgan!=0">
             and l.organ_id=#{entity.belongOrgan}
+        </if>
+        <if test="entity!=null and entity.familyType!=null and entity.familyType.length > 0">
+            and (
+            <foreach collection="entity.familyType" index="index" item="item" open="(" separator="and" close=")">
+                lr.family_types  LIKE  concat('%',${item},'%')
+            </foreach>
+            )
         </if>
         <if test="entity!=null and entity.firType!=null and entity.firType!=0">
             and lt.fir_index=#{entity.firType}
@@ -541,6 +555,12 @@
             and oldf.family_index IN
             <foreach collection="rule.families" index="index" item="item" open="(" separator="," close=")">
                 #{item}
+            </foreach>
+        </if>
+        <if test="rule.familyTypes!=null and rule.familyTypes.size() > 0">
+            and
+            <foreach collection="rule.familyTypes" index="index" item="item" open="(" separator="or" close=")">
+                (oldf.family_type_index like concat('%',#{item},'%'))
             </foreach>
         </if>
         <if test="rule.districtIds!=null and rule.districtIds.size() > 0">
@@ -952,6 +972,7 @@
         is_key=#{isKey},
         economics=#{economics},
         families=#{families},
+        family_types=#{familyTypes},
         intelligences=#{intelligences},
         eyesights=#{eyesights},
         is_healths=#{isHealths},

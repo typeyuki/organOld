@@ -134,6 +134,7 @@ $(document).ready(function(){
                 "ageEnd":$("input[name='ageEnd']").val(),
                 "wh":$("input[name='wh']").val(),
                 "family_array":$("select[name='family_array']").val(),
+                "family_type_array":$("select[name='family_type_array']").val(),
                 "economic_array":$("select[name='economic_array']").val(),
                 "sex":$("select[name='sex']").val(),
                 "search":$("input[name='search']").val(),

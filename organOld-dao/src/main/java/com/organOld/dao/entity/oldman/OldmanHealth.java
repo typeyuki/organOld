@@ -43,7 +43,15 @@ public class OldmanHealth extends DBEntity implements DBInterface{
     private List<String> healthAdd_exzl;
     private List<String> healthAdd_gz;
     private List<String> healthAdd_cj;
+    private List<Integer> healthSelectIds;
 
+    public List<Integer> getHealthSelectIds() {
+        return healthSelectIds;
+    }
+
+    public void setHealthSelectIds(List<Integer> healthSelectIds) {
+        this.healthSelectIds = healthSelectIds;
+    }
 
     public List<String> getHealthAdd_exzl() {
         return healthAdd_exzl;

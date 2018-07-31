@@ -76,6 +76,7 @@ public class LabelController {
     public String data(BTableRequest bTableRequest, LabelRequest labelRequest,
                        @RequestParam(value = "census_array[]",required = false) String census[],
                        @RequestParam(value = "family_array[]",required = false) String family[],
+                       @RequestParam(value = "family_type_array[]",required = false) String familyType[],
                        @RequestParam(value = "economic_array[]",required = false) String economic[],
                        @RequestParam(value = "politicalStatus_array[]",required = false) String politicalStatus[],
                        @RequestParam(value = "isHealth_array[]",required = false) String isHealth[],
@@ -98,6 +99,7 @@ public class LabelController {
         labelRequest.setOldStatusArray(oldStatus);
         labelRequest.setSqzwArray(sqzw);
         labelRequest.setZcArray(zc);
+        labelRequest.setFamilyType(familyType);
         return labelService.getByPage(labelRequest,bTableRequest);
     }
 

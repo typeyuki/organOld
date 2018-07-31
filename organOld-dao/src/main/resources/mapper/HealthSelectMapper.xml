@@ -42,4 +42,10 @@
             #{item}
         </foreach>
     </delete>
+
+
+
+    <select id="getFirTypeById" resultType="java.lang.Integer">
+        SELECT fir_type FROM health_select where id=#{id}
+    </select>
 </mapper>

@@ -204,6 +204,14 @@
                             </div>
                             <div class="row">
                                 <div class="col-sm-2">
+                                    <label>家庭类别：</label>
+                                    <select name="family_type_array"  class="selectpicker bla bla bli" multiple data-live-search="true">
+                                        <#list rule.familyType as family>
+                                            <option value="${family.id!}"> <i></i> ${family.value!}</option>
+                                        </#list>
+                                    </select>
+                                </div>
+                                <div class="col-sm-2">
                                     <label>社区职务：</label>
                                     <select name="sqzw_array" class="selectpicker bla bla bli" multiple data-live-search="true">
                                         <#list rule.sqzw as list>

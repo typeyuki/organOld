@@ -53,6 +53,7 @@
         <result property="intelligence" column="intelligence" />
         <result property="eyesight" column="eyesight" />
         <result property="family" column="family"/>
+        <result property="familyType" column="family_type_index"/>
         <result property="economic" column="economic"/>
         <association property="linkman" javaType="com.organOld.dao.entity.oldman.Linkman">
             <result property="name" column="lname" />
@@ -638,7 +639,7 @@
 
     <select id="getAll" parameterType="com.organOld.dao.entity.oldman.Oldman" resultMap="exportOldman">
         SELECT o.id,o.name,o.sqzw,z.value zc,o.sex,o.birthday,c.value census,p.value political_status,o.phone,o.address,o.pid,o.lou_num,o.old_status,
-        x.value xName,org.name jName,d.value pName,f.value family,ae.value economic,l.name lname,l.phone lphone,l.relation,
+        x.value xName,org.name jName,d.value pName,f.value family,ae.value economic,l.name lname,l.phone lphone,l.relation,ofa.family_type_index,
         ohb.blood_type,e.value eyesight,i.value intelligence,ha.type,ha.desc,hs.fir_type,hs.sec_type_name,ha.id haid,hs.id hsid
         FROM oldman_base o left join auto_value c on o.census=c.id
         left join auto_value p on o.political_status=p.id

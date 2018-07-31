@@ -30,18 +30,18 @@
                     <div>
                         <a onclick="addHome()" href="javascript:void(0);" class="btn btn-primary ">添加</a>
                         <a onclick="del('/home/${type}/del')" href="javascript:void(0);" class="btn btn-primary ">删除</a>
-                        <a  href="javascript:void(0);" id="search" class="btn btn-primary dd " style="display: none">搜索</a>
+                        <#if type==4 || type==5>
+                        <a  href="javascript:void(0);" id="search" class="btn btn-primary" >搜索</a>
+                        </#if>
                     </div>
-                    <div class="row dd" style="display: none">
-                        <div class="col-sm-4">
-                            <input class="search form-control inp" type="text" placeholder="模糊匹配">
+                    <#if type==4 || type==5>
+                        <div class="row" >
+                            <div class="col-sm-4">
+                                <input class="search form-control inp" type="text" placeholder="模糊匹配">
+                            </div>
                         </div>
-                    </div>
-<#if type==4 || type==5>
-<script>
-    $(".dd").show();
-</script>
-</#if>
+                    </#if>
+
                     <div class="table-responsive">
                         <table class="table table-striped table-bordered table-hover dataTables-example text-nowrap">
                             <thead>

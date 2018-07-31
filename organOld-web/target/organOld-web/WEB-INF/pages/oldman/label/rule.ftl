@@ -226,6 +226,24 @@
                                 </div>
                             </#list>
                         </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">家庭类别
+                            </label>
+                            <div class="col-sm-1">
+                                <div class="checkbox i-checks">
+                                    <label>
+                                        <input type="checkbox" name="familyType"  checked> <i></i> 不限</label>
+                                </div>
+                            </div>
+                        <#list rule.familyType as list>
+                            <div class="col-sm-1">
+                                <div class="radio i-checks">
+                                    <label>
+                                        <input type="checkbox" value="${list.id}" name="familyType" > <i></i> ${list.value}</label>
+                                </div>
+                            </div>
+                        </#list>
+                        </div>
                         <div class="hr-line-dashed"></div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">职称

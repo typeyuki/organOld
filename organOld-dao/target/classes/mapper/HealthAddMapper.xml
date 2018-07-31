@@ -10,4 +10,9 @@
             (#{item.oldmanId}, #{item.type},#{item.desc})
         </foreach>
     </insert>
+
+    <delete id="delByOldmanId">
+    DELETE from health_add
+    WHERE oldman_id =#{oldmanId}
+</delete>
 </mapper>

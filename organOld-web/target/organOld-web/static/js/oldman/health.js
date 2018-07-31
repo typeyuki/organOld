@@ -180,9 +180,7 @@ function edit_health(id) {
         success: function (result) {
             var data=result.data;
             for(key in data){
-                if(key=="oldman"){
-                    $("#editModal input[name='oldman.id']").val(data[key].id);
-                }else if(key=="healthSelect"){
+                if(key=="healthSelect"){
                     if(data[key]!=null && data[key].length>0){
                         for(var i=0;i<data[key].length;i++){
                             $("#editModal input[name='"+key+"'][type='checkbox'][value='"+data[key][i].id+"']").prop("checked",true);
@@ -193,13 +191,13 @@ function edit_health(id) {
                         for(var i=0;i<data[key].length;i++){
                             var $input
                             if(data[key][i].type==4){
-                                $input=$("<input name='healthAdd_exzl'  class='form-control inp healthAdd' db='"+data[key][i].id+"' value='"+data[key][i].desc+"'/>");
+                                $input=$("<input name='healthAdd_exzl'  class='form-control inp healthAdd'  value='"+data[key][i].desc+"'/>");
                                 $("#exzl").append($input);
                             }else if(data[key][i].type==5){
-                                $input=$("<input name='healthAdd_gz'  class='form-control inp healthAdd' db='"+data[key][i].id+"' value='"+data[key][i].desc+"'/>");
+                                $input=$("<input name='healthAdd_gz'  class='form-control inp healthAdd'  value='"+data[key][i].desc+"'/>");
                                 $("#gz").append($input);
                             }else{
-                                $input=$("<input name='healthAdd_cj'  class='form-control inp healthAdd' db='"+data[key][i].id+"' value='"+data[key][i].desc+"'/>");
+                                $input=$("<input name='healthAdd_cj'  class='form-control inp healthAdd'  value='"+data[key][i].desc+"'/>");
                                 $("#cj").append($input);
                             }
                             $("#editModal input[name='"+key+"'][type='checkbox'][value='"+data[key][i].id+"']").prop("checked",true);

@@ -25,9 +25,9 @@ $(document).ready(function(){
                 // 增加一列，包括删除和修改，同时将我们需要传递的数据传递到链接中
                 {
                     "targets": [3], // 目标列位置，下标从0开始
-                    "data": "id", // 数据列名
+                    "data": "oldmanId", // 数据列名
                     "render": function(data, type, full) { // 返回自定义内容
-                        return "<span class='mod' id='"+data+"'>查看</span>";
+                        return "<button class='btn btn-primary'  onclick=newPageChange("+data+",$(this).parent().prev().prev().text(),'/oldman/?/info',$(this).parent().prev().prev().prev().text())>查看</button>";
                     }
                 }
             ],
@@ -68,3 +68,8 @@ $(document).ready(function(){
 
 });
 
+
+function newPageChange(id,name,url,oldmanId) {
+    url=url.replace("?",oldmanId);
+    newPage(id,name,url);
+}

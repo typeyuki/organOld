@@ -111,6 +111,8 @@ public class LabelServiceImpl implements LabelService {
             labelRuleToDB.setEconomics(Arrays.asList(labelRule.getEconomics().split("#")));
         if(!StringUtils.isEmpty(labelRule.getFamilies()))
             labelRuleToDB.setFamilies(Arrays.asList(labelRule.getFamilies().split("#")));
+        if(!StringUtils.isEmpty(labelRule.getFamilyTypes()))
+            labelRuleToDB.setFamilyTypes(Arrays.asList(labelRule.getFamilyTypes().split("#")));
         if(!StringUtils.isEmpty(labelRule.getIsHealths()))
             labelRuleToDB.setIsHealths(Arrays.asList(labelRule.getIsHealths().split("#")));
         if(!StringUtils.isEmpty(labelRule.getOldStatuses()))
@@ -165,9 +167,10 @@ public class LabelServiceImpl implements LabelService {
         labelDao.deleteLableManByLabelId(labelRule.getLabelId());
         LabelRuleToDBSelectMan labelRuleToDB=getLabelRuleToDB(labelRule);
         List<LabelMan> labelManList= labelDao.getRuleManIds(labelRuleToDB);
-        labelManList.stream().forEach(r->r.setLabelId(labelRule.getLabelId()));
-        labelManDao.saveAll(labelManList);
-
+        if(labelManList.size()>0) {
+            labelManList.stream().forEach(r -> r.setLabelId(labelRule.getLabelId()));
+            labelManDao.saveAll(labelManList);
+        }
         labelFeedbackDao.deleteByLabelId(labelRule.getLabelId());
 
         //通知 居委

@@ -10,9 +10,9 @@
                                     <h5></h5>
                                 </div>
                                 <div class="ibox-content">
-                                    <form method="post" id="oldmanEdit" class="form-horizontal" action="/oldman/base/update">
+                                    <form method="post" id="oldmanEdit" class="form-horizontal" action="/oldman/health/update">
                                         <input type="hidden" name="id">
-                                        <input type="hidden" name="oldman.id">
+                                        <input type="hidden" name="oldmanId">
                                         <div class="form-group">
                                             <label class="col-sm-1 control-label">血型</label>
                                             <div class="col-sm-8">
@@ -117,8 +117,8 @@
 
 <script>
     function healthSub() {
-        $(".healthAdd").each(function () {
-            $(this).val($(this).attr("db")+"#"+$(this).val());
+        $("input[name='healthSelect']").each(function () {
+            $(this).attr("name","healthSelectIds");
         });
         $("#oldmanEdit").submit();
     }

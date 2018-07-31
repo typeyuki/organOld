@@ -18,6 +18,7 @@ public class LabelFilterModel {
     private Map<Integer,String> isKey;
     private List<AutoValue> economic=new ArrayList<>();
     private List<AutoValue> family=new ArrayList<>();
+    private List<AutoValue> familyType=new ArrayList<>();
     private List<AutoValue> intelligence=new ArrayList<>();
     private List<AutoValue> zc=new ArrayList<>();
     private List<AutoValue> sqzw=new ArrayList<>();
@@ -29,6 +30,14 @@ public class LabelFilterModel {
     private List<AutoValue> firLabel=new ArrayList<>();
     private List<LabelSec> secLabel;
 
+
+    public List<AutoValue> getFamilyType() {
+        return familyType;
+    }
+
+    public void setFamilyType(List<AutoValue> familyType) {
+        this.familyType = familyType;
+    }
 
     public List<AutoValue> getZc() {
         return zc;

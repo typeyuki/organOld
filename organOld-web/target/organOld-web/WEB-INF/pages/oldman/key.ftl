@@ -59,7 +59,7 @@
                             <input type="date" class="form-control inp" id="futureTime">
                         </div>
                         <div class="col-sm-2">
-                            <label >是否主动申请进养老院</label>
+                            <label >是否申请养老院</label>
                             <select name="isActivity" class="form-control inp" style="width: 40%">
                                 <option></option>
                                 <option value="1">是</option>

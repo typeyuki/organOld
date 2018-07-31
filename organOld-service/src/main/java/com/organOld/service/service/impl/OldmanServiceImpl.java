@@ -1008,11 +1008,64 @@ public class OldmanServiceImpl implements OldmanService {
                 break;
             case "health":
                 OldmanHealth oldmanHealth=(OldmanHealth) dbEntity;
-                oldmanHealthDao.updateById(oldmanHealth);
-                healthSelectManDao.delByOldmanId(oldmanHealth.getOldman().getId());
-                healthAddDao.delByOldmanId(oldmanHealth.getOldman().getId());
+                healthSelectManDao.delByOldmanId(oldmanHealth.getOldmanId());
+                List<HealthSelectMan> healthSelectManList=new ArrayList<>();
+                if(oldmanHealth.getHealthSelectIds()!=null && oldmanHealth.getHealthSelectIds().size()>0){
+                    for(Integer id:oldmanHealth.getHealthSelectIds()){
+                        Integer firType=healthSelectDao.getFirTypeById(id);
+                        if(firType==HealthEnum.MB.getIndex()){
+                            oldmanHealth.setIsMb(1);
+                        }
+                        if(firType==HealthEnum.SN.getIndex()){
+                            oldmanHealth.setIsSn(1);
+                        }
+                        if(firType==HealthEnum.YW.getIndex()){
+                            oldmanHealth.setIsYwfy(1);
+                        }
+                        HealthSelectMan healthSelectMan=new HealthSelectMan();
+                        healthSelectMan.setHealthSelectId(id);
+                        healthSelectMan.setOldmanId(oldmanHealth.getOldmanId());
+                        healthSelectManList.add(healthSelectMan);
+                    }
+                }
+                if(healthSelectManList.size()>0)
+                    healthSelectManDao.saveAll(healthSelectManList);
+                healthAddDao.delByOldmanId(oldmanHealth.getOldmanId());
                 List<HealthAdd> healthAddList=new ArrayList<>();
+                if(oldmanHealth.getHealthAdd_exzl()!=null && oldmanHealth.getHealthAdd_exzl().size()>0){
+                    oldmanHealth.setIsExzl(1);
+                    for(String s:oldmanHealth.getHealthAdd_exzl()){
+                        HealthAdd healthAdd=new HealthAdd();
+                        healthAdd.setOldmanId(oldmanHealth.getOldmanId());
+                        healthAdd.setType(HealthEnum.EXZL.getIndex());
+                        healthAdd.setDesc(s);
+                        healthAddList.add(healthAdd);
+                    }
+                }
+                if(oldmanHealth.getHealthAdd_gz()!=null && oldmanHealth.getHealthAdd_gz().size()>0){
+                    oldmanHealth.setIsGz(1);
+                    for(String s:oldmanHealth.getHealthAdd_gz()){
+                        HealthAdd healthAdd=new HealthAdd();
+                        healthAdd.setOldmanId(oldmanHealth.getOldmanId());
+                        healthAdd.setType(HealthEnum.GZ.getIndex());
+                        healthAdd.setDesc(s);
+                        healthAddList.add(healthAdd);
+                    }
+                }
+                if(oldmanHealth.getHealthAdd_cj()!=null && oldmanHealth.getHealthAdd_cj().size()>0){
+                    oldmanHealth.setIsCj(1);
+                    for(String s:oldmanHealth.getHealthAdd_cj()){
+                        HealthAdd healthAdd=new HealthAdd();
+                        healthAdd.setOldmanId(oldmanHealth.getOldmanId());
+                        healthAdd.setType(HealthEnum.CJQK.getIndex());
+                        healthAdd.setDesc(s);
+                        healthAddList.add(healthAdd);
+                    }
+                }
+                if(healthAddList.size()>0)
+                    healthAddDao.saveAll(healthAddList);
 
+                oldmanHealthDao.updateById(oldmanHealth);
         }
         return new Result(true);
     }

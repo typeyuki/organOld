@@ -51,6 +51,7 @@ public class Label extends DBEntity implements DBInterface{
     private Integer secType;
     private String[] politicalStatusArray;//政治面貌
     private String[] family;
+    private String[] familyType;
     private String[] economic;
     private String[] isHealth;
     private String[] intelligence;
@@ -59,6 +60,14 @@ public class Label extends DBEntity implements DBInterface{
     private String[] sqzw;
     private String[] oldStatusArray;
 
+
+    public String[] getFamilyType() {
+        return familyType;
+    }
+
+    public void setFamilyType(String[] familyType) {
+        this.familyType = familyType;
+    }
 
     public String[] getZc() {
         return zc;

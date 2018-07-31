@@ -17,4 +17,8 @@
             #{item}
         </foreach>
     </delete>
+    <delete id="delByOldmanId" >
+        DELETE from health_select_oldman
+        WHERE oldman_id =#{oldmanId}
+    </delete>
 </mapper>

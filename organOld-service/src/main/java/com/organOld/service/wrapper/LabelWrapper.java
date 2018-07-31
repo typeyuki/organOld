@@ -101,6 +101,9 @@ public class LabelWrapper implements Wrapper<Label,LabelModel,LabelRequest> {
             if (autoValue.getType()== AutoValueEnum.SQZW.getIndex()){
                 labelRuleModel.getSqzw().add(autoValue);
             }
+            if (autoValue.getType()== AutoValueEnum.JTLB.getIndex()){
+                labelRuleModel.getFamilyType().add(autoValue);
+            }
         }
 
         return labelRuleModel;
@@ -116,6 +119,8 @@ public class LabelWrapper implements Wrapper<Label,LabelModel,LabelRequest> {
 
         if(labelRule.getZcs()!=null && !labelRule.getZcs().equals(""))
             labelRuleModel.setZcs(Arrays.asList(labelRule.getZcs().split("#")));
+        if(labelRule.getSqzws()!=null && !labelRule.getSqzws().equals(""))
+            labelRuleModel.setSqzws(Arrays.asList(labelRule.getSqzws().split("#")));
         if(labelRule.getSqzws()!=null && !labelRule.getSqzws().equals(""))
             labelRuleModel.setSqzws(Arrays.asList(labelRule.getSqzws().split("#")));
         if(labelRule.getCensuses()!=null && !labelRule.getCensuses().equals(""))
@@ -134,6 +139,8 @@ public class LabelWrapper implements Wrapper<Label,LabelModel,LabelRequest> {
             labelRuleModel.setEconomics(Arrays.asList(labelRule.getEconomics().split("#")));
         if(labelRule.getFamilies()!=null && !labelRule.getFamilies().equals(""))
             labelRuleModel.setFamilies(Arrays.asList(labelRule.getFamilies().split("#")));
+        if(labelRule.getFamilyTypes()!=null && !labelRule.getFamilyTypes().equals(""))
+            labelRuleModel.setFamilyTypes(Arrays.asList(labelRule.getFamilyTypes().split("#")));
         if(labelRule.getChxs()!=null && !labelRule.getChxs().equals(""))
             labelRuleModel.setChxs(Arrays.asList(labelRule.getChxs().split("#")));
         if(labelRule.getOldStatuses()!=null && !labelRule.getOldStatuses().equals(""))
@@ -177,6 +184,8 @@ public class LabelWrapper implements Wrapper<Label,LabelModel,LabelRequest> {
             labelRule.setEconomics(String.join("#", labelRuleRequest.getEconomic()));
         if(labelRuleRequest.getFamily()!=null && labelRuleRequest.getFamily().length>0)
             labelRule.setFamilies(String.join("#", labelRuleRequest.getFamily()));
+        if(labelRuleRequest.getFamilyType()!=null && labelRuleRequest.getFamilyType().length>0)
+            labelRule.setFamilyTypes(String.join("#", labelRuleRequest.getFamilyType()));
         if(labelRuleRequest.getChx()!=null && labelRuleRequest.getChx().length>0)
             labelRule.setChxs(String.join("#", labelRuleRequest.getChx()));
         if(labelRuleRequest.getOldStatus()!=null && labelRuleRequest.getOldStatus().length>0)
@@ -284,6 +293,9 @@ public class LabelWrapper implements Wrapper<Label,LabelModel,LabelRequest> {
             }
             if (autoValue.getType()== AutoValueEnum.SQZW.getIndex()){
                 labelFilterModel.getSqzw().add(autoValue);
+            }
+            if (autoValue.getType()== AutoValueEnum.JTLB.getIndex()){
+                labelFilterModel.getFamilyType().add(autoValue);
             }
         }
 

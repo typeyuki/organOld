@@ -13,6 +13,7 @@ public class LabelRuleRequest {
     private String isKey;
     private String[] economic;
     private String[] family;
+    private String[] familyType;
     private String[] intelligence;
     private String[] eyesight;
     private String[] isHealth;
@@ -21,6 +22,13 @@ public class LabelRuleRequest {
     private String[] zc;
     private String[] sqzw;
 
+    public String[] getFamilyType() {
+        return familyType;
+    }
+
+    public void setFamilyType(String[] familyType) {
+        this.familyType = familyType;
+    }
 
     public String[] getZc() {
         return zc;

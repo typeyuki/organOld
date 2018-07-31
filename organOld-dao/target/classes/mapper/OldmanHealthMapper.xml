@@ -9,6 +9,7 @@
         <result property="bloodType" column="blood_type"/>
         <result property="intelligence" column="intelligence" />
         <result property="eyesight" column="eyesight" />
+        <result property="oldmanId" column="oldman_id" />
         <result property="time" column="time" />
         <association property="oldman" javaType="com.organOld.dao.entity.oldman.Oldman">
             <id property="id" column="oid" />
@@ -96,25 +97,18 @@ select count(1) from oldman_base oo,organ org,auto_value x where  x.id=oo.xq_id 
     </select>
 
     <select id="getByOldmanId" resultMap="oldmanHealth">
-        SELECT o.id,o.time,o.blood_type,o.eyesight,o.intelligence,ha.type,ha.desc,ha.id haid,hs.id hsid
+        SELECT o.id,o.time,o.blood_type,o.eyesight,o.intelligence,o.oldman_id,ha.type,ha.desc,ha.id haid,hs.id hsid
         FROM oldman_health_base o LEFT JOIN health_add ha ON ha.oldman_id=o.oldman_id
         LEFT JOIN health_select_oldman hso on hso.oldman_id=o.oldman_id left join health_select hs on hso.health_select_id=hs.id
         WHERE o.oldman_id=#{id}
     </select>
 
-    <delete id="delById">
-        DELETE FROM oldman_base WHERE id=#{id}
-    </delete>
 
-    <insert id="save" parameterType="com.organOld.dao.entity.oldman.Oldman">
-        INSERT INTO oldman_base(name,sex,birthday,pid,address,jw_id,census,political_status,district_id,phone)
-        VALUE (#{name},#{sex},#{birthday},#{pid},#{address},#{jwId},#{census},#{politicalStatus},#{districtId},#{phone})
-    </insert>
 
-    <update id="updateById" parameterType="com.organOld.dao.entity.oldman.Oldman">
-        UPDATE oldman_base
-        SET name=#{name},sex=#{sex},birthday=#{birthday},pid=#{pid},address=#{address},jw_id=#{jwId},census=#{census},political_status#{politicalStatus},
-        district_id=#{districtId},phone=#{phone}
+    <update id="updateById" parameterType="com.organOld.dao.entity.oldman.OldmanHealth">
+        UPDATE oldman_health_base
+        SET blood_type=#{bloodType},intelligence=#{intelligence},eyesight=#{eyesight},is_mb=#{isMb},
+        is_sn=#{isSn},is_ywfy=#{isYwfy},is_exzl=#{isExzl},is_gz=#{isGz},is_cj=#{isCj}
         WHERE id=#{id}
     </update>
 

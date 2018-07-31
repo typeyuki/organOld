@@ -18,6 +18,7 @@ public class LabelRule extends DBEntity {
     private int isKey;
     private String economics;
     private String families;
+    private String familyTypes;
     private String intelligences;
     private String eyesights;
     private String isHealths;
@@ -26,6 +27,14 @@ public class LabelRule extends DBEntity {
     private String zcs;
     private String sqzws;
 
+
+    public String getFamilyTypes() {
+        return familyTypes;
+    }
+
+    public void setFamilyTypes(String familyTypes) {
+        this.familyTypes = familyTypes;
+    }
 
     public String getZcs() {
         return zcs;

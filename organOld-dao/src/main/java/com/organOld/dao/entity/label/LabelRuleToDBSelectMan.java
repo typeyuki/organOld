@@ -15,6 +15,7 @@ public class LabelRuleToDBSelectMan {
     private int isKey;
     private List<String> economics;
     private List<String> families;
+    private List<String> familyTypes;
     private List<String> intelligences;
     private List<String> eyesights;
     private List<String> isHealths;
@@ -22,6 +23,15 @@ public class LabelRuleToDBSelectMan {
     private List<String> oldStatuses;
     private List<String> zcs;
     private List<String> sqzws;
+
+
+    public List<String> getFamilyTypes() {
+        return familyTypes;
+    }
+
+    public void setFamilyTypes(List<String> familyTypes) {
+        this.familyTypes = familyTypes;
+    }
 
     public List<String> getZcs() {
         return zcs;
