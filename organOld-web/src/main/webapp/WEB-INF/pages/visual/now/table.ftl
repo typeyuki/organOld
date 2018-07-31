@@ -40,39 +40,7 @@
         </div>
     </div>
 
-
-
-<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-    <div class="modal-dialog" style="width: 80%">
-        <div class="modal-content">
-            <div class="modal-body">
-                <div class="wrapper wrapper-content animated fadeInRight">
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <div class="ibox float-e-margins">
-                                <div class="ibox-title">
-                                    <h5></h5>
-                                </div>
-                                <div class="ibox-content">
-                                    <form method="post" id="oldmanEdit" class="form-horizontal" action="/oldman/family/update">
-                                        <input type="hidden" name="id">
-
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-            <div class="modal-footer">
-                <a onclick="$('#oldmanEdit').submit()" href="javascript:void(0);" class="btn btn-primary ">修改</a>
-                <a data-dismiss="modal" href="javascript:void(0);" class="btn btn-primary ">关闭</a>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div>
-
+<#include "table_info.ftl" />
 <script>
     var label=[];//用于标签页面
 
@@ -169,26 +137,13 @@
         $.ajax({
             url : "/oldman/"+id+"/info",
             type : "post",
-            dataType : 'json',
-            data:{
-                ids:ids
-            },
             success : function(data) {
                 if (data.success==true) {
-                    var start = $(".dataTables-example").dataTable().fnSettings()._iDisplayStart;
-                    var total = $(".dataTables-example").dataTable().fnSettings().fnRecordsDisplay();
-                    window.location.reload();
-                    if(total-start==1){
-                        if(start>0){
-                            $(".dataTables-example").dataTable().fnPageChange('previous',true);
-                        }
-                    }
+                    $('#editModal').modal();
 
-                } else {
-                    alert('删除失败！');
                 }
             }
         });
-        $('#editModal').modal();
+
     }
 </script>

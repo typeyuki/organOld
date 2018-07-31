@@ -11,6 +11,7 @@ public class OldmanRequest {
     private Integer sex;//1女 2男
     private String[] politicalStatusArray;//政治面貌
     private String[] family;
+    private String[] familyType;
     private String[] economic;
     private String[] isHealth;
     private String[] intelligence;
@@ -18,6 +19,15 @@ public class OldmanRequest {
     private String[] oldStatusArray;
     private String[] zcArray;
     private String[] sqzwArray;
+
+
+    public String[] getFamilyType() {
+        return familyType;
+    }
+
+    public void setFamilyType(String[] familyType) {
+        this.familyType = familyType;
+    }
 
     public String[] getZcArray() {
         return zcArray;

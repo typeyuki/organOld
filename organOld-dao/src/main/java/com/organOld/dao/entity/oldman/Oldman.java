@@ -49,6 +49,7 @@ public class Oldman extends Man implements DBInterface {
     private String jw[];//居委索引
     private String politicalStatusArray[];//政治面貌 1群众 2党员
     private String family[];
+    private String familyType[];
     private String economic[];
     private String isHealth[];
     private String intelligence[];
@@ -87,6 +88,14 @@ public class Oldman extends Man implements DBInterface {
         return pid != null ? pid.hashCode() : 0;
     }
 
+
+    public String[] getFamilyType() {
+        return familyType;
+    }
+
+    public void setFamilyType(String[] familyType) {
+        this.familyType = familyType;
+    }
 
     public String[] getZcArray() {
         return zcArray;

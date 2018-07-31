@@ -129,6 +129,9 @@ public class OldmanWrapper implements Wrapper<Oldman,OldmanModel,OldmanRequest> 
             if (autoValue.getType()== AutoValueEnum.XQ.getIndex()){
                 oldmanAddInfoModel.getXq().add(autoValue);
             }
+            if (autoValue.getType()== AutoValueEnum.JTLB.getIndex()){
+                oldmanAddInfoModel.getFamilyType().add(autoValue);
+            }
         }
 
         for (HealthSelect healthSelect:healthSelectList){

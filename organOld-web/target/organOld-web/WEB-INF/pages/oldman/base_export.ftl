@@ -98,6 +98,9 @@
                                             <div class="col-sm-1">
                                                 <label><input type="checkbox" value="getLink#应急联系人" name="th" checked>应急联系人</label>
                                             </div>
+                                            <div class="col-sm-1">
+                                                <label><input type="checkbox" value="getFamilyType#家庭类别" name="th" checked>家庭类别</label>
+                                            </div>
                                         </div>
                                     </form>
                                 </div>
