@@ -643,6 +643,14 @@ function customizedPie(title_text,data) {
             trigger: 'item',
             formatter: "{a} <br/>{b} : {c} ({d}%)"
         },
+        legend: {
+            // left:'0',
+            // top:'6%',
+            orient: 'vertical',
+            right: '0',
+            top:"0",
+            data:legend_data
+        },
 
         visualMap: {
             show: false,
@@ -724,6 +732,14 @@ function customizedPie2(title_text,data) {
         tooltip : {
             trigger: 'item',
             formatter: "{a} <br/>{b} : {c} ({d}%)"
+        },
+        legend: {
+            // left:'0',
+            // top:'6%',
+            orient: 'vertical',
+            right: '0',
+            top:"0",
+            data:legend_data
         },
 
         visualMap: {

@@ -214,7 +214,9 @@
         {value:376, name:'日照中心'},
         {value:376, name:'助餐点'},
     ];
-    var organ_option_sq_sub_pie = customizedPie2(title_text,data);
+    legend_data=[{name:'长者照护之家',textStyle:{color:legend_color,fontSize:18}},{name:'日照中心',textStyle:{color:legend_color,fontSize:18}},{name:'助餐点',textStyle:{color:legend_color,fontSize:18}}];
+
+    var organ_option_sq_sub_pie = customizedPie2(title_text,data,legend_data);
     organ_sq_sub_pie.setOption(organ_option_sq_sub_pie);
 
     //legend 点击事件
@@ -273,9 +275,11 @@
         {value:476, name:'家庭医生'},
         {value:676, name:'家庭病床'}
     ];
+    legend_data=[{name:'家庭养老',textStyle:{color:legend_color,fontSize:18}},{name:'长护险',textStyle:{color:legend_color,fontSize:18}},{name:'智能化应用',textStyle:{color:legend_color,fontSize:18}},{name:'家庭医生',textStyle:{color:legend_color,fontSize:18}},{name:'家庭病床',textStyle:{color:legend_color,fontSize:18}}];
 
 
-    var organ_option_jj_pie = customizedPie(title_text,data);
+
+    var organ_option_jj_pie = customizedPie(title_text,data,legend_data);
     organ_jj_pie.setOption(organ_option_jj_pie);
 
 

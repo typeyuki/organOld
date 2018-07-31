@@ -25,6 +25,7 @@
             <div class="row">
                 <div class="col-lg-12" id="map">
                     <#include "map.ftl" />
+                    <#--<#include "heatmap.js" />-->
                 </div>
             </div>
             <div class="row">
@@ -66,7 +67,18 @@
         </div>
     </div>
 </div>
-
+<script type="text/javascript">
+    function downloadJSAtOnload() {
+        var element = document.createElement("script");
+        element.src = "heatmap.js";
+        document.body.appendChild(element);
+    }
+    if (window.addEventListener)
+        window.addEventListener("load", downloadJSAtOnload, false);
+    else if (window.attachEvent)
+        window.attachEvent("onload", downloadJSAtOnload);
+    else window.onload = downloadJSAtOnload;
+</script>
 </body>
 <script>
     function change(source,des) {

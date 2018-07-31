@@ -232,7 +232,7 @@
                             <div class="col-sm-1">
                                 <div class="checkbox i-checks">
                                     <label>
-                                        <input type="checkbox" name="familyType"  checked> <i></i> 不限</label>
+                                        <input type="checkbox" name="familyType" value="" checked> <i></i> 不限</label>
                                 </div>
                             </div>
                         <#list rule.familyType as list>

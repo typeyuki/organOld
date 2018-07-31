@@ -157,7 +157,17 @@
             name: '已完成',
             fontSize: 40,
             color:series_color_5,
-            stack: 'a'
+            stack: 'a',
+            labelLine: {
+                normal: {
+                    lineStyle: {
+                        color: "#000000"
+                    },
+                    smooth: 0.2,
+                    length: 10,
+                    length2: 20
+                }
+            },
         }],
         legend: {
             show: true,
