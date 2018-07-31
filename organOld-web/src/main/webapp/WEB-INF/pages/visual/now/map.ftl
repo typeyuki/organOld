@@ -42,10 +42,10 @@
 </style>
         <div class="row">
             <div class="col-lg-12">
-                <p>古美街道分布图</p>
+                <p>古美路街道分布图</p>
             </div>
         </div>
-        <div class="row">
+        <div class="row" style="margin-top: 30px">
             <div class="col-lg-12" align="center">
             <#--<img src="/static/img/map/3.png">-->
                 <style type="text/css">
@@ -59,7 +59,7 @@
                 <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=Lak4ThuxodnoDdL3ZrfK5t91UR4uDmGm"></script>
                 <script type="text/javascript" src="http://api.map.baidu.com/library/Heatmap/2.0/src/Heatmap_min.js"></script>
 
-                <div class="col-lg-15" style="width:1100px;height:1200px;border:#ccc solid 1px;display: none" id="dituContent" align="center"></div>
+                <div class="col-lg-15" style="width:1100px;height:1200px;border:#ccc solid 1px;display: none;" id="dituContent" align="center"></div>
 
                 <script type="text/javascript">
                    $("#dituContent").css("width",winWidth/3.5);
@@ -272,11 +272,19 @@
                     map.setMapStyle({style:'midnight'});
                 </script>
                 <#--heatmap-->
-                <div class="col-lg-15" style="width:1100px;height:1200px;border:#ccc solid 1px;" id="container" align="center"></div>
+                <div class="col-lg-15" style="width:1100px;height:1200px;border:#ccc solid 1px;z-index: 1" id="container" align="center"></div>
+                <div style="width: 200px;
+    height: 200px;
+    right: 10.5%;
+    top: 5px;
+    position: absolute;
+    z-index: 2;">
+                    <img src="/static/img/map/date.jpg">
+                </div>
 
-                <div id="container" style="display: none;width:1100px;height:1200px;border:#ccc solid 1px;" class="col-lg-15" ></div>
+                <#--<div id="container" style="display: none;width:1100px;height:1200px;border:#ccc solid 1px;" class="col-lg-15" ></div>-->
                 <script type="text/javascript">
-                    $("#container").css("width",winWidth/3.5);
+                    $("#container").css("width",winWidth/4);
                     $("#container").css("height",winHeight/1.55);
                     var hmap = new BMap.Map("container");          // 创建地图实例
 
