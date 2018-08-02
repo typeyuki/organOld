@@ -143,6 +143,23 @@ $(document).ready(function(){
 
     $('#search').click(function () {
         table.fnFilter();
+        if(type==1){
+            $.ajax({
+                url : "/record/getMoneySum",
+                type : "get",
+                dataType : 'json',
+                data:{
+                    "start":$("input[name='startDate']").val(),
+                    "end":$("input[name='endDate']").val(),
+                    "organId":organId
+                },
+                success : function(data) {
+                    if (data.success==true) {
+                      $("#sumMoney").html(data.data);
+                    }
+                }
+            });
+        }
     });
 
     var oTable=$("#editable").dataTable();

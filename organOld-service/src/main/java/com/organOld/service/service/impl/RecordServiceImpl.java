@@ -1,26 +1,19 @@
 package com.organOld.service.service.impl;
 
-import com.organOld.dao.entity.product.Product;
-import com.organOld.dao.entity.product.ProductBook;
 import com.organOld.dao.entity.record.Record;
 import com.organOld.dao.repository.OldmanDao;
-import com.organOld.dao.repository.ProductBookDao;
-import com.organOld.dao.repository.ProductDao;
 import com.organOld.dao.repository.RecordDao;
 import com.organOld.dao.util.Page;
 import com.organOld.service.contract.*;
 import com.organOld.service.enumModel.RecordTypeEnum;
-import com.organOld.service.model.ProductBookModel;
-import com.organOld.service.model.ProductModel;
 import com.organOld.service.model.RecordModel;
 import com.organOld.service.service.CommonService;
-import com.organOld.service.service.ProductService;
 import com.organOld.service.service.RecordService;
+import com.organOld.service.util.Tool;
 import com.organOld.service.wrapper.Wrappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -77,4 +70,11 @@ public class RecordServiceImpl implements RecordService {
     public void saveEntity(Record record) {
         recordDao.save(record);
     }
+
+    @Override
+    public Result getMoneySum(String start, String end, Integer organId) {
+        return new Result(true,recordDao.getMoneySum(Tool.stringToDate(start),Tool.stringToDate(end),organId));
+    }
+
+
 }

@@ -34,7 +34,7 @@
             and m.type=#{entity.type}
         </if>
         <if test="sortType!=null and sortType!='' and sortType=='init'">
-            ORDER BY m.is_read desc
+            ORDER BY m.is_read asc,m.time desc
         </if>
         <if test="sortType!=null and sortType!='' and sortType!='init'">
             ORDER BY m.${sortType} ${sort}

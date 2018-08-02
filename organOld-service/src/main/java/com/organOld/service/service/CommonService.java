@@ -11,6 +11,7 @@ import com.organOld.dao.util.Page;
 import com.organOld.service.contract.*;
 import com.organOld.service.enumModel.AutoValueEnum;
 import com.organOld.service.enumModel.MessageTypeEnum;
+import org.apache.poi.ss.usermodel.Cell;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -249,6 +250,22 @@ public class CommonService {
         }catch (Exception e){
             return "";
         }
+    }
+
+    public Boolean excelIsNotNull(Cell cell){
+        if(cell==null || cell.getStringCellValue()==null){
+            return false;
+        }
+        return true;
+    }
+
+    public boolean excelIsNotNullOne(Cell cell) {
+        Boolean result=excelIsNotNull(cell);
+        if(result){
+            if(cell.getStringCellValue().equals("1"))
+                return true;
+        }
+        return false;
     }
 }
 

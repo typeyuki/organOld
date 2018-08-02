@@ -108,8 +108,8 @@ public class HomeServiceImpl implements HomeService{
                     Integer oldmanId=0;
                     Integer jjfwOrg=0,chxOrg=0,znOrg=0;
 
-                    if (r.getCell(1).getStringCellValue() != null && !r.getCell(1).getStringCellValue().equals("")) {
-                        oldmanId=commonService.checkOldmanExiest(r.getCell(1).getStringCellValue());
+                    if (commonService.excelIsNotNull(r.getCell(3))) {
+                        oldmanId=commonService.checkOldmanExiest(r.getCell(3).getStringCellValue());
                         Oldman exiOldman = oldmanDao.getById(oldmanId);
                         if(oldmanId!=null && oldmanId!=0){
                                 switch (exiOldman.getOldStatus()) {

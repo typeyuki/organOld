@@ -37,6 +37,9 @@
                             <input class="form-control inp" type="date" name="startDate" style="width: 40%">-
                             <input class="form-control inp" type="date" name="endDate" style="width: 40%">
                         </div>
+                        <div class="col-sm-2">
+                            金额：<span id="sumMoney">${moneySum.data!0}</span>元
+                        </div>
                     </div>
                     <div class="table-responsive">
                         <table class="table table-striped table-bordered table-hover dataTables-example text-nowrap">

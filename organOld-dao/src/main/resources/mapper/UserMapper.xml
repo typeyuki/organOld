@@ -122,6 +122,14 @@ UPDATE user_organ SET organ_id=#{organId} where user_id=#{id}
 
     <select id="getByOrganId" resultType="com.organOld.dao.entity.SysUser">
          SELECT u.id,u.username,u.password
-         FROM sysuser u left join user_organ uo on uo.user_id=u.id and uo.organ_id=#{organId}
+         FROM sysuser u,user_organ uo
+			where  uo.user_id=u.id and  uo.organ_id=#{organId}
     </select>
+
+
+    <update id="updateProp">
+        UPDATE sysuser
+        SET ${prop}=#{value}
+        WHERE id=#{id}
+    </update>
 </mapper>

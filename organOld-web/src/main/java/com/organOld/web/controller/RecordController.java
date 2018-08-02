@@ -1,9 +1,6 @@
 package com.organOld.web.controller;
 
-import com.organOld.service.contract.BTableRequest;
-import com.organOld.service.contract.ProductBookRequest;
-import com.organOld.service.contract.ProductRequest;
-import com.organOld.service.contract.RecordRequest;
+import com.organOld.service.contract.*;
 import com.organOld.service.enumModel.RecordTypeEnum;
 import com.organOld.service.service.CommonService;
 import com.organOld.service.service.OrganService;
@@ -44,12 +41,22 @@ public class RecordController {
             mv.addObject("organId", organId);
             mv.addObject("type", type);
             mv.addObject("typeDesc", RecordTypeEnum.getValue(type));
+            if(type==1){
+                mv.addObject("moneySum",recordService.getMoneySum(null,null,organId));
+            }
         }else{
             //没有权限
             mv = new ModelAndView("error/message");
             mv.addObject("message","抱歉！您没有权限");
         }
         return mv;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/getMoneySum",method = RequestMethod.GET)
+    public Result getMoneySum(String start,String end,Integer organId){
+        Result result=recordService.getMoneySum(start,end,organId);
+        return result;
     }
 
     @ResponseBody

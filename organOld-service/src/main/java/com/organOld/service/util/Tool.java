@@ -38,6 +38,9 @@ public class Tool {
             str=str.replace("日","-");
         }
 
+        if(!str.contains("-"))
+            return null;
+
         if(str.split("-").length<3){
             //年月
             str+="-01";

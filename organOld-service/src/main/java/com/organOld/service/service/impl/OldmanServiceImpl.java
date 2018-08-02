@@ -27,6 +27,7 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -484,8 +485,13 @@ public class OldmanServiceImpl implements OldmanService {
         List<Oldman> oldmanList_update=new ArrayList<>();//对已存在的老人进行批量更新
 
 
+        String  fix=file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".")+1);
+        Workbook wb0;
+        if(fix.equals("xls"))
+            wb0= new HSSFWorkbook(file.getInputStream());
+        else
+            wb0=new XSSFWorkbook(file.getInputStream());
 
-        Workbook wb0 = new HSSFWorkbook(file.getInputStream());
         //获取Excel文档中的第一个表单
         Sheet sht0 = wb0.getSheetAt(0);
 
@@ -513,54 +519,64 @@ public class OldmanServiceImpl implements OldmanService {
 
 
                     //创建实体类
+                    if(commonService.excelIsNotNull(r.getCell(3)))
                     oldman.setName(r.getCell(3).getStringCellValue());
-                    String sex=r.getCell(4).getStringCellValue();
-                    sex=sex.replace("性","");
-                    oldman.setSex((sex.equals("男")) ? 2 : 1);
+
+                        if (commonService.excelIsNotNull(r.getCell(4))) {
+                            String sex = r.getCell(4).getStringCellValue();
+                            sex = sex.replace("性", "");
+                            oldman.setSex((sex.equals("男")) ? 2 : 1);
+                        }
+                    if(commonService.excelIsNotNull(r.getCell(5)))
                     oldman.setBirthday(Tool.stringToDate((r.getCell(5).getStringCellValue())));
+                    if(commonService.excelIsNotNull(r.getCell(6)))
                     oldman.setPid(r.getCell(6).getStringCellValue());
+                    if(commonService.excelIsNotNull(r.getCell(7)))
                     oldman.setAddress(r.getCell(7).getStringCellValue());
 
+                    if(commonService.excelIsNotNull(r.getCell(8)))
                     oldman.setPhone(r.getCell(8).getStringCellValue());
 
 
                     //TODO  先按 居委的
                     if(r.getCell(2).getStringCellValue()!=null && !r.getCell(2).getStringCellValue().equals(""))
                         oldman.setXqId(autoValueDao.getStringLikeIndex(r.getCell(2).getStringCellValue(), AutoValueEnum.XQ.getIndex(), "like"));
-
+                    else{
+                        continue;
+                    }
 //                    String politicalStatus = r.getCell(9).getStringCellValue().equals("") ? "群众" : r.getCell(9).getStringCellValue();
                     if(r.getCell(9).getStringCellValue()!=null && !r.getCell(9).getStringCellValue().equals(""))
                         oldman.setPoliticalStatus(autoValueDao.getStringLikeIndex(r.getCell(9).getStringCellValue(), AutoValueEnum.ZZMM.getIndex(), "like")+"");
 
-                    if (r.getCell(11).getStringCellValue().equals("1")) {
+                    if (commonService.excelIsNotNullOne(r.getCell(11))) {
                         Integer hjIndex = autoValueDao.getStringLikeIndex("户籍", AutoValueEnum.HJ.getIndex(), "equals");
                         oldman.setCensus(hjIndex + "");
-                    } else if (r.getCell(12).getStringCellValue().equals("1")) {
+                    } else if (commonService.excelIsNotNullOne(r.getCell(12))) {
                         Integer hjIndex = autoValueDao.getStringLikeIndex("非户籍", AutoValueEnum.HJ.getIndex(), "equals");
                         oldman.setCensus(hjIndex + "");
-                    } else if (r.getCell(13).getStringCellValue().equals("1")) {
+                    } else if (commonService.excelIsNotNullOne(r.getCell(13))) {
                         Integer hjIndex = autoValueDao.getStringLikeIndex("人户分离", AutoValueEnum.HJ.getIndex(), "equals");
                         oldman.setCensus(hjIndex + "");
                     }
 
-                    if (r.getCell(14).getStringCellValue().equals("1")) {
+                    if (commonService.excelIsNotNullOne(r.getCell(14))) {
                         Integer zcIndex = autoValueDao.getStringLikeIndex("高级", AutoValueEnum.ZC.getIndex(), "equals");
                         oldman.setZc(zcIndex + "");
                     }
-                    if (r.getCell(15).getStringCellValue().equals("1")) {
+                    if (commonService.excelIsNotNullOne(r.getCell(15))) {
                         Integer zcIndex = autoValueDao.getStringLikeIndex("副高级", AutoValueEnum.ZC.getIndex(), "equals");
                         oldman.setZc(zcIndex + "");
                     }
-                    if (r.getCell(16).getStringCellValue().equals("1")) {
+                    if (commonService.excelIsNotNullOne(r.getCell(16))) {
                         Integer zcIndex = autoValueDao.getStringLikeIndex("中级", AutoValueEnum.ZC.getIndex(), "equals");
                         oldman.setZc(zcIndex + "");
                     }
                     String sqzw="";
-                    if (r.getCell(17).getStringCellValue().equals("1")) {
+                    if (commonService.excelIsNotNullOne(r.getCell(17))) {
                         Integer szIndex = autoValueDao.getStringLikeIndex("三长", AutoValueEnum.SQZW.getIndex(), "equals");
                         sqzw=szIndex+"";
                     }
-                    if (r.getCell(18).getStringCellValue().equals("1")) {
+                    if (commonService.excelIsNotNullOne(r.getCell(18))) {
                         Integer sqIndex = autoValueDao.getStringLikeIndex("社区团队负责人", AutoValueEnum.SQZW.getIndex(), "equals");
                         if(sqzw.length()>1){
                             sqzw+="#"+sqIndex;
@@ -570,39 +586,43 @@ public class OldmanServiceImpl implements OldmanService {
 
 
                     Linkman linkman = new Linkman();
+                    if(commonService.excelIsNotNull(r.getCell(25)))
                     linkman.setName(r.getCell(25).getStringCellValue());
+                    if(commonService.excelIsNotNull(r.getCell(26)))
                     linkman.setRelation(r.getCell(26).getStringCellValue());
+                    if(commonService.excelIsNotNull(r.getCell(27)))
                     linkman.setPhone(r.getCell(27).getStringCellValue());
 
 
                     //is  字段中的  healthadd 只有在 insert时进行添加  update不改变
                     OldmanHealth health = new OldmanHealth();
+                    if(commonService.excelIsNotNull(r.getCell(10)))
                     health.setBloodType(r.getCell(10).getStringCellValue());
 //                    health.setIntelligence("");
 //                    health.setEyesight("");
 
-                    if (r.getCell(55).getStringCellValue().equals("1")) {
+                    if (commonService.excelIsNotNullOne(r.getCell(55))) {
                         Integer IndexSZ = autoValueDao.getStringLikeIndex("痴呆", AutoValueEnum.SZ.getIndex(), "like");
                         health.setIntelligence(IndexSZ + "");
                     }
-                    if (r.getCell(56).getStringCellValue().equals("1")) {
+                    if (commonService.excelIsNotNullOne(r.getCell(56))) {
                         Integer IndexSZ = autoValueDao.getStringLikeIndex("智障", AutoValueEnum.SZ.getIndex(), "like");
                         health.setIntelligence(IndexSZ + "");
                     }
-                    if (r.getCell(57).getStringCellValue().equals("1")) {
+                    if (commonService.excelIsNotNullOne(r.getCell(57))) {
                         Integer IndexSZ = autoValueDao.getStringLikeIndex("正常", AutoValueEnum.SZ.getIndex(), "like");
                         health.setIntelligence(IndexSZ + "");
                     }
 
-                    if (r.getCell(58).getStringCellValue().equals("1")) {
+                    if (commonService.excelIsNotNullOne(r.getCell(58))) {
                         Integer IndexSZ = autoValueDao.getStringLikeIndex("失明", AutoValueEnum.SL.getIndex(), "like");
                         health.setIntelligence(IndexSZ + "");
                     }
-                    if (r.getCell(59).getStringCellValue().equals("1")) {
+                    if (commonService.excelIsNotNullOne(r.getCell(59))) {
                         Integer IndexSZ = autoValueDao.getStringLikeIndex("一般障碍", AutoValueEnum.SL.getIndex(), "like");
                         health.setIntelligence(IndexSZ + "");
                     }
-                    if (r.getCell(60).getStringCellValue().equals("1")) {
+                    if (commonService.excelIsNotNullOne(r.getCell(60))) {
                         Integer IndexSZ = autoValueDao.getStringLikeIndex("正常", AutoValueEnum.SL.getIndex(), "like");
                         health.setIntelligence(IndexSZ + "");
                     }
@@ -610,112 +630,112 @@ public class OldmanServiceImpl implements OldmanService {
 
 
                     List<Integer> selectIdList = new ArrayList<>();
-                    if (r.getCell(28).getStringCellValue().equals("1")) {
+                    if (commonService.excelIsNotNullOne(r.getCell(28))) {
                         selectIdList.add(oldmanHealthDao.getSelectStringLikeIndex("青霉素", HealthEnum.YW.getIndex()));
                         health.setIsYwfy(HealthEnum.YW.getIndex());
                     }
-                    if (r.getCell(29).getStringCellValue().equals("1")) {
+                    if (commonService.excelIsNotNullOne(r.getCell(29))) {
                         selectIdList.add(oldmanHealthDao.getSelectStringLikeIndex("磺胺", HealthEnum.YW.getIndex()));
                         health.setIsYwfy(HealthEnum.YW.getIndex());
                     }
-                    if (r.getCell(30).getStringCellValue().equals("1")) {
+                    if (commonService.excelIsNotNullOne(r.getCell(30))) {
                         selectIdList.add(oldmanHealthDao.getSelectStringLikeIndex("四环素", HealthEnum.YW.getIndex()));
                         health.setIsYwfy(HealthEnum.YW.getIndex());
                     }
-                    if (r.getCell(31).getStringCellValue().equals("1")) {
+                    if (commonService.excelIsNotNullOne(r.getCell(31))) {
                         selectIdList.add(oldmanHealthDao.getSelectStringLikeIndex("其他", HealthEnum.YW.getIndex()));
                         health.setIsYwfy(HealthEnum.YW.getIndex());
                     }
 
-                    if (r.getCell(32).getStringCellValue().equals("1")) {
+                    if (commonService.excelIsNotNullOne(r.getCell(32))) {
                         selectIdList.add(oldmanHealthDao.getSelectStringLikeIndex("高血压", HealthEnum.MB.getIndex()));
                         health.setIsMb(HealthEnum.MB.getIndex());
                     }
-                    if (r.getCell(33).getStringCellValue().equals("1")) {
+                    if (commonService.excelIsNotNullOne(r.getCell(33))) {
                         selectIdList.add(oldmanHealthDao.getSelectStringLikeIndex("糖尿病", HealthEnum.MB.getIndex()));
                         health.setIsMb(HealthEnum.MB.getIndex());
                     }
-                    if (r.getCell(34).getStringCellValue().equals("1")) {
+                    if (commonService.excelIsNotNullOne(r.getCell(34))) {
                         selectIdList.add(oldmanHealthDao.getSelectStringLikeIndex("脑卒中", HealthEnum.MB.getIndex()));
                         health.setIsMb(HealthEnum.MB.getIndex());
                     }
-                    if (r.getCell(35).getStringCellValue().equals("1")) {
+                    if (commonService.excelIsNotNullOne(r.getCell(35))) {
                         selectIdList.add(oldmanHealthDao.getSelectStringLikeIndex("帕金森", HealthEnum.MB.getIndex()));
                         health.setIsMb(HealthEnum.MB.getIndex());
                     }
-                    if (r.getCell(36).getStringCellValue().equals("1")) {
+                    if (commonService.excelIsNotNullOne(r.getCell(36))) {
                         selectIdList.add(oldmanHealthDao.getSelectStringLikeIndex("癫痫", HealthEnum.MB.getIndex()));
                         health.setIsMb(HealthEnum.MB.getIndex());
                     }
-                    if (r.getCell(37).getStringCellValue().equals("1")) {
+                    if (commonService.excelIsNotNullOne(r.getCell(37))) {
                         selectIdList.add(oldmanHealthDao.getSelectStringLikeIndex("肺炎", HealthEnum.MB.getIndex()));
                         health.setIsMb(HealthEnum.MB.getIndex());
                     }
-                    if (r.getCell(38).getStringCellValue().equals("1")) {
+                    if (commonService.excelIsNotNullOne(r.getCell(38))) {
                         selectIdList.add(oldmanHealthDao.getSelectStringLikeIndex("慢阻肺", HealthEnum.MB.getIndex()));
                         health.setIsMb(HealthEnum.MB.getIndex());
                     }
-                    if (r.getCell(39).getStringCellValue().equals("1")) {
+                    if (commonService.excelIsNotNullOne(r.getCell(39))) {
                         selectIdList.add(oldmanHealthDao.getSelectStringLikeIndex("冠心病", HealthEnum.MB.getIndex()));
                         health.setIsMb(HealthEnum.MB.getIndex());
                     }
-                    if (r.getCell(40).getStringCellValue().equals("1")) {
+                    if (commonService.excelIsNotNullOne(r.getCell(40))) {
                         selectIdList.add(oldmanHealthDao.getSelectStringLikeIndex("甲亢/甲减", HealthEnum.MB.getIndex()));
                         health.setIsMb(HealthEnum.MB.getIndex());
                     }
-                    if (r.getCell(41).getStringCellValue().equals("1")) {
+                    if (commonService.excelIsNotNullOne(r.getCell(41))) {
                         selectIdList.add(oldmanHealthDao.getSelectStringLikeIndex("慢性肾功能障碍", HealthEnum.MB.getIndex()));
                         health.setIsMb(HealthEnum.MB.getIndex());
                     }
-                    if (r.getCell(42).getStringCellValue().equals("1")) {
+                    if (commonService.excelIsNotNullOne(r.getCell(42))) {
                         selectIdList.add(oldmanHealthDao.getSelectStringLikeIndex("肝炎/肝硬化", HealthEnum.MB.getIndex()));
                         health.setIsMb(HealthEnum.MB.getIndex());
                     }
-                    if (r.getCell(43).getStringCellValue().equals("1")) {
+                    if (commonService.excelIsNotNullOne(r.getCell(43))) {
                         selectIdList.add(oldmanHealthDao.getSelectStringLikeIndex("恶性肿瘤", HealthEnum.MB.getIndex()));
                         health.setIsMb(HealthEnum.MB.getIndex());
                     }
-                    if (r.getCell(44).getStringCellValue().equals("1")) {
+                    if (commonService.excelIsNotNullOne(r.getCell(44))) {
                         selectIdList.add(oldmanHealthDao.getSelectStringLikeIndex("骨折", HealthEnum.MB.getIndex()));
                         health.setIsMb(HealthEnum.MB.getIndex());
                     }
-                    if (r.getCell(45).getStringCellValue().equals("1")) {
+                    if (commonService.excelIsNotNullOne(r.getCell(45))) {
                         selectIdList.add(oldmanHealthDao.getSelectStringLikeIndex("其他消化道疾病", HealthEnum.MB.getIndex()));
                         health.setIsMb(HealthEnum.MB.getIndex());
                     }
-                    if (r.getCell(46).getStringCellValue().equals("1")) {
+                    if (commonService.excelIsNotNullOne(r.getCell(46))) {
                         selectIdList.add(oldmanHealthDao.getSelectStringLikeIndex("类风关", HealthEnum.MB.getIndex()));
                         health.setIsMb(HealthEnum.MB.getIndex());
                     }
 
-                    if (r.getCell(49).getStringCellValue().equals("1")) {
+                    if (commonService.excelIsNotNullOne(r.getCell(49))) {
                         selectIdList.add(oldmanHealthDao.getSelectStringLikeIndex("上厕所", HealthEnum.SN.getIndex()));
                         health.setIsSn(HealthEnum.SN.getIndex());
                     }
-                    if (r.getCell(50).getStringCellValue().equals("1")) {
+                    if (commonService.excelIsNotNullOne(r.getCell(50))) {
                         selectIdList.add(oldmanHealthDao.getSelectStringLikeIndex("洗澡", HealthEnum.SN.getIndex()));
                         health.setIsSn(HealthEnum.SN.getIndex());
                     }
-                    if (r.getCell(51).getStringCellValue().equals("1")) {
+                    if (commonService.excelIsNotNullOne(r.getCell(51))) {
                         selectIdList.add(oldmanHealthDao.getSelectStringLikeIndex("穿衣", HealthEnum.SN.getIndex()));
                         health.setIsSn(HealthEnum.SN.getIndex());
                     }
-                    if (r.getCell(52).getStringCellValue().equals("1")) {
+                    if (commonService.excelIsNotNullOne(r.getCell(52))) {
                         selectIdList.add(oldmanHealthDao.getSelectStringLikeIndex("上下床", HealthEnum.SN.getIndex()));
                         health.setIsSn(HealthEnum.SN.getIndex());
                     }
-                    if (r.getCell(53).getStringCellValue().equals("1")) {
+                    if (commonService.excelIsNotNullOne(r.getCell(53))) {
                         selectIdList.add(oldmanHealthDao.getSelectStringLikeIndex("室内行走", HealthEnum.SN.getIndex()));
                         health.setIsSn(HealthEnum.SN.getIndex());
                     }
-                    if (r.getCell(54).getStringCellValue().equals("1")) {
+                    if (commonService.excelIsNotNullOne(r.getCell(54))) {
                         selectIdList.add(oldmanHealthDao.getSelectStringLikeIndex("吃饭", HealthEnum.SN.getIndex()));
                         health.setIsSn(HealthEnum.SN.getIndex());
                     }
 
 
                     List<HealthAdd> healthAddList = new ArrayList<>();
-                    if (!r.getCell(47).getStringCellValue().equals("")) {
+                    if (commonService.excelIsNotNull(r.getCell(47))) {
                         health.setIsExzl(HealthEnum.EXZL.getIndex());
                         String[] add = r.getCell(47).getStringCellValue().split("#");
                         for (int i = 0; i < add.length; i++) {
@@ -725,7 +745,7 @@ public class OldmanServiceImpl implements OldmanService {
                             healthAddList.add(healthAdd);
                         }
                     }
-                    if (!r.getCell(48).getStringCellValue().equals("")) {
+                    if (commonService.excelIsNotNull(r.getCell(48))) {
                         health.setIsGz(HealthEnum.GZ.getIndex());
                         String[] add = r.getCell(48).getStringCellValue().split("#");
                         for (int i = 0; i < add.length; i++) {
@@ -736,7 +756,7 @@ public class OldmanServiceImpl implements OldmanService {
                         }
                     }
 
-                    if (!r.getCell(61).getStringCellValue().equals("")) {
+                    if (commonService.excelIsNotNull(r.getCell(61))) {
                         health.setIsCj(HealthEnum.CJQK.getIndex());
                         String[] add = r.getCell(61).getStringCellValue().split("#");
                         for (int i = 0; i < add.length; i++) {
@@ -748,42 +768,42 @@ public class OldmanServiceImpl implements OldmanService {
                     }
 
                     OldmanFamily family = new OldmanFamily();
-                    if (r.getCell(62).getStringCellValue().equals("1")) {
+                    if (commonService.excelIsNotNullOne(r.getCell(62))) {
                         family.setFamilyIndex(autoValueDao.getStringLikeIndex("纯老", AutoValueEnum.JJJG.getIndex(), "like"));
                     }
-                    if (r.getCell(63).getStringCellValue().equals("1")) {
+                    if (commonService.excelIsNotNullOne(r.getCell(63))) {
                         family.setFamilyIndex(autoValueDao.getStringLikeIndex("独居", AutoValueEnum.JJJG.getIndex(), "like"));
                     }
-                    if (r.getCell(64).getStringCellValue().equals("1")) {
+                    if (commonService.excelIsNotNullOne(r.getCell(64))) {
                         family.setFamilyIndex(autoValueDao.getStringLikeIndex("失独", AutoValueEnum.JJJG.getIndex(), "like"));
                     }
-                    if (r.getCell(65).getStringCellValue().equals("1")) {
+                    if (commonService.excelIsNotNullOne(r.getCell(65))) {
                         family.setFamilyIndex(autoValueDao.getStringLikeIndex("一老养", AutoValueEnum.JJJG.getIndex(), "like"));
                     }
-                    if (r.getCell(66).getStringCellValue().equals("1")) {
+                    if (commonService.excelIsNotNullOne(r.getCell(66))) {
                         family.setFamilyIndex(autoValueDao.getStringLikeIndex("孤老", AutoValueEnum.JJJG.getIndex(), "like"));
                     }
-                    if (r.getCell(67).getStringCellValue().equals("1")) {
+                    if (commonService.excelIsNotNullOne(r.getCell(67))) {
                         family.setFamilyIndex(autoValueDao.getStringLikeIndex("三支人员", AutoValueEnum.JJJG.getIndex(), "like"));
                     }
-                    if (r.getCell(68).getStringCellValue().equals("1")) {
+                    if (commonService.excelIsNotNullOne(r.getCell(68))) {
                         family.setFamilyIndex(autoValueDao.getStringLikeIndex("其他", AutoValueEnum.JJJG.getIndex(), "like"));
                     }
 
                     String familyType="";
-                    if (r.getCell(20).getStringCellValue().equals("1")) {
+                    if (commonService.excelIsNotNullOne(r.getCell(20))) {
                        familyType+=autoValueDao.getStringLikeIndex("独生子女家庭", AutoValueEnum.JTLB.getIndex(), "like")+"#";
                     }
-                    if (r.getCell(21).getStringCellValue().equals("1")) {
+                    if (commonService.excelIsNotNullOne(r.getCell(21))) {
                         familyType+=autoValueDao.getStringLikeIndex("军属", AutoValueEnum.JTLB.getIndex(), "like")+"#";
                     }
-                    if (r.getCell(22).getStringCellValue().equals("1")) {
+                    if (commonService.excelIsNotNullOne(r.getCell(22))) {
                         familyType+=autoValueDao.getStringLikeIndex("烈士家庭", AutoValueEnum.JTLB.getIndex(), "like")+"#";
                     }
-                    if (r.getCell(23).getStringCellValue().equals("1")) {
+                    if (commonService.excelIsNotNullOne(r.getCell(23))) {
                         familyType+=autoValueDao.getStringLikeIndex("离休干部", AutoValueEnum.JTLB.getIndex(), "like")+"#";
                     }
-                    if (r.getCell(24).getStringCellValue().equals("1")) {
+                    if (commonService.excelIsNotNullOne(r.getCell(24))) {
                         familyType+=autoValueDao.getStringLikeIndex("侨属", AutoValueEnum.JTLB.getIndex(), "like")+"#";
                     }
                     if(!familyType.equals("")){
@@ -794,22 +814,22 @@ public class OldmanServiceImpl implements OldmanService {
 
 
                     OldmanEconomic economic = new OldmanEconomic();
-                    if (r.getCell(69).getStringCellValue().equals("1")) {
+                    if (commonService.excelIsNotNullOne(r.getCell(69))) {
                         economic.setEconomicIndex(autoValueDao.getStringLikeIndex("帮困", AutoValueEnum.JJTJ.getIndex(), "like"));
                     }
-                    if (r.getCell(70).getStringCellValue().equals("1")) {
+                    if (commonService.excelIsNotNullOne(r.getCell(70))) {
                         economic.setEconomicIndex(autoValueDao.getStringLikeIndex("低保", AutoValueEnum.JJTJ.getIndex(), "like"));
                     }
-                    if (r.getCell(71).getStringCellValue().equals("1")) {
+                    if (commonService.excelIsNotNullOne(r.getCell(71))) {
                         economic.setEconomicIndex(autoValueDao.getStringLikeIndex("养老保险", AutoValueEnum.JJTJ.getIndex(), "like"));
                     }
-                    if (r.getCell(72).getStringCellValue().equals("1")) {
+                    if (commonService.excelIsNotNullOne(r.getCell(72))) {
                         economic.setEconomicIndex(autoValueDao.getStringLikeIndex("医疗救助金", AutoValueEnum.JJTJ.getIndex(), "like"));
                     }
-                    if (r.getCell(73).getStringCellValue().equals("1")) {
+                    if (commonService.excelIsNotNullOne(r.getCell(73))) {
                         economic.setEconomicIndex(autoValueDao.getStringLikeIndex("城镇医保", AutoValueEnum.JJTJ.getIndex(), "like"));
                     }
-                    if (r.getCell(74).getStringCellValue().equals("1")) {
+                    if (commonService.excelIsNotNullOne(r.getCell(74))) {
                         economic.setEconomicIndex(autoValueDao.getStringLikeIndex("其他", AutoValueEnum.JJTJ.getIndex(), "like"));
                     }
 
@@ -864,7 +884,7 @@ public class OldmanServiceImpl implements OldmanService {
 
                     }
 
-                    if(r.getCell(19).getStringCellValue().equals("1")){
+                    if(commonService.excelIsNotNullOne(r.getCell(19))){
                         Volunteer volunteer=new Volunteer();
                         volunteer.setOldmanId(oldman.getId());
                         volunteerList.add(volunteer);
@@ -963,7 +983,7 @@ public class OldmanServiceImpl implements OldmanService {
         switch (type){
             case "base":
                 Oldman oldman=oldmanBaseDao.getById(id);
-                oldman.setSqzw(oldman.getSqzw().replace("s",""));
+//                oldman.setSqzw(oldman.getSqzw().replace("s",""));
                 oldman.setBirthdayTime(Tool.dateToString(oldman.getBirthday(), TimeConstant.DATA_FORMAT_YMD));
                 return new Result(true,oldman);
             case "family":

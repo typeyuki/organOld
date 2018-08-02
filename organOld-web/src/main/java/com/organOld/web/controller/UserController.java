@@ -110,4 +110,13 @@ public class UserController {
         mv.addObject("user",userService.getBySession());
         return mv;
     }
+
+
+    @RequestMapping(value = "/password/edit",method = RequestMethod.POST)
+    public ModelAndView password(SysUser sysUser){
+        userService.updatePassowrd(sysUser);
+        ModelAndView mv=new ModelAndView("error/message_success");
+        mv.addObject("message","修改成功");
+        return mv;
+    }
 }

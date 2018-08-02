@@ -198,4 +198,9 @@ public class UserServiceImpl implements UserService {
         SysUser user=userDao.getByOrganId(organId);
         return user;
     }
+
+    @Override
+    public void updatePassowrd(SysUser sysUser) {
+        userDao.updateProp("password",sysUser.getPassword(),sysUser.getId());
+    }
 }

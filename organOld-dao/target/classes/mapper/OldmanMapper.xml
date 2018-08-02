@@ -248,6 +248,12 @@
         <if test="entity!=null and entity.id!=null and entity.id!=0">
             and o.id=#{entity.id}
         </if>
+        <if test="entity!=null and entity.oldStatusArray!=null and entity.oldStatusArray.length > 0">
+            and o.old_status in
+            <foreach collection="entity.oldStatusArray" index="index" item="item" open="(" separator="," close=")">
+                ${item}
+            </foreach>
+        </if>
         <if test="entity!=null and entity.organId!=null and entity.organId!=0">
             and org.id in (
             SELECT

@@ -44,7 +44,7 @@
 <script>
     var label=[];//用于标签页面
 
-    var iDisplayLength=8;
+    var iDisplayLength=12;
     $(document).ready(function(){
         var table =$(".dataTables-example").dataTable(
                 {
@@ -107,8 +107,7 @@
                     "iDisplayLength" : aoData.iDisplayLength,
                     "iSortCol_0" : aoData.iSortCol_0,
                     "sEcho" : aoData.sEcho,
-                    "sSortDir_0" : aoData.sSortDir_0,
-                    "label":label
+                    "sSortDir_0" : aoData.sSortDir_0
                 },
                 type: 'POST',
                 dataType: 'json',

@@ -50,7 +50,7 @@
                         </div>
                         <div class="col-sm-2">
                             <label >是否生成二维码</label>
-                            <select class="form-control inp" style="width: 50%" name="isCreate">
+                            <select class="form-control inp" style="width: 40%" name="isCreate">
                                 <option></option>
                                 <option value="1">是</option>
                                 <option value="0">否</option>

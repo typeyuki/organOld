@@ -30,7 +30,7 @@
                 </div>
                 <div class="ibox-content">
                     <form method="post" action="/user/password/edit"  class="form-horizontal" >
-                        <input type="hidden" name="id" value="${organ.id!0}">
+                        <input type="hidden" name="id" value="${user.id!0}">
                         <div class="hr-line-dashed"></div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">账号</label>
@@ -47,7 +47,7 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label">确认密码</label>
                             <div class="col-sm-5">
-                                <input type="text"  class="form-control" name="password" value="" />
+                                <input type="text"  class="form-control" value="" />
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>
@@ -67,33 +67,6 @@
 <script src="/js/jquery.min.js?v=2.1.4"></script>
 <script src="/js/bootstrap.min.js?v=3.3.5"></script>
 
-<script>
-    $("select[name='organTypeId'] option").each(function () {
-        if($(this).val()==${organ.organTypeId!}){
-            $(this).prop("selected",true);
-            return;
-        }
-                });
-
-<#if organ.parentOrganList??>
-$("select[name='parent'] option").each(function () {
-    if($(this).val()==${organ.parent!}){
-        $(this).prop("selected",true);
-        return;
-    }
-});
-</#if>
-    <#if look??>
-        $("input").prop("disabled",true);
-        $("select").prop("disabled",true);
-        $("textarea").prop("disabled",true);
-        $("button").hide();
-        $("input[type='file']").hide();
-    </#if>
-</script>
-
-<script src="/js/plugins/iCheck/icheck.min.js"></script>
-<script type="text/javascript" src="/static/js/organ/organ_simple.js"></script>
 <script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
 
 </body>

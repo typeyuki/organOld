@@ -41,4 +41,6 @@ public interface UserService {
     void update(UserAddRequest sysUser);
 
     SysUser getBySession();
+
+    void updatePassowrd(SysUser sysUser);
 }

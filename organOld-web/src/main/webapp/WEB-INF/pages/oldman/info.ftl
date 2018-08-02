@@ -24,8 +24,10 @@
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
                     <h5>老人信息
-                        <#if info.key.keyStatus==2 || info.key.keyStatus==4>
-                        <small style="color:red;">重点老人(${info.key.goal})</small>
+                        <#if (info.key.keyStatus)??>
+                        <#if (info.key.keyStatus!0)==2 || (info.key.keyStatus!0)==4>
+                        <small style="color:red;">重点老人(${info.key.goal!})</small>
+                        </#if>
                         </#if>
                     </h5>
                     <div class="ibox-tools">
@@ -247,7 +249,7 @@
                         </#if>
                         <div class="hr-line-dashed"></div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label label_title">标签</label>
+                            <label class="col-sm-2 control-label label_title">政策服务</label>
                             <label class="col-sm-2 control-label" id="label"></label>
                         </div>
                     </form>
