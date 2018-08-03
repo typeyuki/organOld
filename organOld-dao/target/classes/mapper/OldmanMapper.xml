@@ -78,28 +78,33 @@
     <!--不能简单的 limit 0，10  因为有1对多的关系  会补全   一条记录当多条使用（由于某个字段有多个值）-->
     <select id="getByPage" parameterType="com.organOld.dao.util.Page" resultMap="oldman">
         SELECT o.id,o.name,o.sqzw,z.value zc,o.sex,o.birthday,c.value census,p.value political_status,o.time,o.phone,o.address,o.pid,o.lou_num,o.old_status,
-        x.value xname,org.name jname,d.value dname
+        x.value xname,org.name jname,d.value dname,lo.id lmid,l.name label_name,lo.is_implement
         FROM oldman_base o left join auto_value c on o.census=c.id
         left join auto_value p on o.political_status=p.id
-
+        left join label_oldman lo on lo.oldman_id=o.id
+        left join label l on lo.label_id=l.id
         left join auto_value z on o.zc=z.id,
-        auto_value x,auto_value d,organ org,oldman_family ofa,oldman_economic oe,oldman_health_base ohb
+        auto_value x,auto_value d,organ org
         WHERE  x.id=o.xq_id AND org.id=x.parent_index AND d.id=org.district_id and o.disable=0
-        and ofa.oldman_id=o.id and oe.oldman_id=o.id AND ohb.oldman_id=o.id
 
-
+        <if test="length!=null and length!=0">
+            and o.id in(
+            select a.id from
+            (select oo.id from oldman_base oo,
+            auto_value x,auto_value d,organ org,oldman_family ofa,oldman_economic oe,oldman_health_base ohb
+            where x.id=oo.xq_id AND org.id=x.parent_index AND d.id=org.district_id and  oo.disable=0 AND ofa.oldman_id=oo.id and oe.oldman_id=oo.id AND ohb.oldman_id=oo.id
             <if test="entity.birthdayStart!=null">
                 <![CDATA[
-            and DATE_FORMAT(o.birthday,'%Y') >= DATE_FORMAT(#{entity.birthdayStart},'%Y')
+            and DATE_FORMAT(oo.birthday,'%Y') >= DATE_FORMAT(#{entity.birthdayStart},'%Y')
             ]]>
             </if>
             <if test="entity.birthdayEnd!=null">
                 <![CDATA[
-            and DATE_FORMAT(o.birthday,'%Y') <= DATE_FORMAT(#{entity.birthdayEnd},'%Y')
+            and DATE_FORMAT(oo.birthday,'%Y') <= DATE_FORMAT(#{entity.birthdayEnd},'%Y')
             ]]>
             </if>
             <if test="entity!=null and entity.id!=null and entity.id!=0">
-                and o.id=#{entity.id}
+                and oo.id=#{entity.id}
             </if>
             <if test="entity!=null and entity.organId!=null and entity.organId!=0">
                 and org.id in (
@@ -113,7 +118,7 @@
                 )
             </if>
             <if test="entity!=null and entity.sex!=null and entity.sex!=0">
-                and o.sex=#{entity.sex}
+                and oo.sex=#{entity.sex}
             </if>
             <if test="entity!=null and entity.isHealth!=null and entity.isHealth.length > 0">
                 and (ohb.is_mb in
@@ -179,7 +184,7 @@
                 </foreach>
             </if>
             <if test="entity!=null and entity.zcArray!=null and entity.zcArray.length > 0">
-                and o.zc in
+                and oo.zc in
                 <foreach collection="entity.zcArray" index="index" item="item" open="(" separator="," close=")">
                     ${item}
                 </foreach>
@@ -187,17 +192,17 @@
             <if test="entity!=null and entity.sqzwArray!=null and entity.sqzwArray.length > 0">
                 and
                 <foreach collection="entity.sqzwArray" index="index" item="item" open="(" separator="or" close=")">
-                    (o.sqzw like concat('%',#{item},'%'))
+                    (oo.sqzw like concat('%',#{item},'%'))
                 </foreach>
             </if>
             <if test="entity!=null and entity.oldStatusArray!=null and entity.oldStatusArray.length > 0">
-                and o.old_status in
+                and oo.old_status in
                 <foreach collection="entity.oldStatusArray" index="index" item="item" open="(" separator="," close=")">
                     ${item}
                 </foreach>
             </if>
             <if test="entity!=null and entity.politicalStatusArray!=null and entity.politicalStatusArray.length > 0">
-                and o.political_status in
+                and oo.political_status in
                 <foreach collection="entity.politicalStatusArray" index="index" item="item" open="(" separator="," close=")">
                     ${item}
                 </foreach>
@@ -215,12 +220,13 @@
                 </foreach>
             </if>
             <if test="entity!=null and entity.search!=null and entity.search!=''">
-                and (o.pid LIKE  concat('%',#{entity.search},'%') OR o.address LIKE  concat('%',#{entity.search},'%') OR o.name LIKE  concat('%',#{entity.search},'%')
-                OR o.phone LIKE  concat('%',#{entity.search},'%'))
+                and (oo.pid LIKE  concat('%',#{entity.search},'%') OR oo.address LIKE  concat('%',#{entity.search},'%') OR oo.name LIKE  concat('%',#{entity.search},'%')
+                OR oo.phone LIKE  concat('%',#{entity.search},'%'))
             </if>
-        <if test="length!=null and length!=0">
-            order by o.id ${sort} limit #{start},#{length}
+             limit #{start},#{length} ) as a
+            )
         </if>
+
     </select>
 
     <select id="getSizeByPage" parameterType="com.organOld.dao.util.Page" resultType="java.lang.Long">
