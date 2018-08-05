@@ -1,10 +1,8 @@
 package com.organOld.service.wrapper;
 
 import com.organOld.dao.entity.AutoValue;
-import com.organOld.dao.entity.oldman.HealthAdd;
-import com.organOld.dao.entity.oldman.HealthSelect;
-import com.organOld.dao.entity.oldman.Oldman;
-import com.organOld.dao.entity.oldman.OldmanIntegral;
+import com.organOld.dao.entity.DBEntity;
+import com.organOld.dao.entity.oldman.*;
 import com.organOld.dao.entity.organ.Organ;
 import com.organOld.dao.util.bean.ExportOldman;
 import com.organOld.service.constant.TimeConstant;
@@ -19,48 +17,66 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+@Service
 public class OldmanWrapper implements Wrapper<Oldman,OldmanModel,OldmanRequest> {
 
     @Autowired
     CommonService commonService;
+    @Autowired
+    AutoValueService autoValueService;
+
+    /**
+     * 用于填充 auto_value 的数据
+     */
+    List<String> method=new ArrayList<>();
+    Map<Integer,String> map=new HashMap<>();
+
+    List<String> methodInfo=new ArrayList<>();
+    Map<Integer,String> mapInfo=new HashMap<>();
+
 
     @Override
     public OldmanModel wrap(Oldman oldman) {
         OldmanModel oldmanModel=new OldmanModel();
         oldmanModel.setId(oldman.getId());
         oldmanModel.setName(oldman.getName());
-        if(oldman.getLouNum()==null || oldman.getLouNum()==0)
-            oldmanModel.setLouNum("");
-        else
-            oldmanModel.setLouNum(oldman.getLouNum()+"");
         if(oldman.getBirthday()!=null)
             oldmanModel.setAge(CommonService.birthdayToAge(oldman.getBirthday()));
         oldmanModel.setSex(SexEnum.getValue(oldman.getSex()));
-        oldmanModel.setCensus(oldman.getCensus()==null?"":oldman.getCensus());
-        oldmanModel.setPoliticalStatus(oldman.getPoliticalStatus()==null?"":oldman.getPoliticalStatus());
-        if(oldman.getTime()!=null)
-            oldmanModel.setTime(Tool.dateToString(oldman.getTime(), TimeConstant.DATA_FORMAT_YMD));
-        oldmanModel.setPid(oldman.getPid());
-        oldmanModel.setAddress(oldman.getAddress()==null?"":oldman.getAddress());
-        oldmanModel.setPhone(oldman.getPhone());
-        oldmanModel.setjName(oldman.getXq().getJwName());
-        oldmanModel.setdName(oldman.getXq().getDistrictName());
-        oldmanModel.setxName(oldman.getXq().getName());
-        oldmanModel.setZc(oldman.getZc());
-        oldmanModel.setSqzwString(oldman.getSqzw());
-        oldmanModel.setPoliticalStatus(oldman.getPoliticalStatus());
         if(oldman.getOldStatus()!=null && oldman.getOldStatus()!=0)
             oldmanModel.setOldStatus(OldStatusEnum.getValue(oldman.getOldStatus()));
-        if(oldman.getLabelManList()!=null && oldman.getLabelManList().size()>0)
-            oldmanModel.setLabelManInfoModelList(oldman.getLabelManList().stream().map(Wrappers.labelWrapper::wrapManInfo).collect(Collectors.toList()));
+//        if(oldman.getLabelManList()!=null && oldman.getLabelManList().size()>0)
+//            oldmanModel.setLabelManInfoModelList(oldman.getLabelManList().stream().map(Wrappers.labelWrapper::wrapManInfo).collect(Collectors.toList()));
+        Xq xq=autoValueService.getXqById(oldman.getXqId());
+        if(xq!=null) {
+            oldmanModel.setjName(xq.getJwName());
+            oldmanModel.setdName(xq.getDistrictName());
+        }
+
+        if(method.size()==0){
+            method.add("Family");
+            method.add("Economic");
+            method.add("Census");
+            method.add("PoliticalStatus");
+        }
+        if(map.size()==0){
+            List<Integer> autoIds=commonService.getAutoValueTypes("oldman");
+            List<AutoValue> autoValueList=autoValueService.getByTypeList(autoIds);
+            autoValueList.forEach(s->map.put(s.getId(),s.getValue()));
+        }
+        commonService.fillAutoValue(oldman,oldmanModel,method,map);
         return oldmanModel;
     }
+
+
 
     @Override
     public Oldman unwrap(OldmanRequest oldmanRequest) {
@@ -76,6 +92,8 @@ public class OldmanWrapper implements Wrapper<Oldman,OldmanModel,OldmanRequest> 
             oldman.setBirthdayEnd(commonService.AgeTobirthday(Integer.parseInt(oldmanRequest.getAgeStart())));
         if(oldmanRequest.getAgeEnd()!=null && !oldmanRequest.getAgeEnd().equals(""))
             oldman.setBirthdayStart(commonService.AgeTobirthday(Integer.parseInt(oldmanRequest.getAgeEnd())));
+
+
 
         return oldman;
     }
@@ -245,5 +263,42 @@ public class OldmanWrapper implements Wrapper<Oldman,OldmanModel,OldmanRequest> 
             }
         }
         return healthSelectInfoModel;
+    }
+
+    public OldmanModel wrapInfo(Oldman oldman) {
+        OldmanModel oldmanModel=new OldmanModel();
+        oldmanModel.setId(oldman.getId());
+        oldmanModel.setName(oldman.getName());
+        oldmanModel.setPid(oldman.getPid());
+        oldmanModel.setLouNum(oldman.getLouNum()+"");
+        oldmanModel.setAddress(oldman.getAddress());
+        if(oldman.getBirthday()!=null)
+            oldmanModel.setAge(CommonService.birthdayToAge(oldman.getBirthday()));
+        oldmanModel.setSex(SexEnum.getValue(oldman.getSex()));
+        if(oldman.getOldStatus()!=null && oldman.getOldStatus()!=0)
+            oldmanModel.setOldStatus(OldStatusEnum.getValue(oldman.getOldStatus()));
+        Xq xq=autoValueService.getXqById(oldman.getXqId());
+        if(xq!=null) {
+            oldmanModel.setxName(xq.getName());
+            oldmanModel.setjName(xq.getJwName());
+            oldmanModel.setdName(xq.getDistrictName());
+        }
+
+        if(methodInfo.size()==0){
+            method.add("Family");
+            method.add("Economic");
+            method.add("Census");
+            method.add("Zc");
+            method.add("Sqzw");
+            method.add("FamilyType");
+            method.add("PoliticalStatus");
+        }
+        if(mapInfo.size()==0){
+            List<Integer> autoIds=commonService.getAutoValueTypes("oldmanInfo");
+            List<AutoValue> autoValueList=autoValueService.getByTypeList(autoIds);
+            autoValueList.forEach(s->mapInfo.put(s.getId(),s.getValue()));
+        }
+        commonService.fillAutoValue(oldman,oldmanModel,method,map);
+        return oldmanModel;
     }
 }

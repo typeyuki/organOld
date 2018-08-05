@@ -17,15 +17,12 @@ import com.organOld.service.service.CommonService;
 import com.organOld.service.thread.KeyAutoUpdate;
 import com.organOld.service.service.OldmanKeyService;
 import com.organOld.service.thread.KeyUpdate;
-import com.organOld.service.wrapper.Wrapper;
-import com.organOld.service.wrapper.Wrappers;
-import org.springframework.beans.BeanUtils;
+import com.organOld.service.wrapper.OldmanKeyWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -48,7 +45,8 @@ public class OldmanKeyServiceImpl implements OldmanKeyService {
     OldmanDao oldmanDao;
     @Autowired
     OrganDao organDao;
-
+    @Autowired
+    OldmanKeyWrapper oldmanKeyWrapper;
 
     public static List<KeyRule> keyRuleList;
 
@@ -57,10 +55,10 @@ public class OldmanKeyServiceImpl implements OldmanKeyService {
     @Override
     public String getByPage(BTableRequest bTableRequest, HttpSession session, OldmanKeyRequest oldmanKeyRequest) {
         Page<Oldman> page=commonService.getPage(bTableRequest,"oldman_key");
-        Oldman oldman= Wrappers.oldmanKeyWrapper.unwrap(oldmanKeyRequest);
+        Oldman oldman= oldmanKeyWrapper.unwrap(oldmanKeyRequest);
         commonService.checkIsOrgan(oldman);
         page.setEntity(oldman);
-        List<OldmanKeyModel> oldmanKeyModelList=oldmanKeyDao.getByPage(page).stream().map(Wrappers.oldmanKeyWrapper::wrap).collect(Collectors.toList());
+        List<OldmanKeyModel> oldmanKeyModelList=oldmanKeyDao.getByPage(page).stream().map(oldmanKeyWrapper::wrap).collect(Collectors.toList());
         Long size=oldmanKeyDao.getSizeByPage(page);
 
         for(OldmanKeyModel oldmanKeyModel:oldmanKeyModelList){
@@ -265,7 +263,7 @@ public class OldmanKeyServiceImpl implements OldmanKeyService {
     public KeyRulelModel getRule() {
         KeyRulelModel keyGoalModel=new KeyRulelModel();
         List<KeyRule> keyRuleList=keyRuleDao.getAllRule();
-        List<KeyRuleTypeModel> keyRuleTypeModelList=Wrappers.oldmanKeyWrapper.wrapKeyRule(keyRuleList);
+        List<KeyRuleTypeModel> keyRuleTypeModelList=oldmanKeyWrapper.wrapKeyRule(keyRuleList);
 //        keyRuleList.stream().forEach(r->r.setTypeDesc(KeyRuleTypeEnum.getValue(r.getType())));
         keyGoalModel.setBaseGoal(ValueConstant.OLDMAN_KEY_GOAL_BASE);
         keyGoalModel.setKeyRuleTypeList(keyRuleTypeModelList);
@@ -276,7 +274,7 @@ public class OldmanKeyServiceImpl implements OldmanKeyService {
     @Override
     public void updateRule(KeyRuleRequest keyRuleRequest) {
         ValueConstant.OLDMAN_KEY_GOAL_BASE=keyRuleRequest.getBaseGoal();
-        List<KeyRule> keyRuleList=Wrappers.oldmanKeyWrapper.unwrapKeyRule(keyRuleRequest);
+        List<KeyRule> keyRuleList=oldmanKeyWrapper.unwrapKeyRule(keyRuleRequest);
         keyRuleDao.updateByIds(keyRuleList);
     }
 
@@ -284,7 +282,7 @@ public class OldmanKeyServiceImpl implements OldmanKeyService {
     @Override
     @Transactional
     public Result handle(OldmanhKeyHandleRequest oldmanhKeyHandleRequest) {
-        OldmanKeyHandle oldmanKeyHandle= Wrappers.oldmanKeyWrapper.unwrapKeyHandle(oldmanhKeyHandleRequest);
+        OldmanKeyHandle oldmanKeyHandle= oldmanKeyWrapper.unwrapKeyHandle(oldmanhKeyHandleRequest);
         if(oldmanhKeyHandleRequest.getHandle().equals("add")) {
             oldmanKeyHandleDao.save(oldmanKeyHandle);
             oldmanDao.updateProp("is_handle", "1", oldmanhKeyHandleRequest.getOldmanId());
@@ -300,7 +298,7 @@ public class OldmanKeyServiceImpl implements OldmanKeyService {
 
     @Override
     public Result getHandleByOldmanId(int oldmanId) {
-        return new Result(true,Wrappers.oldmanKeyWrapper.wrapHandle(oldmanKeyHandleDao.getByOldmanId(oldmanId)));
+        return new Result(true,oldmanKeyWrapper.wrapHandle(oldmanKeyHandleDao.getByOldmanId(oldmanId)));
     }
 
     @Override

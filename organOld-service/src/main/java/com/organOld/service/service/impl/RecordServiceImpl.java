@@ -10,7 +10,7 @@ import com.organOld.service.model.RecordModel;
 import com.organOld.service.service.CommonService;
 import com.organOld.service.service.RecordService;
 import com.organOld.service.util.Tool;
-import com.organOld.service.wrapper.Wrappers;
+import com.organOld.service.wrapper.RecordWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,17 +26,19 @@ public class RecordServiceImpl implements RecordService {
     RecordDao recordDao;
     @Autowired
     OldmanDao oldmanDao;
+    @Autowired
+    RecordWrapper recordWrapper;
 
     @Override
     public String getByPage(RecordRequest recordRequest, BTableRequest bTableRequest) {
         Page<Record> page=commonService.getPage(bTableRequest,"record");
-        Record record= Wrappers.recordWrapper.unwrap(recordRequest);
+        Record record=  recordWrapper.unwrap(recordRequest);
         if(record.getOrganId()==null || record.getOrganId()==0){
             //机构账号页面
             commonService.checkIsOrgan(record);
         }
         page.setEntity(record);
-        List<RecordModel> productModelList=recordDao.getByPage(page).stream().map(Wrappers.recordWrapper::wrap).collect(Collectors.toList());
+        List<RecordModel> productModelList=recordDao.getByPage(page).stream().map( recordWrapper::wrap).collect(Collectors.toList());
         Long size=recordDao.getSizeByPage(page);
         return commonService.tableReturn(bTableRequest.getsEcho(),size,productModelList);
     }
@@ -44,9 +46,9 @@ public class RecordServiceImpl implements RecordService {
     @Override
     public String getByCardPage(BTableRequest bTableRequest, CardRecordRequest cardRecordRequest) {
         Page<Record> page=commonService.getPage(bTableRequest,"record");
-        Record record= Wrappers.recordWrapper.unwrapCard(cardRecordRequest);
+        Record record=  recordWrapper.unwrapCard(cardRecordRequest);
         page.setEntity(record);
-        List<RecordModel> productModelList=recordDao.getByCardPage(page).stream().map(Wrappers.recordWrapper::wrap).collect(Collectors.toList());
+        List<RecordModel> productModelList=recordDao.getByCardPage(page).stream().map( recordWrapper::wrap).collect(Collectors.toList());
         Long size=recordDao.getSizeByCardPage(page);
         return commonService.tableReturn(bTableRequest.getsEcho(),size,productModelList);
     }

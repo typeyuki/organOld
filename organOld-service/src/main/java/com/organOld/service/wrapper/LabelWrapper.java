@@ -11,9 +11,11 @@ import com.organOld.service.service.CommonService;
 import com.organOld.service.util.Tool;
 import com.organOld.service.contract.*;
 import org.springframework.beans.BeanUtils;
+import org.springframework.stereotype.Service;
 
 import java.util.*;
 
+@Service
 public class LabelWrapper implements Wrapper<Label,LabelModel,LabelRequest> {
 
     @Override

@@ -12,9 +12,10 @@ import com.organOld.service.model.HomeOldmanModel;
 import com.organOld.service.model.OrganOldmanModel;
 import com.organOld.service.util.Tool;
 import org.springframework.beans.BeanUtils;
+import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-
+@Service
 public class HomeOldmanWrapper implements Wrapper<HomeOldman,HomeOldmanModel,HomeOldmanRequest> {
 
     @Override

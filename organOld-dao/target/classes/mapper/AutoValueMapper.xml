@@ -86,4 +86,35 @@
             #{item}
         </foreach>
     </select>
+
+    <select id="getXqIdsByUsername">
+        <if test="username!=''">
+            SELECT x.id from auto_value x left join organ org on x.parent_index=org.id,sysuser u,user_organ uo
+            where u.username=#{username} and uo.user_id=u.id and (x.parent_index=uo.organ_id or (x.parent_index=org.id and org.parent=uo.organ_id))
+        </if>
+    </select>
+
+
+    <select id="getXqIdsByJwIds">
+        SELECT id FROM auto_value
+        WHERE parent_index in
+        <foreach collection="array" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+
+    <select id="getXqIdsByPqIds">
+        SELECT x.id FROM auto_value x,organ org
+        WHERE x.parent_index=org.id  and org.parent in
+        <foreach collection="array" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <select id="getXqById" resultType="com.organOld.dao.entity.oldman.Xq">
+        select x.value name,jw.name jwName,pq.name districtName
+        FROM auto_value x,organ jw,organ pq
+        WHERE x.id=#{xqId} and x.parent_index=jw.id and jw.parent=pq.id
+    </select>
 </mapper>

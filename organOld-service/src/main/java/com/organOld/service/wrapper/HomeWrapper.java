@@ -6,7 +6,9 @@ import com.organOld.service.contract.HomeRequest;
 import com.organOld.service.model.HomeModel;
 import com.organOld.service.util.Tool;
 import org.springframework.beans.BeanUtils;
+import org.springframework.stereotype.Service;
 
+@Service
 public class HomeWrapper implements Wrapper<Home,HomeModel,HomeRequest> {
 
 

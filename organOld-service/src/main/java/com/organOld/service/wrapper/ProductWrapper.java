@@ -7,10 +7,11 @@ import com.organOld.service.model.ProductModel;
 import com.organOld.service.util.ImgUpload;
 import com.organOld.service.util.Tool;
 import org.springframework.beans.BeanUtils;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 
-
+@Service
 public class ProductWrapper implements Wrapper<Product,ProductModel,ProductRequest> {
 
     @Override

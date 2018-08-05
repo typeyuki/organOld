@@ -8,7 +8,9 @@ import com.organOld.service.enumModel.RecordTypeEnum;
 import com.organOld.service.model.RecordModel;
 import com.organOld.service.util.Tool;
 import org.springframework.beans.BeanUtils;
+import org.springframework.stereotype.Service;
 
+@Service
 public class RecordWrapper implements Wrapper<Record,RecordModel,RecordRequest> {
 
 

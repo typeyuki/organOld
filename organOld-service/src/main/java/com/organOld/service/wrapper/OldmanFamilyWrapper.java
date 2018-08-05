@@ -5,9 +5,10 @@ import com.organOld.service.model.OldmanFamilyModel;
 import com.organOld.service.util.Tool;
 import com.organOld.service.contract.*;
 import org.springframework.beans.BeanUtils;
+import org.springframework.stereotype.Service;
 
 
-
+@Service
 public class OldmanFamilyWrapper implements Wrapper<OldmanFamily,OldmanFamilyModel,OldmanFamilyRequest> {
 
     @Override

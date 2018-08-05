@@ -26,14 +26,14 @@ public interface OldmanService {
 
     String getOldmanByPage(OldmanRequest oldmanBaseRequest, BTableRequest bTableRequest);
 
-    String getHealthByPage(OldmanHealthRequest oldmanHealthRequest, BTableRequest bTableRequest);
-
-    String getLinkmanByPage(LinkmanRequest linkmanRequest, BTableRequest bTableRequest);
-
-    String getEconomyByPage(OldmanEconomicRequest economicRequest, BTableRequest bTableRequest);
-
-    String getFamilyByPage(OldmanFamilyRequest familyRequest, BTableRequest bTableRequest);
-
+//    String getHealthByPage(OldmanHealthRequest oldmanHealthRequest, BTableRequest bTableRequest);
+//
+//    String getLinkmanByPage(LinkmanRequest linkmanRequest, BTableRequest bTableRequest);
+//
+//    String getEconomyByPage(OldmanEconomicRequest economicRequest, BTableRequest bTableRequest);
+//
+//    String getFamilyByPage(OldmanFamilyRequest familyRequest, BTableRequest bTableRequest);
+//
     String getOrganOldmanByPage(OrganOldmanRequest organOldmanRequest, BTableRequest bTableRequest);
 
     OldmanAddInfoModel getAddInfo();

@@ -5,7 +5,9 @@ import com.organOld.service.model.LinkmanModel;
 import com.organOld.service.util.Tool;
 import com.organOld.service.contract.*;
 import org.springframework.beans.BeanUtils;
+import org.springframework.stereotype.Service;
 
+@Service
 public class LinkmanWrapper implements Wrapper<Linkman,LinkmanModel,LinkmanRequest> {
 
     @Override

@@ -38,9 +38,9 @@ public class OldmanController {
      * 基本信息
      * @return
      */
-    @RequestMapping(value = "/base",method = RequestMethod.GET)
-    public ModelAndView base(){
-        ModelAndView mv=new ModelAndView("oldman/base");
+    @RequestMapping(value = "",method = RequestMethod.GET)
+    public ModelAndView oldman(){
+        ModelAndView mv=new ModelAndView("oldman/oldman");
         mv.addObject("info",oldmanService.getAddInfo());
         return mv;
     }
@@ -51,7 +51,7 @@ public class OldmanController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/baseData",method = RequestMethod.POST)
+    @RequestMapping(value = "/data",method = RequestMethod.POST)
     public String data(OldmanRequest oldmanRequest, BTableRequest bTableRequest,
                        @RequestParam(value = "census_array[]",required = false) String census[],
                        @RequestParam(value = "family_array[]",required = false) String family[],
@@ -67,8 +67,8 @@ public class OldmanController {
                        @RequestParam(value = "zc_array[]",required = false) String zc[],
                        @RequestParam(value = "familyType_array[]",required = false) String familyType[]){
         oldmanRequest.setCensusArray(census);
-        oldmanRequest.setFamily(family);
-        oldmanRequest.setEconomic(economic);
+        oldmanRequest.setFamilyArray(family);
+        oldmanRequest.setEconomicArray(economic);
         oldmanRequest.setPoliticalStatusArray(politicalStatus);
         oldmanRequest.setIntelligence(intelligence);
         oldmanRequest.setEyesight(eyesight);
@@ -78,9 +78,10 @@ public class OldmanController {
         oldmanRequest.setOldStatusArray(oldStatus);
         oldmanRequest.setSqzwArray(sqzw);
         oldmanRequest.setZcArray(zc);
-        oldmanRequest.setFamilyType(familyType);
+        oldmanRequest.setFamilyTypeArray(familyType);
         return oldmanService.getOldmanByPage(oldmanRequest,bTableRequest);
     }
+
 
 
 
@@ -105,23 +106,23 @@ public class OldmanController {
      * 添加  全部信息 页面
      * @return
      */
-    @RequestMapping(value = "/add",method = RequestMethod.GET)
-    public ModelAndView add_get(@RequestParam(required = false) String v){
-        ModelAndView mv=new ModelAndView("oldman/add_all");
-        mv.addObject("info",oldmanService.getAddInfo());
-        return mv;
-    }
+//    @RequestMapping(value = "/add",method = RequestMethod.GET)
+//    public ModelAndView add_get(@RequestParam(required = false) String v){
+//        ModelAndView mv=new ModelAndView("oldman/add_all");
+//        mv.addObject("info",oldmanService.getAddInfo());
+//        return mv;
+//    }
 
     /**
      * 添加  全部信息
      * @param oldmanAddRequest
      * @return
      */
-    @RequestMapping(value = "/base/add",method = RequestMethod.POST)
-    public String add_post(OldmanAddRequest oldmanAddRequest){
-        oldmanService.save(oldmanAddRequest);
-        return "redirect:/oldman/base";
-    }
+//    @RequestMapping(value = "/base/add",method = RequestMethod.POST)
+//    public String add_post(OldmanAddRequest oldmanAddRequest){
+//        oldmanService.save(oldmanAddRequest);
+//        return "redirect:/oldman/base";
+//    }
 
 
     /**
@@ -135,22 +136,22 @@ public class OldmanController {
      * 健康档案
      * @return
      */
-    @RequestMapping(value = "/health",method = RequestMethod.GET)
-    public ModelAndView health(){
-        ModelAndView mv=new ModelAndView("oldman/health");
-        mv.addObject("info",oldmanService.getAllHealthInfo());
-        return mv;
-    }
+//    @RequestMapping(value = "/health",method = RequestMethod.GET)
+//    public ModelAndView health(){
+//        ModelAndView mv=new ModelAndView("oldman/health");
+//        mv.addObject("info",oldmanService.getAllHealthInfo());
+//        return mv;
+//    }
 
     /**
      * 获取基本信息数据 分页
      * @return
      */
-    @ResponseBody
-    @RequestMapping(value = "/healthData",method = RequestMethod.POST)
-    public String health_data(OldmanHealthRequest oldmanHealthRequest, BTableRequest bTableRequest,HttpSession session){
-        return oldmanService.getHealthByPage(oldmanHealthRequest,bTableRequest);
-    }
+//    @ResponseBody
+//    @RequestMapping(value = "/healthData",method = RequestMethod.POST)
+//    public String health_data(OldmanHealthRequest oldmanHealthRequest, BTableRequest bTableRequest,HttpSession session){
+//        return oldmanService.getHealthByPage(oldmanHealthRequest,bTableRequest);
+//    }
 
     /**
      * 健康档案 系统管理页面
@@ -193,27 +194,27 @@ public class OldmanController {
      * 家庭结构
      * @return
      */
-    @RequestMapping(value = "/family",method = RequestMethod.GET)
-    public ModelAndView family(){
-        ModelAndView mv= new ModelAndView("oldman/family");
-        mv.addObject("family",autoValueService.getByType(AutoValueEnum.JJJG.getIndex()));
-        mv.addObject("familyType",autoValueService.getByType(AutoValueEnum.JTLB.getIndex()));
-        return mv;
-    }
+//    @RequestMapping(value = "/family",method = RequestMethod.GET)
+//    public ModelAndView family(){
+//        ModelAndView mv= new ModelAndView("oldman/family");
+//        mv.addObject("family",autoValueService.getByType(AutoValueEnum.JJJG.getIndex()));
+//        mv.addObject("familyType",autoValueService.getByType(AutoValueEnum.JTLB.getIndex()));
+//        return mv;
+//    }
 
     /**
      * 获取家庭数据 分页
      * @return
      */
-    @ResponseBody
-    @RequestMapping(value = "/familyData",method = RequestMethod.POST)
-    public String family_data(OldmanFamilyRequest familyRequest, BTableRequest bTableRequest,
-                              @RequestParam(value = "family_array[]",required = false) String family[],
-                              @RequestParam(value = "family_type_array[]",required = false) String familyType[]){
-        familyRequest.setFamilyArray(family);
-        familyRequest.setFamilyTypeArray(familyType);
-        return oldmanService.getFamilyByPage(familyRequest,bTableRequest);
-    }
+//    @ResponseBody
+//    @RequestMapping(value = "/familyData",method = RequestMethod.POST)
+//    public String family_data(OldmanFamilyRequest familyRequest, BTableRequest bTableRequest,
+//                              @RequestParam(value = "family_array[]",required = false) String family[],
+//                              @RequestParam(value = "family_type_array[]",required = false) String familyType[]){
+//        familyRequest.setFamilyArray(family);
+//        familyRequest.setFamilyTypeArray(familyType);
+//        return oldmanService.getFamilyByPage(familyRequest,bTableRequest);
+//    }
 
 
     /**
@@ -226,24 +227,24 @@ public class OldmanController {
      * 经济条件
      * @return
      */
-    @RequestMapping(value = "/economic",method = RequestMethod.GET)
-    public ModelAndView economic(){
-        ModelAndView mv= new ModelAndView("oldman/economic");
-        mv.addObject("economic",autoValueService.getByType(AutoValueEnum.JJTJ.getIndex()));
-        return mv;
-    }
+//    @RequestMapping(value = "/economic",method = RequestMethod.GET)
+//    public ModelAndView economic(){
+//        ModelAndView mv= new ModelAndView("oldman/economic");
+//        mv.addObject("economic",autoValueService.getByType(AutoValueEnum.JJTJ.getIndex()));
+//        return mv;
+//    }
 
     /**
      * 获取经济条件数据 分页
      * @return
      */
-    @ResponseBody
-    @RequestMapping(value = "/economicData",method = RequestMethod.POST)
-    public String economy_data(OldmanEconomicRequest economicRequest, BTableRequest bTableRequest,
-                               @RequestParam(value = "economic_array[]",required = false) String economic[]){
-        economicRequest.setEconomicArray(economic);
-        return oldmanService.getEconomyByPage(economicRequest,bTableRequest);
-    }
+//    @ResponseBody
+//    @RequestMapping(value = "/economicData",method = RequestMethod.POST)
+//    public String economy_data(OldmanEconomicRequest economicRequest, BTableRequest bTableRequest,
+//                               @RequestParam(value = "economic_array[]",required = false) String economic[]){
+//        economicRequest.setEconomicArray(economic);
+//        return oldmanService.getEconomyByPage(economicRequest,bTableRequest);
+//    }
 
 
     /**
@@ -252,20 +253,20 @@ public class OldmanController {
      *
      */
 
-    @RequestMapping(value = "/linkman",method = RequestMethod.GET)
-    public ModelAndView linkman(){
-        return new ModelAndView("oldman/linkman");
-    }
+//    @RequestMapping(value = "/linkman",method = RequestMethod.GET)
+//    public ModelAndView linkman(){
+//        return new ModelAndView("oldman/linkman");
+//    }
 
     /**
      * 获取基本信息数据 分页
      * @return
      */
-    @ResponseBody
-    @RequestMapping(value = "/linkman/data",method = RequestMethod.POST)
-    public String linkman_data(LinkmanRequest linkmanRequest, BTableRequest bTableRequest){
-        return oldmanService.getLinkmanByPage(linkmanRequest,bTableRequest);
-    }
+//    @ResponseBody
+//    @RequestMapping(value = "/linkman/data",method = RequestMethod.POST)
+//    public String linkman_data(LinkmanRequest linkmanRequest, BTableRequest bTableRequest){
+//        return oldmanService.getLinkmanByPage(linkmanRequest,bTableRequest);
+//    }
 
 
 

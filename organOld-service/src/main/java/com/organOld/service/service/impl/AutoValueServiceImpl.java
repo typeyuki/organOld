@@ -1,6 +1,7 @@
 package com.organOld.service.service.impl;
 
 import com.organOld.dao.entity.AutoValue;
+import com.organOld.dao.entity.oldman.Xq;
 import com.organOld.dao.repository.AutoValueDao;
 import com.organOld.dao.util.Page;
 import com.organOld.service.contract.AutoValueRequest;
@@ -9,7 +10,7 @@ import com.organOld.service.contract.Result;
 import com.organOld.service.model.AutoValueModel;
 import com.organOld.service.service.AutoValueService;
 import com.organOld.service.service.CommonService;
-import com.organOld.service.wrapper.Wrappers;
+import com.organOld.service.wrapper.AutoValueWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +25,8 @@ public class AutoValueServiceImpl implements AutoValueService {
     AutoValueDao autoValueDao;
     @Autowired
     CommonService commonService;
+    @Autowired
+    AutoValueWrapper autoValueWrapper;
 
     @Override
     public List<AutoValue> getByType(int type) {
@@ -34,9 +37,9 @@ public class AutoValueServiceImpl implements AutoValueService {
     @Override
     public String getByPage(AutoValueRequest autoValueRequest, BTableRequest bTableRequest) {
         Page<AutoValue> page=commonService.getPage(bTableRequest,"auto_value");
-        AutoValue autoValue= Wrappers.autoValueWrapper.unwrap(autoValueRequest);
+        AutoValue autoValue= autoValueWrapper.unwrap(autoValueRequest);
         page.setEntity(autoValue);
-        List<AutoValueModel> autoValueModelList=autoValueDao.getByPage(page).stream().map(Wrappers.autoValueWrapper::wrap).collect(Collectors.toList());
+        List<AutoValueModel> autoValueModelList=autoValueDao.getByPage(page).stream().map(autoValueWrapper::wrap).collect(Collectors.toList());
         Long size=autoValueDao.getSizeByPage(page);
         return commonService.tableReturn(bTableRequest.getsEcho(),size,autoValueModelList);
     }
@@ -67,5 +70,32 @@ public class AutoValueServiceImpl implements AutoValueService {
     @Override
     public List<AutoValue> getByIds(String[] sq) {
         return autoValueDao.getByIds(sq);
+    }
+
+    @Override
+    public Xq getXqById(Integer xqId) {
+        return autoValueDao.getXqById(xqId);
+    }
+
+
+    @Override
+    public List<AutoValue> getByTypeList(List<Integer> type) {
+        return autoValueDao.getByTypeList(type);
+    }
+
+
+    @Override
+    public List<Integer> getXqIdsByJwIds(String[] jw) {
+        return autoValueDao.getXqIdsByJwIds(jw);
+    }
+
+    @Override
+    public List<Integer> getXqIdsByPqIds(String[] district) {
+        return autoValueDao.getXqIdsByPqIds(district);
+    }
+
+    @Override
+    public List<Integer> getXqIdsByUsername(String userNameBySession) {
+        return autoValueDao.getXqIdsByUsername(userNameBySession);
     }
 }

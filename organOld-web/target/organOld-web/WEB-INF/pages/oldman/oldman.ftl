@@ -213,22 +213,16 @@
                         <tr>
                             <th style="width:15px;"><input type='checkbox' onclick="thCheck(this)" /></th>
                             <th index="id">序号</th>
+                            <th>街道</th>
                             <th>片区</th>
                             <th>居委</th>
-                            <th>小区</th>
-                            <th>楼号</th>
                             <th>姓名</th>
                             <th>性别</th>
                             <th>年龄</th>
                             <th>政治面貌</th>
                             <th>户籍</th>
-                            <th>电话</th>
-                            <th>身份证号码</th>
-                            <th>地址</th>
-                            <th>职称</th>
-                            <th>社区职务</th>
-                            <th>标签</th>
-                            <th>更新时间</th>
+                            <th>家庭结构</th>
+                            <th>经济条件</th>
                             <th></th>
                         </tr>
                         </thead>
@@ -259,7 +253,7 @@
 <script src="/js/content.min.js?v=1.0.0"></script>
 
 <script src="/static/js/common.js" ></script>
-<script src="/static/js/oldman/base.js" ></script>
+<script src="/static/js/oldman/oldman.js" ></script>
 <script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
 
 </body>

@@ -10,10 +10,12 @@ import com.organOld.service.service.CommonService;
 import com.organOld.service.util.Tool;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * Created by netlab606 on 2018/7/8.
  */
+@Service
 public class LabelManWrapper implements Wrapper<LabelMan,LabelManModel,LabelManRequest> {
 
     @Autowired

@@ -196,8 +196,8 @@ public class LabelController {
                                           @RequestParam(value = "district_array[]",required = false) String district[],
                                           @RequestParam(value = "jw_array[]",required = false) String jw[]){
         oldmanRequest.setCensusArray(census);
-        oldmanRequest.setFamily(family);
-        oldmanRequest.setEconomic(economic);
+        oldmanRequest.setFamilyArray(family);
+        oldmanRequest.setEconomicArray(economic);
         oldmanRequest.setPoliticalStatusArray(politicalStatus);
         oldmanRequest.setDistrict(district);
         oldmanRequest.setJw(jw);

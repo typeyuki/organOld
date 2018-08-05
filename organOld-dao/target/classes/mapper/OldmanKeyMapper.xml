@@ -83,7 +83,6 @@
                and ob.goal &lt;= #{entity.goalEnd}
             </if>
         </if>
-
         <if test="entity!=null and  entity.isHandle!=null">
             and ob.is_handle=#{entity.isHandle}
         </if>
@@ -204,4 +203,5 @@
         )
         and ob.disable=0
     </select>
+
 </mapper>

@@ -7,7 +7,9 @@ import com.organOld.service.enumModel.CardStatusEnum;
 import com.organOld.service.model.CardModel;
 import com.organOld.service.util.Tool;
 import org.springframework.beans.BeanUtils;
+import org.springframework.stereotype.Service;
 
+@Service
 public class CardWrapper implements Wrapper<Card,CardModel,CardRequest> {
 
     @Override

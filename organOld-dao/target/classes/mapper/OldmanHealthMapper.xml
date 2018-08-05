@@ -97,7 +97,7 @@ select count(1) from oldman_base oo,organ org,auto_value x where  x.id=oo.xq_id 
     </select>
 
     <select id="getByOldmanId" resultMap="oldmanHealth">
-        SELECT o.id,o.time,o.blood_type,o.eyesight,o.intelligence,o.oldman_id,ha.type,ha.desc,ha.id haid,hs.id hsid
+        SELECT o.id,o.time,o.blood_type,o.eyesight,o.intelligence,o.oldman_id,ha.type,ha.type,ha.desc,hs.fir_type,hs.sec_type_name,ha.id haid,hs.id hsid
         FROM oldman_health_base o LEFT JOIN health_add ha ON ha.oldman_id=o.oldman_id
         LEFT JOIN health_select_oldman hso on hso.oldman_id=o.oldman_id left join health_select hs on hso.health_select_id=hs.id
         WHERE o.oldman_id=#{id}

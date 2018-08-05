@@ -9,7 +9,7 @@ import com.organOld.service.contract.Result;
 import com.organOld.service.model.MessageModel;
 import com.organOld.service.service.CommonService;
 import com.organOld.service.service.MessageService;
-import com.organOld.service.wrapper.Wrappers;
+import com.organOld.service.wrapper.MessageWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,15 +23,17 @@ public class MessageServiceImpl implements MessageService {
     MessageDao messageDao;
     @Autowired
     CommonService commonService;
+    @Autowired
+    MessageWrapper messageWrapper;
 
     @Override
     public String getByPage(MessageRequest messageRequest, BTableRequest bTableRequest) {
         Page<Message> page=commonService.getPage(bTableRequest,"message");
-        Message message= Wrappers.messageWrapper.unwrap(messageRequest);
+        Message message= messageWrapper.unwrap(messageRequest);
         String username=commonService.getUserNameBySession();
         message.setUsername(username);
         page.setEntity(message);
-        List<MessageModel> messageModelList=messageDao.getByPage(page).stream().map(Wrappers.messageWrapper::wrap).collect(Collectors.toList());
+        List<MessageModel> messageModelList=messageDao.getByPage(page).stream().map(messageWrapper::wrap).collect(Collectors.toList());
         Long size=messageDao.getSizeByPage(page);
         return commonService.tableReturn(bTableRequest.getsEcho(),size,messageModelList);
     }

@@ -2,8 +2,12 @@ package com.organOld.service.service;
 
 import com.alibaba.fastjson.JSONObject;
 
+import com.organOld.dao.entity.DBEntity;
 import com.organOld.dao.entity.DBInterface;
 import com.organOld.dao.entity.Message;
+import com.organOld.dao.entity.XqInterface;
+import com.organOld.dao.entity.oldman.Oldman;
+import com.organOld.dao.repository.AutoValueDao;
 import com.organOld.dao.repository.MessageDao;
 import com.organOld.dao.repository.OldmanDao;
 import com.organOld.dao.repository.UserDao;
@@ -11,6 +15,7 @@ import com.organOld.dao.util.Page;
 import com.organOld.service.contract.*;
 import com.organOld.service.enumModel.AutoValueEnum;
 import com.organOld.service.enumModel.MessageTypeEnum;
+import com.organOld.service.model.Model;
 import org.apache.poi.ss.usermodel.Cell;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,12 +23,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class CommonService {
@@ -34,6 +38,10 @@ public class CommonService {
     MessageDao messageDao;
     @Autowired
     OldmanDao oldmanDao;
+    @Autowired
+    AutoValueDao autoValueDao;
+    @Autowired
+    AutoValueService autoValueService;
 
     public static int birthdayToAge(Date birthday){
         Date date=new Date();
@@ -147,6 +155,21 @@ public class CommonService {
             case "organ_reg":
                 typeList.add(AutoValueEnum.PQ.getIndex());
                 break;
+            case "oldman":
+                typeList.add(AutoValueEnum.ZZMM.getIndex());
+                typeList.add(AutoValueEnum.HJ.getIndex());
+                typeList.add(AutoValueEnum.JJJG.getIndex());
+                typeList.add(AutoValueEnum.JJTJ.getIndex());
+                break;
+            case "oldmanInfo":
+                typeList.add(AutoValueEnum.ZZMM.getIndex());
+                typeList.add(AutoValueEnum.HJ.getIndex());
+                typeList.add(AutoValueEnum.JJJG.getIndex());
+                typeList.add(AutoValueEnum.JJTJ.getIndex());
+                typeList.add(AutoValueEnum.SQZW.getIndex());
+                typeList.add(AutoValueEnum.ZC.getIndex());
+                typeList.add(AutoValueEnum.JTLB.getIndex());
+                break;
             default:
         }
         return typeList;
@@ -168,6 +191,20 @@ public class CommonService {
         if (organId!=null && organId!=0){
             dbInterface.setOrganId(organId);
         }
+    }
+
+    public void getOrganXqs(XqInterface xqInterface) {
+        if(xqInterface.getXqIds()==null || xqInterface.getXqIds().size()==0) {
+            Integer organId = getIdBySession();
+            if (organId == null || organId == 0) {
+                //管理员
+                xqInterface.setXqIds(null);
+            } else {
+                List<Integer> xqIds = autoValueService.getXqIdsByUsername(getUserNameBySession());
+                xqInterface.setXqIds(xqIds);
+            }
+        }
+
     }
 
     public static int calculateTwoDateYears(String futureTime, Date birthday) throws ParseException {
@@ -267,5 +304,44 @@ public class CommonService {
         }
         return false;
     }
+
+
+    public void fillAutoValue(DBEntity entity, Model model, List<String> methods, Map<Integer,String> map)  {
+        try {
+            for(String method : methods){
+                String setM="set"+method;
+                String getM="get"+method;
+                Method setMethod;
+                if (method.equals("Sqzw") || method.equals("FamilyType")){
+                    setMethod=model.getClass().getMethod(setM, List.class);
+                }else{
+                    setMethod=model.getClass().getMethod(setM, String.class);
+                }
+                Method getMethod =entity.getClass().getMethod(getM, null);
+
+                String value=(String)getMethod.invoke(entity,null);
+                if(value!=null && !value.equals("")){
+                    if (method.equals("sqzw") || method.equals("familyType")){
+                        String[] s=value.split("#");
+                        List<String> sList=new ArrayList<>();
+                        for(String ss:s){
+                            sList.add(map.get(Integer.parseInt(ss)));
+                        }
+                        setMethod.invoke(model,sList);
+                    }else{
+                        setMethod.invoke(model,map.get(Integer.parseInt(value)));
+                    }
+
+                }
+            }
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
 

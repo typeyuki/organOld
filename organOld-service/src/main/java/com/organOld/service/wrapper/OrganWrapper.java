@@ -13,12 +13,13 @@ import com.organOld.service.model.OrganServiceRecordModel;
 import com.organOld.service.util.ImgUpload;
 import com.organOld.service.util.Tool;
 import org.springframework.beans.BeanUtils;
+import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
-
+@Service
 public class OrganWrapper implements Wrapper<Organ,OrganModel,OrganRequest> {
 
     @Override

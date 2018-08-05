@@ -24,10 +24,8 @@
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
                     <h5>老人信息
-                        <#if (info.key.keyStatus)??>
-                        <#if (info.key.keyStatus!0)==2 || (info.key.keyStatus!0)==4>
+                        <#if (info.key)??>
                         <small style="color:red;">重点老人(${info.key.goal!})</small>
-                        </#if>
                         </#if>
                     </h5>
                     <div class="ibox-tools">
@@ -57,6 +55,7 @@
                             <label class="col-sm-3 control-label">身份证号码：${info.oldman.pid!}</label>
                         </div>
                         <div class="form-group">
+                            <label class="col-sm-2 control-label">街道：古美路街道</label>
                             <label class="col-sm-2 control-label">片区：${info.oldman.dName!}</label>
                             <label class="col-sm-2 control-label">居委：${info.oldman.jName!}</label>
                             <label class="col-sm-2 control-label">小区：${info.oldman.xName!}</label>
@@ -64,7 +63,7 @@
                             <label class="col-sm-2 control-label">地址：${info.oldman.address!}</label>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">职称：${info.oldman.zc!}</label>
+                            <label class="col-sm-2 control-label">职称：${info.oldman.zc!"无"}</label>
                             <label class="col-sm-2 control-label">社区职务：
                             <#if info.oldman.sqzw?? && info.oldman.sqzw?size &gt; 0>
                                 <#list info.oldman.sqzw as list>
@@ -158,8 +157,16 @@
                         </div>
                         <div class="hr-line-dashed"></div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">家庭结构：${info.family!}</label>
-                            <label class="col-sm-2 control-label">经济条件：${info.economic!}</label>
+                            <label class="col-sm-2 control-label">家庭结构：${info.oldman.family!"无"}</label>
+                            <label class="col-sm-2 control-label">家庭类别：
+                            <#if info.oldman.familyType?? && info.oldman.familyType?size &gt; 0>
+                                <#list info.oldman.familyType as list>
+                                    <label>${list}</label>
+                                </#list>
+                            <#else >
+                                无
+                            </#if></label>
+                            <label class="col-sm-2 control-label">经济条件：${info.oldman.economic!"无"}</label>
                         </div>
                         <div class="hr-line-dashed"></div>
                         <div class="form-group">
@@ -238,7 +245,7 @@
                                             <label class="col-sm-2 control-label">服务时间：${list.timeIn}-${list.timeOut}</label>
                                         </#if>
                                     </#if>
-                                    <label class="col-sm-2 control-label">服务机构：${list.organName!"无"}</label>
+                                    <label class="col-sm-2 control-label">服务机构：${(list.organ.name)!"无"}</label>
                                 </div>
                             </#list>
                         <#else >
@@ -250,8 +257,31 @@
                         <div class="hr-line-dashed"></div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label label_title">政策服务</label>
-                            <label class="col-sm-2 control-label" id="label"></label>
                         </div>
+                        <div class="form-group" id="label">
+                        </div>
+                    <#if (info.key)??>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label label_title">重点老人</label>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" >状态：${info.key.status}</label>
+                                <label class="col-sm-2 control-label">处理情况：${(info.key.oldmanKeyHandleModel.type)!}</label>
+                                <label class="col-sm-2 control-label" >
+                                    <#if info.key.oldmanKeyHandleModel?? && info.key.oldmanKeyHandleModel.organ??>
+                                        <#list info..key.oldmanKeyHandleModel.organ as list>
+                                            <label>${list.name}</label>
+                                        </#list>
+                                    </#if>
+                                    <#if info.key.oldmanKeyHandleModel?? && info.key.oldmanKeyHandleModel.homeFirTypes??>
+                                        <#list info..key.oldmanKeyHandleModel.homeFirTypes as list>
+                                            <label>${list}</label>
+                                        </#list>
+                                    </#if>
+                                </label>
+                            </div>
+                    </#if>
                     </form>
                 </div>
             </div>
@@ -269,7 +299,12 @@
         success: function (result) {
             if(result.success==true){
                 for(var i=0;i<result.data.length;i++){
-                    var l=$("<label style='margin: 5px'>"+result.data[i].labelName+"</label>"+result.data[i].isImplement+"<br>");
+                    var l;
+                    if((i+1)%6==0){
+                        l=$("<br>"+"<label class='col-sm-2 control-label' style='margin: 5px'>"+result.data[i].labelName+"("+result.data[i].isImplement+")</label>");
+                    }else{
+                        l=$("<label class='col-sm-2 control-label' style='margin: 5px'>"+result.data[i].labelName+"("+result.data[i].isImplement+")</label>");
+                    }
                     $("#label").append(l);
                 }
             }

@@ -1,6 +1,7 @@
 package com.organOld.service.wrapper;
 
 
+import com.organOld.dao.entity.AutoValue;
 import com.organOld.dao.entity.oldman.HealthAdd;
 import com.organOld.dao.entity.oldman.HealthSelect;
 import com.organOld.dao.entity.oldman.Oldman;
@@ -10,21 +11,42 @@ import com.organOld.service.enumModel.HealthEnum;
 import com.organOld.service.model.HealthSelectModel;
 import com.organOld.service.model.OldmanHealthModel;
 import com.organOld.service.contract.*;
+import com.organOld.service.service.AutoValueService;
+import com.organOld.service.service.CommonService;
 import com.organOld.service.util.Tool;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+@Service
 public class OldmanHealthWrapper implements Wrapper<OldmanHealth,OldmanHealthModel,OldmanHealthRequest> {
+
+    @Autowired
+    CommonService commonService;
+    @Autowired
+    AutoValueService autoValueService;
+
+    /**
+     * 用于填充 auto_value 的数据
+     */
+    List<String> method=new ArrayList<>();
+    Map<Integer,String> map=new HashMap<>();
 
     @Override
     public OldmanHealthModel wrap(OldmanHealth oldmanHealth) {
 
         OldmanHealthModel oldmanHealthModel=new OldmanHealthModel();
         oldmanHealthModel.setId(oldmanHealth.getId());
-        oldmanHealthModel.setOldmanId(oldmanHealth.getOldman().getId());
-        oldmanHealthModel.setName(oldmanHealth.getOldman().getName());
+        if(oldmanHealth.getOldman()!=null) {
+            oldmanHealthModel.setOldmanId(oldmanHealth.getOldman().getId());
+            oldmanHealthModel.setName(oldmanHealth.getOldman().getName());
+        }
         oldmanHealthModel.setBloodType(oldmanHealth.getBloodType());
-        oldmanHealthModel.setIntelligence(oldmanHealth.getIntelligence()==null?"":oldmanHealth.getIntelligence());
-        oldmanHealthModel.setEyesight(oldmanHealth.getEyesight()==null?"":oldmanHealth.getEyesight());
         //TODO  选取所有表格中最新的一个时间  暂时还没实现
         oldmanHealthModel.setTime(Tool.dateToString(oldmanHealth.getTime(), TimeConstant.DATA_FORMAT_YMD));
 
@@ -57,6 +79,16 @@ public class OldmanHealthWrapper implements Wrapper<OldmanHealth,OldmanHealthMod
             }
         }
 
+        if(method.size()==0){
+            method.add("Eyesight");
+            method.add("Intelligence");
+        }
+        if(map.size()==0){
+            List<Integer> autoIds=commonService.getAutoValueTypes("health_add");
+            List<AutoValue> autoValueList=autoValueService.getByTypeList(autoIds);
+            autoValueList.forEach(s->map.put(s.getId(),s.getValue()));
+        }
+        commonService.fillAutoValue(oldmanHealth,oldmanHealthModel,method,map);
         return oldmanHealthModel;
     }
 

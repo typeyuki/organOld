@@ -20,7 +20,7 @@ import com.organOld.service.service.CommonService;
 import com.organOld.service.service.OldmanService;
 import com.organOld.service.service.RecordService;
 import com.organOld.dao.util.bean.QrCodeData;
-import com.organOld.service.wrapper.Wrappers;
+import com.organOld.service.wrapper.CardWrapper;
 import com.swetake.util.Qrcode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -52,14 +52,16 @@ public class CardServiceImpl implements CardService {
     RecordService recordService;
     @Autowired
     OldmanDao oldmanDao;
+    @Autowired
+    CardWrapper cardWrapper;
 
 
     @Override
     public String getByPage(CardRequest cardRequest, BTableRequest bTableRequest) {
         Page<Card> page=commonService.getPage(bTableRequest,"card");
-        Card card= Wrappers.cardWrapper.unwrap(cardRequest);
+        Card card= cardWrapper.unwrap(cardRequest);
         page.setEntity(card);
-        List<CardModel> cardModelList=cardDao.getByPage(page).stream().map(Wrappers.cardWrapper::wrap).collect(Collectors.toList());
+        List<CardModel> cardModelList=cardDao.getByPage(page).stream().map(cardWrapper::wrap).collect(Collectors.toList());
         Long size=cardDao.getSizeByPage(page);
         return commonService.tableReturn(bTableRequest.getsEcho(),size,cardModelList);
     }

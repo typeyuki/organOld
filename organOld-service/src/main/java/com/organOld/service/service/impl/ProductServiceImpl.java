@@ -14,7 +14,8 @@ import com.organOld.service.model.ProductModel;
 import com.organOld.service.service.CommonService;
 import com.organOld.service.service.ProductService;
 import com.organOld.service.util.ImgUpload;
-import com.organOld.service.wrapper.Wrappers;
+import com.organOld.service.wrapper.ProductBookWrapper;
+import com.organOld.service.wrapper.ProductWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,17 +34,21 @@ public class ProductServiceImpl implements ProductService {
     ProductDao productDao;
     @Autowired
     ProductBookDao productBookDao;
+    @Autowired
+    ProductBookWrapper productBookWrapper;
+    @Autowired
+    ProductWrapper productWrapper;
 
     @Override
     public String getByPage(ProductRequest productRequest, BTableRequest bTableRequest) {
         Page<Product> page=commonService.getPage(bTableRequest,"product");
-        Product product= Wrappers.productWrapper.unwrap(productRequest);
+        Product product=  productWrapper.unwrap(productRequest);
         if(product.getOrganId()==null || product.getOrganId()==0){
             //机构账号页面
             commonService.checkIsOrgan(product);
         }
         page.setEntity(product);
-        List<ProductModel> productModelList=productDao.getByPage(page).stream().map(Wrappers.productWrapper::wrap).collect(Collectors.toList());
+        List<ProductModel> productModelList=productDao.getByPage(page).stream().map( productWrapper::wrap).collect(Collectors.toList());
         Long size=productDao.getSizeByPage(page);
         return commonService.tableReturn(bTableRequest.getsEcho(),size,productModelList);
     }
@@ -51,14 +56,14 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public String getBookByPage(ProductBookRequest productBookRequest, BTableRequest bTableRequest) {
         Page<ProductBook> page=commonService.getPage(bTableRequest,"product_book");
-        ProductBook productBook= Wrappers.productBookWrapper.unwrap(productBookRequest);
+        ProductBook productBook=  productBookWrapper.unwrap(productBookRequest);
         if(productBook.getOrganId()==null || productBook.getOrganId()==0){
             //机构账号页面
             commonService.checkIsOrgan(productBook);
         }
         commonService.checkIsOrgan(productBook);
         page.setEntity(productBook);
-        List<ProductBookModel> productBookModelList=productBookDao.getByPage(page).stream().map(Wrappers.productBookWrapper::wrap).collect(Collectors.toList());
+        List<ProductBookModel> productBookModelList=productBookDao.getByPage(page).stream().map( productBookWrapper::wrap).collect(Collectors.toList());
         Long size=productBookDao.getSizeByPage(page);
 
 
@@ -79,7 +84,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void addOrUpdate(ProductRequest productRequest, String type, HttpServletRequest request) {
-        Product product=Wrappers.productWrapper.unwrap(productRequest);
+        Product product= productWrapper.unwrap(productRequest);
         if(!productRequest.getPic().isEmpty()){
             try {
                 String path= ImgUpload.uploadFile(productRequest.getPic(), request,"product");

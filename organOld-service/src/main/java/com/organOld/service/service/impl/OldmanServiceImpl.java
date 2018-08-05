@@ -16,11 +16,12 @@ import com.organOld.service.constant.ValueConstant;
 import com.organOld.service.enumModel.AutoValueEnum;
 import com.organOld.service.enumModel.HealthEnum;
 import com.organOld.service.model.*;
+import com.organOld.service.service.AutoValueService;
 import com.organOld.service.service.CommonService;
 import com.organOld.service.service.OldmanService;
 import com.organOld.service.util.ExcelUtil;
 import com.organOld.service.util.Tool;
-import com.organOld.service.wrapper.Wrappers;
+import com.organOld.service.wrapper.*;
 import com.organOld.service.contract.*;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
@@ -87,32 +88,50 @@ public class OldmanServiceImpl implements OldmanService {
     HealthSelectDao healthSelectDao;
     @Autowired
     CardDao cardDao;
+    @Autowired
+    OldmanWrapper oldmanWrapper;
+    @Autowired
+    OldmanHealthWrapper oldmanHealthWrapper;
+    @Autowired
+    LinkmanWrapper linkmanWrapper;
+    @Autowired
+    OrganOldmanWrapper organOldmanWrapper;
+    @Autowired
+    HomeOldmanWrapper homeOldmanWrapper;
+    @Autowired
+    OldmanKeyWrapper oldmanKeyWrapper;
+    @Autowired
+    AutoValueService autoValueService;
 
     @Override
     public String getOldmanByPage(OldmanRequest oldmanRequest, BTableRequest bTableRequest) {
         Page<Oldman> page=commonService.getPage(bTableRequest,"oldman_base");
-        Oldman oldman= Wrappers.oldmanWrapper.unwrap(oldmanRequest);
-        commonService.checkIsOrgan(oldman);
+        Oldman oldman= oldmanWrapper.unwrap(oldmanRequest);
+        fillXq(oldmanRequest,oldman);
         page.setEntity(oldman);
-        List<OldmanModel> oldmanList=oldmanBaseDao.getByPage(page).stream().map(Wrappers.oldmanWrapper::wrap).collect(Collectors.toList());
-        try {
-            fillAutoValue(oldmanList,AutoValueEnum.SQZW.getIndex(),"Sqzw");
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
+        List<OldmanModel> oldmanList=oldmanBaseDao.getByPage(page).stream().map(oldmanWrapper::wrap).collect(Collectors.toList());
         Long size=oldmanBaseDao.getSizeByPage(page);
         return commonService.tableReturn(bTableRequest.getsEcho(),size,oldmanList);
     }
 
+    //填充小区 1.筛选片区、居委 2.本身机构对应的小区
+    private void fillXq(OldmanRequest oldmanRequest, Oldman oldman) {
+        List<Integer> xqIds=new ArrayList<>();
+        if(oldmanRequest.getJw()!=null && oldmanRequest.getJw().length>0){
+            xqIds=autoValueService.getXqIdsByJwIds(oldmanRequest.getJw());
+        }else if(oldmanRequest.getDistrict()!=null && oldmanRequest.getDistrict().length>0){
+            xqIds=autoValueService.getXqIdsByPqIds(oldmanRequest.getDistrict());
+        }
+        oldman.setXqIds(xqIds);
+        commonService.getOrganXqs(oldman);
+    }
+
+
     @Override
     public void export(HttpServletResponse response, ExportTableThRequest exportTableThRequest) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-        Oldman oldman= Wrappers.oldmanWrapper.unwrapAll(exportTableThRequest);
+        Oldman oldman= oldmanWrapper.unwrapAll(exportTableThRequest);
         commonService.checkIsOrgan(oldman);
-        List<ExportOldman> exportOldmanList=oldmanBaseDao.getAll(oldman).stream().map(Wrappers.oldmanWrapper::wrapAll).collect(Collectors.toList());
+        List<ExportOldman> exportOldmanList=oldmanBaseDao.getAll(oldman).stream().map(oldmanWrapper::wrapAll).collect(Collectors.toList());
 
         //excel标题
         String[] title =new String[exportTableThRequest.getTh().size()];
@@ -197,45 +216,25 @@ public class OldmanServiceImpl implements OldmanService {
     }
 
 
-    private void fillAutoValue(List<? extends Model> list, int type,String method) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-        List<AutoValue> autoValueList=autoValueDao.getByType(type);
-        Map<Integer,String> map=new HashMap<>();
-        autoValueList.forEach(s->map.put(s.getId(),s.getValue()));
-        for(Model model : list){
-            String setM="set"+method;
-            String getM="get"+method+"String";
-            Method setMethod = model.getClass().getMethod(setM, List.class);
-            Method getMethod = model.getClass().getMethod(getM, null);
-
-            if((String)getMethod.invoke(model,null)!=null && !((String)getMethod.invoke(model,null)).equals("")){
-                String[] s=((String)getMethod.invoke(model,null)).split("#");
-                List<String> sList=new ArrayList<>();
-                for(String ss:s){
-                    sList.add(map.get(Integer.parseInt(ss)));
-                }
-                setMethod.invoke(model,sList);
-            }
-        }
-    }
 
 
-    @Override
-    public String getHealthByPage(OldmanHealthRequest oldmanHealthRequest, BTableRequest bTableRequest) {
-        Page<OldmanHealth> page=commonService.getPage(bTableRequest,"oldman_health");
-        OldmanHealth oldmanHealth=Wrappers.oldmanHealthWrapper.unwrap(oldmanHealthRequest);
-        commonService.checkIsOrgan(oldmanHealth);
-        page.setEntity(oldmanHealth);
-        List<OldmanHealthModel> oldmanHealthModelList=oldmanHealthDao.getByPage(page).stream().map(Wrappers.oldmanHealthWrapper::wrap).collect(Collectors.toList());
-        Long size=oldmanHealthDao.getSizeByPage(page);
-        return commonService.tableReturn(bTableRequest.getsEcho(),size,oldmanHealthModelList);
-    }
+//    @Override
+//    public String getHealthByPage(OldmanHealthRequest oldmanHealthRequest, BTableRequest bTableRequest) {
+//        Page<OldmanHealth> page=commonService.getPage(bTableRequest,"oldman_health");
+//        OldmanHealth oldmanHealth=oldmanHealthWrapper.unwrap(oldmanHealthRequest);
+//        commonService.checkIsOrgan(oldmanHealth);
+//        page.setEntity(oldmanHealth);
+//        List<OldmanHealthModel> oldmanHealthModelList=oldmanHealthDao.getByPage(page).stream().map(oldmanHealthWrapper::wrap).collect(Collectors.toList());
+//        Long size=oldmanHealthDao.getSizeByPage(page);
+//        return commonService.tableReturn(bTableRequest.getsEcho(),size,oldmanHealthModelList);
+//    }
 
     @Override
     public String getHealthSelectByPage(HealthSelectRequest healthSelectRequest, BTableRequest bTableRequest) {
         Page<HealthSelect> page=commonService.getPage(bTableRequest,"health_select");
-        HealthSelect healthSelect=Wrappers.oldmanHealthWrapper.unwrapHealthSelect(healthSelectRequest);
+        HealthSelect healthSelect=oldmanHealthWrapper.unwrapHealthSelect(healthSelectRequest);
         page.setEntity(healthSelect);
-        List<HealthSelectModel> healthSelectModelList=healthSelectDao.getByPage(page).stream().map(Wrappers.oldmanHealthWrapper::wrapHealthSelect).collect(Collectors.toList());
+        List<HealthSelectModel> healthSelectModelList=healthSelectDao.getByPage(page).stream().map(oldmanHealthWrapper::wrapHealthSelect).collect(Collectors.toList());
         Long size=healthSelectDao.getSizeByPage(page);
         return commonService.tableReturn(bTableRequest.getsEcho(),size,healthSelectModelList);
     }
@@ -248,70 +247,70 @@ public class OldmanServiceImpl implements OldmanService {
             healthSelectDao.updateById(healthSelect);
     }
 
-    @Override
-    public String getEconomyByPage(OldmanEconomicRequest economicRequest, BTableRequest bTableRequest) {
-        Page<OldmanEconomic> page=commonService.getPage(bTableRequest,"oldman_economy");
-        OldmanEconomic economic=Wrappers.economicWrapper.unwrap(economicRequest);
-        commonService.checkIsOrgan(economic);
-        page.setEntity(economic);
-        List<OldmanEconomicModel> economicModelList=economicDao.getByPage(page).stream().map(Wrappers.economicWrapper::wrap).collect(Collectors.toList());
-        Long size=economicDao.getSizeByPage(page);
-        return commonService.tableReturn(bTableRequest.getsEcho(),size,economicModelList);
-    }
+//    @Override
+//    public String getEconomyByPage(OldmanEconomicRequest economicRequest, BTableRequest bTableRequest) {
+//        Page<OldmanEconomic> page=commonService.getPage(bTableRequest,"oldman_economy");
+//        OldmanEconomic economic=economicWrapper.unwrap(economicRequest);
+//        commonService.checkIsOrgan(economic);
+//        page.setEntity(economic);
+//        List<OldmanEconomicModel> economicModelList=economicDao.getByPage(page).stream().map(economicWrapper::wrap).collect(Collectors.toList());
+//        Long size=economicDao.getSizeByPage(page);
+//        return commonService.tableReturn(bTableRequest.getsEcho(),size,economicModelList);
+//    }
 
 
     @Override
     public String getIntegralByPage(OldmanIntegralRequest oldmanIntegralRequest, BTableRequest bTableRequest) {
         Page<OldmanIntegral> page=commonService.getPage(bTableRequest,"oldman_integral");
-        OldmanIntegral integral=Wrappers.oldmanWrapper.unwrapIntegral(oldmanIntegralRequest);
+        OldmanIntegral integral=oldmanWrapper.unwrapIntegral(oldmanIntegralRequest);
         commonService.checkIsOrgan(integral);
         page.setEntity(integral);
-        List<OldmanIntegralModel> oldmanIntegralModelList=oldmanBaseDao.getIntegralByPage(page).stream().map(Wrappers.oldmanWrapper::wrapIntegral).collect(Collectors.toList());
+        List<OldmanIntegralModel> oldmanIntegralModelList=oldmanBaseDao.getIntegralByPage(page).stream().map(oldmanWrapper::wrapIntegral).collect(Collectors.toList());
         Long size=oldmanBaseDao.getIntegralSizeByPage(page);
         return commonService.tableReturn(bTableRequest.getsEcho(),size,oldmanIntegralModelList);
     }
 
-    @Override
-    public String getFamilyByPage(OldmanFamilyRequest familyRequest, BTableRequest bTableRequest) {
-        Page<OldmanFamily> page=commonService.getPage(bTableRequest,"oldman_family");
-        OldmanFamily family=Wrappers.familyWrapper.unwrap(familyRequest);
-        commonService.checkIsOrgan(family);
-        page.setEntity(family);
-        List<OldmanFamilyModel> familyModelList=familyDao.getByPage(page).stream().map(Wrappers.familyWrapper::wrap).collect(Collectors.toList());
-        Long size=familyDao.getSizeByPage(page);
-        try {
-            fillAutoValue(familyModelList,AutoValueEnum.JTLB.getIndex(),"FamilyType");
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-        return commonService.tableReturn(bTableRequest.getsEcho(),size,familyModelList);
-    }
+//    @Override
+//    public String getFamilyByPage(OldmanFamilyRequest familyRequest, BTableRequest bTableRequest) {
+//        Page<OldmanFamily> page=commonService.getPage(bTableRequest,"oldman_family");
+//        OldmanFamily family=familyWrapper.unwrap(familyRequest);
+//        commonService.checkIsOrgan(family);
+//        page.setEntity(family);
+//        List<OldmanFamilyModel> familyModelList=familyDao.getByPage(page).stream().map(familyWrapper::wrap).collect(Collectors.toList());
+//        Long size=familyDao.getSizeByPage(page);
+//        try {
+//            fillAutoValue(familyModelList,AutoValueEnum.JTLB.getIndex(),"FamilyType");
+//        } catch (NoSuchMethodException e) {
+//            e.printStackTrace();
+//        } catch (InvocationTargetException e) {
+//            e.printStackTrace();
+//        } catch (IllegalAccessException e) {
+//            e.printStackTrace();
+//        }
+//        return commonService.tableReturn(bTableRequest.getsEcho(),size,familyModelList);
+//    }
 
     @Override
     public String getOrganOldmanByPage(OrganOldmanRequest organOldmanRequest, BTableRequest bTableRequest) {
         Page<OrganOldman> page=commonService.getPage(bTableRequest,"oldman_organOldman");
-        OrganOldman organOldman=Wrappers.organOldmanWrapper.unwrap(organOldmanRequest);
+        OrganOldman organOldman=organOldmanWrapper.unwrap(organOldmanRequest);
         commonService.checkIsOrgan(organOldman);
         page.setEntity(organOldman);
-        List<OrganOldmanModel> organOldmanModelList=organOldmanDao.getByPage(page).stream().map(Wrappers.organOldmanWrapper::wrap).collect(Collectors.toList());
+        List<OrganOldmanModel> organOldmanModelList=organOldmanDao.getByPage(page).stream().map(organOldmanWrapper::wrap).collect(Collectors.toList());
         Long size=organOldmanDao.getSizeByPage(page);
         return commonService.tableReturn(bTableRequest.getsEcho(),size,organOldmanModelList);
     }
 
-    @Override
-    public String getLinkmanByPage(LinkmanRequest linkmanRequest, BTableRequest bTableRequest) {
-        Page<Linkman> page=commonService.getPage(bTableRequest,"oldman_linkman");
-        Linkman linkman=Wrappers.linkmanWrapper.unwrap(linkmanRequest);
-        commonService.checkIsOrgan(linkman);
-        page.setEntity(linkman);
-        List<LinkmanModel> linkmanModelList=linkmanDao.getByPage(page).stream().map(Wrappers.linkmanWrapper::wrap).collect(Collectors.toList());
-        Long size=linkmanDao.getSizeByPage(page);
-        return commonService.tableReturn(bTableRequest.getsEcho(),size,linkmanModelList);
-    }
+//    @Override
+//    public String getLinkmanByPage(LinkmanRequest linkmanRequest, BTableRequest bTableRequest) {
+//        Page<Linkman> page=commonService.getPage(bTableRequest,"oldman_linkman");
+//        Linkman linkman=linkmanWrapper.unwrap(linkmanRequest);
+//        commonService.checkIsOrgan(linkman);
+//        page.setEntity(linkman);
+//        List<LinkmanModel> linkmanModelList=linkmanDao.getByPage(page).stream().map(linkmanWrapper::wrap).collect(Collectors.toList());
+//        Long size=linkmanDao.getSizeByPage(page);
+//        return commonService.tableReturn(bTableRequest.getsEcho(),size,linkmanModelList);
+//    }
 
 
 
@@ -345,7 +344,7 @@ public class OldmanServiceImpl implements OldmanService {
         Integer organId=commonService.getIdBySession();
         List<Organ> jwList=organDao.getSimpleByType(2,organId);
         List<HealthSelect> healthSelectList=oldmanHealthDao.getAllHealthSelect();
-        OldmanAddInfoModel oldmanAddInfoModel=Wrappers.oldmanWrapper.wrapAddInfo(autoValueList,jwList,healthSelectList);
+        OldmanAddInfoModel oldmanAddInfoModel=oldmanWrapper.wrapAddInfo(autoValueList,jwList,healthSelectList);
         return oldmanAddInfoModel;
     }
 
@@ -355,17 +354,17 @@ public class OldmanServiceImpl implements OldmanService {
         List<Integer> typeList=commonService.getAutoValueTypes("health_add");
         List<AutoValue> autoValueList=autoValueDao.getByTypeList(typeList);
         List<HealthSelect> healthSelectList=oldmanHealthDao.getAllHealthSelect();
-        HealthSelectInfoModel healthSelectInfoModel=Wrappers.oldmanWrapper.wrapHealthSelectInfo(autoValueList,healthSelectList);
+        HealthSelectInfoModel healthSelectInfoModel=oldmanWrapper.wrapHealthSelectInfo(autoValueList,healthSelectList);
         return healthSelectInfoModel;
     }
 
     @Override
     public String getHomeOldmanByPage(HomeOldmanRequest homeOldmanRequest, BTableRequest bTableRequest) {
         Page<HomeOldman> page=commonService.getPage(bTableRequest,"oldman_homeOldman");
-        HomeOldman homeOldman=Wrappers.homeOldmanWrapper.unwrap(homeOldmanRequest);
+        HomeOldman homeOldman=homeOldmanWrapper.unwrap(homeOldmanRequest);
         commonService.checkIsOrgan(homeOldman);
         page.setEntity(homeOldman);
-        List<HomeOldmanModel> organOldmanModelList=homeOldmanDao.getByPage(page).stream().map(Wrappers.homeOldmanWrapper::wrap).collect(Collectors.toList());
+        List<HomeOldmanModel> organOldmanModelList=homeOldmanDao.getByPage(page).stream().map(homeOldmanWrapper::wrap).collect(Collectors.toList());
         Long size=homeOldmanDao.getSizeByPage(page);
         return commonService.tableReturn(bTableRequest.getsEcho(),size,organOldmanModelList);
     }
@@ -374,57 +373,30 @@ public class OldmanServiceImpl implements OldmanService {
     public OldmanAllInfoModel getOldmanInfo(int oldmanId) {
         OldmanAllInfoModel oldmanAllInfoModel=new OldmanAllInfoModel();
         Page<DBEntity> page=new Page<>();
-        page.setSortType("id");
-        page.setSort("asc");
         page.setLength(1);
         page.setStart(0);
 
         Oldman oldman=new Oldman();
         oldman.setId(oldmanId);
 
+
+        OldmanModel oldmanModel=oldmanWrapper.wrapInfo(oldmanBaseDao.getById(oldmanId));
+        oldmanAllInfoModel.setOldman(oldmanModel);
+
+        oldman.setKeyGoalBase(ValueConstant.OLDMAN_KEY_GOAL_BASE);
         page.setEntity(oldman);
-        List<OldmanModel> oldmanModelList=oldmanBaseDao.getByPage(page).stream().map(Wrappers.oldmanWrapper::wrap).collect(Collectors.toList());
-        try {
-            fillAutoValue(oldmanModelList,AutoValueEnum.SQZW.getIndex(),"Sqzw");
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-        if(oldmanModelList!=null && oldmanModelList.size()>0)
-            oldmanAllInfoModel.setOldman(oldmanModelList.get(0));
+        List<OldmanKeyModel> oldmanKeyModelList=oldmanKeyDao.getByPage(page).stream().map(oldmanKeyWrapper::wrap).collect(Collectors.toList());
+        if(oldmanKeyModelList!=null && oldmanKeyModelList.size()>0)
+            oldmanAllInfoModel.setKey(oldmanKeyModelList.get(0));
 
-        List<Oldman> oldmanList=oldmanKeyDao.getByPage(page);
-        if(oldmanList!=null && oldmanList.size()>0)
-            oldmanAllInfoModel.setKey(oldmanList.get(0));
+        OldmanHealthModel oldmanHealthModel=oldmanHealthWrapper.wrap(oldmanHealthDao.getByOldmanId(oldmanId));
+        oldmanAllInfoModel.setHealth(oldmanHealthModel);
 
-        OldmanHealth oldmanHealth=new OldmanHealth();
-        oldmanHealth.setOldman(oldman);
-        page.setEntity(oldmanHealth);
-        List<OldmanHealthModel> oldmanHealthModelList=oldmanHealthDao.getByPage(page).stream().map(Wrappers.oldmanHealthWrapper::wrap).collect(Collectors.toList());
-        if(oldmanHealthModelList!=null && oldmanHealthModelList.size()>0)
-            oldmanAllInfoModel.setHealth(oldmanHealthModelList.get(0));
-
-        OldmanFamily oldmanFamily=new OldmanFamily();
-        oldmanFamily.setOldman(oldman);
-        page.setEntity(oldmanFamily);
-        List<OldmanFamilyModel> familyModelList=familyDao.getByPage(page).stream().map(Wrappers.familyWrapper::wrap).collect(Collectors.toList());
-        if(familyModelList!=null && familyModelList.size()>0)
-            oldmanAllInfoModel.setFamily(familyModelList.get(0).getFamily());
-
-        OldmanEconomic oldmanEconomic=new OldmanEconomic();
-        oldmanEconomic.setOldman(oldman);
-        page.setEntity(oldmanEconomic);
-        List<OldmanEconomicModel> economicModelList=economicDao.getByPage(page).stream().map(Wrappers.economicWrapper::wrap).collect(Collectors.toList());
-        if(economicModelList!=null && economicModelList.size()>0)
-            oldmanAllInfoModel.setEconomic(economicModelList.get(0).getEconomic());
 
         Linkman linkman=new Linkman();
         linkman.setOldman(oldman);
         page.setEntity(linkman);
-        List<LinkmanModel> linkmanModelList=linkmanDao.getByPage(page).stream().map(Wrappers.linkmanWrapper::wrap).collect(Collectors.toList());
+        List<LinkmanModel> linkmanModelList=linkmanDao.getByPage(page).stream().map(linkmanWrapper::wrap).collect(Collectors.toList());
         if(linkmanModelList!=null && linkmanModelList.size()>0)
             oldmanAllInfoModel.setLinkman(linkmanModelList.get(0));
 
@@ -432,7 +404,7 @@ public class OldmanServiceImpl implements OldmanService {
         organOldman.setFirType(21);
         organOldman.setOldman(oldman);
         page.setEntity(organOldman);
-        List<OrganOldmanModel> organOldmanModelList=organOldmanDao.getByPage(page).stream().map(Wrappers.organOldmanWrapper::wrap).collect(Collectors.toList());
+        List<OrganOldmanModel> organOldmanModelList=organOldmanDao.getByPage(page).stream().map(organOldmanWrapper::wrap).collect(Collectors.toList());
         if(organOldmanModelList!=null && organOldmanModelList.size()>0)
             oldmanAllInfoModel.setOrgan(organOldmanModelList.get(0));
 
@@ -440,13 +412,13 @@ public class OldmanServiceImpl implements OldmanService {
         communityOldman.setFirType(22);
         communityOldman.setOldman(oldman);
         page.setEntity(communityOldman);
-        List<OrganOldmanModel> communityOldmanModelList=organOldmanDao.getByPage(page).stream().map(Wrappers.organOldmanWrapper::wrap).collect(Collectors.toList());
+        List<OrganOldmanModel> communityOldmanModelList=organOldmanDao.getByPage(page).stream().map(organOldmanWrapper::wrap).collect(Collectors.toList());
         oldmanAllInfoModel.setCommunity(communityOldmanModelList);
 
         HomeOldman homeOldman=new HomeOldman();
         homeOldman.setOldman(oldman);
         page.setEntity(homeOldman);
-        List<HomeOldmanModel> homeOldmanModelList=homeOldmanDao.getByPage(page).stream().map(Wrappers.homeOldmanWrapper::wrap).collect(Collectors.toList());
+        List<HomeOldmanModel> homeOldmanModelList=homeOldmanDao.getByPage(page).stream().map(homeOldmanWrapper::wrap).collect(Collectors.toList());
         oldmanAllInfoModel.setHome(homeOldmanModelList);
 
         return oldmanAllInfoModel;
@@ -458,9 +430,8 @@ public class OldmanServiceImpl implements OldmanService {
     @Transactional
     public Result importExcel(MultipartFile file, HttpSession session) throws IOException {
 
-        Oldman o=new Oldman();
-        commonService.checkIsOrgan(o);
-        Integer organId=o.getOrganId();
+
+        Integer organId=commonService.getIdBySession();
 
         //导入规则  已有的则进行更新 没有的今天添加   数据库有的 表没有的  则“删除” 设置老人状态为不可用
         List<Integer> existOldmanIds=new ArrayList<>();//存储 本次更新 中已存在的老人ID 用于得到需要“删除”的老人ID
@@ -972,7 +943,7 @@ public class OldmanServiceImpl implements OldmanService {
 
     @Override
     public Result getIntegralByOldmanId(int oldmanId) {
-        OrganQueryIntegralModel organQueryIntegralModel=Wrappers.oldmanWrapper.wrapInregral(oldmanBaseDao.getIntegralByOldmanId(oldmanId));
+        OrganQueryIntegralModel organQueryIntegralModel=oldmanWrapper.wrapInregral(oldmanBaseDao.getIntegralByOldmanId(oldmanId));
         if(organQueryIntegralModel!=null)
             return new Result(true,organQueryIntegralModel);
         else return new Result(false,"找不到");

@@ -17,7 +17,8 @@ import com.organOld.service.service.UserService;
 import com.organOld.service.util.Email;
 import com.organOld.service.util.ImgUpload;
 import com.organOld.service.util.Tool;
-import com.organOld.service.wrapper.Wrappers;
+import com.organOld.service.wrapper.OrganOldmanWrapper;
+import com.organOld.service.wrapper.OrganWrapper;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,14 +58,17 @@ public class OrganServiceImpl implements OrganService{
     OldmanKeyHandleDao oldmanKeyHandleDao;
     @Autowired
     OrganServiceRecordDao organServiceRecordDao;
-
+    @Autowired
+    OrganWrapper organWrapper;
+    @Autowired
+    OrganOldmanWrapper organOldmanWrapper;
 
     @Override
     public String getByPage(OrganRequest organRequest, BTableRequest bTableRequest) {
         Page<Organ> page=commonService.getPage(bTableRequest,"organ");
-        Organ organ= Wrappers.organWrapper.unwrap(organRequest);
+        Organ organ= organWrapper.unwrap(organRequest);
         page.setEntity(organ);
-        List<OrganModel> organModelList=organDao.getByPage(page).stream().map(Wrappers.organWrapper::wrap).collect(Collectors.toList());
+        List<OrganModel> organModelList=organDao.getByPage(page).stream().map(organWrapper::wrap).collect(Collectors.toList());
         Long size=organDao.getSizeByPage(page);
         return commonService.tableReturn(bTableRequest.getsEcho(),size,organModelList);
     }
@@ -72,9 +76,9 @@ public class OrganServiceImpl implements OrganService{
     @Override
     public String getManByPage(BTableRequest bTableRequest, OrganOldmanRequest organOrganManRequest) {
         Page<OrganOldman> page=commonService.getPage(bTableRequest,"organ_man");
-        OrganOldman organOldman= Wrappers.organOldmanWrapper.unwrap(organOrganManRequest);
+        OrganOldman organOldman= organOldmanWrapper.unwrap(organOrganManRequest);
         page.setEntity(organOldman);
-        List<OrganOldmanModel> organOldmanModelList=organOldmanDao.getByPage(page).stream().map(Wrappers.organOldmanWrapper::wrap).collect(Collectors.toList());
+        List<OrganOldmanModel> organOldmanModelList=organOldmanDao.getByPage(page).stream().map(organOldmanWrapper::wrap).collect(Collectors.toList());
         Long size=organOldmanDao.getSizeByPage(page);
         return commonService.tableReturn(bTableRequest.getsEcho(),size,organOldmanModelList);
     }
@@ -87,7 +91,7 @@ public class OrganServiceImpl implements OrganService{
 
     @Override
     public OrganModel getById(int organId) {
-        OrganModel organModel=Wrappers.organWrapper.wrap(organDao.getById(organId));
+        OrganModel organModel=organWrapper.wrap(organDao.getById(organId));
         List<AutoValue> districtList=autoValueDao.getByType(AutoValueEnum.PQ.getIndex());
         organModel.setDistrictList(districtList);
         List<OrganType> organTypeList=organTypeDao.getByFirType(organModel.getOrganFirTypeId());
@@ -194,9 +198,9 @@ public class OrganServiceImpl implements OrganService{
     @Override
     @Transactional
     public Result reg(OrganRegRequest organRegRequest, HttpServletRequest request) {
-        Organ organ=Wrappers.organWrapper.unwrapRegOrgan(organRegRequest,request);
+        Organ organ=organWrapper.unwrapRegOrgan(organRegRequest,request);
         organ.setStatus("1");
-        OrganReg organReg=Wrappers.organWrapper.unwrapRegOrganReg(organRegRequest);
+        OrganReg organReg=organWrapper.unwrapRegOrganReg(organRegRequest);
         organDao.save(organ);
         organReg.setOrganId(organ.getId());
         organRegDao.save(organReg);
@@ -205,7 +209,7 @@ public class OrganServiceImpl implements OrganService{
 
     @Override
     public Integer addOrUpdate(OrganRegRequest organRegRequest, HttpServletRequest request, String type) {
-        Organ organ=Wrappers.organWrapper.unwrapRegOrgan(organRegRequest,request);
+        Organ organ=organWrapper.unwrapRegOrgan(organRegRequest,request);
         if(type.equals("update")) organDao.updateById(organ);
         else organDao.save(organ);
         return organ.getId();
@@ -571,13 +575,13 @@ public class OrganServiceImpl implements OrganService{
     @Override
     public String getRecordByPage(OrganServiceRecordRequest organServiceRecordRequest, BTableRequest bTableRequest) {
         Page<OrganServiceRecord> page=commonService.getPage(bTableRequest,"organ_service_record");
-        OrganServiceRecord organServiceRecord= Wrappers.organWrapper.unwrapServiceRecord(organServiceRecordRequest);
+        OrganServiceRecord organServiceRecord= organWrapper.unwrapServiceRecord(organServiceRecordRequest);
         if(organServiceRecord.getOrganId()==null || organServiceRecord.getOrganId()==0){
             //机构账号页面
             commonService.checkIsOrgan(organServiceRecord);
         }
         page.setEntity(organServiceRecord);
-        List<OrganServiceRecordModel> productModelList=organServiceRecordDao.getByPage(page).stream().map(Wrappers.organWrapper::wrapServiceRecord).collect(Collectors.toList());
+        List<OrganServiceRecordModel> productModelList=organServiceRecordDao.getByPage(page).stream().map(organWrapper::wrapServiceRecord).collect(Collectors.toList());
         Long size=organServiceRecordDao.getSizeByPage(page);
         return commonService.tableReturn(bTableRequest.getsEcho(),size,productModelList);
     }

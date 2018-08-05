@@ -38,6 +38,9 @@
         <if test="entity!=null and entity.oldmanId!=null and entity.oldmanId!=0">
             and o.id=#{entity.oldmanId}
         </if>
+        <if test="entity!=null and entity.oldman!=null and entity.oldman.id!=0">
+            and o.id=#{entity.oldman.id}
+        </if>
         <if test="entity!=null and entity.type!=null and entity.type.length > 0">
             and h.fir_type IN
             <foreach collection="entity.type" index="index" item="item" separator="," open="(" close=")">

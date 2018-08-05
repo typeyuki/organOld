@@ -17,7 +17,8 @@ import com.organOld.service.model.HomeOldmanModel;
 import com.organOld.service.service.CommonService;
 import com.organOld.service.service.HomeService;
 import com.organOld.service.util.Tool;
-import com.organOld.service.wrapper.Wrappers;
+import com.organOld.service.wrapper.HomeOldmanWrapper;
+import com.organOld.service.wrapper.HomeWrapper;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -53,13 +54,17 @@ public class HomeServiceImpl implements HomeService{
     ChxDao chxDao;
     @Autowired
     HomeDoctorDao homeDoctorDao;
+    @Autowired
+    HomeWrapper homeWrapper;
+    @Autowired
+    HomeOldmanWrapper homeOldmanWrapper;
 
     @Override
     public String getByPage(HomeRequest homeRequest, BTableRequest bTableRequest) {
         Page<Home> page=commonService.getPage(bTableRequest,"home");
-        Home home= Wrappers.homeWrapper.unwrap(homeRequest);
+        Home home= homeWrapper.unwrap(homeRequest);
         page.setEntity(home);
-        List<HomeModel> homeModelList=homeDao.getByPage(page).stream().map(Wrappers.homeWrapper::wrap).collect(Collectors.toList());
+        List<HomeModel> homeModelList=homeDao.getByPage(page).stream().map(homeWrapper::wrap).collect(Collectors.toList());
         Long size=homeDao.getSizeByPage(page);
         return commonService.tableReturn(bTableRequest.getsEcho(),size,homeModelList);
     }
@@ -67,9 +72,9 @@ public class HomeServiceImpl implements HomeService{
     @Override
     public String getManByPage(HomeOldmanRequest homeOldmanRequest, BTableRequest bTableRequest) {
         Page<HomeOldman> page=commonService.getPage(bTableRequest,"home_man");
-        HomeOldman homeOldman= Wrappers.homeOldmanWrapper.unwrap(homeOldmanRequest);
+        HomeOldman homeOldman= homeOldmanWrapper.unwrap(homeOldmanRequest);
         page.setEntity(homeOldman);
-        List<HomeOldmanModel> organOldmanModelList=homeOldmanDao.getByPage(page).stream().map(Wrappers.homeOldmanWrapper::wrap).collect(Collectors.toList());
+        List<HomeOldmanModel> organOldmanModelList=homeOldmanDao.getByPage(page).stream().map(homeOldmanWrapper::wrap).collect(Collectors.toList());
         Long size=homeOldmanDao.getSizeByPage(page);
         return commonService.tableReturn(bTableRequest.getsEcho(),size,organOldmanModelList);
     }

@@ -12,7 +12,7 @@ import com.organOld.service.model.OrganAuth;
 import com.organOld.service.model.UserModel;
 import com.organOld.service.service.CommonService;
 import com.organOld.service.service.UserService;
-import com.organOld.service.wrapper.Wrappers;
+import com.organOld.service.wrapper.UserWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -37,6 +37,8 @@ public class UserServiceImpl implements UserService {
     CommonService commonService;
     @Autowired
     OrganDao organDao;
+    @Autowired
+    UserWrapper userWrapper;
 
 
     @Override
@@ -83,9 +85,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public String getByPage(UserRequest userRequest, BTableRequest bTableRequest) {
         Page<SysUser> page=commonService.getPage(bTableRequest,"user");
-        SysUser sysUser=Wrappers.userWrapper.unwrap(userRequest);
+        SysUser sysUser= userWrapper.unwrap(userRequest);
         page.setEntity(sysUser);
-        List<UserModel> userModelList=userDao.getByPage(page).stream().map(Wrappers.userWrapper::wrap).collect(Collectors.toList());
+        List<UserModel> userModelList=userDao.getByPage(page).stream().map( userWrapper::wrap).collect(Collectors.toList());
         Long size=userDao.getSizeByPage(page);
         return commonService.tableReturn(bTableRequest.getsEcho(),size,userModelList);
     }

@@ -18,17 +18,42 @@ public class OldmanModel extends ManModel{
     private String oldStatus;
     private String zc;
     private List<String> sqzw=new ArrayList<>();
-    private String sqzwString;
+    private String family;
+    private String economic;
 
-    private List<LabelManInfoModel> labelManInfoModelList;
+//    private List<LabelManInfoModel> labelManInfoModelList;
 
 
-    public String getSqzwString() {
-        return sqzwString;
+    public String getAddress() {
+        return address;
     }
 
-    public void setSqzwString(String sqzwString) {
-        this.sqzwString = sqzwString;
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getPid() {
+        return pid;
+    }
+
+    public void setPid(String pid) {
+        this.pid = pid;
+    }
+
+    public String getLouNum() {
+        return louNum;
+    }
+
+    public void setLouNum(String louNum) {
+        this.louNum = louNum;
+    }
+
+    public String getxName() {
+        return xName;
+    }
+
+    public void setxName(String xName) {
+        this.xName = xName;
     }
 
     public String getZc() {
@@ -47,6 +72,22 @@ public class OldmanModel extends ManModel{
         this.sqzw = sqzw;
     }
 
+    public String getFamily() {
+        return family;
+    }
+
+    public void setFamily(String family) {
+        this.family = family;
+    }
+
+    public String getEconomic() {
+        return economic;
+    }
+
+    public void setEconomic(String economic) {
+        this.economic = economic;
+    }
+
     public String getOldStatus() {
         return oldStatus;
     }
@@ -55,22 +96,6 @@ public class OldmanModel extends ManModel{
         this.oldStatus = oldStatus;
     }
 
-    public List<LabelManInfoModel> getLabelManInfoModelList() {
-        return labelManInfoModelList;
-    }
-
-
-    public void setLabelManInfoModelList(List<LabelManInfoModel> labelManInfoModelList) {
-        this.labelManInfoModelList = labelManInfoModelList;
-    }
-
-    public String getPid() {
-        return pid;
-    }
-
-    public void setPid(String pid) {
-        this.pid = pid;
-    }
 
     public String getSex() {
         return sex;
@@ -104,29 +129,6 @@ public class OldmanModel extends ManModel{
         this.politicalStatus = politicalStatus;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getLouNum() {
-        return louNum;
-    }
-
-    public void setLouNum(String louNum) {
-        this.louNum = louNum;
-    }
-
-    public String getxName() {
-        return xName;
-    }
-
-    public void setxName(String xName) {
-        this.xName = xName;
-    }
 
     public String getjName() {
         return jName;

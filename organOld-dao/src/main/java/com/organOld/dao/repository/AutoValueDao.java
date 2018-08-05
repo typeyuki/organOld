@@ -1,6 +1,7 @@
 package com.organOld.dao.repository;
 
 import com.organOld.dao.entity.AutoValue;
+import com.organOld.dao.entity.oldman.Xq;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -17,4 +18,12 @@ public interface AutoValueDao extends BaseDao<AutoValue,Integer>{
     Integer getStringLikeIndex(@Param("str") String str, @Param("index") int index,@Param("type") String type);
 
     List<AutoValue> getByIds(String[] sq);
+
+    List<Integer> getXqIdsByUsername(String username);
+
+    List<Integer> getXqIdsByPqIds(String[] district);
+
+    List<Integer> getXqIdsByJwIds(String[] jw);
+
+    Xq getXqById(Integer xqId);
 }

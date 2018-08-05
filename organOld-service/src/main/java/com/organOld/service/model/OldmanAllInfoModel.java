@@ -4,6 +4,7 @@ import com.organOld.dao.entity.home.Home;
 import com.organOld.dao.entity.home.HomeOldman;
 import com.organOld.dao.entity.label.Label;
 import com.organOld.dao.entity.oldman.Oldman;
+import com.organOld.dao.entity.oldman.OldmanKey;
 import com.organOld.dao.entity.organ.Organ;
 import com.organOld.dao.entity.organ.OrganOldman;
 
@@ -22,13 +23,13 @@ public class OldmanAllInfoModel {
     private OrganOldmanModel organ;//机构养老
     private List<OrganOldmanModel> community;//社区养老
     private List<HomeOldmanModel> home;//居家养老
-    private Oldman key;//重点老人参数
+    private OldmanKeyModel key;//重点老人参数
 
-    public Oldman getKey() {
+    public OldmanKeyModel getKey() {
         return key;
     }
 
-    public void setKey(Oldman key) {
+    public void setKey(OldmanKeyModel key) {
         this.key = key;
     }
 

@@ -2,6 +2,7 @@ package com.organOld.dao.entity.oldman;
 
 
 import com.organOld.dao.entity.DBInterface;
+import com.organOld.dao.entity.XqInterface;
 import com.organOld.dao.entity.home.Home;
 import com.organOld.dao.entity.label.LabelMan;
 import com.organOld.dao.entity.organ.Organ;
@@ -13,13 +14,15 @@ import java.util.List;
  * 老人
  * Created by netlab606 on 2018/4/2.
  */
-public class Oldman extends Man implements DBInterface {
+public class Oldman extends Man implements DBInterface,XqInterface {
     private Integer sex;//1女 2男
     private Date birthday;//出生年月
     private String pid;//身份证号
     private String address;//户籍住址
     private String census;//户籍
     private String politicalStatus;//政治面貌
+    private String family;
+    private String economic;
     private Integer louNum;//楼号
     private int goal;//得分用于 重点老人
     private Integer keyStatus;
@@ -35,6 +38,8 @@ public class Oldman extends Man implements DBInterface {
     /**
      * 搜索对象
      */
+
+    private List<Integer> xqIds;
     private Integer organId;//居委ID 或者片区ID
     private Date birthdayStart;//出生年月-起
     private Date birthdayEnd;//出生年月-止
@@ -44,13 +49,11 @@ public class Oldman extends Man implements DBInterface {
 
 
     private String censusArray[];//户籍 1非 2户籍 3人户分离
-    private String district[];//片区索引
     private String search;//模糊全文 匹配搜索  姓名、身份证、地址、电话
-    private String jw[];//居委索引
     private String politicalStatusArray[];//政治面貌 1群众 2党员
-    private String family[];
-    private String familyType[];
-    private String economic[];
+    private String familyArray[];
+    private String familyTypeArray[];
+    private String economicArray[];
     private String isHealth[];
     private String intelligence[];
     private String eyesight[];
@@ -89,12 +92,28 @@ public class Oldman extends Man implements DBInterface {
     }
 
 
-    public String[] getFamilyType() {
-        return familyType;
+    public String getFamily() {
+        return family;
     }
 
-    public void setFamilyType(String[] familyType) {
-        this.familyType = familyType;
+    public void setFamily(String family) {
+        this.family = family;
+    }
+
+    public String getEconomic() {
+        return economic;
+    }
+
+    public void setEconomic(String economic) {
+        this.economic = economic;
+    }
+
+    public List<Integer> getXqIds() {
+        return xqIds;
+    }
+
+    public void setXqIds(List<Integer> xqIds) {
+        this.xqIds = xqIds;
     }
 
     public String[] getZcArray() {
@@ -225,22 +244,6 @@ public class Oldman extends Man implements DBInterface {
         this.censusArray = censusArray;
     }
 
-    public String[] getDistrict() {
-        return district;
-    }
-
-    public void setDistrict(String[] district) {
-        this.district = district;
-    }
-
-
-    public String[] getJw() {
-        return jw;
-    }
-
-    public void setJw(String[] jw) {
-        this.jw = jw;
-    }
 
     public String[] getPoliticalStatusArray() {
         return politicalStatusArray;
@@ -250,20 +253,28 @@ public class Oldman extends Man implements DBInterface {
         this.politicalStatusArray = politicalStatusArray;
     }
 
-    public String[] getFamily() {
-        return family;
+    public String[] getFamilyArray() {
+        return familyArray;
     }
 
-    public void setFamily(String[] family) {
-        this.family = family;
+    public void setFamilyArray(String[] familyArray) {
+        this.familyArray = familyArray;
     }
 
-    public String[] getEconomic() {
-        return economic;
+    public String[] getFamilyTypeArray() {
+        return familyTypeArray;
     }
 
-    public void setEconomic(String[] economic) {
-        this.economic = economic;
+    public void setFamilyTypeArray(String[] familyTypeArray) {
+        this.familyTypeArray = familyTypeArray;
+    }
+
+    public String[] getEconomicArray() {
+        return economicArray;
+    }
+
+    public void setEconomicArray(String[] economicArray) {
+        this.economicArray = economicArray;
     }
 
     public String[] getIntelligence() {

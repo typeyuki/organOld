@@ -10,9 +10,9 @@ public class OldmanRequest {
     private String[] jw;//居委索引
     private Integer sex;//1女 2男
     private String[] politicalStatusArray;//政治面貌
-    private String[] family;
-    private String[] familyType;
-    private String[] economic;
+    private String[] familyArray;
+    private String[] familyTypeArray;
+    private String[] economicArray;
     private String[] isHealth;
     private String[] intelligence;
     private String[] eyesight;
@@ -21,13 +21,6 @@ public class OldmanRequest {
     private String[] sqzwArray;
 
 
-    public String[] getFamilyType() {
-        return familyType;
-    }
-
-    public void setFamilyType(String[] familyType) {
-        this.familyType = familyType;
-    }
 
     public String[] getZcArray() {
         return zcArray;
@@ -134,20 +127,28 @@ public class OldmanRequest {
         this.politicalStatusArray = politicalStatusArray;
     }
 
-    public String[] getFamily() {
-        return family;
+    public String[] getFamilyArray() {
+        return familyArray;
     }
 
-    public void setFamily(String[] family) {
-        this.family = family;
+    public void setFamilyArray(String[] familyArray) {
+        this.familyArray = familyArray;
     }
 
-    public String[] getEconomic() {
-        return economic;
+    public String[] getFamilyTypeArray() {
+        return familyTypeArray;
     }
 
-    public void setEconomic(String[] economic) {
-        this.economic = economic;
+    public void setFamilyTypeArray(String[] familyTypeArray) {
+        this.familyTypeArray = familyTypeArray;
+    }
+
+    public String[] getEconomicArray() {
+        return economicArray;
+    }
+
+    public void setEconomicArray(String[] economicArray) {
+        this.economicArray = economicArray;
     }
 
     public String[] getIntelligence() {
