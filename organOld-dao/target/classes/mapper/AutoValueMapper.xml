@@ -87,7 +87,7 @@
         </foreach>
     </select>
 
-    <select id="getXqIdsByUsername">
+    <select id="getXqIdsByUsername" resultType="java.lang.Integer">
         <if test="username!=''">
             SELECT x.id from auto_value x left join organ org on x.parent_index=org.id,sysuser u,user_organ uo
             where u.username=#{username} and uo.user_id=u.id and (x.parent_index=uo.organ_id or (x.parent_index=org.id and org.parent=uo.organ_id))

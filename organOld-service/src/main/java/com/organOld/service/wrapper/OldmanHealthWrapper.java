@@ -41,7 +41,7 @@ public class OldmanHealthWrapper implements Wrapper<OldmanHealth,OldmanHealthMod
     public OldmanHealthModel wrap(OldmanHealth oldmanHealth) {
 
         OldmanHealthModel oldmanHealthModel=new OldmanHealthModel();
-        oldmanHealthModel.setId(oldmanHealth.getId());
+        oldmanHealthModel.setId(oldmanHealth.getId()+"");
         if(oldmanHealth.getOldman()!=null) {
             oldmanHealthModel.setOldmanId(oldmanHealth.getOldman().getId());
             oldmanHealthModel.setName(oldmanHealth.getOldman().getName());

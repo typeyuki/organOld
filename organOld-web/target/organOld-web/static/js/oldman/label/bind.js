@@ -26,8 +26,6 @@ $(document).ready(function(){
                 data:"politicalStatus"
             },{
                 data:"census"
-            },{
-                data:"time"
             },{},{
                 data:"remark"
             }
@@ -70,12 +68,12 @@ $(document).ready(function(){
             },
             // 增加一列，包括删除和修改，同时将我们需要传递的数据传递到链接中
             {
-                "targets": [11], // 目标列位置，下标从0开始
+                "targets": [10], // 目标列位置，下标从0开始
                 "data": "isImplement", // 数据列名
                 "render": function(data, type, full) { // 返回自定义内容
-                    var s="<span class='btn btn-primary'  onclick=newPageBefore($(this).parent().prev().prev().prev().prev().prev().prev().text(),$(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().text(),'/oldman/?/info') >查看</span>";
+                    var s="<span class='btn btn-primary'  onclick=newPageBefore($(this).parent().prev().prev().prev().prev().prev().text(),$(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().text(),'/oldman/?/info') >查看</span>";
                     if(data==0){
-                        s+="<button class='btn btn-primary' onclick='implement($(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().text(),$(this).parent().prev().prev().prev().prev().prev().prev().text())'>未操作</button>";
+                        s+="<button class='btn btn-primary' onclick='implement($(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().prev().text(),$(this).parent().prev().prev().prev().prev().prev().prev().text())'>未操作</button>";
                     }else if(data==1){
                         s+="<button class='btn btn-default'>未落实</button>";
                     }else{
@@ -85,7 +83,7 @@ $(document).ready(function(){
                 }
             },
             //不进行排序的列
-            { "bSortable": false, "aTargets": [ 0,2 ,3, 4, 5,6,7,9,10,11,12] }
+            { "bSortable": false, "aTargets": [ 0,2 ,3, 4, 5,6,7,9,10,11] }
         ]
     }else{
         columns=[{
@@ -106,8 +104,6 @@ $(document).ready(function(){
                 data:"politicalStatus"
             },{
                 data:"census"
-            },{
-                data:"time"
             },{},{
             data:"remark"
         }
@@ -138,12 +134,12 @@ $(document).ready(function(){
             },
             // 增加一列，包括删除和修改，同时将我们需要传递的数据传递到链接中
             {
-                "targets": [10], // 目标列位置，下标从0开始
+                "targets": [9], // 目标列位置，下标从0开始
                 "data": "isImplement", // 数据列名
                 "render": function(data, type, full) { // 返回自定义内容
-                    var s="<span class='btn btn-primary' onclick=newPageBefore($(this).parent().prev().prev().prev().prev().prev().prev().text(),$(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().text(),'/oldman/?/info')>查看</span>";
+                    var s="<span class='btn btn-primary' onclick=newPageBefore($(this).parent().prev().prev().prev().prev().prev().text(),$(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().text(),'/oldman/?/info')>查看</span>";
                     if(data==0){
-                        s+="<button class='btn btn-primary' onclick='implement($(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().text(),$(this).parent().prev().prev().prev().prev().prev().prev().text())'>未操作</button>";
+                        s+="<button class='btn btn-primary' onclick='implement($(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().prev().text(),$(this).parent().prev().prev().prev().prev().prev().prev().text())'>未操作</button>";
                     }else if(data==1){
                         s+="<button class='btn btn-default'>未落实</button>";
                     }else{
@@ -153,7 +149,7 @@ $(document).ready(function(){
                 }
             },
             //不进行排序的列
-            { "bSortable": false, "aTargets": [ 1 ,2, 3,4,5,6,8,9,10,11] }
+            { "bSortable": false, "aTargets": [ 1 ,2, 3,4,5,6,8,9,10] }
         ]
     }
     table =$(".dataTables-example").dataTable(
@@ -240,8 +236,6 @@ $(document).ready(function(){
                     data:"politicalStatus"
                 },{
                     data:"census"
-                },{
-                    data:"time"
                 }
                 ],
                 "order":[[1,"asc"]],
@@ -273,14 +267,6 @@ $(document).ready(function(){
                             }else{
                                 return data;
                             }
-                        }
-                    },
-                    // 增加一列，包括删除和修改，同时将我们需要传递的数据传递到链接中
-                    {
-                        "targets": [11], // 目标列位置，下标从0开始
-                        "data": "id", // 数据列名
-                        "render": function(data, type, full) { // 返回自定义内容
-                            return "<span class='btn btn-primary' id='"+data+"'>查看</span>";
                         }
                     },
                     //不进行排序的列

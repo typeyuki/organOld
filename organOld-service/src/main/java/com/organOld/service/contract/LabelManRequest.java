@@ -1,9 +1,11 @@
 package com.organOld.service.contract;
 
+import com.organOld.dao.entity.XqInterface;
+
 /**
  * Created by netlab606 on 2018/7/8.
  */
-public class LabelManRequest {
+public class LabelManRequest implements XqRequest{
     private int labelId;
     private int id;//老人的id
     private String[] censusArray;//户籍
@@ -20,6 +22,7 @@ public class LabelManRequest {
     private String[] intelligence;
     private String[] eyesight;
     private String isImplement;
+
 
 
     public int getId() {

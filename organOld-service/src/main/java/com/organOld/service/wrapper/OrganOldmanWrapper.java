@@ -16,7 +16,7 @@ public class OrganOldmanWrapper implements Wrapper<OrganOldman,OrganOldmanModel,
     @Override
     public OrganOldmanModel wrap(OrganOldman organOldman) {
         OrganOldmanModel organOldmanModel=new OrganOldmanModel();
-        organOldmanModel.setId(organOldman.getId());
+        organOldmanModel.setId(organOldman.getId()+"");
         organOldmanModel.setOrganId(organOldman.getOrgan().getId());
         organOldmanModel.setOrganName(organOldman.getOrgan().getName());
         organOldmanModel.setOrgan(organOldman.getOrgan());

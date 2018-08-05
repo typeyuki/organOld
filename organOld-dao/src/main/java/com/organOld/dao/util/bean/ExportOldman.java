@@ -1,5 +1,6 @@
 package com.organOld.dao.util.bean;
 
+import com.organOld.dao.entity.DBEntity;
 import com.organOld.dao.entity.oldman.HealthAdd;
 import com.organOld.dao.entity.oldman.HealthSelect;
 import com.organOld.dao.entity.oldman.Linkman;
@@ -9,12 +10,9 @@ import java.util.List;
 /**
  * Created by netlab606 on 2018/7/29.
  */
-public class ExportOldman {
-    private String id;
+public class ExportOldman extends DBEntity{
     private String name;
-    private String pName;
-    private String jName;
-    private String xName;
+    private Integer xqId;
     private String louNum;
     private String sex;
     private String birthday;
@@ -47,6 +45,14 @@ public class ExportOldman {
     private String cj="";
     private String ywfy="";
 
+
+    public Integer getXqId() {
+        return xqId;
+    }
+
+    public void setXqId(Integer xqId) {
+        this.xqId = xqId;
+    }
 
     public String getFamilyType() {
         return familyType;
@@ -184,13 +190,6 @@ public class ExportOldman {
         this.healthSelect = healthSelect;
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -199,31 +198,6 @@ public class ExportOldman {
     public void setName(String name) {
         this.name = name;
     }
-
-    public String getpName() {
-        return pName;
-    }
-
-    public void setpName(String pName) {
-        this.pName = pName;
-    }
-
-    public String getjName() {
-        return jName;
-    }
-
-    public void setjName(String jName) {
-        this.jName = jName;
-    }
-
-    public String getxName() {
-        return xName;
-    }
-
-    public void setxName(String xName) {
-        this.xName = xName;
-    }
-
     public String getLouNum() {
         return louNum;
     }

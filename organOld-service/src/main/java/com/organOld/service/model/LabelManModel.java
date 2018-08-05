@@ -3,8 +3,7 @@ package com.organOld.service.model;
 /**
  * Created by netlab606 on 2018/7/8.
  */
-public class LabelManModel {
-    private int id;
+public class LabelManModel extends Model{
     private int isImplement;
     private String sex;
     private String census;//户籍
@@ -15,7 +14,6 @@ public class LabelManModel {
     private String dName;//片区名称
     private String oldmanName;
     private int oldmanId;
-    private String time;
     private String remark;
 
     public String getRemark() {
@@ -26,21 +24,6 @@ public class LabelManModel {
         this.remark = remark;
     }
 
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public int getIsImplement() {
         return isImplement;

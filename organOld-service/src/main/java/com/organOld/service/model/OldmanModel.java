@@ -8,6 +8,7 @@ public class OldmanModel extends ManModel{
     private String sex;
     private String census;//户籍
     private Integer age;//年龄
+    private Integer isVolunteer;//是否是志愿者
     private String politicalStatus;//政治面貌
     private String address;//地址
     private String pid;//身份证号码
@@ -20,9 +21,26 @@ public class OldmanModel extends ManModel{
     private List<String> sqzw=new ArrayList<>();
     private String family;
     private String economic;
+    private List<String> familyType=new ArrayList<>();
 
 //    private List<LabelManInfoModel> labelManInfoModelList;
 
+
+    public Integer getIsVolunteer() {
+        return isVolunteer;
+    }
+
+    public void setIsVolunteer(Integer isVolunteer) {
+        this.isVolunteer = isVolunteer;
+    }
+
+    public List<String> getFamilyType() {
+        return familyType;
+    }
+
+    public void setFamilyType(List<String> familyType) {
+        this.familyType = familyType;
+    }
 
     public String getAddress() {
         return address;

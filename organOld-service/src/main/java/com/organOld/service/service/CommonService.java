@@ -321,7 +321,7 @@ public class CommonService {
 
                 String value=(String)getMethod.invoke(entity,null);
                 if(value!=null && !value.equals("")){
-                    if (method.equals("sqzw") || method.equals("familyType")){
+                    if (method.equals("Sqzw") || method.equals("FamilyType")){
                         String[] s=value.split("#");
                         List<String> sList=new ArrayList<>();
                         for(String ss:s){
@@ -341,6 +341,18 @@ public class CommonService {
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
+    }
+
+    //填充小区 1.筛选片区、居委 2.本身机构对应的小区
+    public void fillXq(XqRequest xqRequest, XqInterface xqInterface) {
+        List<Integer> xqIds=new ArrayList<>();
+        if(xqRequest!=null && xqRequest.getJw()!=null && xqRequest.getJw().length>0){
+            xqIds=autoValueService.getXqIdsByJwIds(xqRequest.getJw());
+        }else if(xqRequest!=null && xqRequest.getDistrict()!=null && xqRequest.getDistrict().length>0){
+            xqIds=autoValueService.getXqIdsByPqIds(xqRequest.getDistrict());
+        }
+        xqInterface.setXqIds(xqIds);
+        getOrganXqs(xqInterface);
     }
 
 }

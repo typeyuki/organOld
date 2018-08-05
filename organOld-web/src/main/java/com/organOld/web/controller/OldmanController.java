@@ -390,19 +390,19 @@ public class OldmanController {
         return new Result(true);
     }
 
-    @RequestMapping(value = "/economic/update",method = RequestMethod.POST)
-    public ModelAndView economic_update(OldmanEconomic oldmanEconomic){
-        ModelAndView mv=new ModelAndView("redirect:/oldman/economic");
-        oldmanService.updateById(oldmanEconomic,"economic");
-        return mv;
-    }
+//    @RequestMapping(value = "/economic/update",method = RequestMethod.POST)
+//    public ModelAndView economic_update(OldmanEconomic oldmanEconomic){
+//        ModelAndView mv=new ModelAndView("redirect:/oldman/economic");
+//        oldmanService.updateById(oldmanEconomic,"economic");
+//        return mv;
+//    }
 
-    @RequestMapping(value = "/family/update",method = RequestMethod.POST)
-    public ModelAndView family_update(OldmanFamily oldmanFamily){
-        ModelAndView mv=new ModelAndView("redirect:/oldman/family");
-        oldmanService.updateById(oldmanFamily,"family");
-        return mv;
-    }
+//    @RequestMapping(value = "/family/update",method = RequestMethod.POST)
+//    public ModelAndView family_update(OldmanFamily oldmanFamily){
+//        ModelAndView mv=new ModelAndView("redirect:/oldman/family");
+//        oldmanService.updateById(oldmanFamily,"family");
+//        return mv;
+//    }
 
     @RequestMapping(value = "/linkman/update",method = RequestMethod.POST)
     public ModelAndView linkman_update(Linkman linkman){

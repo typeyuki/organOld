@@ -36,14 +36,9 @@
             <result property="sex" column="sex" />
             <result property="birthday" column="birthday" />
             <result property="census" column="census" />
+            <result property="xqId" column="xq_id" />
             <result property="politicalStatus" column="political_status" />
             <result property="time" column="time" />
-            <association property="xq" javaType="com.organOld.dao.entity.oldman.Xq">
-                <id property="id" column="xid"/>
-                <result property="name" column="xname"/>
-                <result property="jwName" column="jname"/>
-                <result property="districtName" column="dname"/>
-            </association>
         </association>
     </resultMap>
 
@@ -54,14 +49,9 @@
         <result property="sex" column="sex" />
         <result property="birthday" column="birthday" />
         <result property="census" column="census" />
+        <result property="xqId" column="xq_id"/>
         <result property="politicalStatus" column="political_status" />
         <result property="time" column="time" />
-        <association property="xq" javaType="com.organOld.dao.entity.oldman.Xq">
-            <id property="id" column="xid"/>
-            <result property="name" column="xname"/>
-            <result property="jwName" column="jname"/>
-            <result property="districtName" column="dname"/>
-        </association>
     </resultMap>
 
     <select id="getByPage" parameterType="com.organOld.dao.util.Page" resultMap="label">
@@ -361,22 +351,9 @@
 
 
     <select id="getBindManByPage" parameterType="com.organOld.dao.util.Page" resultMap="bindOldman">
-       SELECT o.id oid,o.name,o.sex,o.birthday,c.value census,p.value political_status,o.time,x.value xname,org.name jname,d.value dname,lo.id,lo.is_implement,lo.remark
-        FROM oldman_base o left join auto_value c on o.census=c.id left join auto_value p on o.political_status=p.id
-		  ,auto_value x,auto_value d,organ org,label_oldman lo,oldman_family ofa,oldman_economic oe
-        WHERE x.id=o.xq_id AND org.id=x.parent_index AND d.id=org.district_id
-              AND lo.label_id=#{entity.labelId} AND o.id=lo.oldman_id and o.disable=0 and ofa.oldman_id=o.id and oe.oldman_id=o.id
-        <if test="entity!=null and entity.organId!=null and entity.organId!=0">
-            and org.id in (
-            SELECT
-            case o.parent
-            when 0 then child.id
-            else o.id
-            end id
-            from organ o left join organ child on child.parent=o.id
-            WHERE o.id=#{entity.organId}
-            )
-        </if>
+       SELECT o.id oid,o.name,o.sex,o.birthday,o.census,o.political_status,o.xq_id,lo.id,lo.is_implement,lo.remark,o.time
+        FROM oldman_base o ,label_oldman lo
+        WHERE lo.label_id=#{entity.labelId} AND o.id=lo.oldman_id and o.disable=0
         <if test="entity.oldman!=null and entity.oldman.birthdayStart!=null">
             <![CDATA[
             and DATE_FORMAT(o.birthday,'%Y') >= DATE_FORMAT(#{entity.oldman.birthdayStart},'%Y')
@@ -394,13 +371,13 @@
             and o.sex=#{entity.oldman.sex}
         </if>
         <if test="entity!=null and entity.oldman!=null and entity.oldman.family!=null and entity.oldman.family.length > 0">
-            and ofa.family_index in
+            and o.family in
             <foreach collection="entity.oldman.family" index="index" item="item" open="(" separator="," close=")">
                 ${item}
             </foreach>
         </if>
         <if test="entity!=null and entity.oldman!=null and entity.oldman.economic!=null and entity.oldman.economic.length > 0">
-            and oe.economic_index in
+            and o.economic in
             <foreach collection="entity.oldman.economic" index="index" item="item" open="(" separator="," close=")">
                 ${item}
             </foreach>
@@ -417,17 +394,12 @@
                 ${item}
             </foreach>
         </if>
-        <if test="entity!=null and entity.oldman!=null and entity.oldman.jw!=null and entity.oldman.jw.length > 0">
-            and org.id in
-            <foreach collection="entity.oldman.jw" index="index" item="item" open="(" separator="," close=")">
+        <if test="entity!=null and entity.xqIds!=null">
+            and o.xq_id in
+            <foreach collection="entity.xqIds" index="index" item="item" open="(" separator="," close=")">
                 ${item}
             </foreach>
-        </if>
-        <if test="entity!=null and entity.oldman!=null and entity.oldman.district!=null and entity.oldman.district.length > 0">
-            and d.id in
-            <foreach collection="entity.oldman.district" index="index" item="item" open="(" separator="," close=")">
-                ${item}
-            </foreach>
+
         </if>
         <if test="entity!=null and entity.oldman!=null and entity.oldman.search!=null and entity.oldman.search!=''">
             and (o.pid LIKE  concat('%',#{entity.oldman.search},'%') OR o.address LIKE  concat('%',#{entity.oldman.search},'%') OR o.name LIKE  concat('%',#{entity.oldman.search},'%')
@@ -440,18 +412,14 @@
 
     <select id="getBindManSizeByPage" parameterType="com.organOld.dao.util.Page" resultType="java.lang.Long">
         SELECT count(1)
-        FROM oldman_base o,label_oldman lo,auto_value x,organ org,oldman_family ofa,oldman_economic oe
-        WHERE lo.label_id=#{entity.labelId} AND o.id=lo.oldman_id and x.id=o.xq_id AND org.id=x.parent_index and o.disable=0 and ofa.oldman_id=o.id and oe.oldman_id=o.id
-        <if test="entity!=null and entity.organId!=null and entity.organId!=0">
-            and org.id in (
-            SELECT
-            case o.parent
-            when 0 then child.id
-            else o.id
-            end id
-            from organ o left join organ child on child.parent=o.id
-            WHERE o.id=#{entity.organId}
-            )
+        FROM oldman_base o,label_oldman lo
+        WHERE lo.label_id=#{entity.labelId} AND o.id=lo.oldman_id and o.disable=0
+        <if test="entity!=null and entity.xqIds!=null">
+            and o.xq_id in
+            <foreach collection="entity.xqIds" index="index" item="item" open="(" separator="," close=")">
+                ${item}
+            </foreach>
+
         </if>
         <if test="entity.oldman!=null and entity.oldman.birthdayStart!=null">
             <![CDATA[
@@ -470,13 +438,13 @@
             and o.sex=#{entity.oldman.sex}
         </if>
         <if test="entity!=null and entity.oldman!=null and entity.oldman.family!=null and entity.oldman.family.length > 0">
-            and ofa.family_index in
+            and o.family in
             <foreach collection="entity.oldman.family" index="index" item="item" open="(" separator="," close=")">
                 ${item}
             </foreach>
         </if>
         <if test="entity!=null and entity.oldman!=null and entity.oldman.economic!=null and entity.oldman.economic.length > 0">
-            and oe.economic_index in
+            and o.economic in
             <foreach collection="entity.oldman.economic" index="index" item="item" open="(" separator="," close=")">
                 ${item}
             </foreach>
@@ -490,18 +458,6 @@
         <if test="entity!=null and entity.oldman!=null and entity.oldman.politicalStatusArray!=null and entity.oldman.politicalStatusArray.length > 0">
             and o.political_status in
             <foreach collection="entity.oldman.politicalStatusArray" index="index" item="item" open="(" separator="," close=")">
-                ${item}
-            </foreach>
-        </if>
-        <if test="entity!=null and entity.oldman!=null and entity.oldman.jw!=null and entity.oldman.jw.length > 0">
-            and org.id in
-            <foreach collection="entity.oldman.jw" index="index" item="item" open="(" separator="," close=")">
-                ${item}
-            </foreach>
-        </if>
-        <if test="entity!=null and entity.oldman!=null and entity.oldman.district!=null and entity.oldman.district.length > 0">
-            and d.id in
-            <foreach collection="entity.oldman.district" index="index" item="item" open="(" separator="," close=")">
                 ${item}
             </foreach>
         </if>
@@ -515,8 +471,15 @@
     <select id="getRuleManIds" parameterType="com.organOld.dao.util.Page" resultType="com.organOld.dao.entity.label.LabelMan">
         SELECT o.id oldman_id
         FROM oldman_base o left join home_oldman ho on ho.oldman_id=o.id left join home h on h.id=ho.home_id
-        ,auto_value x,auto_value d,organ org,oldman_family oldf, oldman_economic oe, oldman_health_base ohb
-        WHERE x.id=o.xq_id AND org.id=x.parent_index AND d.id=org.district_id  AND oe.oldman_id=o.id AND oldf.oldman_id=o.id AND ohb.oldman_id=o.id and o.disable=0
+        , oldman_health_base ohb
+        WHERE ohb.oldman_id=o.id and o.disable=0
+        <if test="rule.xqIds!=null">
+            and o.xq_id in
+            <foreach collection="rule.xqIds" index="index" item="item" open="(" separator="," close=")">
+                ${item}
+            </foreach>
+
+        </if>
         <if test="rule.birStart!=null">
             <![CDATA[
             and DATE_FORMAT(o.birthday,'%Y') >= DATE_FORMAT(#{rule.birStart},'%Y')
@@ -552,7 +515,7 @@
             </foreach>
         </if>
         <if test="rule.families!=null and rule.families.size() > 0">
-            and oldf.family_index IN
+            and o.family IN
             <foreach collection="rule.families" index="index" item="item" open="(" separator="," close=")">
                 #{item}
             </foreach>
@@ -560,21 +523,10 @@
         <if test="rule.familyTypes!=null and rule.familyTypes.size() > 0">
             and
             <foreach collection="rule.familyTypes" index="index" item="item" open="(" separator="or" close=")">
-                (oldf.family_type_index like concat('%',#{item},'%'))
+                (o.family_type like concat('%',#{item},'%'))
             </foreach>
         </if>
-        <if test="rule.districtIds!=null and rule.districtIds.size() > 0">
-            and d.id IN
-            <foreach collection="rule.districtIds" index="index" item="item" open="(" separator="," close=")">
-                #{item}
-            </foreach>
-        </if>
-        <if test="rule.jwIds!=null and rule.jwIds.size() > 0">
-            and org.id IN
-            <foreach collection="rule.jwIds" index="index" item="item" open="(" separator="," close=")">
-                #{item}
-            </foreach>
-        </if>
+
         <if test="rule.politicalStatuses!=null and rule.politicalStatuses.size() > 0">
             and o.political_status IN
             <foreach collection="rule.politicalStatuses" index="index" item="item" open="(" separator="," close=")">
@@ -799,22 +751,11 @@
 
 
     <select id="getNoSelectManDataByPage" parameterType="com.organOld.dao.util.Page" resultMap="bindNoSelectOldman">
-        SELECT o.id,o.name,o.sex,o.birthday,c.value census,p.value political_status,o.time,x.value xname,org.name jname,d.value dname
-        FROM oldman_base o left join auto_value c on o.census=c.id left join auto_value p on o.political_status=p.id
-        ,auto_value x,auto_value d,organ org,oldman_family ofa,oldman_economic oe
-        WHERE x.id=o.xq_id AND org.id=x.parent_index AND d.id=org.district_id
-              AND o.id NOT IN (SELECT oldman_id FROM label_oldman WHERE label_id=#{labelId}) and o.disable=0 and ofa.oldman_id=o.id and oe.oldman_id=o.id
-        <if test="page.entity!=null and page.entity.organId!=null and page.entity.organId!=0">
-            and org.id in (
-            SELECT
-            case o.parent
-            when 0 then child.id
-            else o.id
-            end id
-            from organ o left join organ child on child.parent=o.id
-            WHERE o.id=#{page.entity.organId}
-            )
-        </if>
+        SELECT o.id,o.name,o.sex,o.birthday,o.census,o.political_status,o.time,o.xq_id
+        FROM oldman_base o
+        WHERE
+              o.id NOT IN (SELECT oldman_id FROM label_oldman WHERE label_id=#{labelId}) and o.disable=0
+
         <if test="page.entity!=null and page.entity.birthdayStart!=null">
             <![CDATA[
             and DATE_FORMAT(o.birthday,'%Y') >= DATE_FORMAT(#{page.entity.birthdayStart},'%Y')
@@ -832,13 +773,13 @@
             and o.sex=#{page.entity.sex}
         </if>
         <if test="page.entity!=null and page.entity.family!=null and page.entity.family.length > 0">
-            and ofa.family_index in
+            and o.family in
             <foreach collection="page.entity.family" index="index" item="item" open="(" separator="," close=")">
                 ${item}
             </foreach>
         </if>
         <if test="page.entity!=null and page.entity.economic!=null and page.entity.economic.length > 0">
-            and oe.economic_index in
+            and o.economic in
             <foreach collection="page.entity.economic" index="index" item="item" open="(" separator="," close=")">
                 ${item}
             </foreach>
@@ -855,17 +796,12 @@
                 ${item}
             </foreach>
         </if>
-        <if test="page.entity!=null and page.entity.jw!=null and page.entity.jw.length > 0">
-            and org.id in
-            <foreach collection="page.entity.jw" index="index" item="item" open="(" separator="," close=")">
+        <if test="page.entity!=null and page.entity.xqIds!=null">
+            and o.xq_id in
+            <foreach collection="page.entity.xqIds" index="index" item="item" open="(" separator="," close=")">
                 ${item}
             </foreach>
-        </if>
-        <if test="page.entity!=null and page.entity.district!=null and page.entity.district.length > 0">
-            and d.id in
-            <foreach collection="page.entity.district" index="index" item="item" open="(" separator="," close=")">
-                ${item}
-            </foreach>
+
         </if>
         <if test="page.entity!=null and page.entity.search!=null and page.entity.search!=''">
             and (o.pid LIKE  concat('%',#{page.entity.search},'%') OR o.address LIKE  concat('%',#{page.entity.search},'%') OR o.name LIKE  concat('%',#{page.entity.search},'%')
@@ -878,20 +814,15 @@
 
     <select id="getNoSelectManDataSizeByPage" parameterType="com.organOld.dao.util.Page" resultType="java.lang.Long">
         SELECT count(1)
-        FROM oldman_base o left join auto_value c on o.census=c.id left join auto_value p on o.political_status=p.id
-        ,auto_value x,auto_value d,organ org,oldman_family ofa,oldman_economic oe
-        WHERE x.id=o.xq_id AND org.id=x.parent_index AND d.id=org.district_id
-        AND o.id NOT IN (SELECT oldman_id FROM label_oldman WHERE label_id=#{labelId}) and o.disable=0 and ofa.oldman_id=o.id and oe.oldman_id=o.id
-        <if test="page.entity!=null and page.entity.organId!=null and page.entity.organId!=0">
-            and org.id in (
-            SELECT
-            case o.parent
-            when 0 then child.id
-            else o.id
-            end id
-            from organ o left join organ child on child.parent=o.id
-            WHERE o.id=#{page.entity.organId}
-            )
+        FROM oldman_base o
+        WHERE
+        o.id NOT IN (SELECT oldman_id FROM label_oldman WHERE label_id=#{labelId}) and o.disable=0
+        <if test="page.entity!=null and page.entity.xqIds!=null">
+            and o.xq_id in
+            <foreach collection="page.entity.xqIds" index="index" item="item" open="(" separator="," close=")">
+                ${item}
+            </foreach>
+
         </if>
         <if test="page.entity!=null and page.entity.birthdayStart!=null">
             <![CDATA[
@@ -910,13 +841,13 @@
             and o.sex=#{page.entity.sex}
         </if>
         <if test="page.entity!=null and page.entity.family!=null and page.entity.family.length > 0">
-            and ofa.family_index in
+            and o.family in
             <foreach collection="page.entity.family" index="index" item="item" open="(" separator="," close=")">
                 ${item}
             </foreach>
         </if>
         <if test="page.entity!=null and page.entity.economic!=null and page.entity.economic.length > 0">
-            and oe.economic_index in
+            and o.economic in
             <foreach collection="page.entity.economic" index="index" item="item" open="(" separator="," close=")">
                 ${item}
             </foreach>
@@ -930,18 +861,6 @@
         <if test="page.entity!=null and page.entity.politicalStatusArray!=null and page.entity.politicalStatusArray.length > 0">
             and o.political_status in
             <foreach collection="page.entity.politicalStatusArray" index="index" item="item" open="(" separator="," close=")">
-                ${item}
-            </foreach>
-        </if>
-        <if test="page.entity!=null and page.entity.jw!=null and page.entity.jw.length > 0">
-            and org.id in
-            <foreach collection="page.entity.jw" index="index" item="item" open="(" separator="," close=")">
-                ${item}
-            </foreach>
-        </if>
-        <if test="page.entity!=null and page.entity.district!=null and page.entity.district.length > 0">
-            and d.id in
-            <foreach collection="page.entity.district" index="index" item="item" open="(" separator="," close=")">
                 ${item}
             </foreach>
         </if>

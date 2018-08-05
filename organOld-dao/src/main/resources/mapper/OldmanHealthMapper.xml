@@ -68,31 +68,31 @@
     </select>
 
     <select id="getSizeByPage" parameterType="com.organOld.dao.util.Page" resultType="java.lang.Long">
-select count(1) from oldman_base oo,organ org,auto_value x where  x.id=oo.xq_id AND org.id=x.parent_index And oo.disable=0
+        select count(1) from oldman_base oo,organ org,auto_value x where  x.id=oo.xq_id AND org.id=x.parent_index And oo.disable=0
 
-            <if test="entity!=null and entity.organId!=null and entity.organId!=0">
-                and org.id in (
-                SELECT
-                case o.parent
-                when 0 then child.id
-                else o.id
-                end id
-                from organ o left join organ child on child.parent=o.id
-                WHERE o.id=#{entity.organId}
-                )
-            </if>
-            <if test="entity!=null and entity.search!=null and entity.search!=''">
-                and oo.id in
-                (
-                SELECT DISTINCT(old.id) FROM oldman_base old,oldman_health_base o LEFT JOIN health_add ha ON ha.oldman_id=o.oldman_id
-                LEFT JOIN health_select_oldman hso on hso.oldman_id=o.oldman_id left join health_select hs on hso.health_select_id=hs.id
-                WHERE old.id=o.oldman_id
-                and (o.blood_type LIKE  concat('%',#{entity.search},'%') OR o.eyesight LIKE  concat('%',#{entity.search},'%') OR old.name LIKE  concat('%',#{entity.search},'%')
-                OR o.intelligence LIKE  concat('%',#{entity.search},'%') OR ha.desc LIKE  concat('%',#{entity.search},'%') OR hs.sec_type_name LIKE  concat('%',#{entity.search},'%')
-                OR old.id=#{entity.search})
-                )
-            </if>
-           
+        <if test="entity!=null and entity.organId!=null and entity.organId!=0">
+            and org.id in (
+            SELECT
+            case o.parent
+            when 0 then child.id
+            else o.id
+            end id
+            from organ o left join organ child on child.parent=o.id
+            WHERE o.id=#{entity.organId}
+            )
+        </if>
+        <if test="entity!=null and entity.search!=null and entity.search!=''">
+            and oo.id in
+            (
+            SELECT DISTINCT(old.id) FROM oldman_base old,oldman_health_base o LEFT JOIN health_add ha ON ha.oldman_id=o.oldman_id
+            LEFT JOIN health_select_oldman hso on hso.oldman_id=o.oldman_id left join health_select hs on hso.health_select_id=hs.id
+            WHERE old.id=o.oldman_id
+            and (o.blood_type LIKE  concat('%',#{entity.search},'%') OR o.eyesight LIKE  concat('%',#{entity.search},'%') OR old.name LIKE  concat('%',#{entity.search},'%')
+            OR o.intelligence LIKE  concat('%',#{entity.search},'%') OR ha.desc LIKE  concat('%',#{entity.search},'%') OR hs.sec_type_name LIKE  concat('%',#{entity.search},'%')
+            OR old.id=#{entity.search})
+            )
+        </if>
+
 
     </select>
 

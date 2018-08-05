@@ -20,14 +20,9 @@
         <result property="sqzw" column="sqzw" />
         <result property="zc" column="zc" />
         <result property="family" column="family"/>
-        <result property="familyType" column="family_type_index"/>
+        <result property="familyType" column="family_type"/>
         <result property="economic" column="economic"/>
-        <association property="xq" javaType="com.organOld.dao.entity.oldman.Xq">
-            <id property="id" column="xid"/>
-            <result property="name" column="xname"/>
-            <result property="jwName" column="jname"/>
-            <result property="districtName" column="dname"/>
-        </association>
+        <result property="isVolunteer" column="is_volunteer"/>
         <collection property="labelManList" ofType="com.organOld.dao.entity.label.LabelMan">
             <id property="id" column="lmid" />
             <result property="labelName" column="label_name"/>
@@ -51,14 +46,11 @@
         <result property="politicalStatus" column="political_status" />
         <result property="sqzw" column="sqzw" />
         <result property="zc" column="zc" />
-        <result property="xName" column="xName"/>
-        <result property="jName" column="jName"/>
-        <result property="pName" column="pName"/>
         <result property="bloodType" column="blood_type"/>
         <result property="intelligence" column="intelligence" />
         <result property="eyesight" column="eyesight" />
         <result property="family" column="family"/>
-        <result property="familyType" column="family_type_index"/>
+        <result property="familyType" column="family_type"/>
         <result property="economic" column="economic"/>
         <association property="linkman" javaType="com.organOld.dao.entity.oldman.Linkman">
             <result property="name" column="lname" />
@@ -82,7 +74,7 @@
 
     <!--不能简单的 limit 0，10  因为有1对多的关系  会补全   一条记录当多条使用（由于某个字段有多个值）-->
     <select id="getByPage" parameterType="com.organOld.dao.util.Page" resultMap="oldman">
-        SELECT o.id,o.name,o.sex,o.birthday,o.census,o.political_status,o.xq_id,o.family,o.economic
+        SELECT o.id,o.name,o.sex,o.birthday,o.census,o.political_status,o.xq_id,o.family,o.economic,o.is_volunteer
         FROM oldman_base o,oldman_health_base ohb
         WHERE  o.disable=0 and o.id=ohb.oldman_id
         <if test="entity.birthdayStart!=null">
@@ -99,15 +91,18 @@
                 and o.id=#{entity.id}
             </if>
             <if test="entity!=null and entity.xqIds!=null">
-                and o.xq_id in (
+                and o.xq_id in
                 <foreach collection="entity.xqIds" index="index" item="item" open="(" separator="," close=")">
                     ${item}
                 </foreach>
-                )
+
             </if>
             <if test="entity!=null and entity.sex!=null and entity.sex!=0">
                 and o.sex=#{entity.sex}
             </if>
+        <if test="entity!=null and entity.isVolunteer!=null">
+            and o.is_volunteer=#{entity.isVolunteer}
+        </if>
             <if test="entity!=null and entity.isHealth!=null and entity.isHealth.length > 0">
                 and (ohb.is_mb in
                 <foreach collection="entity.isHealth" index="index" item="item" open="(" separator="," close=")">
@@ -222,12 +217,12 @@
             and o.id=#{entity.id}
         </if>
         <if test="entity!=null and entity.xqIds!=null">
-            and o.xq_id in (
-            <foreach collection="entity.xqIds" index="index" item="item" open="(" separator="," close=")">
-                ${item}
-            </foreach>
-            )
-        </if>
+        and o.xq_id in
+        <foreach collection="entity.xqIds" index="index" item="item" open="(" separator="," close=")">
+            ${item}
+        </foreach>
+
+    </if>
         <if test="entity!=null and entity.sex!=null and entity.sex!=0">
             and o.sex=#{entity.sex}
         </if>
@@ -479,16 +474,18 @@
 
 
     <update id="setDisabled">
-        UPDATE oldman_base o,auto_value x,organ org
-        SET o.disable=1
-        WHERE o.id NOT in
+        UPDATE oldman_base
+        SET disable=1
+        WHERE id NOT in
         <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
             #{item}
         </foreach>
-        <if test="organId!=null and organId!=0">
-            and x.id=o.xq_id AND org.id=x.parent_index AND org.id=#{organId}
+        <if test="xqIds!=null">
+            and xq_id IN
+            <foreach collection="xqIds" index="index" item="item" separator="," open="(" close=")">
+                #{item}
+            </foreach>
         </if>
-        and o.disable=0
     </update>
 
     <update id="updateProp">
@@ -601,21 +598,15 @@
 
 
     <select id="getAll" parameterType="com.organOld.dao.entity.oldman.Oldman" resultMap="exportOldman">
-        SELECT o.id,o.name,o.sqzw,z.value zc,o.sex,o.birthday,c.value census,p.value political_status,o.phone,o.address,o.pid,o.lou_num,o.old_status,
-        x.value xName,org.name jName,d.value pName,f.value family,ae.value economic,l.name lname,l.phone lphone,l.relation,ofa.family_type_index,
-        ohb.blood_type,e.value eyesight,i.value intelligence,ha.type,ha.desc,hs.fir_type,hs.sec_type_name,ha.id haid,hs.id hsid
-        FROM oldman_base o left join auto_value c on o.census=c.id
-        left join auto_value p on o.political_status=p.id
-        left join auto_value z on o.zc=z.id
+        SELECT o.id,o.name,o.sqzw,o.zc,o.sex,o.birthday,o.census,o.political_status,o.phone,o.address,o.pid,o.lou_num,o.old_status,
+        o.xq_id,o.family,o.economic,l.name lname,l.phone lphone,l.relation,o.family_type,
+        ohb.blood_type,ohb.eyesight,ohb.intelligence,ha.type,ha.desc,hs.fir_type,hs.sec_type_name,ha.id haid,hs.id hsid
+        FROM oldman_base o
         left JOIN linkman l on l.oldman_id=o.id,
-        auto_value x,auto_value d,organ org,
-        oldman_family ofa left join auto_value f on f.id=ofa.family_index,
-        oldman_economic oe left join auto_value ae on ae.id=oe.economic_index,
         oldman_health_base ohb  LEFT JOIN health_add ha ON ha.oldman_id=ohb.oldman_id
         LEFT JOIN health_select_oldman hso on hso.oldman_id=ohb.oldman_id left join health_select hs on hso.health_select_id=hs.id
-        left join auto_value e on e.id=ohb.eyesight left join auto_value i on i.id=ohb.intelligence
-        WHERE  x.id=o.xq_id AND org.id=x.parent_index AND d.id=org.district_id and o.disable=0
-        AND ohb.oldman_id=o.id and ofa.oldman_id=o.id and oe.oldman_id=o.id
+        WHERE  o.disable=0
+        AND ohb.oldman_id=o.id
         <if test="birthdayStart!=null">
                 <![CDATA[
             and DATE_FORMAT(o.birthday,'%Y') >= DATE_FORMAT(#{birthdayStart},'%Y')
@@ -629,17 +620,13 @@
            <if test="id!=null and id!=0">
                 and o.id=#{id}
           </if>
-           <if test="organId!=null and organId!=0">
-                and org.id in (
-                SELECT
-                case o.parent
-                when 0 then child.id
-                else o.id
-                end id
-                from organ o left join organ child on child.parent=o.id
-                WHERE o.id=#{organId}
-                )
-            </if>
+        <if test="xqIds!=null">
+            and o.xq_id in
+            <foreach collection="xqIds" index="index" item="item" open="(" separator="," close=")">
+                ${item}
+            </foreach>
+
+        </if>
             <if test="sex!=null and sex!=0">
                 and o.sex=#{sex}
             </if>
@@ -670,15 +657,15 @@
                 </foreach>
                 )
             </if>
-            <if test="family!=null and family.length > 0">
-                and ofa.family_index in
-                <foreach collection="family" index="index" item="item" open="(" separator="," close=")">
+            <if test="familyArray!=null and familyArray.length > 0">
+                and o.family in
+                <foreach collection="familyArray" index="index" item="item" open="(" separator="," close=")">
                     ${item}
                 </foreach>
             </if>
-            <if test="familyType!=null and familyType.length > 0">
-                and ofa.family_type_index in
-                <foreach collection="familyType" index="index" item="item" open="(" separator="," close=")">
+            <if test="familyTypeArray!=null and familyTypeArray.length > 0">
+                and o.family_type in
+                <foreach collection="familyTypeArray" index="index" item="item" open="(" separator="," close=")">
                     ${item}
                 </foreach>
             </if>
@@ -694,9 +681,9 @@
                     ${item}
                 </foreach>
             </if>
-            <if test="economic!=null and economic.length > 0">
-                and oe.economic_index in
-                <foreach collection="economic" index="index" item="item" open="(" separator="," close=")">
+            <if test="economicArray!=null and economicArray.length > 0">
+                and o.economic in
+                <foreach collection="economicArray" index="index" item="item" open="(" separator="," close=")">
                     ${item}
                 </foreach>
             </if>
@@ -730,22 +717,38 @@
                     ${item}
                 </foreach>
             </if>
-            <if test="jw!=null and jw.length > 0">
-                and org.id in
-                <foreach collection="jw" index="index" item="item" open="(" separator="," close=")">
-                    ${item}
-                </foreach>
-            </if>
-            <if test="district!=null and district.length > 0">
-                and d.id in
-                <foreach collection="district" index="index" item="item" open="(" separator="," close=")">
-                    ${item}
-                </foreach>
-            </if>
             <if test="search!=null and search!=''">
                 and (o.pid LIKE  concat('%',#{search},'%') OR o.address LIKE  concat('%',#{search},'%') OR o.name LIKE  concat('%',#{search},'%')
                 OR o.phone LIKE  concat('%',#{search},'%'))
             </if>
 
     </select>
+
+
+    <select id="getOrganOldmans">
+        SELECT id,pid FROM oldman_base
+        where 1=1
+        <if test="xqIds!=null">
+            and xq_id in
+            <foreach collection="xqIds" index="index" item="item" open="(" separator="," close=")">
+                ${item}
+            </foreach>
+        </if>
+    </select>
+
+
+    <delete id="delVolunteerByXqIds" parameterType="java.util.List">
+        UPDATE oldman_base SET is_volunteer=0
+        WHERE
+         id not IN
+        <foreach collection="existOldmanIds" index="index" item="item" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+        <if test="xqIds!=null">
+            and xq_id IN
+            <foreach collection="xqIds" index="index" item="item" separator="," open="(" close=")">
+                #{item}
+            </foreach>
+        </if>
+    </delete>
 </mapper>

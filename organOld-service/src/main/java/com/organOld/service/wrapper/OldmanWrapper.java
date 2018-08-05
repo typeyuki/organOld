@@ -46,7 +46,7 @@ public class OldmanWrapper implements Wrapper<Oldman,OldmanModel,OldmanRequest> 
     @Override
     public OldmanModel wrap(Oldman oldman) {
         OldmanModel oldmanModel=new OldmanModel();
-        oldmanModel.setId(oldman.getId());
+        oldmanModel.setId(oldman.getId()+"");
         oldmanModel.setName(oldman.getName());
         if(oldman.getBirthday()!=null)
             oldmanModel.setAge(CommonService.birthdayToAge(oldman.getBirthday()));
@@ -58,6 +58,7 @@ public class OldmanWrapper implements Wrapper<Oldman,OldmanModel,OldmanRequest> 
         Xq xq=autoValueService.getXqById(oldman.getXqId());
         if(xq!=null) {
             oldmanModel.setjName(xq.getJwName());
+            oldmanModel.setxName(xq.getName());
             oldmanModel.setdName(xq.getDistrictName());
         }
 
@@ -191,10 +192,14 @@ public class OldmanWrapper implements Wrapper<Oldman,OldmanModel,OldmanRequest> 
         return oldmanIntegralModel;
     }
 
-    public ExportOldman wrapAll(ExportOldman exportOldman){
+    public ExportOldmanModel wrapAll(ExportOldman exportOldman){
+        ExportOldmanModel exportOldmanModel=new ExportOldmanModel();
+        BeanUtils.copyProperties(exportOldman,exportOldmanModel);
+        exportOldmanModel.setId(exportOldman.getId()+"");
         if(exportOldman.getLinkman()!=null)
-            exportOldman.setLink(exportOldman.getLinkman().getName()+"-"+exportOldman.getLinkman().getPhone()+"-"+exportOldman.getLinkman().getRelation());
-        exportOldman.setSex(SexEnum.getValue(Integer.parseInt(exportOldman.getSex())));
+            exportOldmanModel.setLink(exportOldman.getLinkman().getName()+"-"+exportOldman.getLinkman().getPhone()+"-"+exportOldman.getLinkman().getRelation());
+        exportOldmanModel.setSex(SexEnum.getValue(Integer.parseInt(exportOldman.getSex())));
+
         if(exportOldman.getHealthAdd()!=null &&exportOldman.getHealthAdd().size()>0){
             for(HealthAdd healthAdd:exportOldman.getHealthAdd()){
                 if(healthAdd.getType()== HealthEnum.EXZL.getIndex()) {
@@ -206,11 +211,11 @@ public class OldmanWrapper implements Wrapper<Oldman,OldmanModel,OldmanRequest> 
                 }
             }
             if(exportOldman.getExzl().length()>0)
-                exportOldman.setExzl(exportOldman.getExzl().substring(1));
+                exportOldmanModel.setExzl(exportOldman.getExzl().substring(1));
             if(exportOldman.getGz().length()>0)
-                exportOldman.setGz(exportOldman.getGz().substring(1));
-            if(exportOldman.getCj().length()>0)
-                exportOldman.setCj(exportOldman.getCj().substring(1));
+                exportOldmanModel.setGz(exportOldman.getGz().substring(1));
+            if(exportOldmanModel.getCj().length()>0)
+                exportOldmanModel.setCj(exportOldman.getCj().substring(1));
         }
         if(exportOldman.getHealthSelect()!=null &&exportOldman.getHealthSelect().size()>0){
             for(HealthSelect healthSelect:exportOldman.getHealthSelect()){
@@ -223,15 +228,36 @@ public class OldmanWrapper implements Wrapper<Oldman,OldmanModel,OldmanRequest> 
                 }
             }
             if(exportOldman.getMb().length()>0)
-                exportOldman.setMb(exportOldman.getMb().substring(1));
+                exportOldmanModel.setMb(exportOldman.getMb().substring(1));
             if(exportOldman.getSn().length()>0)
-                exportOldman.setSn(exportOldman.getSn().substring(1));
+                exportOldmanModel.setSn(exportOldman.getSn().substring(1));
             if(exportOldman.getYwfy().length()>0)
-                exportOldman.setYwfy(exportOldman.getYwfy().substring(1));
+                exportOldmanModel.setYwfy(exportOldman.getYwfy().substring(1));
         }
 
+        Xq xq=autoValueService.getXqById(exportOldman.getXqId());
+        if(xq!=null) {
+            exportOldmanModel.setjName(xq.getJwName());
+            exportOldmanModel.setpName(xq.getDistrictName());
+            exportOldmanModel.setxName(xq.getName());
+        }
+        if(methodInfo.size()==0){
+            methodInfo.add("Family");
+            methodInfo.add("Economic");
+            methodInfo.add("Census");
+            methodInfo.add("Zc");
+            methodInfo.add("Sqzw");
+            methodInfo.add("FamilyType");
+            methodInfo.add("PoliticalStatus");
+        }
+        if(mapInfo.size()==0){
+            List<Integer> autoIds=commonService.getAutoValueTypes("oldmanInfo");
+            List<AutoValue> autoValueList=autoValueService.getByTypeList(autoIds);
+            autoValueList.forEach(s->mapInfo.put(s.getId(),s.getValue()));
+        }
+        commonService.fillAutoValue(exportOldman,exportOldmanModel,methodInfo,mapInfo);
 
-        return  exportOldman;
+        return  exportOldmanModel;
     }
 
     public Oldman unwrapAll(ExportTableThRequest exportTableThRequest) {
@@ -267,11 +293,9 @@ public class OldmanWrapper implements Wrapper<Oldman,OldmanModel,OldmanRequest> 
 
     public OldmanModel wrapInfo(Oldman oldman) {
         OldmanModel oldmanModel=new OldmanModel();
-        oldmanModel.setId(oldman.getId());
-        oldmanModel.setName(oldman.getName());
-        oldmanModel.setPid(oldman.getPid());
+        BeanUtils.copyProperties(oldman,oldmanModel);
+        oldmanModel.setId(oldman.getId()+"");
         oldmanModel.setLouNum(oldman.getLouNum()+"");
-        oldmanModel.setAddress(oldman.getAddress());
         if(oldman.getBirthday()!=null)
             oldmanModel.setAge(CommonService.birthdayToAge(oldman.getBirthday()));
         oldmanModel.setSex(SexEnum.getValue(oldman.getSex()));
@@ -285,20 +309,20 @@ public class OldmanWrapper implements Wrapper<Oldman,OldmanModel,OldmanRequest> 
         }
 
         if(methodInfo.size()==0){
-            method.add("Family");
-            method.add("Economic");
-            method.add("Census");
-            method.add("Zc");
-            method.add("Sqzw");
-            method.add("FamilyType");
-            method.add("PoliticalStatus");
+            methodInfo.add("Family");
+            methodInfo.add("Economic");
+            methodInfo.add("Census");
+            methodInfo.add("Zc");
+            methodInfo.add("Sqzw");
+            methodInfo.add("FamilyType");
+            methodInfo.add("PoliticalStatus");
         }
         if(mapInfo.size()==0){
             List<Integer> autoIds=commonService.getAutoValueTypes("oldmanInfo");
             List<AutoValue> autoValueList=autoValueService.getByTypeList(autoIds);
             autoValueList.forEach(s->mapInfo.put(s.getId(),s.getValue()));
         }
-        commonService.fillAutoValue(oldman,oldmanModel,method,map);
+        commonService.fillAutoValue(oldman,oldmanModel,methodInfo,mapInfo);
         return oldmanModel;
     }
 }

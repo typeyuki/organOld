@@ -4,17 +4,13 @@ import com.organOld.dao.entity.AutoValue;
 import com.organOld.service.contract.AutoValueRequest;
 import com.organOld.service.contract.BTableRequest;
 import com.organOld.service.contract.Result;
-import com.organOld.service.contract.VolunteerRequest;
 import com.organOld.service.enumModel.AutoValueEnum;
 import com.organOld.service.service.AutoValueService;
 import com.organOld.service.service.OrganService;
-import com.organOld.service.service.VolunteerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-
-import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/autoValue")

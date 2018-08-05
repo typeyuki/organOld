@@ -7,8 +7,7 @@ import java.util.List;
 public class LabelRuleToDBSelectMan {
     private Date birStart;
     private Date birEnd;
-    private List<String> districtIds;
-    private List<String> jwIds;
+    private List<Integer> xqIds;
     private int sex;
     private List<String> censuses;
     private List<String> politicalStatuses;
@@ -65,12 +64,12 @@ public class LabelRuleToDBSelectMan {
         this.oldStatuses = oldStatuses;
     }
 
-    public List<String> getJwIds() {
-        return jwIds;
+    public List<Integer> getXqIds() {
+        return xqIds;
     }
 
-    public void setJwIds(List<String> jwIds) {
-        this.jwIds = jwIds;
+    public void setXqIds(List<Integer> xqIds) {
+        this.xqIds = xqIds;
     }
 
     public Date getBirStart() {
@@ -89,13 +88,6 @@ public class LabelRuleToDBSelectMan {
         this.birEnd = birEnd;
     }
 
-    public List<String> getDistrictIds() {
-        return districtIds;
-    }
-
-    public void setDistrictIds(List<String> districtIds) {
-        this.districtIds = districtIds;
-    }
 
     public int getSex() {
         return sex;

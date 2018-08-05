@@ -10,6 +10,7 @@ import com.organOld.dao.util.Page;
 import com.organOld.service.constant.TimeConstant;
 import com.organOld.service.enumModel.AutoValueEnum;
 import com.organOld.service.model.*;
+import com.organOld.service.service.AutoValueService;
 import com.organOld.service.service.CommonService;
 import com.organOld.service.service.LabelService;
 import com.organOld.service.util.Tool;
@@ -48,10 +49,6 @@ public class LabelServiceImpl implements LabelService {
     @Autowired
     LabelFeedbackDao labelFeedbackDao;
     @Autowired
-    UserDao userDao;
-    @Autowired
-    MessageDao messageDao;
-    @Autowired
     LabelSecDao labelSecDao;
     @Autowired
     LabelWrapper labelWrapper;
@@ -59,6 +56,8 @@ public class LabelServiceImpl implements LabelService {
     LabelManWrapper labelManWrapper;
     @Autowired
     OldmanWrapper oldmanWrapper;
+    @Autowired
+    AutoValueService autoValueService;
 
     @Override
     public String getByPage(LabelRequest labelRequest, BTableRequest bTableRequest) {
@@ -92,7 +91,7 @@ public class LabelServiceImpl implements LabelService {
     public String getBindManByPage(LabelManRequest labelManRequest, BTableRequest bTableRequest) {
         Page<LabelMan> page=commonService.getPage(bTableRequest,"label_man");
         LabelMan labelMan=labelManWrapper.unwrap(labelManRequest);
-        commonService.checkIsOrgan(labelMan);
+        commonService.fillXq(labelManRequest,labelMan);
         page.setEntity(labelMan);
         List<LabelManModel> labelManModelList= labelDao.getBindManByPage(page).stream().map(labelManWrapper::wrap).collect(Collectors.toList());
         Long size=labelDao.getBindManSizeByPage(page);
@@ -105,10 +104,15 @@ public class LabelServiceImpl implements LabelService {
         labelRuleToDB.setBirEnd(commonService.AgeTobirthday(labelRule.getAgeStart()));
         if(!StringUtils.isEmpty(labelRule.getCensuses()))
             labelRuleToDB.setCensuses(Arrays.asList(labelRule.getCensuses().split("#")));
-        if(!StringUtils.isEmpty(labelRule.getDistrictIds()))
-            labelRuleToDB.setDistrictIds(Arrays.asList(labelRule.getDistrictIds().split("#")));
-        if(!StringUtils.isEmpty(labelRule.getJwIds()))
-            labelRuleToDB.setJwIds(Arrays.asList(labelRule.getJwIds().split("#")));
+        List<Integer> xqIds=new ArrayList<>();
+        if(!StringUtils.isEmpty(labelRule.getJwIds())){
+            xqIds=autoValueService.getXqIdsByJwIds(labelRule.getJwIds().split("#"));
+        }else if(!StringUtils.isEmpty(labelRule.getDistrictIds())){
+            xqIds=autoValueService.getXqIdsByPqIds(labelRule.getDistrictIds().split("#"));
+        }
+        if(xqIds.size()>0){
+            labelRuleToDB.setXqIds(xqIds);
+        }
         if(!StringUtils.isEmpty(labelRule.getEyesights()))
             labelRuleToDB.setEyesights(Arrays.asList(labelRule.getEyesights().split("#")));
         if(!StringUtils.isEmpty(labelRule.getIntelligences()))
@@ -140,7 +144,7 @@ public class LabelServiceImpl implements LabelService {
     public String getNoSelectManDataByPage(OldmanRequest oldmanRequest, BTableRequest bTableRequest, int labelId) {
         Page<Oldman> page=commonService.getPage(bTableRequest,"oldman_base");
         Oldman oldman=oldmanWrapper.unwrap(oldmanRequest);
-        commonService.checkIsOrgan(oldman);
+        commonService.fillXq(oldmanRequest,oldman);
         page.setEntity(oldman);
         List<OldmanModel> oldmanModelList=labelDao.getNoSelectManDataByPage(page,labelId).stream().map(oldmanWrapper::wrap).collect(Collectors.toList());
         Long size=labelDao.getNoSelectManDataSizeByPage(page,labelId);

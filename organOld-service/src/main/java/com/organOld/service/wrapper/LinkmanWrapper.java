@@ -13,7 +13,7 @@ public class LinkmanWrapper implements Wrapper<Linkman,LinkmanModel,LinkmanReque
     @Override
     public LinkmanModel wrap(Linkman linkman) {
         LinkmanModel linkmanModel=new LinkmanModel();
-        linkmanModel.setId(linkman.getId());
+        linkmanModel.setId(linkman.getId()+"");
         linkmanModel.setOldman(linkman.getOldman().getId()+"："+linkman.getOldman().getName());
         linkmanModel.setName(linkman.getName());
         linkmanModel.setPhone(linkman.getPhone());

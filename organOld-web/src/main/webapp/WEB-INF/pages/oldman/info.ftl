@@ -27,6 +27,11 @@
                         <#if (info.key)??>
                         <small style="color:red;">重点老人(${info.key.goal!})</small>
                         </#if>
+                        <#if info.oldman.isVolunteer==1>
+                            <small style="color:red;margin-left: 5px">
+                                志愿者
+                            </small>
+                        </#if>
                     </h5>
                     <div class="ibox-tools">
                         <a class="collapse-link">

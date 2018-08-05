@@ -11,7 +11,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * 老人
+ * 老人  相等 根据身份号码
  * Created by netlab606 on 2018/4/2.
  */
 public class Oldman extends Man implements DBInterface,XqInterface {
@@ -33,7 +33,8 @@ public class Oldman extends Man implements DBInterface,XqInterface {
     private Integer oldStatus;
     private String zc;
     private String sqzw;
-
+    private Integer isVolunteer;
+    private String familyType;
     private String birthdayTime;
     /**
      * 搜索对象
@@ -91,6 +92,22 @@ public class Oldman extends Man implements DBInterface,XqInterface {
         return pid != null ? pid.hashCode() : 0;
     }
 
+
+    public Integer getIsVolunteer() {
+        return isVolunteer;
+    }
+
+    public void setIsVolunteer(Integer isVolunteer) {
+        this.isVolunteer = isVolunteer;
+    }
+
+    public String getFamilyType() {
+        return familyType;
+    }
+
+    public void setFamilyType(String familyType) {
+        this.familyType = familyType;
+    }
 
     public String getFamily() {
         return family;

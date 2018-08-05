@@ -1,10 +1,8 @@
 package com.organOld.web.controller;
 
-import com.organOld.dao.entity.Message;
 import com.organOld.service.contract.BTableRequest;
 import com.organOld.service.contract.MessageRequest;
 import com.organOld.service.contract.Result;
-import com.organOld.service.contract.VolunteerRequest;
 import com.organOld.service.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,8 +11,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-
-import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/message")

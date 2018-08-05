@@ -1,6 +1,7 @@
 package com.organOld.service.contract;
 
-public class OldmanRequest {
+
+public class OldmanRequest implements XqRequest{
     private int id;
     private String[] censusArray;//户籍
     private String[] district;//片区索引

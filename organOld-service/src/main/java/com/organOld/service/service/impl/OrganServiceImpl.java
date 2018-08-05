@@ -313,7 +313,8 @@ public class OrganServiceImpl implements OrganService{
                         r.getCell(13).setCellType(Cell.CELL_TYPE_STRING);
                         r.getCell(14).setCellType(Cell.CELL_TYPE_STRING);
                         r.getCell(15).setCellType(Cell.CELL_TYPE_STRING);
-                        int total = 0; //1养老院  2长者  3 日照  4日托  8助餐
+                        //TODO  机构没有助餐点了  换成为老服务中心
+                        int total = 0; //1养老院  2长者  3 日照  4日托  8为老服务中心
                         if (r.getCell(11).getStringCellValue() != null && r.getCell(11).getStringCellValue().equals("1")) {
                             total += 1;
                         }

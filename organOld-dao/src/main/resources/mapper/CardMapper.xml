@@ -25,11 +25,18 @@
     </insert>
 
     <delete id="delByOldmanIds" parameterType="java.util.List">
-        UPDATE card SET status=3
-        WHERE oldman_id IN
-        <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
+        UPDATE card c,oldman_base o SET c.status=3
+        WHERE
+        c.oldman_id not IN
+        <foreach collection="existOldmanIds" index="index" item="item" separator="," open="(" close=")">
             #{item}
         </foreach>
+        <if test="xqIds!=null">
+            and o.xq_id IN
+            <foreach collection="xqIds" index="index" item="item" separator="," open="(" close=")">
+                #{item}
+            </foreach>
+        </if>
     </delete>
 
 

@@ -1,8 +1,7 @@
 package com.organOld.service.contract;
-
 import java.util.List;
 
-public class ExportTableThRequest {
+public class ExportTableThRequest implements XqRequest {
     private List<String> th;
 
     private String[] censusArray;//户籍

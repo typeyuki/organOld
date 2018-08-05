@@ -5,8 +5,8 @@
     <resultMap id="oldmanKey" type="com.organOld.dao.entity.oldman.OldmanKey">
         <id property="oldmanId" column="id" />
         <result property="birthday" column="birthday"/>
-        <result property="familyIndex" column="family_index" />
-        <result property="economicIndex" column="economic_index" />
+        <result property="familyIndex" column="family" />
+        <result property="economicIndex" column="economic" />
         <result property="floor" column="floor" />
         <result property="isActivityOrgan" column="isActivityOrgan" />
         <result property="chxIndex" column="chx_index" />
@@ -99,16 +99,12 @@
             and (ob.name LIKE  concat('%',#{entity.search},'%')
             OR ob.id=#{entity.search})
         </if>
-        <if test="entity!=null and entity.organId!=null and entity.organId!=0">
-            and org.id in (
-            SELECT
-            case o.parent
-            when 0 then child.id
-            else o.id
-            end id
-            from organ o left join organ child on child.parent=o.id
-            WHERE o.id=#{entity.organId}
-            )
+        <if test="entity!=null and entity.xqIds!=null">
+            and ob.xq_id in
+            <foreach collection="entity.xqIds" index="index" item="item" open="(" separator="," close=")">
+                ${item}
+            </foreach>
+
         </if>
         <if test="entity!=null and entity.future!=null and entity.future!=''">
             ORDER BY future_key_status
@@ -124,8 +120,8 @@
 
     <select id="getSizeByPage" parameterType="com.organOld.dao.util.Page" resultType="java.lang.Long">
         SELECT count(1)
-        FROM oldman_base ob left join organ_oldman oo on oo.oldman_id=ob.id,organ org,auto_value x
-        WHERE x.id=ob.xq_id AND org.id=x.parent_index and ob.disable=0
+        FROM oldman_base ob left join organ_oldman oo on oo.oldman_id=ob.id
+        WHERE ob.disable=0
         <if test="entity!=null and entity.future!=null and entity.future!=''">
             and (ob.future_key_status =2 or ob.future_key_status =3 or ob.future_key_status =4)
             <if test="entity!=null and  entity.goalStart!=null and entity.goalStart!=0">
@@ -156,17 +152,12 @@
         <if test="entity!=null and  entity.id!=null and entity.id!=0">
             and ob.id=#{entity.id}
         </if>
+        <if test="entity!=null and entity.xqIds!=null">
+            and ob.xq_id in
+            <foreach collection="entity.xqIds" index="index" item="item" open="(" separator="," close=")">
+                ${item}
+            </foreach>
 
-        <if test="entity!=null and entity.organId!=null and entity.organId!=0">
-            and org.id in (
-            SELECT
-            case o.parent
-            when 0 then child.id
-            else o.id
-            end id
-            from organ o left join organ child on child.parent=o.id
-            WHERE o.id=#{entity.organId}
-            )
         </if>
     </select>
 
@@ -187,7 +178,7 @@
 
     <!--是否主动申请进 养老院 的逻辑是： 床位号为0 则得分 其他有床位号 或者 没进养老院的都不得分-->
     <select id="getOldmanKeyByRound" resultMap="oldmanKey"  parameterType="com.organOld.dao.util.Page">
-        SELECT ob.id,ob.key_status,ob.future_key_status,ob.birthday,ob.floor,oe.economic_index,oldf.family_index,ohb.intelligence,ohb.eyesight,ho.home_id,hs.id hsid,hs.fir_type,
+        SELECT ob.id,ob.key_status,ob.future_key_status,ob.birthday,ob.floor,o.economic,o.family,ohb.intelligence,ohb.eyesight,ho.home_id,hs.id hsid,hs.fir_type,
         case oo.num
 			when 0 then 57
 			else 58
@@ -195,8 +186,8 @@
         FROM oldman_base ob left join home_oldman ho on ob.id=ho.oldman_id left join home h on ho.home_id=h.id and h.fir_type=2
         left join health_select_oldman hso on hso.oldman_id=ob.id left join health_select hs on hs.id=hso.health_select_id and hs.fir_type in (1,2)
 		left join organ_oldman oo on oo.oldman_id=ob.id left join organ org on org.id=oo.organ_id left join organ_type ot on ot.id=org.organ_type_id and ot.fir_type=21,
-        oldman_economic oe,oldman_family oldf,oldman_health_base ohb
-        where ob.id=oe.oldman_id and ob.id=oldf.oldman_id and ob.id=ohb.oldman_id
+        oldman_health_base ohb
+        where ob.id=ohb.oldman_id
         and ob.id in(
         select a.id from
         (select oo.id from oldman_base oo where oo.id>${current} limit 0,#{round} ) as a

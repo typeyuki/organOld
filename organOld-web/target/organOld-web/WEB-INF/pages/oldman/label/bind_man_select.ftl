@@ -97,8 +97,6 @@
                                                 <th>年龄</th>
                                                 <th>政治面貌</th>
                                                 <th>户籍</th>
-                                                <th>更新时间</th>
-                                                <th></th>
                                             </tr>
                                             </thead>
                                             <tbody>

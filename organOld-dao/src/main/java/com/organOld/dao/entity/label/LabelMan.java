@@ -2,12 +2,16 @@ package com.organOld.dao.entity.label;
 
 import com.organOld.dao.entity.DBEntity;
 import com.organOld.dao.entity.DBInterface;
+import com.organOld.dao.entity.XqInterface;
 import com.organOld.dao.entity.oldman.Oldman;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by netlab606 on 2018/7/8.
  */
-public class LabelMan extends DBEntity implements DBInterface{
+public class LabelMan extends DBEntity implements DBInterface,XqInterface{
     private int labelId;
     private int oldmanId;
     private int isImplement;
@@ -19,9 +23,18 @@ public class LabelMan extends DBEntity implements DBInterface{
     private Integer organId;
 
 
+    private List<Integer> xqIds=new ArrayList<>();
 
 
+    @Override
+    public List<Integer> getXqIds() {
+        return xqIds;
+    }
 
+    @Override
+    public void setXqIds(List<Integer> xqIds) {
+        this.xqIds = xqIds;
+    }
 
     public String getRemark() {
         return remark;

@@ -19,7 +19,7 @@ public interface AutoValueDao extends BaseDao<AutoValue,Integer>{
 
     List<AutoValue> getByIds(String[] sq);
 
-    List<Integer> getXqIdsByUsername(String username);
+    List<Integer> getXqIdsByUsername(@Param("username") String username);
 
     List<Integer> getXqIdsByPqIds(String[] district);
 

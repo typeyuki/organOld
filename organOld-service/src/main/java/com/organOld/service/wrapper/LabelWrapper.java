@@ -24,7 +24,7 @@ public class LabelWrapper implements Wrapper<Label,LabelModel,LabelRequest> {
         labelModel.setContent(label.getContent());
         labelModel.setFir(label.getLabelSec().getFirName());
         labelModel.setSec(label.getLabelSec().getSecName());
-        labelModel.setId(label.getId());
+        labelModel.setId(label.getId()+"");
         labelModel.setName(label.getName());
         labelModel.setRule(label.getRule());
         labelModel.setWh(label.getWh());

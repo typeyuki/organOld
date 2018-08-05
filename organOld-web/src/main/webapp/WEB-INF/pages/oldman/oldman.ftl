@@ -101,7 +101,7 @@
                             </div>
                             <div class="col-sm-2">
                                 <label>家庭结构：</label>
-                                <select name="family"  class="selectpicker bla bla bli" multiple data-live-search="true">
+                                <select name="familyArray"  class="selectpicker bla bla bli" multiple data-live-search="true">
                                 <#list info.family as family>
                                     <option value="${family.id!}"> <i></i> ${family.value!}</option>
                                 </#list>
@@ -109,7 +109,7 @@
                             </div>
                             <div class="col-sm-2">
                                 <label >经济条件：</label>
-                                <select name="economic" class="selectpicker bla bla bli" multiple data-live-search="true">
+                                <select name="economicArray" class="selectpicker bla bla bli" multiple data-live-search="true">
                                 <#list info.economic as economic>
                                     <option type="checkbox" value="${economic.id!}" > <i></i> ${economic.value!}</option>
                                 </#list>
