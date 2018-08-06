@@ -12,6 +12,7 @@
         <module>organOld-dao</module>
         <module>organOld-web</module>
         <module>organOld-service</module>
+        <module>organOld-visualService</module>
     </modules>
 
     <dependencies>

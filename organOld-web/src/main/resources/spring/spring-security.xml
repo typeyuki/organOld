@@ -13,6 +13,8 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
 
     <context:component-scan base-package="com.organOld"/>
 
+    <context:component-scan base-package="com.organOld.visualService"/>
+
     <!-- 配置不过滤的资源（静态资源及登录相关） -->
     <sec:http pattern="/css/bootstrap.min.css" security="none"></sec:http>
     <sec:http pattern="/img/profile_big.jpg" security="none"></sec:http>

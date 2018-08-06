@@ -8,14 +8,18 @@
         <outputRelativeToContentRoot value="true" />
         <module name="organOld-dao" />
         <module name="organOld-service" />
+        <module name="organOld-visualService" />
         <module name="organOld-web" />
+        <module name="visualService" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="organOld" target="1.8" />
       <module name="organOld-dao" target="1.8" />
       <module name="organOld-service" target="1.8" />
+      <module name="organOld-visualService" target="1.8" />
       <module name="organOld-web" target="1.8" />
+      <module name="visualService" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

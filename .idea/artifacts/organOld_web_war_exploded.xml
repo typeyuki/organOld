@@ -5,6 +5,7 @@
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
           <element id="module-output" name="organOld-web" />
+          <element id="module-output" name="organOld-visualService" />
         </element>
         <element id="directory" name="lib">
           <element id="archive" name="organOld-web-1.0-SNAPSHOT.jar">
