@@ -19,4 +19,6 @@ public interface CardDao extends BaseDao<Card,Number>{
     Card getByCid(int cid);
 
     List<QrCodeData> getQrDataByIds(String[] ids);
+
+    void ableByOldmanIds(@Param("existOldmanIds") List<Integer> existOldmanIds,@Param("xqIds") List<Integer> xqIds);
 }

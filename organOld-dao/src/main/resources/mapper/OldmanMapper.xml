@@ -325,8 +325,8 @@
     </delete>
 
     <insert id="save" parameterType="com.organOld.dao.entity.oldman.Oldman" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO oldman_base(name,sex,birthday,pid,address,xq_id,census,political_status,phone,lou_num,floor,disable,zc,sqzw)
-        VALUE (#{name},#{sex},#{birthday},#{pid},#{address},#{xqId},#{census},#{politicalStatus},#{phone},#{louNum},#{floor},0,#{zc},#{sqzw})
+        INSERT INTO oldman_base(economic,family,family_type,is_volunteer,name,sex,birthday,pid,address,xq_id,census,political_status,phone,lou_num,floor,disable,zc,sqzw)
+        VALUE (#{economic},#{family},#{familyType},#{isVolunteer},#{name},#{sex},#{birthday},#{pid},#{address},#{xqId},#{census},#{politicalStatus},#{phone},#{louNum},#{floor},0,#{zc},#{sqzw})
     </insert>
 
 
@@ -465,6 +465,30 @@
             WHEN ${item.id} THEN #{item.floor}
         </foreach>
         ELSE floor
+        END,
+        economic= CASE id
+        <foreach collection="list" index="index" item="item" open="" separator=" " close="">
+            WHEN ${item.id} THEN #{item.economic}
+        </foreach>
+        ELSE economic
+        END,
+        family= CASE id
+        <foreach collection="list" index="index" item="item" open="" separator=" " close="">
+            WHEN ${item.id} THEN #{item.family}
+        </foreach>
+        ELSE family
+        END,
+        family_type= CASE id
+        <foreach collection="list" index="index" item="item" open="" separator=" " close="">
+            WHEN ${item.id} THEN #{item.familyType}
+        </foreach>
+        ELSE family_type
+        END,
+        is_volunteer= CASE id
+        <foreach collection="list" index="index" item="item" open="" separator=" " close="">
+            WHEN ${item.id} THEN #{item.isVolunteer}
+        </foreach>
+        ELSE is_volunteer
         END
         where id in
         <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
@@ -725,7 +749,7 @@
     </select>
 
 
-    <select id="getOrganOldmans">
+    <select id="getOrganOldmans" resultType="com.organOld.dao.entity.oldman.Oldman">
         SELECT id,pid FROM oldman_base
         where 1=1
         <if test="xqIds!=null">

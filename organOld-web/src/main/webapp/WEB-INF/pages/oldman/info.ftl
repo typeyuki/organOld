@@ -64,7 +64,7 @@
                             <label class="col-sm-2 control-label">片区：${info.oldman.dName!}</label>
                             <label class="col-sm-2 control-label">居委：${info.oldman.jName!}</label>
                             <label class="col-sm-2 control-label">小区：${info.oldman.xName!}</label>
-                            <label class="col-sm-2 control-label">楼号：${info.oldman.louNum!}</label>
+                            <label class="col-sm-2 control-label">楼号：${(info.oldman.louNum)!"无"}</label>
                             <label class="col-sm-2 control-label">地址：${info.oldman.address!}</label>
                         </div>
                         <div class="form-group">

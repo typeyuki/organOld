@@ -98,4 +98,9 @@ public class AutoValueServiceImpl implements AutoValueService {
     public List<Integer> getXqIdsByUsername(String userNameBySession) {
         return autoValueDao.getXqIdsByUsername(userNameBySession);
     }
+
+    @Override
+    public Integer getStringLikeIndex(String stringCellValue, int index, String like) {
+        return autoValueDao.getStringLikeIndex(stringCellValue,index,like);
+    }
 }

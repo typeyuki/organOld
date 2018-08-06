@@ -170,6 +170,18 @@ public class CommonService {
                 typeList.add(AutoValueEnum.ZC.getIndex());
                 typeList.add(AutoValueEnum.JTLB.getIndex());
                 break;
+            case "importOldman":
+                typeList.add(AutoValueEnum.ZZMM.getIndex());
+                typeList.add(AutoValueEnum.HJ.getIndex());
+                typeList.add(AutoValueEnum.JJJG.getIndex());
+                typeList.add(AutoValueEnum.JJTJ.getIndex());
+                typeList.add(AutoValueEnum.SQZW.getIndex());
+                typeList.add(AutoValueEnum.ZC.getIndex());
+                typeList.add(AutoValueEnum.JTLB.getIndex());
+                typeList.add(AutoValueEnum.SL.getIndex());
+                typeList.add(AutoValueEnum.SZ.getIndex());
+                typeList.add(AutoValueEnum.XQ.getIndex());
+                break;
             default:
         }
         return typeList;
@@ -290,7 +302,7 @@ public class CommonService {
     }
 
     public Boolean excelIsNotNull(Cell cell){
-        if(cell==null || cell.getStringCellValue()==null){
+        if(cell==null || cell.getStringCellValue()==null || cell.getStringCellValue().trim().equals("")){
             return false;
         }
         return true;

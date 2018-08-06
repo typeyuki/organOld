@@ -94,7 +94,7 @@ public class OldmanController {
      */
     @RequestMapping(value = "/importExcel",method = RequestMethod.POST)
     public ModelAndView importExcel(@RequestParam MultipartFile file,HttpSession session) throws IOException {
-        ModelAndView mv=new ModelAndView("oldman/base");
+        ModelAndView mv=new ModelAndView("oldman/oldman");
         Result result=oldmanService.importExcel(file,session);
         mv.addObject("result",result);
         mv.addObject("info",oldmanService.getAddInfo());

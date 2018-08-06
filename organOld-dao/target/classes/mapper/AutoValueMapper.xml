@@ -95,7 +95,7 @@
     </select>
 
 
-    <select id="getXqIdsByJwIds">
+    <select id="getXqIdsByJwIds" resultType="java.lang.Integer">
         SELECT id FROM auto_value
         WHERE parent_index in
         <foreach collection="array" index="index" item="item" open="(" separator="," close=")">
@@ -104,9 +104,9 @@
     </select>
 
 
-    <select id="getXqIdsByPqIds">
+    <select id="getXqIdsByPqIds" resultType="java.lang.Integer">
         SELECT x.id FROM auto_value x,organ org
-        WHERE x.parent_index=org.id  and org.parent in
+        WHERE x.parent_index=org.id  and org.district_id in
         <foreach collection="array" index="index" item="item" open="(" separator="," close=")">
             #{item}
         </foreach>

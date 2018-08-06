@@ -30,4 +30,6 @@ public interface AutoValueService {
     List<Integer> getXqIdsByPqIds(String[] district);
 
     List<Integer> getXqIdsByUsername(String userNameBySession);
+
+    Integer getStringLikeIndex(String stringCellValue, int index, String like);
 }

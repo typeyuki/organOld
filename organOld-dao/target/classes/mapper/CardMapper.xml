@@ -24,7 +24,7 @@
         </foreach>
     </insert>
 
-    <delete id="delByOldmanIds" parameterType="java.util.List">
+    <update id="delByOldmanIds" parameterType="java.util.List">
         UPDATE card c,oldman_base o SET c.status=3
         WHERE
         c.oldman_id not IN
@@ -37,7 +37,21 @@
                 #{item}
             </foreach>
         </if>
-    </delete>
+    </update>
+    <update id="ableByOldmanIds" parameterType="java.util.List">
+        UPDATE card c,oldman_base o SET c.status=1
+        WHERE
+        c.oldman_id  IN
+        <foreach collection="existOldmanIds" index="index" item="item" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+        <if test="xqIds!=null">
+            and o.xq_id IN
+            <foreach collection="xqIds" index="index" item="item" separator="," open="(" close=")">
+                #{item}
+            </foreach>
+        </if>
+    </update>
 
 
     <select id="getByPage" parameterType="com.organOld.dao.util.Page" resultMap="card">
