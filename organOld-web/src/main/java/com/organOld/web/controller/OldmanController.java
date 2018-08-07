@@ -7,6 +7,7 @@ import com.organOld.service.service.AutoValueService;
 import com.organOld.service.service.OldmanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -369,19 +370,35 @@ public class OldmanController {
     }
 
 
-    @RequestMapping(value = "/base/update",method = RequestMethod.POST)
-    public ModelAndView base_update(Oldman oldman){
-        ModelAndView mv=new ModelAndView("redirect:/oldman/base");
-        oldmanService.updateById(oldman,"base");
-        return mv;
+    @InitBinder("linkman")
+    public void initUser(WebDataBinder binder)
+    {
+        binder.setFieldDefaultPrefix("linkman");
     }
 
-    @ResponseBody
-    @RequestMapping(value = "/base/del",method = RequestMethod.POST)
-    public Result base_del(@RequestParam("ids[]") String ids[]){
-        oldmanService.delByIds(ids);
-        return new Result(true);
+    @RequestMapping(value = "/update",method = RequestMethod.POST)
+    public ModelAndView update(Oldman oldman,OldmanHealth oldmanHealth,Linkman linkman){
+        ModelAndView mv=new ModelAndView("redirect:/oldman");
+        oldmanService.updateById(oldman,"base");
+        oldmanHealth.setOldmanId(oldman.getId());
+        oldmanService.updateById(oldmanHealth,"health");
+        linkman.setOldmanId(oldman.getId());
+        oldmanService.updateById(linkman,"linkman");
+        return mv;
     }
+//    @RequestMapping(value = "/base/update",method = RequestMethod.POST)
+//    public ModelAndView base_update(Oldman oldman){
+//        ModelAndView mv=new ModelAndView("redirect:/oldman/oldman");
+//        oldmanService.updateById(oldman,"base");
+//        return mv;
+//    }
+
+//    @ResponseBody
+//    @RequestMapping(value = "/base/del",method = RequestMethod.POST)
+//    public Result base_del(@RequestParam("ids[]") String ids[]){
+//        oldmanService.delByIds(ids);
+//        return new Result(true);
+//    }
 
     @ResponseBody
     @RequestMapping(value = "/health/select/del",method = RequestMethod.POST)
@@ -404,19 +421,19 @@ public class OldmanController {
 //        return mv;
 //    }
 
-    @RequestMapping(value = "/linkman/update",method = RequestMethod.POST)
-    public ModelAndView linkman_update(Linkman linkman){
-        ModelAndView mv=new ModelAndView("redirect:/oldman/linkman");
-        oldmanService.updateById(linkman,"linkman");
-        return mv;
-    }
+//    @RequestMapping(value = "/linkman/update",method = RequestMethod.POST)
+//    public ModelAndView linkman_update(Linkman linkman){
+//        ModelAndView mv=new ModelAndView("redirect:/oldman/linkman");
+//        oldmanService.updateById(linkman,"linkman");
+//        return mv;
+//    }
 
-    @RequestMapping(value = "/health/update",method = RequestMethod.POST)
-    public ModelAndView health_update(OldmanHealth oldmanHealth){
-        ModelAndView mv=new ModelAndView("redirect:/oldman/health");
-        oldmanService.updateById(oldmanHealth,"health");
-        return mv;
-    }
+//    @RequestMapping(value = "/health/update",method = RequestMethod.POST)
+//    public ModelAndView health_update(OldmanHealth oldmanHealth){
+//        ModelAndView mv=new ModelAndView("redirect:/oldman/oldman");
+//        oldmanService.updateById(oldmanHealth,"health");
+//        return mv;
+//    }
 
 
     @ResponseBody

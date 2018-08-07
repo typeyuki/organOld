@@ -112,6 +112,12 @@
         WHERE id=#{id}
     </update>
 
+    <update id="updateByOldmanId" parameterType="com.organOld.dao.entity.oldman.OldmanHealth">
+        UPDATE oldman_health_base
+        SET blood_type=#{bloodType},intelligence=#{intelligence},eyesight=#{eyesight},is_mb=#{isMb},
+        is_sn=#{isSn},is_ywfy=#{isYwfy},is_exzl=#{isExzl},is_gz=#{isGz},is_cj=#{isCj}
+        WHERE oldman_id=#{oldmanId}
+    </update>
 
     <select id="getAllHealthSelect" resultType="com.organOld.dao.entity.oldman.HealthSelect">
         SELECT * FROM health_select

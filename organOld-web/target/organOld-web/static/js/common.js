@@ -71,6 +71,7 @@ function oldman_edit(id,url) {
                     if(data[key]!=null){
                         $("#editModal input[name='"+key+"'][type='hidden']").val(data[key]);
                         $("#editModal input[name='"+key+"'][type='text']").val(data[key]);
+                        $("#editModal input[name='"+key+"'][type='date']").val(data[key]);
                         $("#editModal input[name='"+key+"'][type='radio'][value='"+data[key]+"']").prop("checked",true);
                         $("#editModal select[name='"+key+"'] option[value='"+data[key]+"']").prop("selected",true);
                     }else{

@@ -38,7 +38,9 @@
                             <input class="form-control inp" type="date" name="endDate" style="width: 40%">
                         </div>
                         <div class="col-sm-2">
-                            金额：<span id="sumMoney">${moneySum.data!0}</span>元
+                            <#if type==1>
+                            金额：<span id="sumMoney">${(moneySum.data)!0}</span>元
+                            </#if>
                         </div>
                     </div>
                     <div class="table-responsive">

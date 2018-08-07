@@ -381,7 +381,7 @@
     <update id="updateById" parameterType="com.organOld.dao.entity.oldman.Oldman">
         UPDATE oldman_base
         set name=#{name},birthday=#{birthday},sex=#{sex},pid=#{pid},address=#{address},census=#{census},political_status=#{politicalStatus},
-        phone=#{phone},xq_id=#{xqId},lou_num=#{louNum},floor=#{floor},zc=#{zc},sqzw=#{sqzw}
+        phone=#{phone},xq_id=#{xqId},lou_num=#{louNum},floor=#{floor},zc=#{zc},sqzw=#{sqzw},family=#{family},economic=#{economic},family_type=#{familyType}
         where id=#{id}
     </update>
 

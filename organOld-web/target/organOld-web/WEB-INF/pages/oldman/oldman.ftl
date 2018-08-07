@@ -238,7 +238,7 @@
 
 </div>
 <#include  "../spinner.ftl"/>
-<#include  "edit_base.ftl"/>
+<#include  "edit_oldman.ftl"/>
 <#include  "base_export.ftl"/>
 
 <script>

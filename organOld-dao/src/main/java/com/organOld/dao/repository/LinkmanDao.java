@@ -12,4 +12,8 @@ public interface LinkmanDao extends BaseDao<Linkman,Integer>{
     void delByOid(int id);
 
     void updateByOldmanIds(List<Linkman> linkmanList_update);
+
+    void updateByOldmanId(Linkman linkman);
+
+    Linkman getByOldmanId(int id);
 }

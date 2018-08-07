@@ -985,7 +985,7 @@ public class OldmanServiceImpl implements OldmanService {
                 oldman.setBirthdayTime(Tool.dateToString(oldman.getBirthday(), TimeConstant.DATA_FORMAT_YMD));
                 return new Result(true,oldman);
             case "linkman":
-                Linkman linkman=linkmanDao.getById(id);
+                Linkman linkman=linkmanDao.getByOldmanId(id);
                 return new Result(true,linkman);
             case "health":
                 OldmanHealth oldmanHealth=oldmanHealthDao.getByOldmanId(id);
@@ -1006,7 +1006,7 @@ public class OldmanServiceImpl implements OldmanService {
                 break;
             case "linkman":
                 Linkman linkman=(Linkman) dbEntity;
-                linkmanDao.updateById(linkman);
+                linkmanDao.updateByOldmanId(linkman);
                 break;
             case "health":
                 OldmanHealth oldmanHealth=(OldmanHealth) dbEntity;
@@ -1067,7 +1067,7 @@ public class OldmanServiceImpl implements OldmanService {
                 if(healthAddList.size()>0)
                     healthAddDao.saveAll(healthAddList);
 
-                oldmanHealthDao.updateById(oldmanHealth);
+                oldmanHealthDao.updateByOldmanId(oldmanHealth);
         }
         return new Result(true);
     }

@@ -20,4 +20,6 @@ public interface OldmanHealthDao extends BaseDao<OldmanHealth,Integer>{
     void updateByOldmanIds(List<OldmanHealth> healthList_update);
 
     OldmanHealth getByOldmanId(int id);
+
+    void updateByOldmanId(OldmanHealth oldmanHealth);
 }
