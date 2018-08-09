@@ -83,7 +83,7 @@
             tu_big_w=winWidth/4.5;
             tu_big_h=winHeight/2.2;
             text_h=winHeight/2.46;
-        }else if(winWidth<=1400 && winWidth>=1300){
+        }else if(winWidth<=1650 && winWidth>=1300){
             tu_w=winWidth/4.5;
             tu_h=winHeight/4.1;
             tu_big_w=winWidth/4.5;
@@ -96,6 +96,7 @@
         //     tu_big_h=winHeight/2.2;
         //     text_h=winHeight/2.22;
         // }
+
         $(".tu").css('width',tu_w);
         $(".tu").css( 'height', tu_h);
         $(".text").css( 'height', text_h);

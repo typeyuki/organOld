@@ -366,15 +366,14 @@ public class OldmanController {
     @ResponseBody
     @RequestMapping(value = "/{type}/{id}/getById",method = RequestMethod.GET)
     public Result base_getById(@PathVariable String type,@PathVariable int id){
-        return oldmanService.getById(id,type);
+        return oldmanService
+                .getById(id,type);
     }
-
-
     @InitBinder("linkman")
-    public void initUser(WebDataBinder binder)
-    {
-        binder.setFieldDefaultPrefix("linkman");
+    public void initLinkman(WebDataBinder binder){
+        binder.setFieldDefaultPrefix("linkman.");
     }
+
 
     @RequestMapping(value = "/update",method = RequestMethod.POST)
     public ModelAndView update(Oldman oldman,OldmanHealth oldmanHealth,Linkman linkman){

@@ -13,7 +13,7 @@
                                     <form method="post" id="labelAdd" class="form-horizontal" action="/oldman/label/add">
                                         <input type="hidden" value="${type}" name="type">
                                         <div class="form-group">
-                                            <label class="col-sm-1 control-label">一级菜单</label>
+                                            <label class="col-sm-1 control-label">一级菜单<span  class="control-label star-content">*</span></label>
                                             <div class="col-sm-2">
                                                 <select onchange="firLabelSelect(this)">
                                                     <option></option>
@@ -22,14 +22,14 @@
                                                     </#list>
                                                 </select>
                                             </div>
-                                            <label class="col-sm-1 control-label">二级菜单</label>
+                                            <label class="col-sm-1 control-label">二级菜单<span  class="control-label star-content">*</span></label>
                                             <div class="col-sm-2">
                                                 <select name="labelSec.id">
                                             </select>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-sm-1 control-label">名称</label>
+                                            <label class="col-sm-1 control-label">名称<span  class="control-label star-content">*</span></label>
                                             <div class="col-sm-8">
                                                 <input type="text" class="form-control" name="name"/>
                                             </div>
@@ -62,11 +62,11 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-sm-1 control-label">开始时间</label>
+                                            <label class="col-sm-1 control-label">开始时间<span  class="control-label star-content">*</span></label>
                                             <div class="col-sm-3">
                                                 <input type="date" class="form-control" name="startTime"/>
                                             </div>
-                                            <label class="col-sm-1 control-label">结束时间</label>
+                                            <label class="col-sm-1 control-label">结束时间<span  class="control-label star-content">*</span></label>
                                             <div class="col-sm-3">
                                                 <input type="date" class="form-control" name="endTime"/>
                                             </div>

@@ -409,12 +409,13 @@ public class OldmanServiceImpl implements OldmanService {
 
 
         //批量插入  HealthSelect只进行批量插入 在这之前将已有信息删除 由于恶性肿瘤史、骨折史 等 每次都只写当次更新的内容 历史不用写进来  所以直接进行批量更新
+        int oldmanIdStrat=0;//导入老人 第一个 进行插入数据库  之后的老人 就不插入数据库 而是最后批量插入 该变量记录第一个的oldmanId
 
         List<Linkman> linkmanList_add=new ArrayList<>();
         List<OldmanHealth> healthList_add=new ArrayList<>();
         List<HealthSelectMan> healthSelectManList_add=new ArrayList<>();
         List<HealthAdd> healthAddList_add=new ArrayList<>();
-
+        List<Oldman> oldmanList_add=new ArrayList<>();
         List<Card> cardList_add=new ArrayList<>();
 
         //批量更新
@@ -873,7 +874,14 @@ public class OldmanServiceImpl implements OldmanService {
                     }else{
                         //添加
                         successAdd++;
-                        oldmanBaseDao.save(oldman);
+                        if(oldmanIdStrat!=0){
+                            oldman.setId(oldmanIdStrat++);
+                            oldmanList_add.add(oldman);
+                        }else {
+                            oldmanBaseDao.save(oldman);
+                            oldmanIdStrat=oldman.getId()+1;
+                        }
+
                         existOldmanIds.add(oldman.getId());
 
                         linkman.setOldmanId(oldman.getId());
@@ -934,6 +942,8 @@ public class OldmanServiceImpl implements OldmanService {
             linkmanDao.saveAll(linkmanList_add);
         if(healthList_add.size()>0)
             oldmanHealthDao.saveAll(healthList_add);
+        if(oldmanList_add.size()>0)
+            oldmanBaseDao.saveAll(oldmanList_add);
 
         if(existOldmanIds.size()>0)
             healthSelectManDao.delByOldmanIds(existOldmanIds);

@@ -329,7 +329,13 @@
         VALUE (#{economic},#{family},#{familyType},#{isVolunteer},#{name},#{sex},#{birthday},#{pid},#{address},#{xqId},#{census},#{politicalStatus},#{phone},#{louNum},#{floor},0,#{zc},#{sqzw})
     </insert>
 
-
+    <insert id="saveAll" parameterType="java.util.List" >
+        INSERT INTO oldman_base(economic,family,family_type,is_volunteer,name,sex,birthday,pid,address,xq_id,census,political_status,phone,lou_num,floor,disable,zc,sqzw)
+        VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+        (#{item.economic},#{item.family},#{item.familyType},#{item.isVolunteer},#{item.name},#{item.sex},#{item.birthday},#{item.pid},#{item.address},#{item.xqId},#{item.census},#{item.politicalStatus},#{item.phone},#{item.louNum},#{item.floor},0,#{item.zc},#{item.sqzw})
+        </foreach>
+    </insert>
 
     <update id="updateKeyOldman">
         UPDATE oldman_base

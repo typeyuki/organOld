@@ -10,6 +10,12 @@
     <link href="/css/font-awesome.min.css?v=4.4.0" rel="stylesheet">
     <link href="/css/plugins/iCheck/custom.css" rel="stylesheet">
     <link href="/css/style.min.css?v=4.0.0" rel="stylesheet">
+    <style>
+        .star-content{
+            font-size: 1.5em;
+            color: red;
+        }
+    </style>
 </head>
 
 <body class="gray-bg">
@@ -35,7 +41,7 @@
                         <input type="hidden" name="organFirType" value="${organ.organFirTypeId!}">
                         <div class="hr-line-dashed"></div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">类型</label>
+                            <label class="col-sm-2 control-label">类型<span  class="control-label star-content">*</span></label>
                             <div class="col-sm-5">
                                 <select class="form-control" name="organTypeId">
                                     <#list organ.organTypeList as list>
@@ -46,7 +52,7 @@
                         </div>
                         <div class="hr-line-dashed"></div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">名称</label>
+                            <label class="col-sm-2 control-label">名称<span  class="control-label star-content">*</span></label>
                             <div class="col-sm-5">
                                 <input type="text" name="name" class="form-control" value="${organ.name!}" />
                             </div>
@@ -165,7 +171,7 @@
                         <#else >
 
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">父机构</label>
+                                <label class="col-sm-2 control-label">父机构（居委会必选）</label>
                                 <div class="col-sm-5">
                                     <select name="parent">
                                         <option value="">无</option>
@@ -179,45 +185,45 @@
                             </div>
                             <div class="hr-line-dashed"></div>
                         </#if>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">权限升级</label>
-                            <div class="col-sm-1">
-                                <div class="checkbox i-checks">
-                                    <label>
-                                        <input type="checkbox" value="consume"  name="auth" ${(organ.authConsume?? && organ.authConsume==1)?string("checked","")}> <i></i> 消费</label>
+                        <#--<div class="form-group">-->
+                            <#--<label class="col-sm-2 control-label">权限升级</label>-->
+                            <#--<div class="col-sm-1">-->
+                                <#--<div class="checkbox i-checks">-->
+                                    <#--<label>-->
+                                        <#--<input type="checkbox" value="consume"  name="auth" ${(organ.authConsume?? && organ.authConsume==1)?string("checked","")}> <i></i> 消费</label>-->
 
-                                </div>
-                            </div>
-                            <div class="col-sm-1">
-                                <div class="checkbox i-checks">
-                                    <label>
-                                        <input type="checkbox" value="sign"  name="auth" ${(organ.authSign?? && organ.authSign==1)?string("checked","")}> <i></i> 签到</label>
+                                <#--</div>-->
+                            <#--</div>-->
+                            <#--<div class="col-sm-1">-->
+                                <#--<div class="checkbox i-checks">-->
+                                    <#--<label>-->
+                                        <#--<input type="checkbox" value="sign"  name="auth" ${(organ.authSign?? && organ.authSign==1)?string("checked","")}> <i></i> 签到</label>-->
 
-                                </div>
-                            </div>
-                            <div class="col-sm-1">
-                                <div class="checkbox i-checks">
-                                    <label>
-                                        <input type="checkbox" value="product"  name="auth" ${(organ.authProduct?? && organ.authProduct==1)?string("checked","")}> <i></i> 商品</label>
+                                <#--</div>-->
+                            <#--</div>-->
+                            <#--<div class="col-sm-1">-->
+                                <#--<div class="checkbox i-checks">-->
+                                    <#--<label>-->
+                                        <#--<input type="checkbox" value="product"  name="auth" ${(organ.authProduct?? && organ.authProduct==1)?string("checked","")}> <i></i> 商品</label>-->
 
-                                </div>
-                            </div>
-                            <div class="col-sm-1">
-                                <div class="checkbox i-checks">
-                                    <label>
-                                        <input type="checkbox" value="info"  name="auth" ${(organ.authQueryInfo?? && organ.authQueryInfo==1)?string("checked","")}> <i></i> 老人信息查询</label>
+                                <#--</div>-->
+                            <#--</div>-->
+                            <#--<div class="col-sm-1">-->
+                                <#--<div class="checkbox i-checks">-->
+                                    <#--<label>-->
+                                        <#--<input type="checkbox" value="info"  name="auth" ${(organ.authQueryInfo?? && organ.authQueryInfo==1)?string("checked","")}> <i></i> 老人信息查询</label>-->
 
-                                </div>
-                            </div>
-                            <div class="col-sm-1">
-                                <div class="checkbox i-checks">
-                                    <label>
-                                        <input type="checkbox" value="integral"  name="auth" ${(organ.authQueryIntegral?? &&organ.authQueryIntegral==1)?string("checked","")}> <i></i> 积分查询</label>
+                                <#--</div>-->
+                            <#--</div>-->
+                            <#--<div class="col-sm-1">-->
+                                <#--<div class="checkbox i-checks">-->
+                                    <#--<label>-->
+                                        <#--<input type="checkbox" value="integral"  name="auth" ${(organ.authQueryIntegral?? &&organ.authQueryIntegral==1)?string("checked","")}> <i></i> 积分查询</label>-->
 
-                                </div>
-                            </div>
-                        </div>
-                        <div class="hr-line-dashed"></div>
+                                <#--</div>-->
+                            <#--</div>-->
+                        <#--</div>-->
+                        <#--<div class="hr-line-dashed"></div>-->
                         <div class="form-group">
                             <div class="col-sm-4 col-sm-offset-2">
                                 <button class="btn btn-primary" type="submit">保存</button>
