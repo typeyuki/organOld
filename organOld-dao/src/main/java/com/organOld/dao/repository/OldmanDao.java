@@ -41,4 +41,6 @@ public interface OldmanDao extends BaseDao<Oldman,Integer>{
     List<Oldman> getOrganOldmans(@Param("xqIds") List<Integer> xqIds);
 
     void delVolunteerByXqIds(@Param("existOldmanIds") List<Integer> existOldmanIds,@Param("xqIds") List<Integer> xqIds);
+
+    Oldman getOldStatusNum();
 }

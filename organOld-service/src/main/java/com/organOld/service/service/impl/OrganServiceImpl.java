@@ -658,4 +658,6 @@ public class OrganServiceImpl implements OrganService{
     public List<Organ> getAll() {
         return organDao.getAll();
     }
+
+
 }

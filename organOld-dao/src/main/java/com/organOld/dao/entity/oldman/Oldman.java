@@ -76,6 +76,12 @@ public class Oldman extends Man implements DBInterface,XqInterface {
     private List<Organ> organList;
     private List<Home> homeList;
 
+    private Long organOldNum;//机构养老统计
+    private Long communityOldNum;//社区养老统计
+    private Long familyOldNum;//居家养老统计
+    private Long cfOldNum;//社区居家养老统计
+
+
 
     @Override
     public boolean equals(Object o) {
@@ -92,6 +98,40 @@ public class Oldman extends Man implements DBInterface,XqInterface {
         return pid != null ? pid.hashCode() : 0;
     }
 
+
+
+
+    public Long getOrganOldNum() {
+        return organOldNum;
+    }
+
+    public void setOrganOldNum(Long organOldNum) {
+        this.organOldNum = organOldNum;
+    }
+
+    public Long getCommunityOldNum() {
+        return communityOldNum;
+    }
+
+    public void setCommunityOldNum(Long communityOldNum) {
+        this.communityOldNum = communityOldNum;
+    }
+
+    public Long getFamilyOldNum() {
+        return familyOldNum;
+    }
+
+    public void setFamilyOldNum(Long familyOldNum) {
+        this.familyOldNum = familyOldNum;
+    }
+
+    public Long getCfOldNum() {
+        return cfOldNum;
+    }
+
+    public void setCfOldNum(Long cfOldNum) {
+        this.cfOldNum = cfOldNum;
+    }
 
     public Integer getIsVolunteer() {
         return isVolunteer;

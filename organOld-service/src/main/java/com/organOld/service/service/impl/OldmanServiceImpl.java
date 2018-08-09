@@ -1109,4 +1109,9 @@ public class OldmanServiceImpl implements OldmanService {
         ValueConstant.INTEGRAL_RULE_SIGN=sign;
         ValueConstant.INTEGRAL_RULE_CONSUME=consume;
     }
+
+    @Override
+    public Oldman getOldStatusNum() {
+        return oldmanBaseDao.getOldStatusNum();
+    }
 }

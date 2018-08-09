@@ -58,4 +58,5 @@ public interface OrganService {
     List<Organ> getAll();
 
     List<Organ> getByType(int type);
+
 }

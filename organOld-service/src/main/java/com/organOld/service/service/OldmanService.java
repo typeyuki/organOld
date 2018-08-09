@@ -3,6 +3,7 @@ package com.organOld.service.service;
 
 import com.organOld.dao.entity.DBEntity;
 import com.organOld.dao.entity.oldman.HealthSelect;
+import com.organOld.dao.entity.oldman.Oldman;
 import com.organOld.service.contract.*;
 import com.organOld.service.model.HealthSelectInfoModel;
 import com.organOld.service.model.OldmanAddInfoModel;
@@ -67,4 +68,6 @@ public interface OldmanService {
     void export(HttpServletResponse response, ExportTableThRequest exportTableThRequest) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, IllegalAccessException;
 
     HealthSelectInfoModel getAllHealthInfo();
+
+    Oldman getOldStatusNum();
 }

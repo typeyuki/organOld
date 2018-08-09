@@ -325,4 +325,10 @@ public class OldmanWrapper implements Wrapper<Oldman,OldmanModel,OldmanRequest> 
         commonService.fillAutoValue(oldman,oldmanModel,methodInfo,mapInfo);
         return oldmanModel;
     }
+
+    public TotalAdminOldStatus wrapOldStatus(Oldman oldman) {
+        TotalAdminOldStatus totalAdminOldStatus=new TotalAdminOldStatus();
+        BeanUtils.copyProperties(oldman,totalAdminOldStatus);
+        return totalAdminOldStatus;
+    }
 }

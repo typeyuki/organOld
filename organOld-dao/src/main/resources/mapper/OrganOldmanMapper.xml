@@ -120,4 +120,6 @@
     <select id="getNumByOldmanId" resultType="java.lang.Integer">
         SELECT count(1) from organ_oldman where oldman_id=#{oldmanId}
     </select>
+
+
 </mapper>

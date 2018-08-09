@@ -17,4 +17,5 @@ public interface OrganOldmanDao extends BaseDao<OrganOldman,Integer>{
     List<Oldman> getByOrganId(Integer organId);
 
     int getNumByOldmanId(int oldmanId);
+
 }
