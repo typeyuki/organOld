@@ -41,9 +41,9 @@ public class KeyUpdate{
     @Autowired
     CommonService commonService;
 
-    Lock lock = new ReentrantLock();
+    public static Lock lock = new ReentrantLock();
 
-    private static final Logger log = LoggerFactory.getLogger(KeyUpdate.class);
+    public static final Logger log = LoggerFactory.getLogger(KeyUpdate.class);
 
     private static final long LONG_POLLING_EXECUTOR_DELAY = 1000;
 
@@ -55,7 +55,7 @@ public class KeyUpdate{
     /**
      * The timeout for loading data once.
      */
-    private static final long ROUND = 1000L;
+    private static final long ROUND = 2000L;
 
     /**
      * The timeout for loading data once.
@@ -70,7 +70,7 @@ public class KeyUpdate{
     /**
      * The timeout for getting the distributed lock.
      */
-    private static final long LOCK_TIMEOUT = 2 * 1000;
+    public static final long LOCK_TIMEOUT = 2 * 1000;
 
     /**
      * The timeout for getting the data from the redis.
@@ -209,13 +209,13 @@ public class KeyUpdate{
 
                             Oldman oldman=new Oldman();
                             oldman.setId(oldmanKey.getOldmanId());
+
                             oldman.setGoal(oldmanKeyService.calculateKeyGoal(oldmanKey));
 //                            if(futureTime!=null && !futureTime.equals("")){
 //                                oldman.setKeyStatus(oldmanKey.getFutureKeyStatus());
 //                            }else{
                                 oldman.setKeyStatus(oldmanKey.getKeyStatus());
 //                            }
-
                             oldmanKeyService.checkKeyStatus(oldman);
                             oldmanList.add(oldman);
                         } catch (Exception ex) {

@@ -81,7 +81,13 @@ public class Oldman extends Man implements DBInterface,XqInterface {
     private Long familyOldNum;//居家养老统计
     private Long cfOldNum;//社区居家养老统计
 
-
+    @Override
+    public String toString() {
+        return "Oldman{" +
+                "id='" + id + '\'' +
+                ", keyStatus=" + keyStatus +
+                '}';
+    }
 
     @Override
     public boolean equals(Object o) {

@@ -24,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 @Service
@@ -111,6 +112,7 @@ public class OldmanKeyServiceImpl implements OldmanKeyService {
     @Override
     public void checkKeyStatus(Oldman oldman) {
         Boolean isKeyNow=false;
+//        KeyUpdate.log.info(oldman.toString());
         if(oldman.getGoal()>= ValueConstant.OLDMAN_KEY_GOAL_BASE)
             isKeyNow=true;
 
@@ -131,6 +133,7 @@ public class OldmanKeyServiceImpl implements OldmanKeyService {
                 oldman.setKeyStatus(KeyStatusEnum.DEL.getIndex());
             }
         }
+//        KeyUpdate.log.info(oldman.toString());
     }
 
     @Override
