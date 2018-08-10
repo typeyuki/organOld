@@ -1114,4 +1114,9 @@ public class OldmanServiceImpl implements OldmanService {
     public Oldman getOldStatusNum() {
         return oldmanBaseDao.getOldStatusNum();
     }
+
+    @Override
+    public Map<String, Oldman> getAllOldman() {
+        return oldmanBaseDao.getAllOldman();
+    }
 }

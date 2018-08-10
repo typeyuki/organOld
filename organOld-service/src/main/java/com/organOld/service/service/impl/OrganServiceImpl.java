@@ -12,6 +12,7 @@ import com.organOld.service.enumModel.OldStatusEnum;
 import com.organOld.service.enumModel.OrganFirEnum;
 import com.organOld.service.model.*;
 import com.organOld.service.service.CommonService;
+import com.organOld.service.service.OldmanService;
 import com.organOld.service.service.OrganService;
 import com.organOld.service.service.UserService;
 import com.organOld.service.util.Email;
@@ -19,8 +20,11 @@ import com.organOld.service.util.ImgUpload;
 import com.organOld.service.util.Tool;
 import com.organOld.service.wrapper.OrganOldmanWrapper;
 import com.organOld.service.wrapper.OrganWrapper;
+import org.apache.poi.POIXMLDocumentPart;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.*;
+import org.openxmlformats.schemas.drawingml.x2006.spreadsheetDrawing.CTMarker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -62,6 +66,8 @@ public class OrganServiceImpl implements OrganService{
     OrganWrapper organWrapper;
     @Autowired
     OrganOldmanWrapper organOldmanWrapper;
+    @Autowired
+    OldmanService oldmanService;
 
     @Override
     public String getByPage(OrganRequest organRequest, BTableRequest bTableRequest) {
@@ -240,7 +246,12 @@ public class OrganServiceImpl implements OrganService{
     @Override
     public Result importExcel(MultipartFile file, int type, HttpServletRequest request) throws IOException {
         List<Organ> organList=new ArrayList<>();
-        Workbook wb0 = new HSSFWorkbook(file.getInputStream());
+        String  fix=file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".")+1);
+        Workbook wb0;
+        if(fix.equals("xls"))
+            wb0= new HSSFWorkbook(file.getInputStream());
+        else
+            wb0=new XSSFWorkbook(file.getInputStream());
         //获取Excel文档中的第一个表单
         Sheet sht0 = wb0.getSheetAt(0);
         int start=0;
@@ -256,7 +267,11 @@ public class OrganServiceImpl implements OrganService{
         int successAdd=0;//导入数量中  增加的个数
 
         //得到所有的图片  一个机构一张图片  key是行号
-        Map<Integer, PictureData> sheetIndexPicMap = getSheetPictrues03( (HSSFSheet) sht0, (HSSFWorkbook) wb0);
+        Map<Integer, PictureData> sheetIndexPicMap;
+        if(fix.equals("xls"))
+            sheetIndexPicMap = getSheetPictrues03XLS( (HSSFSheet) sht0, (HSSFWorkbook) wb0);
+        else
+            sheetIndexPicMap = getPicturesXlsx( (XSSFSheet) sht0);
 
         Map<Integer,String> picPath= ImgUpload.excelImg(sheetIndexPicMap,request,"organ");
 
@@ -265,69 +280,64 @@ public class OrganServiceImpl implements OrganService{
             try {
                 if (r.getRowNum() >= start) {
                     //遍历 cell  将单元格 格式 全都转换成String 类型
-//                    Iterator<Cell> cells = r.cellIterator();    //获得第一行的迭代器
-//                    while (cells.hasNext()) {
-//                        Cell cell = cells.next();
-//
-//                        cell.setCellType(Cell.CELL_TYPE_STRING);
-//                    }
+                    Iterator<Cell> cells = r.cellIterator();    //获得第一行的迭代器
+                    while (cells.hasNext()) {
+                        Cell cell = cells.next();
+                        cell.setCellType(Cell.CELL_TYPE_STRING);
+                    }
                     //创建实体类
                     Organ organ=new Organ();
                     if(type==21 || type==22) {
-                        if (r.getCell(0).getStringCellValue() != null && !r.getCell(0).getStringCellValue().equals("")) {
+                        if (commonService.excelIsNotNull(r.getCell(0))) {
                             organ.setName(r.getCell(0).getStringCellValue());
                         }else{
                             continue;
                         }
-                        if (r.getCell(1).getStringCellValue() != null && !r.getCell(1).getStringCellValue().equals("")) {
+                        if (commonService.excelIsNotNull(r.getCell(1))) {
                             organ.setIntro(r.getCell(1).getStringCellValue());
                         }
                         r.getCell(2).setCellType(Cell.CELL_TYPE_STRING);
-                        if (r.getCell(2).getStringCellValue() != null && !r.getCell(2).getStringCellValue().equals("")) {
+                        if (commonService.excelIsNotNull(r.getCell(2))) {
                             organ.setNum(Integer.parseInt(r.getCell(2).getStringCellValue()));
                         }
-                        if (r.getCell(3).getStringCellValue() != null && !r.getCell(3).getStringCellValue().equals("")) {
+                        if (commonService.excelIsNotNull(r.getCell(3))) {
                             organ.setWork(r.getCell(3).getStringCellValue());
                         }
-                        if (r.getCell(4).getStringCellValue() != null && !r.getCell(4).getStringCellValue().equals("")) {
+                        if (commonService.excelIsNotNull(r.getCell(4))) {
                             organ.setInstitution(r.getCell(4).getStringCellValue());
                         }
-                        if (r.getCell(5).getStringCellValue() != null && !r.getCell(5).getStringCellValue().equals("")) {
+                        if (commonService.excelIsNotNull(r.getCell(5))) {
                             organ.setRequire(r.getCell(5).getStringCellValue());
                         }
-                        if (r.getCell(6).getStringCellValue() != null && !r.getCell(6).getStringCellValue().equals("")) {
+                        if (commonService.excelIsNotNull(r.getCell(6))) {
                             organ.setServiceTime(r.getCell(6).getStringCellValue());
                         }
-                        if (r.getCell(7).getStringCellValue() != null && !r.getCell(7).getStringCellValue().equals("")) {
+                        if (commonService.excelIsNotNull(r.getCell(7))) {
                             organ.setAddress(r.getCell(7).getStringCellValue());
                         }
                         r.getCell(8).setCellType(Cell.CELL_TYPE_STRING);
-                        if (r.getCell(8).getStringCellValue() != null && !r.getCell(8).getStringCellValue().equals("")) {
+                        if (commonService.excelIsNotNull(r.getCell(8))) {
                             organ.setPhone(r.getCell(8).getStringCellValue());
                         }
-                        if (r.getCell(9).getStringCellValue() != null && !r.getCell(9).getStringCellValue().equals("")) {
+                        if (commonService.excelIsNotNull(r.getCell(9))) {
                             organ.setWebUrl(r.getCell(9).getStringCellValue());
                         }
-                        r.getCell(11).setCellType(Cell.CELL_TYPE_STRING);
-                        r.getCell(12).setCellType(Cell.CELL_TYPE_STRING);
-                        r.getCell(13).setCellType(Cell.CELL_TYPE_STRING);
-                        r.getCell(14).setCellType(Cell.CELL_TYPE_STRING);
-                        r.getCell(15).setCellType(Cell.CELL_TYPE_STRING);
+
                         //TODO  机构没有助餐点了  换成为老服务中心
                         int total = 0; //1养老院  2长者  3 日照  4日托  8为老服务中心
-                        if (r.getCell(11).getStringCellValue() != null && r.getCell(11).getStringCellValue().equals("1")) {
+                        if (commonService.excelIsNotNullOne(r.getCell(11))) {
                             total += 1;
                         }
-                        if (r.getCell(12).getStringCellValue() != null && r.getCell(12).getStringCellValue().equals("1")) {
+                        if (commonService.excelIsNotNullOne(r.getCell(12))) {
                             total += 2;
                         }
-                        if (r.getCell(13).getStringCellValue() != null && r.getCell(13).getStringCellValue().equals("1")) {
+                        if (commonService.excelIsNotNullOne(r.getCell(13))) {
                             total += 3;
                         }
-                        if (r.getCell(14).getStringCellValue() != null && r.getCell(14).getStringCellValue().equals("1")) {
+                        if (commonService.excelIsNotNullOne(r.getCell(14))) {
                             total += 4;
                         }
-                        if (r.getCell(15).getStringCellValue() != null && r.getCell(15).getStringCellValue().equals("1")) {
+                        if (commonService.excelIsNotNullOne(r.getCell(15))) {
                             total += 8;
                         }
                         switch (total) {
@@ -341,7 +351,7 @@ public class OrganServiceImpl implements OrganService{
                                 organ.setOrganTypeId(28);
                                 break;
                             case 8:
-                                organ.setOrganTypeId(29);
+                                organ.setOrganTypeId(23);
                                 break;
                             case 5:
                                 organ.setOrganTypeId(34);
@@ -398,7 +408,7 @@ public class OrganServiceImpl implements OrganService{
 
 
 
-    public static Map<Integer, PictureData> getSheetPictrues03(HSSFSheet sheet, HSSFWorkbook workbook) {
+    public static Map<Integer, PictureData> getSheetPictrues03XLS(HSSFSheet sheet, HSSFWorkbook workbook) {
 
         Map<Integer, PictureData> sheetIndexPicMap = new HashMap<Integer, PictureData>();
         List<HSSFPictureData> pictures = workbook.getAllPictures();
@@ -419,19 +429,46 @@ public class OrganServiceImpl implements OrganService{
         }
     }
 
+    public static Map<Integer, PictureData> getPicturesXlsx (XSSFSheet sheet) throws IOException {
+        Map<Integer, PictureData> map = new HashMap();
+        List<POIXMLDocumentPart> list = sheet.getRelations();
+        for (POIXMLDocumentPart part : list) {
+            if (part instanceof XSSFDrawing) {
+                XSSFDrawing drawing = (XSSFDrawing) part;
+                List<XSSFShape> shapes = drawing.getShapes();
+                for (XSSFShape shape : shapes) {
+                    XSSFPicture picture = (XSSFPicture) shape;
+                    XSSFClientAnchor anchor = picture.getPreferredSize();
+                    CTMarker marker = anchor.getFrom();
+                    Integer row= marker.getRow();
+                    map.put(row, picture.getPictureData());
+                }
+            }
+        }
+        return map;
+    }
+
 
     @Override
     @Transactional
     public Result importManExcel(MultipartFile file) throws IOException {
         List<OrganOldman> organOldmanList=new ArrayList<>();
-        Workbook wb0 = new HSSFWorkbook(file.getInputStream());
+
+        String  fix=file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".")+1);
+        Workbook wb0;
+        if(fix.equals("xls"))
+            wb0= new HSSFWorkbook(file.getInputStream());
+        else
+            wb0=new XSSFWorkbook(file.getInputStream());
+//        Workbook wb0 = new HSSFWorkbook(file.getInputStream());
         //获取Excel文档中的第一个表单
-        Sheet sht0 = wb0.getSheetAt(0);
+        Sheet sht0 = wb0.getSheetAt(1);
         int start=1;
 
         ExcelReturnModel excelReturnModel=new ExcelReturnModel();
         int numSuccess=0;//成功导入的数量
         int successAdd=0;//导入数量中  增加的个数
+        int noexistOldman=0;
 
         Integer organId=commonService.getIdBySession();
         int oldStatus=0;//养老状态
@@ -445,27 +482,36 @@ public class OrganServiceImpl implements OrganService{
         List<Oldman> oldmanList=new ArrayList<>();//用于更新老人 养老状态
 
 
-        List<Oldman> organExistOldman=organOldmanDao.getByOrganId(organId);//先存储 该机构所有的老人 ，筛选出去掉的老人
+        List<Oldman> organExistOldman=organOldmanDao.getByOrganId(organId);//先存储 该机构原有的老人 ，筛选出去掉的老人
+
+        Map<String,Oldman> existOldmanMap=oldmanService.getAllOldman();
 
         for (Row r : sht0) {
             try {
                 if (r.getRowNum() >= start) {
+
+                    Iterator<Cell> cells = r.cellIterator();    //获得第一行的迭代器
+                    while (cells.hasNext()) {
+                        Cell cell = cells.next();
+                        cell.setCellType(Cell.CELL_TYPE_STRING);
+                    }
+
                     //创建实体类
                     OrganOldman organOldman=new OrganOldman();
                     organOldman.setOrganId(organId);
 
 
-                        if (r.getCell(1).getStringCellValue() != null && !r.getCell(1).getStringCellValue().equals("")) {
+                        if (commonService.excelIsNotNull(r.getCell(1))) {
                         }else{
-                            throw new Exception();
+                            continue;
                         }
-                        if (r.getCell(2).getStringCellValue() != null && !r.getCell(2).getStringCellValue().equals("")) {
-                            Integer oldmanId=commonService.checkOldmanExiest(r.getCell(2).getStringCellValue());
-                            Oldman exiOldman = oldmanDao.getById(oldmanId);
-                            if(oldmanId!=null && oldmanId!=0){
+                        if (commonService.excelIsNotNull(r.getCell(2))) {
+                            Oldman existOldman=existOldmanMap.get(r.getCell(2).getStringCellValue());
+//                            Integer oldmanId=commonService.checkOldmanExiest(r.getCell(2).getStringCellValue());
+                            if(existOldman!=null){
                                 if(oldStatus==2) {
                                     //社区养老
-                                    switch (exiOldman.getOldStatus()) {
+                                    switch (existOldman.getOldStatus()) {
                                         case 3:
                                         case 4:
                                             //之前是居家养老 或者社区居家
@@ -474,18 +520,18 @@ public class OrganServiceImpl implements OrganService{
                                     }
                                 }
                                 Oldman oldman=new Oldman();
-                                oldman.setId(oldmanId);
+                                oldman.setId(existOldman.getId());
                                 oldman.setPid(r.getCell(2).getStringCellValue());
                                 oldman.setIsHandle(2);
-                                if (r.getCell(5).getStringCellValue() != null && r.getCell(5).getStringCellValue().equals("0")){
+                                if (commonService.excelIsNotNull(r.getCell(5)) && r.getCell(5).getStringCellValue().equals("0")){
                                     //排队的  保持以前的养老状态
                                     organOldman.setNum(r.getCell(5).getStringCellValue());
-                                    oldman.setOldStatus(exiOldman.getOldStatus());
-                                    if (r.getCell(6).getStringCellValue() != null && !r.getCell(6).getStringCellValue().equals("")){
+                                    oldman.setOldStatus(existOldman.getOldStatus());
+                                    if (commonService.excelIsNotNull(r.getCell(6))){
                                         organOldman.setApplyTime(Tool.stringToDate(r.getCell(6).getStringCellValue()));
-                                        oldman.setIsHandle(exiOldman.getIsHandle());
                                     }
-                                }else if(r.getCell(5).getStringCellValue() != null && !r.getCell(5).getStringCellValue().equals("") && !r.getCell(5).getStringCellValue().equals("0")){
+                                    oldman.setIsHandle(existOldman.getIsHandle());
+                                }else if(commonService.excelIsNotNull(r.getCell(5)) && !r.getCell(5).getStringCellValue().equals("0")){
                                     oldman.setOldStatus(oldStatus);
                                     organOldman.setNum(r.getCell(5).getStringCellValue());
                                 }
@@ -496,16 +542,25 @@ public class OrganServiceImpl implements OrganService{
                                 oldmanList.add(oldman);
                                 organOldman.setOldman(oldman);
                             }else{
-                                throw new Exception();
+                                //该老人  不在当前数据库中
+                                organOldman.setNoExistName(r.getCell(1).getStringCellValue());
+                                organOldman.setNoExistPid(r.getCell(2).getStringCellValue());
+                                if(commonService.excelIsNotNull(r.getCell(5))){
+                                    organOldman.setNum(r.getCell(5).getStringCellValue());
+                                }
+                                if (commonService.excelIsNotNull(r.getCell(6))){
+                                    organOldman.setApplyTime(Tool.stringToDate(r.getCell(6).getStringCellValue()));
+                                }
+                                noexistOldman++;
                             }
                         }else{
                             throw new Exception();
                         }
 
-                        if (r.getCell(3).getStringCellValue() != null && !r.getCell(3).getStringCellValue().equals("")) {
+                        if (commonService.excelIsNotNull(r.getCell(3))) {
                             organOldman.setTimeIn(Tool.stringToDate(r.getCell(3).getStringCellValue()));
                         }
-                        if (r.getCell(4).getStringCellValue() != null && !r.getCell(4).getStringCellValue().equals("")) {
+                        if (commonService.excelIsNotNull(r.getCell(4))) {
                             organOldman.setTimeOut(Tool.stringToDate(r.getCell(4).getStringCellValue()));
                         }
 
@@ -521,6 +576,7 @@ public class OrganServiceImpl implements OrganService{
         excelReturnModel.setNumFail(excelReturnModel.getFail().size());
         excelReturnModel.setSuccessAdd(successAdd);
         excelReturnModel.setNumSuccess(numSuccess);
+        excelReturnModel.setNoexistOldman(noexistOldman);
         excelReturnModel.setTotal(numSuccess+excelReturnModel.getNumFail());//一共
         //该机构 删除的老人 的养老状态   之前是机构养老 则变为0 之前是社区养老的 看看之前的养老状态是不是居家社区 看看有没有在其他的社区养老机构
         for(Oldman oldman:organExistOldman){

@@ -101,10 +101,10 @@
     </update>
 
     <insert id="saveAll" parameterType="java.util.List">
-        INSERT into organ_oldman(organ_id,oldman_id,time_in,time_out,num,apply_time)
+        INSERT into organ_oldman(organ_id,oldman_id,time_in,time_out,num,apply_time,noexist_name,noexist_pid)
         VALUES
         <foreach collection="list" item="item" index="index" separator=",">
-            (#{item.organId},#{item.oldman.id},#{item.timeIn},#{item.timeOut},#{item.num},#{item.applyTime})
+            (#{item.organId},#{item.oldman.id},#{item.timeIn},#{item.timeOut},#{item.num},#{item.applyTime},#{item.noExistName},#{item.noExistPid})
         </foreach>
     </insert>
 
@@ -115,6 +115,7 @@
 
     <select id="getByOrganId" resultType="com.organOld.dao.entity.oldman.Oldman">
         SELECT o.id,o.name,o.pid,o.old_status,o.is_handle FROM oldman_base o,organ_oldman oo WHERE oo.organ_id=#{organId} and oo.oldman_id=o.id
+        and o.disable=0
     </select>
 
     <select id="getNumByOldmanId" resultType="java.lang.Integer">

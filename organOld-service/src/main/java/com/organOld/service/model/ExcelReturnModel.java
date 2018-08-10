@@ -12,6 +12,17 @@ public class ExcelReturnModel {
     private int numFail;//失败的数量
     private List<Integer> fail=new ArrayList<>();//失败的行号
 
+    private int noexistOldman;//针对 机构、居家 导入的人员 不在已有的老人库的数量
+
+
+    public int getNoexistOldman() {
+        return noexistOldman;
+    }
+
+    public void setNoexistOldman(int noexistOldman) {
+        this.noexistOldman = noexistOldman;
+    }
+
     public int getSuccessUpdate() {
         return successUpdate;
     }

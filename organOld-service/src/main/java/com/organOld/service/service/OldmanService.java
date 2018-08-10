@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Map;
 
 /**
  * Created by netlab606 on 2018/4/1.
@@ -70,4 +71,6 @@ public interface OldmanService {
     HealthSelectInfoModel getAllHealthInfo();
 
     Oldman getOldStatusNum();
+
+    Map<String,Oldman> getAllOldman();
 }

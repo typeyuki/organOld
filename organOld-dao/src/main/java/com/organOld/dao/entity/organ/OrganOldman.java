@@ -18,7 +18,8 @@ public class OrganOldman extends DBEntity implements DBInterface {
     private Date timeIn;
     private Date timeOut;
     private String num;
-
+    private String noExistName;
+    private String noExistPid;
 
     private Date applyTime;
     private Integer organId;//居委ID
@@ -31,6 +32,22 @@ public class OrganOldman extends DBEntity implements DBInterface {
     private Integer isPd;
     private String search;
 
+
+    public String getNoExistName() {
+        return noExistName;
+    }
+
+    public void setNoExistName(String noExistName) {
+        this.noExistName = noExistName;
+    }
+
+    public String getNoExistPid() {
+        return noExistPid;
+    }
+
+    public void setNoExistPid(String noExistPid) {
+        this.noExistPid = noExistPid;
+    }
 
     public String getSearch() {
         return search;

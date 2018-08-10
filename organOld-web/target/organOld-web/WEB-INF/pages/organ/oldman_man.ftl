@@ -32,10 +32,11 @@
                         <div>
                             <a onclick="" href="javascript:void(0);" class="btn btn-primary ">添加</a>
                             <a onclick="" href="javascript:void(0);" class="btn btn-primary ">删除</a>
+                            <a  href="javascript:void(0);" id="search" class="btn btn-primary ">搜索</a>
                         <#if single??>
-                            <form action="/organ/man/importExcel" method="post" enctype="multipart/form-data" id="importForm" style="display: inline-block;margin-left: 200px">
-                                <input type="file" name="file" style="display:inline">
+                            <form action="/organ/man/importExcel" method="post" enctype="multipart/form-data" id="importForm" style="display: inline-block">
                                 <input type="button" style="display:inline" class="btn btn-primary" onclick="$('.wrapper').hide();$('#process').show();$('#importForm').submit()" value="导入">
+                                <input type="file" name="file" style="display:inline">
                             </form>
                         </#if>
                         </div>
@@ -43,7 +44,6 @@
                     <div>
                         <input class="id" type="text" placeholder="老人序号">
                         <input class="time" type="text" placeholder="模糊匹配">
-                        <button id="search">搜索</button>
                     </div>
                     <div class="table-responsive">
                         <table class="table table-striped table-bordered table-hover dataTables-example text-nowrap">

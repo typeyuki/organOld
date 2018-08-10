@@ -77,8 +77,9 @@ public class ImgUpload {
                 byte[] data = pic.getData();
 
                 Calendar now = Calendar.getInstance();
-                String path=root_path+"/"+now.get(Calendar.YEAR)+"/"+(now.get(Calendar.MONTH) + 1)+"/"+now.get(Calendar.DAY_OF_MONTH)+"/";
-                File tempFile = new File(path, new Date().getTime()+number+"."+ext);
+                String path=root_path+now.get(Calendar.YEAR)+"/"+(now.get(Calendar.MONTH) + 1)+"/"+now.get(Calendar.DAY_OF_MONTH)+"/";
+                String dateTime=new Date().getTime()+"";
+                File tempFile = new File(path, dateTime+i+"."+ext);
                 if (!tempFile.getParentFile().exists()) {
                     tempFile.getParentFile().mkdirs();
                 }
@@ -86,11 +87,11 @@ public class ImgUpload {
                     tempFile.createNewFile();
                 }
 
-                FileOutputStream out = new FileOutputStream(path+new Date().getTime()+i+"."+ext);
+                FileOutputStream out = new FileOutputStream(path+dateTime+i+"."+ext);
                 out.write(data);
                 out.close();
 
-                String absolute=path+new Date().getTime()+i+"."+ext;
+                String absolute=path+dateTime+i+"."+ext;
                 int index = absolute.indexOf("img");
                 String picUrl= absolute.substring(index, absolute.length());
                 returnMap.put(picIndex,picUrl);
