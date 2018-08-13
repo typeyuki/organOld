@@ -29,7 +29,7 @@ $(document).ready(function(){
                 "targets": [0], // 目标列位置，下标从0开始
                 "data": "id", // 数据列名
                 "render": function(data, type, full) { // 返回自定义内容
-                    return"<input type='checkbox' />"
+                    return"<input type='checkbox' name='id' value='"+data+"' />"
                 }
             },
             {
@@ -45,10 +45,10 @@ $(document).ready(function(){
             },
             // 增加一列，包括删除和修改，同时将我们需要传递的数据传递到链接中
             {
-                "targets": [8], // 目标列位置，下标从0开始
-                "data": "oldmanId", // 数据列名
+                "targets": [8], // 目标列位id置，下标从0开始
+                "data": "", // 数据列名
                 "render": function(data, type, full) { // 返回自定义内容
-                    return "<span class='look' id='"+data+"'>查看</span><span class='mod' id='"+data+"'>修改</span>";
+                    return "<span class='btn btn-primary' onclick='edit("+data+")'>修改</span>";
                 }
             },
             //不进行排序的列
@@ -123,7 +123,10 @@ $(document).ready(function(){
                 "iSortCol_0" : aoData.iSortCol_0,
                 "sEcho" : aoData.sEcho,
                 "sSortDir_0" : aoData.sSortDir_0,
-                "organId" : organId
+                "organId" : organId,
+                "search" : $('.search').val(),
+                "isPd":$("select[name='isPd']").val(),
+                "isExist":$("select[name='isExist']").val()
             },
             type: 'POST',
             dataType: 'json',
@@ -149,40 +152,76 @@ $(document).ready(function(){
 
 });
 
-function look(organId,obj,url) {
-    alert(1);
-    var t="oldman/base",
-        a="1"+organId,
-        i=$(obj).parent().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().text(),
-        n=!0;
+function add() {
+    $(".searchable-select").show();
+    $(".searchable-select").attr("name","oldmanId");
+    $(".oldmanId").attr("name","");
+    $(".id").attr("name","");
+    $('#addModal').modal();
+    $('#addModal form').attr("action","/organ/oldman/add");
+}
 
-    var jq=top.jQuery;
-    if(void 0==t||0==$.trim(t).length)
-        return!1;
-    if(
-        jq(".J_menuTab").each(
-            function(){
-                return $(this).data("id")==t?(
-                        $(this).hasClass("active")||
-                        (
-                            $(this).addClass("active").siblings(".J_menuTab").removeClass("active"),
-                                jq(".J_mainContent .J_iframe").each(function(){
-                                    return $(this).data("id")==t?
-                                        ($(this).show().siblings(".J_iframe").hide(),!1)
-                                        :
-                                        void 0}))
-                            ,n=!1,!1)
-                    : void 0
-            })
-            ,n
-    ) {
-        var s='<a href="javascript:;" class="active J_menuTab" data-id="'+t+'">'+i+' <i class="fa fa-times-circle"></i></a>';
-        jq(".J_menuTab").removeClass("active");
-        var r='<iframe class="J_iframe" name="iframe'+a+'" width="100%" height="100%" src="'+t+'" frameborder="0" data-id="'+t+'" seamless></iframe>';
-        jq(".J_mainContent").find("iframe.J_iframe").hide().parents(".J_mainContent").append(r);
-        jq(".J_mainContent iframe:visible").load(function(){layer.close(o)});
-        jq(".J_menuTabs .page-tabs-content").append(s);
-        e(jq(".J_menuTab.active"));
+function edit(id) {
+    $(".searchable-select").hide();
+    $(".searchable-select").attr("name","");
+    $(".id").attr("name","id");
+    $(".oldmanId").attr("name","oldmanId");
+    $('#addModal form').attr("action","/organ/oldman/update");
+    $.ajax({
+        url: "/organ/oldman/"+id+"/getById",
+        type: "get",
+        async:false,
+        success: function (result) {
+            var data=result.data;
+            for(key in data){
+                $("#editModal input[name='"+key+"']").val(data[key]);
+            }
+
+            $("#addModal").modal();
+        }
+    });
+}
+
+function thCheck(obj) {
+    thCheckByName(obj,"id");
+}
+
+
+function thCheckByName(obj,name) {
+    if($(obj).is(':checked')){
+        $("input[name="+name+"]").prop("checked",true);
+    }else{
+        $("input[name="+name+"]").prop("checked",false);
     }
-    return!1
+}
+
+function del(url) {
+    var ids=[];
+    $("input[name='id']:checked").each(function () {
+        ids.push($(this).val());
+    });
+
+    $.ajax({
+        url : url,
+        type : "post",
+        dataType : 'json',
+        data:{
+            ids:ids
+        },
+        success : function(data) {
+            if (data.success==true) {
+                var start = $(".dataTables-example").dataTable().fnSettings()._iDisplayStart;
+                var total = $(".dataTables-example").dataTable().fnSettings().fnRecordsDisplay();
+                window.location.reload();
+                if(total-start==1){
+                    if(start>0){
+                        $(".dataTables-example").dataTable().fnPageChange('previous',true);
+                    }
+                }
+
+            } else {
+                alert('删除失败！');
+            }
+        }
+    });
 }

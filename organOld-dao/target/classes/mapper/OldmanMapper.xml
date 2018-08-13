@@ -80,7 +80,14 @@
     <select id="getAllOldman" resultMap="idPid">
         SELECT id,pid,old_status,is_handle from oldman_base where disable=0
     </select>
-    
+
+
+    <select id="getBySearch" resultMap="oldman">
+        SELECT id,name
+        FROM oldman_base
+        WHERE  disable=0
+            and (id =#{search} OR name LIKE  concat('%',#{search},'%'))
+    </select>
     <!--不能简单的 limit 0，10  因为有1对多的关系  会补全   一条记录当多条使用（由于某个字段有多个值）-->
     <select id="getByPage" parameterType="com.organOld.dao.util.Page" resultMap="oldman">
         SELECT o.id,o.name,o.sex,o.birthday,o.census,o.political_status,o.xq_id,o.family,o.economic,o.is_volunteer

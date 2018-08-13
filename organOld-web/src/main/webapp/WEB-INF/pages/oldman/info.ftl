@@ -164,7 +164,7 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label">家庭结构：${info.oldman.family!"无"}</label>
                             <label class="col-sm-2 control-label">家庭类别：
-                            <#if info.oldman.familyType?? && info.oldman.familyType?size &gt; 0>
+                            <#if (info.oldman.familyType)?? && info.oldman.familyType?size &gt; 0>
                                 <#list info.oldman.familyType as list>
                                     <label>${list}</label>
                                 </#list>

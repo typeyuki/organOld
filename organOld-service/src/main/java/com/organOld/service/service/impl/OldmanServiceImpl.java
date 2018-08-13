@@ -795,23 +795,23 @@ public class OldmanServiceImpl implements OldmanService {
 
                     String familyType="";
                     if (commonService.excelIsNotNullOne(r.getCell(20))) {
-                        familyType+=mapAutoValue.get(AutoValueEnum.JTLB.getIndex()+"独生子女家庭");
+                        familyType+=mapAutoValue.get(AutoValueEnum.JTLB.getIndex()+"独生子女家庭")+"#";
 //                       familyType+=autoValueDao.getStringLikeIndex("独生子女家庭", AutoValueEnum.JTLB.getIndex(), "like")+"#";
                     }
                     if (commonService.excelIsNotNullOne(r.getCell(21))) {
-                        familyType+=mapAutoValue.get(AutoValueEnum.JTLB.getIndex()+"军属");
+                        familyType+=mapAutoValue.get(AutoValueEnum.JTLB.getIndex()+"军属")+"#";
 //                        familyType+=autoValueDao.getStringLikeIndex("军属", AutoValueEnum.JTLB.getIndex(), "like")+"#";
                     }
                     if (commonService.excelIsNotNullOne(r.getCell(22))) {
-                        familyType+=mapAutoValue.get(AutoValueEnum.JTLB.getIndex()+"烈士家庭");
+                        familyType+=mapAutoValue.get(AutoValueEnum.JTLB.getIndex()+"烈士家庭")+"#";
 //                        familyType+=autoValueDao.getStringLikeIndex("烈士家庭", AutoValueEnum.JTLB.getIndex(), "like")+"#";
                     }
                     if (commonService.excelIsNotNullOne(r.getCell(23))) {
-                        familyType+=mapAutoValue.get(AutoValueEnum.JTLB.getIndex()+"离休干部");
+                        familyType+=mapAutoValue.get(AutoValueEnum.JTLB.getIndex()+"离休干部")+"#";
 //                        familyType+=autoValueDao.getStringLikeIndex("离休干部", AutoValueEnum.JTLB.getIndex(), "like")+"#";
                     }
                     if (commonService.excelIsNotNullOne(r.getCell(24))) {
-                        familyType+=mapAutoValue.get(AutoValueEnum.JTLB.getIndex()+"侨属");
+                        familyType+=mapAutoValue.get(AutoValueEnum.JTLB.getIndex()+"侨属")+"#";
 //                        familyType+=autoValueDao.getStringLikeIndex("侨属", AutoValueEnum.JTLB.getIndex(), "like")+"#";
                     }
                     if(!familyType.equals("")){
@@ -1118,5 +1118,10 @@ public class OldmanServiceImpl implements OldmanService {
     @Override
     public Map<String, Oldman> getAllOldman() {
         return oldmanBaseDao.getAllOldman();
+    }
+
+    @Override
+    public Result getBySearch(String search) {
+        return new Result(true,oldmanBaseDao.getBySearch(search));
     }
 }

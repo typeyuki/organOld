@@ -84,8 +84,8 @@ public class OrganServiceImpl implements OrganService{
         Page<OrganOldman> page=commonService.getPage(bTableRequest,"organ_man");
         OrganOldman organOldman= organOldmanWrapper.unwrap(organOrganManRequest);
         page.setEntity(organOldman);
-        List<OrganOldmanModel> organOldmanModelList=organOldmanDao.getByPage(page).stream().map(organOldmanWrapper::wrap).collect(Collectors.toList());
-        Long size=organOldmanDao.getSizeByPage(page);
+        List<OrganOldmanModel> organOldmanModelList=organOldmanDao.getManByPage(page).stream().map(organOldmanWrapper::wrap).collect(Collectors.toList());
+        Long size=organOldmanDao.getManSizeByPage(page);
         return commonService.tableReturn(bTableRequest.getsEcho(),size,organOldmanModelList);
     }
 
@@ -715,5 +715,30 @@ public class OrganServiceImpl implements OrganService{
         return organDao.getAll();
     }
 
+    @Override
+    public void addOldman(OrganOldman organOldman) {
+        Integer organId=commonService.getIdBySession();
+        organOldman.setOrganId(organId);
+        organOldmanDao.save(organOldman);
+    }
 
+    @Override
+    public void getOldmanById(Integer id) {
+        organOldmanDao.getById(id);
+    }
+
+    @Override
+    public void updateOldman(OrganOldman organOldman) {
+        Integer organId=commonService.getIdBySession();
+        organOldmanDao.updateById(organOldman);
+    }
+
+    @Override
+    public void delByOldmanIds(String[] ids) {
+        Integer[] id=new Integer[ids.length];
+        for(int i=0;i<ids.length;i++){
+            id[i]=Integer.parseInt(ids[i]);
+        }
+        organOldmanDao.delByIds(id);
+    }
 }

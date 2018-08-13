@@ -9,6 +9,8 @@
         <result property="num" column="num"/>
         <result property="applyTime" column="apply_time" />
         <result property="time" column="time"/>
+        <result property="noExistName" column="noexist_name"/>
+        <result property="noExistPid" column="noexist_pid"/>
         <association property="oldman" javaType="com.organOld.dao.entity.oldman.Oldman">
             <id property="id" column="oid" />
             <result property="name" column="name"/>
@@ -20,9 +22,65 @@
     </resultMap>
 
 
+    <select id="getManByPage" parameterType="com.organOld.dao.util.Page" resultMap="organOldman">
+        SELECT oo.id,o.id oid,o.name,oo.time_in,oo.time_out,oo.num,oo.time,oo.noexist_name,oo.apply_time
+        FROM organ_oldman oo LEFT join oldman_base o on oo.oldman_id=o.id
+        WHERE oo.organ_id=#{entity.organ.id}
+        <if test="entity.isPd!=null and entity.isPd==1">
+            AND oo.num='0'
+        </if>
+        <if test="entity.isPd!=null and entity.isPd==2">
+            AND oo.num!='0'
+        </if>
+        <if test="entity.isExist!=null and entity.isExist==1">
+            AND (oo.oldman_id is NOT NULL or oo.oldman_id!=0)
+        </if>
+        <if test="entity.isExist!=null and entity.isExist==2">
+            AND (oo.oldman_id is NULL or oo.oldman_id=0)
+        </if>
+        <if test="entity!=null and entity.search!=null and entity.search!=''">
+            and ( o.pid LIKE  concat('%',#{entity.search},'%') OR oo.noexist_pid LIKE  concat('%',#{entity.search},'%')
+            OR oo.noexist_name LIKE  concat('%',#{entity.search},'%')
+            OR o.name LIKE  concat('%',#{entity.search},'%') OR o.id=#{entity.search})
+        </if>
+        <if test="sortType!=null and sortType!=''">
+            ORDER BY ${sortType}
+        </if>
+        <if test="sort!=null and sort!=''">
+            ${sort}
+        </if>
+        <if test="length!=null and length!=0">
+            limit #{start},#{length}
+        </if>
+    </select>
+
+    <select id="getManSizeByPage" parameterType="com.organOld.dao.util.Page" resultType="java.lang.Long">
+        SELECT count(1)
+        FROM organ_oldman oo LEFT join oldman_base o on oo.oldman_id=o.id
+        WHERE oo.organ_id=#{entity.organ.id}
+        <if test="entity.isPd!=null and entity.isPd==1">
+            AND oo.num='0'
+        </if>
+        <if test="entity.isPd!=null and entity.isPd==2">
+            AND oo.num!='0'
+        </if>
+        <if test="entity.isExist!=null and entity.isExist==1">
+            AND (oo.oldman_id is NOT NULL or oo.oldman_id!=0)
+        </if>
+        <if test="entity.isExist!=null and entity.isExist==2">
+            AND (oo.oldman_id is  NULL or oo.oldman_id=0)
+        </if>
+        <if test="entity!=null and entity.search!=null and entity.search!=''">
+            and ( o.pid LIKE  concat('%',#{entity.search},'%') OR oo.noexist_pid LIKE  concat('%',#{entity.search},'%')
+            OR oo.noexist_name LIKE  concat('%',#{entity.search},'%')
+            OR o.name LIKE  concat('%',#{entity.search},'%') OR o.id=#{entity.search})
+        </if>
+    </select>
+
+
     <select id="getByPage" parameterType="com.organOld.dao.util.Page" resultMap="organOldman">
         SELECT oo.id,org.id orgid,o.id oid,oo.time_in,oo.time_out,oo.num,oo.time,o.name,org.name orgname,oo.apply_time
-        FROM organ_oldman oo,oldman_base o,organ org,organ_type ot,organ jw,auto_value x
+        FROM organ_oldman oo, oldman_base o,organ org,organ_type ot,organ jw,auto_value x
         WHERE oo.oldman_id=o.id AND org.id=oo.organ_id AND org.organ_type_id=ot.id AND x.id=o.xq_id AND jw.id=x.parent_index and o.disable=0
         and org.disable=0
         <if test="entity.organ!=null and entity.organ.id!=0">
@@ -108,6 +166,14 @@
         </foreach>
     </insert>
 
+
+    <insert id="save" parameterType="java.util.List">
+        INSERT into organ_oldman(organ_id,oldman_id,time_in,time_out,num,apply_time,noexist_name,noexist_pid)
+        VALUES
+            (#{organId},#{oldmanId},#{timeIn},#{timeOut},#{num},#{applyTime},#{noExistName},#{noExistPid})
+    </insert>
+
+
     <delete id="delByOrganId">
         DELETE from organ_oldman where organ_id=#{organId}
     </delete>
@@ -122,5 +188,15 @@
         SELECT count(1) from organ_oldman where oldman_id=#{oldmanId}
     </select>
 
+    <select id="getById" resultType="com.organOld.dao.entity.organ.OrganOldman">
+        SELECT id,oldman_id,organ_id,time_in,time_out,apply_time,num from organ_oldman where id=#{id}
+    </select>
 
+
+    <delete id="delByIds">
+        DELETE from organ_oldman where id in
+        <foreach collection="array" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
 </mapper>

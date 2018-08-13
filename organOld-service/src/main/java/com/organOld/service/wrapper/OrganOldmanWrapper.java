@@ -17,11 +17,18 @@ public class OrganOldmanWrapper implements Wrapper<OrganOldman,OrganOldmanModel,
     public OrganOldmanModel wrap(OrganOldman organOldman) {
         OrganOldmanModel organOldmanModel=new OrganOldmanModel();
         organOldmanModel.setId(organOldman.getId()+"");
-        organOldmanModel.setOrganId(organOldman.getOrgan().getId());
-        organOldmanModel.setOrganName(organOldman.getOrgan().getName());
-        organOldmanModel.setOrgan(organOldman.getOrgan());
-        organOldmanModel.setOldmanId(organOldman.getOldman().getId());
-        organOldmanModel.setOldmanName(organOldman.getOldman().getName());
+        if(!StringUtils.isEmpty(organOldman.getOrgan())){
+            organOldmanModel.setOrganId(organOldman.getOrgan().getId());
+            organOldmanModel.setOrganName(organOldman.getOrgan().getName());
+            organOldmanModel.setOrgan(organOldman.getOrgan());
+        }
+        if(!StringUtils.isEmpty(organOldman.getOldman())){
+            organOldmanModel.setOldmanId(organOldman.getOldman().getId());
+            organOldmanModel.setOldmanName(organOldman.getOldman().getName());
+        }
+        if(!StringUtils.isEmpty(organOldman.getNoExistName())){
+            organOldmanModel.setOldmanName(organOldman.getNoExistName());
+        }
         organOldmanModel.setNum(organOldman.getNum());
         organOldmanModel.setTimeIn(Tool.dateToString(organOldman.getTimeIn(),"yyyy-MM-dd"));
         organOldmanModel.setTimeOut(Tool.dateToString(organOldman.getTimeOut(),"yyyy-MM-dd"));
@@ -43,6 +50,7 @@ public class OrganOldmanWrapper implements Wrapper<OrganOldman,OrganOldmanModel,
         }
         organOldman.setOrgan(organ);
         organOldman.setIsPd(organOldmanRequest.getIsPd());
+        organOldman.setIsExist(organOldmanRequest.getIsExist());
 
         if(!StringUtils.isEmpty(organOldmanRequest.getFirType())){
             if(organOldmanRequest.getFirType().equals("organ")){

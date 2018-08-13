@@ -15,13 +15,13 @@
                                     <form method="post" id="oldmanEdit" class="form-horizontal" action="/oldman/update">
                                         <input type="hidden" name="id">
                                         <div class="form-group">
-                                            <label class="col-sm-1 control-label">姓名<span  class="control-label star-content">*</span></label>
+                                            <label class="col-sm-1 control-label">姓名<span  class="control-label star">*</span></label>
                                             <div class="col-sm-8">
                                                 <input type="text" class="form-control" name="name"/>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-sm-1 control-label">小区<span  class="control-label star-content">*</span></label>
+                                            <label class="col-sm-1 control-label">小区</label>
                                             <div class="col-sm-8">
                                                 <select name="xqId"  class="search_select" data-live-search="true">
                                                     <option></option>
@@ -40,7 +40,7 @@
                                         </div>
 
                                         <div class="form-group">
-                                            <label class="col-sm-1 control-label">性别<span  class="control-label star-content">*</span></label>
+                                            <label class="col-sm-1 control-label">性别</label>
                                             <div class="col-sm-8">
                                                 <label>
                                                 <input type="radio" class="form-control" value="2" name="sex" > <i></i> 男</label>
@@ -49,13 +49,13 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-sm-1 control-label">出生日期<span  class="control-label star-content">*</span></label>
+                                            <label class="col-sm-1 control-label">出生日期</label>
                                             <div class="col-sm-8">
                                                 <input type="date" class="form-control" name="birthdayTime"/>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-sm-1 control-label">政治面貌<span  class="control-label star-content">*</span></label>
+                                            <label class="col-sm-1 control-label">政治面貌</label>
                                             <div class="col-sm-8">
                                                 <select class="search_select" name="politicalStatus">
                                                     <option></option>
@@ -66,7 +66,7 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-sm-1 control-label">户籍<span  class="control-label star-content">*</span></label>
+                                            <label class="col-sm-1 control-label">户籍</label>
                                             <div class="col-sm-8">
                                                 <select class="search_select" name="census">
                                                     <option></option>
@@ -105,7 +105,7 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-sm-1 control-label">身份证号码<span  class="control-label star-content">*</span></label>
+                                            <label class="col-sm-1 control-label">身份证号码</label>
                                             <div class="col-sm-8">
                                                 <input type="text" class="form-control" name="pid"/>
                                             </div>
@@ -178,7 +178,7 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-sm-1 control-label">慢病
+                                            <label class="col-sm-2 control-label">慢病
                                             </label>
                                         <#list info.mb as list>
                                             <div class="col-sm-1">
@@ -190,7 +190,7 @@
                                         </#list>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-sm-1 control-label">失能
+                                            <label class="col-sm-2 control-label">失能
                                             </label>
                                         <#list info.sn as list>
                                             <div class="col-sm-1">
@@ -202,7 +202,7 @@
                                         </#list>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-sm-1 control-label">药物反应
+                                            <label class="col-sm-2 control-label">药物反应
                                             </label>
                                         <#list info.ywfy as list>
                                             <div class="col-sm-1">
@@ -214,20 +214,20 @@
                                         </#list>
                                         </div>
                                         <div class="form-group" >
-                                            <label class="col-sm-1 control-label">恶性肿瘤史
+                                            <label class="col-sm-2 control-label">恶性肿瘤史
                                             </label>
                                             <div class="col-sm-8" id="exzl">
                                             </div>
                                         </div>
                                         <div class="form-group" >
-                                            <label class="col-sm-1 control-label">骨折史
+                                            <label class="col-sm-2 control-label">骨折史
                                             </label>
                                             <div class="col-sm-8" id="gz">
 
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-sm-1 control-label">残疾情况
+                                            <label class="col-sm-2 control-label">残疾情况
                                             </label>
                                             <div class="col-sm-8" id="cj">
 
@@ -263,7 +263,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <a onclick="formSub()" href="javascript:void(0);" class="btn btn-primary ">修改</a>
+                <a onclick="formSub()" href="javascript:void(0);" class="btn btn-primary ">保存</a>
                 <a data-dismiss="modal" href="javascript:void(0);" class="btn btn-primary ">关闭</a>
             </div>
         </div><!-- /.modal-content -->
@@ -332,7 +332,7 @@
                 var data=result.data;
                 for(key in data){
                         if(data[key]!=null){
-                            $("#editModal input[name='linkman."+key+"'][type='text']").val(data[key]);
+                            $("#editModal input[name='linkman."+key+"']").val(data[key]);
                         }
                 }
             }

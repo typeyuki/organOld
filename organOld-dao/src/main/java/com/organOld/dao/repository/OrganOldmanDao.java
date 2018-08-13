@@ -3,6 +3,7 @@ package com.organOld.dao.repository;
 
 import com.organOld.dao.entity.oldman.Oldman;
 import com.organOld.dao.entity.organ.OrganOldman;
+import com.organOld.dao.util.Page;
 
 import java.util.List;
 
@@ -18,4 +19,7 @@ public interface OrganOldmanDao extends BaseDao<OrganOldman,Integer>{
 
     int getNumByOldmanId(int oldmanId);
 
+    List<OrganOldman> getManByPage(Page<OrganOldman> page);
+
+    Long getManSizeByPage(Page<OrganOldman> page);
 }

@@ -48,4 +48,6 @@ public interface OldmanDao extends BaseDao<Oldman,Integer>{
 
     @MapKey("pid")
     Map<String,Oldman> getAllOldman();
+
+    List<Oldman> getBySearch(String search);
 }

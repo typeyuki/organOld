@@ -73,4 +73,6 @@ public interface OldmanService {
     Oldman getOldStatusNum();
 
     Map<String,Oldman> getAllOldman();
+
+    Result getBySearch(String search);
 }

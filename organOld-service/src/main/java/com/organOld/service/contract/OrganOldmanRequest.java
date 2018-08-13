@@ -6,7 +6,16 @@ public class OrganOldmanRequest {
     private String firType;//用于养老状态  organ机构养老 community 社区养老
     private Integer isPd;
     private String search;
+    private Integer isExist;//老人是否存在  1是 2否
 
+
+    public Integer getIsExist() {
+        return isExist;
+    }
+
+    public void setIsExist(Integer isExist) {
+        this.isExist = isExist;
+    }
 
     public String getSearch() {
         return search;

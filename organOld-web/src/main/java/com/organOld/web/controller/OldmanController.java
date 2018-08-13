@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 /**
  * Created by netlab606 on 2018/4/1.
@@ -100,6 +101,13 @@ public class OldmanController {
         mv.addObject("result",result);
         mv.addObject("info",oldmanService.getAddInfo());
         return mv;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/getBySearch",method = RequestMethod.POST)
+    public Result getBySearch(String search) {
+        Result result=oldmanService.getBySearch(search);
+        return result;
     }
 
 
@@ -366,22 +374,21 @@ public class OldmanController {
     @ResponseBody
     @RequestMapping(value = "/{type}/{id}/getById",method = RequestMethod.GET)
     public Result base_getById(@PathVariable String type,@PathVariable int id){
-        return oldmanService
-                .getById(id,type);
-    }
-    @InitBinder("linkman")
-    public void initLinkman(WebDataBinder binder){
-        binder.setFieldDefaultPrefix("linkman.");
+        return oldmanService.getById(id,type);
     }
 
 
     @RequestMapping(value = "/update",method = RequestMethod.POST)
-    public ModelAndView update(Oldman oldman,OldmanHealth oldmanHealth,Linkman linkman){
+    public ModelAndView update(Oldman oldman,OldmanHealth oldmanHealth,Linkman linkman,@RequestParam("linkman.name")String lname,
+                               @RequestParam("linkman.phone") String lphone,@RequestParam("linkman.relation") String relation){
         ModelAndView mv=new ModelAndView("redirect:/oldman");
         oldmanService.updateById(oldman,"base");
         oldmanHealth.setOldmanId(oldman.getId());
         oldmanService.updateById(oldmanHealth,"health");
         linkman.setOldmanId(oldman.getId());
+        linkman.setName(lname);
+        linkman.setPhone(lphone);
+        linkman.setRelation(relation);
         oldmanService.updateById(linkman,"linkman");
         return mv;
     }
@@ -392,12 +399,12 @@ public class OldmanController {
 //        return mv;
 //    }
 
-//    @ResponseBody
-//    @RequestMapping(value = "/base/del",method = RequestMethod.POST)
-//    public Result base_del(@RequestParam("ids[]") String ids[]){
-//        oldmanService.delByIds(ids);
-//        return new Result(true);
-//    }
+    @ResponseBody
+    @RequestMapping(value = "/del",method = RequestMethod.POST)
+    public Result oldman_del(@RequestParam("ids[]") String ids[]){
+        oldmanService.delByIds(ids);
+        return new Result(true);
+    }
 
     @ResponseBody
     @RequestMapping(value = "/health/select/del",method = RequestMethod.POST)

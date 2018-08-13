@@ -4,6 +4,8 @@ package com.organOld.dao.entity.organ;
 import com.organOld.dao.entity.DBEntity;
 import com.organOld.dao.entity.DBInterface;
 import com.organOld.dao.entity.oldman.Oldman;
+import org.springframework.beans.factory.annotation.Required;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -15,12 +17,18 @@ public class OrganOldman extends DBEntity implements DBInterface {
     private Oldman oldman;
     private Organ organ;
 
+    private Integer oldmanId;
+
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date timeIn;
+
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date timeOut;
     private String num;
     private String noExistName;
     private String noExistPid;
 
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date applyTime;
     private Integer organId;//居委ID
 
@@ -30,8 +38,24 @@ public class OrganOldman extends DBEntity implements DBInterface {
      */
     private Integer firType;
     private Integer isPd;
+    private Integer isExist;//老人是否存在  1是 2否
     private String search;
 
+    public Integer getOldmanId() {
+        return oldmanId;
+    }
+
+    public void setOldmanId(Integer oldmanId) {
+        this.oldmanId = oldmanId;
+    }
+
+    public Integer getIsExist() {
+        return isExist;
+    }
+
+    public void setIsExist(Integer isExist) {
+        this.isExist = isExist;
+    }
 
     public String getNoExistName() {
         return noExistName;

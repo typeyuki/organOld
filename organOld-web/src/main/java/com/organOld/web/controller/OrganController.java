@@ -1,6 +1,7 @@
 package com.organOld.web.controller;
 
 import com.organOld.dao.entity.AutoValue;
+import com.organOld.dao.entity.organ.OrganOldman;
 import com.organOld.dao.entity.organ.OrganReg;
 import com.organOld.dao.entity.organ.OrganType;
 import com.organOld.service.contract.*;
@@ -129,6 +130,33 @@ public class OrganController {
         return organService.getManByPage(bTableRequest,organOldmanManRequest);
     }
 
+    @RequestMapping(value = "/oldman/add",method = RequestMethod.POST)
+    public ModelAndView oldman_add(OrganOldman organOldman){
+        ModelAndView mv=new ModelAndView("redirect:/organ/oldman/single/man");
+        organService.addOldman(organOldman);
+        return mv;
+    }
+
+    @RequestMapping(value = "/oldman/update",method = RequestMethod.POST)
+    public ModelAndView oldman_update(OrganOldman organOldman){
+        ModelAndView mv=new ModelAndView("redirect:/organ/oldman/single/man");
+        organService.updateOldman(organOldman);
+        return mv;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/oldamn/del",method = RequestMethod.POST)
+    public Result oldman_del(@RequestParam("ids[]") String ids[]){
+        organService.delByOldmanIds(ids);
+        return new Result(true);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/oldman/{id}/getById",method = RequestMethod.POST)
+    public Result getOrganOldmanById(@PathVariable Integer id){
+        organService.getOldmanById(id);
+        return new Result(true);
+    }
 
     /**
      * 机构查看
@@ -185,7 +213,7 @@ public class OrganController {
 
     @ResponseBody
     @RequestMapping(value = "/oldman/single/man/data",method = RequestMethod.POST)
-    public String single(BTableRequest bTableRequest, OrganOldmanRequest organOldmanManRequest,HttpSession session){
+    public String single(BTableRequest bTableRequest, OrganOldmanRequest organOldmanManRequest){
         int organId=commonService.getIdBySession();
         organOldmanManRequest.setOrganId(organId);
         return organService.getManByPage(bTableRequest,organOldmanManRequest);

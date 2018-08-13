@@ -1,6 +1,7 @@
 package com.organOld.service.service;
 
 import com.organOld.dao.entity.organ.Organ;
+import com.organOld.dao.entity.organ.OrganOldman;
 import com.organOld.dao.entity.organ.OrganType;
 import com.organOld.service.contract.*;
 import com.organOld.service.model.OrganAddModel;
@@ -59,4 +60,11 @@ public interface OrganService {
 
     List<Organ> getByType(int type);
 
+    void addOldman(OrganOldman organOldman);
+
+    void getOldmanById(Integer oldmanId);
+
+    void updateOldman(OrganOldman organOldman);
+
+    void delByOldmanIds(String[] ids);
 }

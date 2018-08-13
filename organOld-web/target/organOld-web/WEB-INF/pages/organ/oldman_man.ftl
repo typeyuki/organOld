@@ -30,8 +30,8 @@
                     <div>
                     <#if single??>
                         <div>
-                            <a onclick="" href="javascript:void(0);" class="btn btn-primary ">添加</a>
-                            <a onclick="" href="javascript:void(0);" class="btn btn-primary ">删除</a>
+                            <a onclick="add()" href="javascript:void(0);" class="btn btn-primary ">添加</a>
+                            <a onclick="del('/organ/oldman/del')" href="javascript:void(0);" class="btn btn-primary ">删除</a>
                             <a  href="javascript:void(0);" id="search" class="btn btn-primary ">搜索</a>
                         <#if single??>
                             <form action="/organ/man/importExcel" method="post" enctype="multipart/form-data" id="importForm" style="display: inline-block">
@@ -41,16 +41,33 @@
                         </#if>
                         </div>
                     </#if>
-                    <div>
-                        <input class="id" type="text" placeholder="老人序号">
-                        <input class="time" type="text" placeholder="模糊匹配">
-                    </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <input class="search form-control inp" type="text" placeholder="模糊匹配">
+                            </div>
+                            <div class="col-sm-2">
+                                <label >是否在排队</label>
+                                <select name="isPd" class="form-control inp" style="width: 50%">
+                                    <option></option>
+                                    <option  value="1"> 是</option>
+                                    <option  value="2"> 否</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-2">
+                                <label >在当前数据库</label>
+                                <select name="isExist" class="form-control inp" style="width: 50%">
+                                    <option></option>
+                                    <option  value="1"> 是</option>
+                                    <option  value="2"> 否</option>
+                                </select>
+                            </div>
+                        </div>
                     <div class="table-responsive">
                         <table class="table table-striped table-bordered table-hover dataTables-example text-nowrap">
                             <thead>
                             <tr>
                                 <#if single??>
-                                    <th><input type="checkbox"></th>
+                                    <th><input type='checkbox' onclick="thCheck(this)"></th>
                                 </#if>
                                 <th>老人编号</th>
                                 <th>老人姓名</th>
@@ -74,20 +91,22 @@
 
 </div>
 </div>
-<#include  "../spinner.ftl"/>
 <script>
     var organId="${organId!'0'}";
     var dataUrl="${dataUrl!}";
     var single="${single!}";
     <#if result??>
-    alert("录入数据：${result.data.total}\n其中成功导入数据：${result.data.numSuccess}\n包括添加：${result.data.successAdd}\n更新：${result.data.successUpdate}\n失败：${result.data.numFail}");
+    alert("录入数据：${result.data.total}\n其中成功导入数据：${result.data.numSuccess}\n包括添加：${result.data.successAdd}\n更新：${result.data.successUpdate}\n失败：${result.data.numFail}\n不在当前数据库的老人数：${result.data.noexistOldman}");
     </#if>
 </script>
 <script src="/js/content.min.js?v=1.0.0"></script>
-<script src="/static/js/common.js"></script>
+<#--<script src="/static/js/common.js"></script>-->
 <script src="/static/js/organ/organOldman.js" ></script>
 <script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
 
+
+<#include  "../spinner.ftl"/>
+<#include  "add_oldman.ftl"/>
 </body>
 
 </html>
