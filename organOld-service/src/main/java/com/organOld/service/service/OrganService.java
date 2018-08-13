@@ -62,7 +62,7 @@ public interface OrganService {
 
     void addOldman(OrganOldman organOldman);
 
-    void getOldmanById(Integer oldmanId);
+    OrganOldman getOldmanById(Integer oldmanId);
 
     void updateOldman(OrganOldman organOldman);
 

@@ -154,7 +154,7 @@
 
     <update id="updateById" parameterType="com.organOld.dao.entity.organ.OrganOldman">
         UPDATE organ_oldman
-        SET organ_id=#{organ_id},oldman_id=#{oldman_id},id=#{id},time_in=#{time_in},time_out=#{time_out},time=#{time},num=#{num}
+        SET time_in=#{timeIn},time_out=#{timeOut},num=#{num},apply_time=#{applyTime}
         WHERE id=#{id}
     </update>
 

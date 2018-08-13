@@ -27,6 +27,7 @@ public class OrganOldmanWrapper implements Wrapper<OrganOldman,OrganOldmanModel,
             organOldmanModel.setOldmanName(organOldman.getOldman().getName());
         }
         if(!StringUtils.isEmpty(organOldman.getNoExistName())){
+            organOldmanModel.setOldmanId(null);
             organOldmanModel.setOldmanName(organOldman.getNoExistName());
         }
         organOldmanModel.setNum(organOldman.getNum());

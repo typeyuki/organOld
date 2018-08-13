@@ -46,7 +46,7 @@ $(document).ready(function(){
             // 增加一列，包括删除和修改，同时将我们需要传递的数据传递到链接中
             {
                 "targets": [8], // 目标列位id置，下标从0开始
-                "data": "", // 数据列名
+                "data": "id", // 数据列名
                 "render": function(data, type, full) { // 返回自定义内容
                     return "<span class='btn btn-primary' onclick='edit("+data+")'>修改</span>";
                 }
@@ -103,7 +103,7 @@ $(document).ready(function(){
             "sPaginationType": "full_numbers",
             "bPaginite": true,
             "bInfo": true,
-            "bSort": true,
+            "bSort": false,
             "bFilter": false, //搜索栏
             "bStateSave": true,
             "bProcessing": true, //加载数据时显示正在加载信息
@@ -153,7 +153,7 @@ $(document).ready(function(){
 });
 
 function add() {
-    $(".searchable-select").show();
+    $(".lr").show();
     $(".searchable-select").attr("name","oldmanId");
     $(".oldmanId").attr("name","");
     $(".id").attr("name","");
@@ -162,7 +162,7 @@ function add() {
 }
 
 function edit(id) {
-    $(".searchable-select").hide();
+    $(".lr").hide();
     $(".searchable-select").attr("name","");
     $(".id").attr("name","id");
     $(".oldmanId").attr("name","oldmanId");
@@ -174,7 +174,19 @@ function edit(id) {
         success: function (result) {
             var data=result.data;
             for(key in data){
-                $("#editModal input[name='"+key+"']").val(data[key]);
+                if(key=="timeIn" || key=="timeOut" || key=="applyTime"){
+                    if(data[key]!=null){
+                        var date = new Date(data[key]);
+                        var year = date.getFullYear(),
+                            month = date.getMonth()+1,//月份是从0开始的
+                            day = date.getDate();
+                        var newTime = year + '-' +
+                            (month < 10? '0' + month : month) + '-' +
+                            (day < 10? '0' + day : day);
+                        data[key]=newTime;
+                    }
+                }
+                $("#addModal input[name='"+key+"']").val(data[key]);
             }
 
             $("#addModal").modal();

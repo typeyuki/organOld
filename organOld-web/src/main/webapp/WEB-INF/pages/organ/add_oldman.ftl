@@ -14,7 +14,7 @@
                                     <form method="post" id="oldmanEdit" class="form-horizontal" action="/organ/oldman/add">
                                         <input type="hidden" class="oldmanId"/>
                                         <input type="hidden" class="id"/>
-                                        <div class="form-group">
+                                        <div class="form-group lr">
                                             <label class="col-sm-1 control-label">老人</label>
                                             <div class="col-sm-8">
                                                 <select  class="selectpicker bla bla bli" data-live-search="true" name="oldmanId">

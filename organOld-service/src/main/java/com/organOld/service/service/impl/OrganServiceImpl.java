@@ -723,8 +723,8 @@ public class OrganServiceImpl implements OrganService{
     }
 
     @Override
-    public void getOldmanById(Integer id) {
-        organOldmanDao.getById(id);
+    public OrganOldman getOldmanById(Integer id) {
+        return organOldmanDao.getById(id);
     }
 
     @Override

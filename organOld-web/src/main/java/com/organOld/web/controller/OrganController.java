@@ -145,17 +145,16 @@ public class OrganController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/oldamn/del",method = RequestMethod.POST)
+    @RequestMapping(value = "/oldman/del",method = RequestMethod.POST)
     public Result oldman_del(@RequestParam("ids[]") String ids[]){
         organService.delByOldmanIds(ids);
         return new Result(true);
     }
 
     @ResponseBody
-    @RequestMapping(value = "/oldman/{id}/getById",method = RequestMethod.POST)
+    @RequestMapping(value = "/oldman/{id}/getById",method = RequestMethod.GET)
     public Result getOrganOldmanById(@PathVariable Integer id){
-        organService.getOldmanById(id);
-        return new Result(true);
+        return new Result(true, organService.getOldmanById(id));
     }
 
     /**

@@ -3,7 +3,7 @@ package com.organOld.service.model;
 import com.organOld.dao.entity.organ.Organ;
 
 public class OrganOldmanModel extends Model {
-    private int oldmanId;
+    private Integer oldmanId;
     private String oldmanName;
     private int organId;
     private String organName;
@@ -48,11 +48,11 @@ public class OrganOldmanModel extends Model {
         this.oldmanName = oldmanName;
     }
 
-    public int getOldmanId() {
+    public Integer getOldmanId() {
         return oldmanId;
     }
 
-    public void setOldmanId(int oldmanId) {
+    public void setOldmanId(Integer oldmanId) {
         this.oldmanId = oldmanId;
     }
 

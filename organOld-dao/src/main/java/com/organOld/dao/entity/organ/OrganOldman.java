@@ -32,6 +32,9 @@ public class OrganOldman extends DBEntity implements DBInterface {
     private Date applyTime;
     private Integer organId;//居委ID
 
+
+
+
     /**
      * 搜素
      * @return
