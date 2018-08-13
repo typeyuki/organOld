@@ -13,6 +13,7 @@ import com.organOld.service.enumModel.KeyStatusEnum;
 import com.organOld.service.model.KeyRuleTypeModel;
 import com.organOld.service.model.KeyRulelModel;
 import com.organOld.service.model.OldmanKeyModel;
+import com.organOld.service.contract.Result;
 import com.organOld.service.service.CommonService;
 import com.organOld.service.thread.KeyAutoUpdate;
 import com.organOld.service.service.OldmanKeyService;
@@ -24,7 +25,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 @Service

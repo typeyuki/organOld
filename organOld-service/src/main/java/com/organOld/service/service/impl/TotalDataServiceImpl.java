@@ -1,10 +1,8 @@
 package com.organOld.service.service.impl;
 
 import com.organOld.service.contract.Result;
-import com.organOld.service.enumModel.OrganFirEnum;
 import com.organOld.service.model.TotalAdminOldStatus;
 import com.organOld.service.service.OldmanService;
-import com.organOld.service.service.OrganService;
 import com.organOld.service.service.TotalDataService;
 import com.organOld.service.wrapper.OldmanWrapper;
 import org.springframework.beans.factory.annotation.Autowired;

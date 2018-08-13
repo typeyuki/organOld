@@ -2,6 +2,12 @@
  * Created by netlab606 on 2018/4/2.
  */
 $(document).ready(function(){
+    //这个方法用来启动该页面的ReverseAjax功能
+    dwr.engine.setActiveReverseAjax(true);
+    //设置在页面关闭时，通知服务端销毁会话
+    dwr.engine.setNotifyServerOnPageUnload(true);
+
+
     var table =$(".dataTables-example").dataTable(
         {
             "sPaginationType": "full_numbers",
@@ -115,31 +121,48 @@ function changeStatus(status) {
 
 
 function createCode() {
-    var ids=[];
-    $("input[name='id']:checked").each(function () {
-        ids.push($(this).val());
-    });
-    $.ajax({
-        url : "/card/create",
-        type : "post",
-        dataType : 'json',
-        data:{
-            ids:ids
-        },
-        success : function(data) {
-            if (data.success==true) {
-                alert("一共操作："+data.data.total+"个老人\n其中共："+data.data.numSuccess+"个老人未生成二维码\n已生成数："+data.data.successAdd+"\n失败数："+data.data.numFail);
-                var start = $(".dataTables-example").dataTable().fnSettings()._iDisplayStart;
-                var total = $(".dataTables-example").dataTable().fnSettings().fnRecordsDisplay();
-                window.location.reload();
-                if(total-start==1){
-                    if(start>0){
-                        $(".dataTables-example").dataTable().fnPageChange('previous',true);
-                    }
-                }
-            } else {
-                alert('删除失败！');
-            }
+    $('.wrapper').hide();$('#process').show();
+    $(".f").submit();
+    // var ids=[];
+    // $("input[name='id']:checked").each(function () {
+    //     ids.push($(this).val());
+    // });
+    // $.ajax({
+    //     url : "/card/create",
+    //     type : "post",
+    //     dataType : 'json',
+    //     data:{
+    //         ids:ids
+    //     },
+    //     success : function(data) {
+    //         if (data.success==true) {
+    //             alert("一共操作："+data.data.total+"个老人\n其中共："+data.data.numSuccess+"个老人未生成二维码\n已生成数："+data.data.successAdd+"\n失败数："+data.data.numFail);
+    //             var start = $(".dataTables-example").dataTable().fnSettings()._iDisplayStart;
+    //             var total = $(".dataTables-example").dataTable().fnSettings().fnRecordsDisplay();
+    //             window.location.reload();
+    //             if(total-start==1){
+    //                 if(start>0){
+    //                     $(".dataTables-example").dataTable().fnPageChange('previous',true);
+    //                 }
+    //             }
+    //         } else {
+    //             alert('删除失败！');
+    //         }
+    //     }
+    // });
+}
+
+function finishZip(data) {
+    $('#process').hide();
+    $('.wrapper').show();
+    alert("下载成功：\n一共："+data.data.total+"个老人\n生成："+data.data.numSuccess+"张卡");
+
+    var start = $(".dataTables-example").dataTable().fnSettings()._iDisplayStart;
+    var total = $(".dataTables-example").dataTable().fnSettings().fnRecordsDisplay();
+    window.location.reload();
+    if(total-start==1){
+        if(start>0){
+            $(".dataTables-example").dataTable().fnPageChange('previous',true);
         }
-    });
+    }
 }

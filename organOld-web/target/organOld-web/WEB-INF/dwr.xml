@@ -10,5 +10,7 @@
 
         <!--传给前端的对象类型-->
         <convert converter="bean" match="com.organOld.service.dwr.DwrData"/>
+        <convert converter="bean" match="com.organOld.service.contract.Result"/>
+        <convert converter="bean" match="com.organOld.service.model.ExcelReturnModel"/>
     </allow>
 </dwr>

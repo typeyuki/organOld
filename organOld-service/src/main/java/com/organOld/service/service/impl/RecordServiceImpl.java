@@ -7,6 +7,7 @@ import com.organOld.dao.util.Page;
 import com.organOld.service.contract.*;
 import com.organOld.service.enumModel.RecordTypeEnum;
 import com.organOld.service.model.RecordModel;
+import com.organOld.service.contract.Result;
 import com.organOld.service.service.CommonService;
 import com.organOld.service.service.RecordService;
 import com.organOld.service.util.Tool;

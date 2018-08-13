@@ -1,6 +1,7 @@
 package com.organOld.web.controller;
 
 import com.organOld.service.contract.*;
+import com.organOld.service.contract.Result;
 import com.organOld.service.service.HomeService;
 import com.organOld.service.service.OldmanKeyService;
 import com.organOld.service.service.OrganService;

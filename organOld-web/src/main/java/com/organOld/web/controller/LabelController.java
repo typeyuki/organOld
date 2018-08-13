@@ -2,10 +2,10 @@ package com.organOld.web.controller;
 
 import com.organOld.dao.entity.AutoValue;
 import com.organOld.dao.entity.label.Label;
-import com.organOld.dao.entity.label.LabelFeedback;
 import com.organOld.dao.entity.label.LabelMan;
 import com.organOld.dao.entity.label.LabelSec;
 import com.organOld.service.contract.*;
+import com.organOld.service.contract.Result;
 import com.organOld.service.service.AutoValueService;
 import com.organOld.service.service.LabelService;
 import com.organOld.service.service.OldmanService;
@@ -14,8 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-
-import javax.servlet.http.HttpSession;
 
 /**
  * 标签管理

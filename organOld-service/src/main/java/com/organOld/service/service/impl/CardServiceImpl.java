@@ -11,6 +11,7 @@ import com.organOld.service.constant.ValueConstant;
 import com.organOld.service.contract.BTableRequest;
 import com.organOld.service.contract.CardRequest;
 import com.organOld.service.contract.Result;
+import com.organOld.service.dwr.Remote;
 import com.organOld.service.enumModel.RecordTypeEnum;
 import com.organOld.service.model.CardModel;
 import com.organOld.service.model.ExcelReturnModel;
@@ -27,13 +28,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.imageio.ImageIO;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 /**
  * Created by netlab606 on 2018/6/25.
@@ -182,70 +186,105 @@ public class CardServiceImpl implements CardService {
         }
     }
 
+
+
     @Override
-    public Result create(String[] ids) {
-        List<QrCodeData> qrCodeData=cardDao.getQrDataByIds(ids);
-        ExcelReturnModel excelReturnModel=createCode(qrCodeData);
+    public void createZip(String[] ids, HttpServletResponse response, HttpServletRequest request) {
+        List<QrCodeData> qrCodeDataList=cardDao.getQrDataByIds(ids);
+        ExcelReturnModel excelReturnModel=new ExcelReturnModel();
         excelReturnModel.setTotal(ids.length);
-        excelReturnModel.setNumSuccess(qrCodeData.size());
-        return new Result(true,excelReturnModel);
+        int numSuccess=0;
+//        excelReturnModel.setNumSuccess(qrCodeDataList.size());
+//        int sucessAdd=0,failNum=0;
+        try {
+            String rela_path="img/";
+            String root_path = request.getSession().getServletContext().getRealPath(rela_path);
 
+            File zipFile = new File(root_path+"/qrCode.zip");
+            byte[] buf = new byte[1024];
+            int len;
+
+            ZipOutputStream zout=new ZipOutputStream(new FileOutputStream(zipFile));
+
+            for (QrCodeData qrCodeData : qrCodeDataList) {
+                Qrcode qrcode = new Qrcode();
+                qrcode.setQrcodeErrorCorrect('M');//纠错等级（分为L、M、H三个等级）
+                qrcode.setQrcodeEncodeMode('B');//N代表数字，A代表a-Z，B代表其它字符
+                qrcode.setQrcodeVersion(7);//版本
+                //生成二维码中要存储的信息
+                String qrData = qrCodeData.getCid();
+                //设置一下二维码的像素
+                int width = 67 + 12 * (7 - 1);
+                int height = 67 + 12 * (7 - 1);
+                BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+                //绘图
+                Graphics2D gs = bufferedImage.createGraphics();
+                gs.setBackground(Color.WHITE);
+                gs.setColor(Color.BLACK);
+                gs.clearRect(0, 0, width, height);//清除下画板内容
+
+                //设置下偏移量,如果不加偏移量，有时会导致出错。
+                int pixoff = 2;
+
+                byte[] d = qrData.getBytes("gb2312");
+                if (d.length > 0 && d.length < 120) {
+                    boolean[][] s = qrcode.calQrcode(d);
+                    for (int i = 0; i < s.length; i++) {
+                        for (int j = 0; j < s.length; j++) {
+                            if (s[j][i]) {
+                                gs.fillRect(j * 3 + pixoff, i * 3 + pixoff, 3, 3);
+                            }
+                        }
+                    }
+                }
+                gs.dispose();
+                bufferedImage.flush();
+
+                File file=new File(root_path+"/qrCode/" + qrCodeData.getName() + ".png");
+                if (!file.getParentFile().exists()) {
+                    file.getParentFile().mkdirs();
+                }
+
+                ImageIO.write(bufferedImage, "png", file);
+                FileInputStream fileInputStream=new FileInputStream(file);
+
+                zout.putNextEntry(new ZipEntry(qrCodeData.getName() + ".png"));
+                while ((len = fileInputStream.read(buf)) > 0) {
+                    zout.write(buf, 0, len);
+                }
+                zout.closeEntry();
+                fileInputStream.close();
+
+                numSuccess++;
+//                sucessAdd++;
+                cardDao.updateProp("is_create","1",qrCodeData.getId());
+            }
+
+            zout.close();
+            //下载图片
+            FileInputStream zipInput =new FileInputStream(zipFile);
+            OutputStream out = response.getOutputStream();
+            response.setContentType("application/octet-stream");
+            response.setHeader("Content-Disposition", "attachment; filename=QRcode.zip");
+            while ((len=zipInput.read(buf))!= -1){
+                out.write(buf,0,len);
+            }
+            zipInput.close();
+            out.flush();
+            out.close();
+            //删除压缩包
+            zipFile.delete();
+
+            excelReturnModel.setNumSuccess(numSuccess);
+            Result result=new Result(true,excelReturnModel);
+            Remote.noticeQrCode(result);
+        }catch (Exception e){
+            e.printStackTrace();
+//            failNum++;
+        }
+//        excelReturnModel.setSuccessAdd(sucessAdd);
+//        excelReturnModel.setNumFail(failNum);
     }
-
-    public ExcelReturnModel createCode(List<QrCodeData> qrCodeDataList){
-       ExcelReturnModel excelReturnModel=new ExcelReturnModel();
-       int sucessAdd=0,failNum=0;
-       try {
-           for (QrCodeData qrCodeData : qrCodeDataList) {
-               Qrcode qrcode = new Qrcode();
-               qrcode.setQrcodeErrorCorrect('M');//纠错等级（分为L、M、H三个等级）
-               qrcode.setQrcodeEncodeMode('B');//N代表数字，A代表a-Z，B代表其它字符
-               qrcode.setQrcodeVersion(7);//版本
-               //生成二维码中要存储的信息
-               String qrData = qrCodeData.getCid();
-               //设置一下二维码的像素
-               int width = 67 + 12 * (7 - 1);
-               int height = 67 + 12 * (7 - 1);
-               BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-               //绘图
-               Graphics2D gs = bufferedImage.createGraphics();
-               gs.setBackground(Color.WHITE);
-               gs.setColor(Color.BLACK);
-               gs.clearRect(0, 0, width, height);//清除下画板内容
-
-               //设置下偏移量,如果不加偏移量，有时会导致出错。
-               int pixoff = 2;
-
-               byte[] d = qrData.getBytes("gb2312");
-               if (d.length > 0 && d.length < 120) {
-                   boolean[][] s = qrcode.calQrcode(d);
-                   for (int i = 0; i < s.length; i++) {
-                       for (int j = 0; j < s.length; j++) {
-                           if (s[j][i]) {
-                               gs.fillRect(j * 3 + pixoff, i * 3 + pixoff, 3, 3);
-                           }
-                       }
-                   }
-               }
-               gs.dispose();
-               bufferedImage.flush();
-               File file=new File(ValueConstant.CODE_CREATE_PATH + qrCodeData.getName() + ".png");
-               if (!file.getParentFile().exists()) {
-                   file.getParentFile().mkdirs();
-               }
-               ImageIO.write(bufferedImage, "png", file);
-               sucessAdd++;
-               cardDao.updateProp("is_create","1",qrCodeData.getId());
-           }
-       }catch (Exception e){
-           e.printStackTrace();
-           failNum++;
-       }
-       excelReturnModel.setSuccessAdd(sucessAdd);
-       excelReturnModel.setNumFail(failNum);
-        return excelReturnModel;
-    }
-
 
     @Override
     public Result getById(Integer id) {

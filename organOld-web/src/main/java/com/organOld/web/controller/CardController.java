@@ -3,9 +3,8 @@ package com.organOld.web.controller;
 import com.organOld.dao.entity.Card;
 import com.organOld.dao.entity.SysUser;
 import com.organOld.service.contract.*;
-import com.organOld.service.enumModel.RecordTypeEnum;
 import com.organOld.service.model.OldmanAllInfoModel;
-import com.organOld.service.model.OrganQueryIntegralModel;
+import com.organOld.service.contract.Result;
 import com.organOld.service.service.CardService;
 import com.organOld.service.service.OldmanService;
 import com.organOld.service.service.RecordService;
@@ -15,7 +14,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.io.IOException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * 一卡通
@@ -192,15 +192,15 @@ public class CardController {
     }
 
 
+
     /**
-     * 生成二维码
+     * 生成二维码 压缩包
      * @param
      * @return
      */
     @ResponseBody
     @RequestMapping(value = "/create",method = RequestMethod.POST)
-    public Result create(@RequestParam("ids[]") String ids[]){
-        Result result=cardService.create(ids);
-        return result;
+    public void create_zip(@RequestParam("id") String ids[], HttpServletResponse response, HttpServletRequest request){
+        cardService.createZip(ids,response,request);
     }
 }

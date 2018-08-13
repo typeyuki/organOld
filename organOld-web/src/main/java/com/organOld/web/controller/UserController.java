@@ -4,7 +4,7 @@ package com.organOld.web.controller;
 import com.organOld.dao.entity.SysUser;
 import com.organOld.service.contract.*;
 
-import com.organOld.service.model.Model;
+import com.organOld.service.contract.Result;
 import com.organOld.service.service.CommonService;
 import com.organOld.service.service.OrganService;
 import com.organOld.service.service.UserService;
@@ -12,8 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-
-import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/user")
@@ -53,7 +51,7 @@ public class UserController {
      */
     @ResponseBody
     @RequestMapping(value = "/getRoleOrgan",method = RequestMethod.POST)
-    public Result data(@RequestParam int type,@RequestParam int typeIndex){
+    public Result data(@RequestParam int type, @RequestParam int typeIndex){
         return organService.getRoleOrgan(type,typeIndex);
     }
 

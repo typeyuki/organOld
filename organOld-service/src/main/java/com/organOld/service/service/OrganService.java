@@ -7,6 +7,7 @@ import com.organOld.service.contract.*;
 import com.organOld.service.model.OrganAddModel;
 import com.organOld.service.model.OrganModel;
 import com.organOld.service.model.OrganRegInfoModel;
+import com.organOld.service.contract.Result;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;

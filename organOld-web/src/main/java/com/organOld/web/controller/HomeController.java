@@ -1,26 +1,18 @@
 package com.organOld.web.controller;
 
-import com.organOld.dao.entity.AutoValue;
 import com.organOld.dao.entity.home.Home;
 import com.organOld.service.contract.*;
-import com.organOld.service.enumModel.AutoValueEnum;
 import com.organOld.service.enumModel.HomeEnum;
-import com.organOld.service.model.OrganModel;
-import com.organOld.service.service.AutoValueService;
-import com.organOld.service.service.CommonService;
+import com.organOld.service.contract.Result;
 import com.organOld.service.service.HomeService;
 import com.organOld.service.service.OrganService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 居家养老

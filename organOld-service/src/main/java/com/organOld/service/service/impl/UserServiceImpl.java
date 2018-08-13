@@ -9,6 +9,7 @@ import com.organOld.dao.entity.SysUser;
 import com.organOld.dao.util.Page;
 import com.organOld.service.contract.*;
 import com.organOld.service.model.OrganAuth;
+import com.organOld.service.contract.Result;
 import com.organOld.service.model.UserModel;
 import com.organOld.service.service.CommonService;
 import com.organOld.service.service.UserService;

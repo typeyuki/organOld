@@ -6,8 +6,8 @@ import com.organOld.service.contract.CardRequest;
 import com.organOld.service.contract.Result;
 import com.organOld.service.model.OldmanAllInfoModel;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * Created by netlab606 on 2018/6/25.
@@ -29,9 +29,10 @@ public interface CardService {
 
     Result handleConsume(int cid, int organId, String order, String oldmanPassword, String money);
 
-    Result create(String[] oldmanIds) ;
 
     Result getById(Integer id);
 
     void updateById(Card card);
+
+    void createZip(String[] ids, HttpServletResponse response, HttpServletRequest request);
 }

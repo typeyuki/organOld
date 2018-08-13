@@ -1,14 +1,10 @@
 package com.organOld.web.controller;
 
-import com.organOld.dao.entity.AutoValue;
 import com.organOld.dao.entity.organ.OrganOldman;
-import com.organOld.dao.entity.organ.OrganReg;
-import com.organOld.dao.entity.organ.OrganType;
 import com.organOld.service.contract.*;
-import com.organOld.service.enumModel.AutoValueEnum;
-import com.organOld.service.enumModel.HomeEnum;
 import com.organOld.service.model.OrganAddModel;
 import com.organOld.service.model.OrganModel;
+import com.organOld.service.contract.Result;
 import com.organOld.service.service.AutoValueService;
 import com.organOld.service.service.CommonService;
 import com.organOld.service.service.OrganService;
@@ -22,7 +18,6 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.List;
 
 /**
  * Created by netlab606 on 2018/6/11.

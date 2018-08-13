@@ -2,12 +2,11 @@ package com.organOld.web.controller;
 
 import com.organOld.dao.entity.oldman.*;
 import com.organOld.service.contract.*;
-import com.organOld.service.enumModel.AutoValueEnum;
+import com.organOld.service.contract.Result;
 import com.organOld.service.service.AutoValueService;
 import com.organOld.service.service.OldmanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -15,7 +14,6 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 
 /**
  * Created by netlab606 on 2018/4/1.

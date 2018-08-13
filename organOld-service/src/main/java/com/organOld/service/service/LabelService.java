@@ -9,6 +9,7 @@ import com.organOld.service.contract.*;
 import com.organOld.service.model.LabelAllRuleModel;
 import com.organOld.service.model.LabelFilterModel;
 import com.organOld.service.model.LabelRuleModel;
+import com.organOld.service.contract.Result;
 
 /**
  * Created by netlab606 on 2018/6/7.

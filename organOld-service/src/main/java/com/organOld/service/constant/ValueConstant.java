@@ -7,6 +7,4 @@ public class ValueConstant {
     public static int INTEGRAL_RULE_SIGN=1;
     public static int INTEGRAL_RULE_CONSUME=10;
 
-    //二维码生成路径
-    public static String CODE_CREATE_PATH="c:/codeCreate/";
 }

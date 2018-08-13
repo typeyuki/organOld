@@ -1,6 +1,5 @@
 package com.organOld.web.controller;
 
-import com.organOld.dao.entity.product.Product;
 import com.organOld.service.contract.BTableRequest;
 import com.organOld.service.contract.ProductBookRequest;
 import com.organOld.service.contract.ProductRequest;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/product")

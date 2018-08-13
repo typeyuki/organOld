@@ -2,16 +2,14 @@ package com.organOld.web.controller;
 
 import com.organOld.service.contract.*;
 import com.organOld.service.enumModel.RecordTypeEnum;
+import com.organOld.service.contract.Result;
 import com.organOld.service.service.CommonService;
 import com.organOld.service.service.OrganService;
-import com.organOld.service.service.ProductService;
 import com.organOld.service.service.RecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-
-import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/record")
@@ -54,7 +52,7 @@ public class RecordController {
 
     @ResponseBody
     @RequestMapping(value = "/getMoneySum",method = RequestMethod.GET)
-    public Result getMoneySum(String start,String end,Integer organId){
+    public Result getMoneySum(String start, String end, Integer organId){
         Result result=recordService.getMoneySum(start,end,organId);
         return result;
     }

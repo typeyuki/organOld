@@ -1,16 +1,18 @@
+<#assign basePath=request.contextPath />
 <!DOCTYPE html>
 <html>
-
 <head>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <#include "../common/head.ftl" />
 
-<#--<link href="/css/animate.min.css" rel="stylesheet">-->
     <link href="/css/style.min.css?v=4.0.0" rel="stylesheet">
     <link href="/static/css/common_table.css" rel="stylesheet">
-    <link href="/static/css/oldman/base.css" rel="stylesheet">
+
+    <script type='text/javascript' src="${basePath}/dwr/engine.js"></script>
+    <script type='text/javascript' src="${basePath}/dwr/util.js"></script>
+    <script type='text/javascript' src="${basePath}/dwr/interface/Remote.js"></script>
 </head>
 
 <body class="gray-bg">
@@ -60,6 +62,7 @@
                             <input name="search" class="form-control inp" type="text" placeholder="模糊搜索">
                         </div>
                     </div>
+                    <form class="f" action="/card/create" method="post">
                     <div class="table-responsive">
                         <table class="table table-striped table-bordered table-hover dataTables-example  text-nowrap">
                             <thead>
@@ -80,6 +83,7 @@
                             </tbody>
                         </table>
                     </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -90,6 +94,7 @@
 <script src="/js/content.min.js?v=1.0.0"></script>
 <script src="/static/js/common.js"></script>
 
+<#include "../spinner.ftl"/>
 <#include "add_money.ftl"/>
 <#include "edit_card.ftl" />
 <script src="/static/js/card/card.js" ></script>
