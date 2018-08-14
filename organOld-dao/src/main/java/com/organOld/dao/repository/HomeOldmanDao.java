@@ -15,4 +15,5 @@ public interface HomeOldmanDao extends BaseDao<HomeOldman,Integer>{
 
     void delByJwId(Integer jwId);
 
+    void delAll();
 }

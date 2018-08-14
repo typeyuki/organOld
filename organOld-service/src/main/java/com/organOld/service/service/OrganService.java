@@ -68,4 +68,6 @@ public interface OrganService {
     void updateOldman(OrganOldman organOldman);
 
     void delByOldmanIds(String[] ids);
+
+    Integer getIdByName(String name);
 }

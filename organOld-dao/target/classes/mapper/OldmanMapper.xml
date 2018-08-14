@@ -797,4 +797,15 @@
             </foreach>
         </if>
     </delete>
+
+    <update id="delHomeOldStatus">
+        UPDATE oldman_base SET
+        old_status= CASE old_status
+        WHEN 3 THEN 0
+        WHEN 4 THEN 3,
+        is_handle= CASE old_status
+        WHEN 3 THEN 0
+        WHEN 4 THEN 2
+        WHERE old_status=3 OR old_status=4
+    </update>
 </mapper>

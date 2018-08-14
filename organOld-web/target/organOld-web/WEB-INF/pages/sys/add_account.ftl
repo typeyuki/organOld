@@ -120,7 +120,7 @@
                 }
             });
         }else{
-
+            $("select[name='organId']").html("");
             $(".organ").hide();
 
         }

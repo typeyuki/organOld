@@ -82,15 +82,15 @@ public class HomeController {
 
 
     /**
-     * 居家养老人员的导入 更新：先删除之前的再添加  先根据 身份证号码 检测该老人是否在系统中 不在的话不添加
+     * 居家养老人员的导入 更新：先删除之前的再添加  先根据 身份证号码 检测该老人是否在系统中 不在的话  设为不在系统的老人
      * @param file
      * @return
      * @throws IOException
      */
     @RequestMapping(value = "/man/importExcel",method = RequestMethod.POST)
-    public ModelAndView importManExcel(@RequestParam MultipartFile file) throws IOException {
+    public ModelAndView importManExcel(@RequestParam MultipartFile file,@RequestParam String type) throws IOException {
         ModelAndView mv=new ModelAndView("oldman/home_oldman");
-        Result result=homeService.importManExcel(file);
+        Result result=homeService.importManExcel(file,type);
         mv.addObject("result",result);
         return mv;
     }

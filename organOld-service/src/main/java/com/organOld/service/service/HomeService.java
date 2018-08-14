@@ -14,7 +14,7 @@ public interface HomeService {
 
     String getManByPage(HomeOldmanRequest homeOldmanRequest, BTableRequest bTableRequest);
 
-    Result importManExcel(MultipartFile file) throws IOException;
+    Result importManExcel(MultipartFile file, String type) throws IOException;
 
 
     Result getById(int id, int firType);
@@ -22,4 +22,5 @@ public interface HomeService {
     void addOrUpdate(Home home, String type);
 
     void delByIds(String[] ids, int type);
+
 }

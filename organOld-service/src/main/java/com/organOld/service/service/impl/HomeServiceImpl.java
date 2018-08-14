@@ -16,6 +16,8 @@ import com.organOld.service.model.HomeModel;
 import com.organOld.service.model.HomeOldmanModel;
 import com.organOld.service.service.CommonService;
 import com.organOld.service.service.HomeService;
+import com.organOld.service.service.OldmanService;
+import com.organOld.service.service.OrganService;
 import com.organOld.service.util.Tool;
 import com.organOld.service.wrapper.HomeOldmanWrapper;
 import com.organOld.service.wrapper.HomeWrapper;
@@ -24,6 +26,7 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,6 +36,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -58,6 +62,10 @@ public class HomeServiceImpl implements HomeService{
     HomeWrapper homeWrapper;
     @Autowired
     HomeOldmanWrapper homeOldmanWrapper;
+    @Autowired
+    OldmanService oldmanService;
+    @Autowired
+    OrganService organService;
 
     @Override
     public String getByPage(HomeRequest homeRequest, BTableRequest bTableRequest) {
@@ -80,9 +88,15 @@ public class HomeServiceImpl implements HomeService{
     }
 
     @Override
-    public Result importManExcel(MultipartFile file) throws IOException {
+    public Result importManExcel(MultipartFile file, String type) throws IOException {
         List<HomeOldman> homeOldmanList=new ArrayList<>();
-        Workbook wb0 = new HSSFWorkbook(file.getInputStream());
+
+        String  fix=file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".")+1);
+        Workbook wb0;
+        if(fix.equals("xls"))
+            wb0= new HSSFWorkbook(file.getInputStream());
+        else
+            wb0=new XSSFWorkbook(file.getInputStream());
         //获取Excel文档中的第一个表单
         Sheet sht0 = wb0.getSheetAt(0);
         int start=2;
@@ -92,13 +106,14 @@ public class HomeServiceImpl implements HomeService{
         int successAdd=0;//导入数量中  增加的个数
         excelReturnModel.setTotal(sht0.getLastRowNum()-(start-1));//一共
 
-        Integer jwId=commonService.getIdBySession();
+//        Integer jwId=commonService.getIdBySession();
 
 
-        List<Oldman> oldmanList=new ArrayList<>();//用于更新老人 养老状态
+        List<Oldman> oldmanList=new ArrayList<>();//用于当前导入的老人 养老状态
+
+        Map<String,Oldman> existOldmanMap=oldmanService.getAllOldman();
 
 
-        List<Oldman> homeExistOldman=oldmanDao.getByJwId(jwId);//先存储 该居委所有的老人 ，筛选出去掉的老人 用于更新 去掉的老人的 是否已处理、养老状态
 
         for (Row r : sht0) {
             try {
@@ -112,31 +127,28 @@ public class HomeServiceImpl implements HomeService{
                     int oldStatus= OldStatusEnum.JJ.getIndex();//养老状态
                     Integer oldmanId=0;
                     Integer jjfwOrg=0,chxOrg=0,znOrg=0;
+                    String noExistName=null;
+                    String noExistPid=null;
 
-                    if (commonService.excelIsNotNull(r.getCell(3))) {
-                        oldmanId=commonService.checkOldmanExiest(r.getCell(3).getStringCellValue());
-                        Oldman exiOldman = oldmanDao.getById(oldmanId);
-                        if(oldmanId!=null && oldmanId!=0){
-                                switch (exiOldman.getOldStatus()) {
-                                    case 2:
-                                    case 4:
-                                        //之前是社区养老 或者社区居家
-                                        oldStatus = OldStatusEnum.SJ.getIndex();
-                                        break;
-                                }
-
+                    if (commonService.excelIsNotNull(r.getCell(1))) {
+                        Oldman existOldman=existOldmanMap.get(r.getCell(1).getStringCellValue());
+                        if(existOldman!=null){
+                            oldmanId=existOldman.getId();
+                            switch (existOldman.getOldStatus()){
+                                case 2:
+                                case 4:
+                                    oldStatus=OldStatusEnum.SJ.getIndex();
+                            }
+                            //增加的方式
                             Oldman oldman=new Oldman();
                             oldman.setId(oldmanId);
-                            oldman.setPid(r.getCell(1).getStringCellValue());
                             oldman.setIsHandle(2);
                             oldman.setOldStatus(oldStatus);
-
-                            if(homeExistOldman.contains(oldman)){
-                                homeExistOldman.remove(oldman);
-                            }
                             oldmanList.add(oldman);
+
                         }else{
-                            throw new Exception();
+                            noExistName=r.getCell(0).getStringCellValue();
+                            noExistPid=r.getCell(1).getStringCellValue();
                         }
                     }else{
                         throw new Exception();
@@ -147,12 +159,14 @@ public class HomeServiceImpl implements HomeService{
                      * 家庭服务
                      */
                     if (r.getCell(12)!=null && r.getCell(12).getStringCellValue() != null && !r.getCell(12).getStringCellValue().equals("")) {
-                        jjfwOrg=organDao.getIdByName(r.getCell(12).getStringCellValue());
+                        jjfwOrg=organService.getIdByName(r.getCell(12).getStringCellValue());
                     }
                     if (r.getCell(2)!=null && r.getCell(2).getStringCellValue().equals("1")) {
                         HomeOldman homeOldman=new HomeOldman();
                         homeOldman.setOrganId(jjfwOrg);
                         homeOldman.setOldmanId(oldmanId);
+                        homeOldman.setNoExistName(noExistName);
+                        homeOldman.setNoExistPid(noExistPid);
                         homeOldman.setHomeId(7);
                         homeOldmanList.add(homeOldman);
                     }
@@ -161,6 +175,8 @@ public class HomeServiceImpl implements HomeService{
                         homeOldman.setOrganId(jjfwOrg);
                         homeOldman.setOldmanId(oldmanId);
                         homeOldman.setHomeId(8);
+                        homeOldman.setNoExistName(noExistName);
+                        homeOldman.setNoExistPid(noExistPid);
                         homeOldmanList.add(homeOldman);
                     }
                     if (r.getCell(4)!=null && r.getCell(4).getStringCellValue().equals("1")) {
@@ -168,6 +184,8 @@ public class HomeServiceImpl implements HomeService{
                         homeOldman.setOrganId(jjfwOrg);
                         homeOldman.setOldmanId(oldmanId);
                         homeOldman.setHomeId(9);
+                        homeOldman.setNoExistName(noExistName);
+                        homeOldman.setNoExistPid(noExistPid);
                         homeOldmanList.add(homeOldman);
                     }
                     if (r.getCell(5)!=null && r.getCell(5).getStringCellValue().equals("1")) {
@@ -175,6 +193,8 @@ public class HomeServiceImpl implements HomeService{
                         homeOldman.setOrganId(jjfwOrg);
                         homeOldman.setOldmanId(oldmanId);
                         homeOldman.setHomeId(10);
+                        homeOldman.setNoExistName(noExistName);
+                        homeOldman.setNoExistPid(noExistPid);
                         homeOldmanList.add(homeOldman);
                     }
                     if (r.getCell(6)!=null && r.getCell(6).getStringCellValue().equals("1")) {
@@ -182,6 +202,8 @@ public class HomeServiceImpl implements HomeService{
                         homeOldman.setOrganId(jjfwOrg);
                         homeOldman.setOldmanId(oldmanId);
                         homeOldman.setHomeId(11);
+                        homeOldman.setNoExistName(noExistName);
+                        homeOldman.setNoExistPid(noExistPid);
                         homeOldmanList.add(homeOldman);
                     }
                     if (r.getCell(7)!=null && r.getCell(7).getStringCellValue().equals("1")) {
@@ -189,6 +211,8 @@ public class HomeServiceImpl implements HomeService{
                         homeOldman.setOrganId(jjfwOrg);
                         homeOldman.setOldmanId(oldmanId);
                         homeOldman.setHomeId(12);
+                        homeOldman.setNoExistName(noExistName);
+                        homeOldman.setNoExistPid(noExistPid);
                         homeOldmanList.add(homeOldman);
                     }
                     if (r.getCell(8)!=null && r.getCell(8).getStringCellValue().equals("1")) {
@@ -196,6 +220,8 @@ public class HomeServiceImpl implements HomeService{
                         homeOldman.setOrganId(jjfwOrg);
                         homeOldman.setOldmanId(oldmanId);
                         homeOldman.setHomeId(13);
+                        homeOldman.setNoExistName(noExistName);
+                        homeOldman.setNoExistPid(noExistPid);
                         homeOldmanList.add(homeOldman);
                     }
                     if (r.getCell(9)!=null && r.getCell(9).getStringCellValue().equals("1")) {
@@ -203,6 +229,8 @@ public class HomeServiceImpl implements HomeService{
                         homeOldman.setOrganId(jjfwOrg);
                         homeOldman.setOldmanId(oldmanId);
                         homeOldman.setHomeId(14);
+                        homeOldman.setNoExistName(noExistName);
+                        homeOldman.setNoExistPid(noExistPid);
                         homeOldmanList.add(homeOldman);
                     }
                     if (r.getCell(10)!=null && r.getCell(10).getStringCellValue().equals("1")) {
@@ -210,6 +238,8 @@ public class HomeServiceImpl implements HomeService{
                         homeOldman.setOrganId(jjfwOrg);
                         homeOldman.setOldmanId(oldmanId);
                         homeOldman.setHomeId(15);
+                        homeOldman.setNoExistName(noExistName);
+                        homeOldman.setNoExistPid(noExistPid);
                         homeOldmanList.add(homeOldman);
                     }
                     if (r.getCell(11)!=null && r.getCell(11).getStringCellValue().equals("1")) {
@@ -217,6 +247,8 @@ public class HomeServiceImpl implements HomeService{
                         homeOldman.setOrganId(jjfwOrg);
                         homeOldman.setOldmanId(oldmanId);
                         homeOldman.setHomeId(16);
+                        homeOldman.setNoExistName(noExistName);
+                        homeOldman.setNoExistPid(noExistPid);
                         homeOldmanList.add(homeOldman);
                     }
 
@@ -224,14 +256,16 @@ public class HomeServiceImpl implements HomeService{
                      * 长护险
                      */
                     if (r.getCell(15)!=null && r.getCell(15).getStringCellValue() != null && !r.getCell(15).getStringCellValue().equals("")) {
-                        chxOrg=organDao.getIdByName(r.getCell(15).getStringCellValue());
+                        chxOrg=organService.getIdByName(r.getCell(15).getStringCellValue());
                     }
 
                     if (r.getCell(13)!=null && r.getCell(13).getStringCellValue() != null && !r.getCell(13).getStringCellValue().equals("")) {
                         HomeOldman homeOldman=new HomeOldman();
                         homeOldman.setOrganId(chxOrg);
+                        homeOldman.setNoExistName(noExistName);
+                        homeOldman.setNoExistPid(noExistPid);
                         homeOldman.setOldmanId(oldmanId);
-                        homeOldman.setHomeId(homeDao.getIdBySecType(r.getCell(13).getStringCellValue(),HomeEnum.CHX.getIndex()));
+                        homeOldman.setHomeId(getIdBySecType(r.getCell(13).getStringCellValue(),HomeEnum.CHX.getIndex()));
                         if (r.getCell(14)!=null && r.getCell(14).getStringCellValue() != null && r.getCell(14).getStringCellValue().equals("1")) {
                             homeOldman.setIsService(1);
                         }
@@ -242,13 +276,15 @@ public class HomeServiceImpl implements HomeService{
                      * 智能设备
                      */
                     if (r.getCell(19)!=null && r.getCell(19).getStringCellValue() != null && !r.getCell(19).getStringCellValue().equals("")) {
-                        znOrg=organDao.getIdByName(r.getCell(19).getStringCellValue());
+                        znOrg=organService.getIdByName(r.getCell(19).getStringCellValue());
                     }
                     if (r.getCell(16)!=null && r.getCell(16).getStringCellValue() != null && !r.getCell(16).getStringCellValue().equals("")) {
                         HomeOldman homeOldman=new HomeOldman();
                         homeOldman.setOrganId(znOrg);
+                        homeOldman.setNoExistName(noExistName);
+                        homeOldman.setNoExistPid(noExistPid);
                         homeOldman.setOldmanId(oldmanId);
-                        homeOldman.setHomeId(homeDao.getIdBySecType(r.getCell(16).getStringCellValue(),HomeEnum.ZNZD.getIndex()));
+                        homeOldman.setHomeId(getIdBySecType(r.getCell(16).getStringCellValue(),HomeEnum.ZNZD.getIndex()));
                         if(r.getCell(17)!=null && r.getCell(17).getStringCellValue() != null && !r.getCell(17).getStringCellValue().equals("")){
                             homeOldman.setTimeIn(Tool.stringToDate(r.getCell(17).getStringCellValue()));
                         }
@@ -264,6 +300,8 @@ public class HomeServiceImpl implements HomeService{
                      */
                     if (r.getCell(20)!=null && r.getCell(20).getStringCellValue() != null && !r.getCell(20).getStringCellValue().equals("")) {
                         HomeOldman homeOldman=new HomeOldman();
+                        homeOldman.setNoExistName(noExistName);
+                        homeOldman.setNoExistPid(noExistPid);
                         homeOldman.setOldmanId(oldmanId);
                         if(r.getCell(21)!=null && r.getCell(21).getStringCellValue() != null && !r.getCell(21).getStringCellValue().equals("")){
                             homeOldman.setTimeIn(Tool.stringToDate(r.getCell(21).getStringCellValue()));
@@ -271,7 +309,7 @@ public class HomeServiceImpl implements HomeService{
                         if(r.getCell(21)!=null && r.getCell(21).getStringCellValue() != null && !r.getCell(21).getStringCellValue().equals("")){
                             homeOldman.setTimeOut(Tool.stringToDate(r.getCell(21).getStringCellValue()));
                         }
-                        homeOldman.setHomeId(homeDao.getIdBySecType(r.getCell(20).getStringCellValue(),HomeEnum.JTYS.getIndex()));
+                        homeOldman.setHomeId(getIdBySecType(r.getCell(20).getStringCellValue(),HomeEnum.JTYS.getIndex()));
                         homeOldmanList.add(homeOldman);
                     }
 
@@ -280,6 +318,8 @@ public class HomeServiceImpl implements HomeService{
                      */
                     if (r.getCell(23)!=null && r.getCell(23).getStringCellValue() != null && !r.getCell(23).getStringCellValue().equals("")) {
                         HomeOldman homeOldman=new HomeOldman();
+                        homeOldman.setNoExistName(noExistName);
+                        homeOldman.setNoExistPid(noExistPid);
                         homeOldman.setOldmanId(oldmanId);
                         if(r.getCell(24)!=null && r.getCell(24).getStringCellValue() != null && !r.getCell(24).getStringCellValue().equals("")){
                             homeOldman.setTimeIn(Tool.stringToDate(r.getCell(24).getStringCellValue()));
@@ -287,7 +327,7 @@ public class HomeServiceImpl implements HomeService{
                         if(r.getCell(25)!=null && r.getCell(25).getStringCellValue() != null && !r.getCell(25).getStringCellValue().equals("")){
                             homeOldman.setTimeOut(Tool.stringToDate(r.getCell(25).getStringCellValue()));
                         }
-                        homeOldman.setHomeId(homeDao.getIdBySecType(r.getCell(23).getStringCellValue(),HomeEnum.JTBC.getIndex()));
+                        homeOldman.setHomeId(getIdBySecType(r.getCell(23).getStringCellValue(),HomeEnum.JTBC.getIndex()));
                         homeOldmanList.add(homeOldman);
                     }
 
@@ -304,25 +344,30 @@ public class HomeServiceImpl implements HomeService{
         excelReturnModel.setNumSuccess(numSuccess);
 
         //该居家 删除的老人 的养老状态   之前是社区居家养老 则变为2  其他为0
-        for(Oldman oldman:homeExistOldman){
-                    if(oldman.getOldStatus()==4){
-                        oldman.setOldStatus(2);
-                        oldman.setIsHandle(2);
-                    }else if(oldman.getOldStatus()==3){
-                        oldman.setOldStatus(0);
-                        oldman.setIsHandle(0);
-                    }
+        if(type.equals("update")){
+            //更新的方式
+            //删掉之前的所有数据
+            homeOldmanDao.delAll();
+            oldmanKeyHandleDao.delByOldman(oldmanList);
+            //将 养老状态为4 的改为 2
+            //将 养老状态为3 的改为 0 切 handle=0
+            oldmanDao.delHomeOldStatus();
+        }else{
+            if(oldmanList.size()>0)
+                oldmanKeyHandleDao.delByOldman(oldmanList);
         }
 
-        homeOldmanDao.delByJwId(jwId);
         if(homeOldmanList.size()>0){
             // 老人基本信息表  养老状态更新
-            homeExistOldman.addAll(oldmanList);//删除的老人 和 更新的 一起更新养老状态
-            oldmanDao.updateOrganExceLImportByIds(homeExistOldman);
+            if(oldmanList.size()>0)
+                oldmanDao.updateOrganExceLImportByIds(oldmanList);
             homeOldmanDao.saveAll(homeOldmanList);
-            oldmanKeyHandleDao.delByOldman(oldmanList);
         }
         return new Result(true,excelReturnModel);
+    }
+
+    private int getIdBySecType(String stringCellValue, int index) {
+       return homeDao.getIdBySecType(stringCellValue,index);
     }
 
     @Override

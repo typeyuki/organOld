@@ -741,4 +741,9 @@ public class OrganServiceImpl implements OrganService{
         }
         organOldmanDao.delByIds(id);
     }
+
+    @Override
+    public Integer getIdByName(String name) {
+        return organDao.getIdByName(name);
+    }
 }

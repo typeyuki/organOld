@@ -19,8 +19,27 @@ public class HomeOldman extends DBEntity implements DBInterface{
     private String[] type;
     private Home home;
 
+    private String noExistName;
+    private String noExistPid;
+
     private Integer organId;//居委ID
     private String search;
+
+    public String getNoExistName() {
+        return noExistName;
+    }
+
+    public void setNoExistName(String noExistName) {
+        this.noExistName = noExistName;
+    }
+
+    public String getNoExistPid() {
+        return noExistPid;
+    }
+
+    public void setNoExistPid(String noExistPid) {
+        this.noExistPid = noExistPid;
+    }
 
     public String getSearch() {
         return search;

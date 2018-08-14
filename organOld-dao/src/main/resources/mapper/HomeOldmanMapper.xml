@@ -25,7 +25,7 @@
 
 
     <select id="getByPage" parameterType="com.organOld.dao.util.Page" resultMap="homeOldman">
-        SELECT ho.id,ho.time_in,ho.time_out,ho.is_service,o.id oid,o.name,h.id hid,ho.time,orgDy.id orgid,orgDy.name orgname,h.fir_type,
+        SELECT ho.id,ho.time_in,ho.time_out,ho.is_service,ho.noexist_name,ho.noexist_pid,o.id oid,o.name,h.id hid,ho.time,orgDy.id orgid,orgDy.name orgname,h.fir_type,
         case h.fir_type
         when 2 then c.level
         when 4 then hd.name
@@ -119,10 +119,10 @@
 
 
     <insert id="saveAll" parameterType="java.util.List">
-        INSERT into home_oldman(home_id,oldman_id,time_in,time_out,is_service,organ_id)
+        INSERT into home_oldman(home_id,oldman_id,time_in,time_out,is_service,organ_id,noexist_name,noexist_pid)
         VALUES
         <foreach collection="list" item="item" index="index" separator=",">
-            (#{item.homeId},#{item.oldmanId},#{item.timeIn},#{item.timeOut},#{item.isService},#{item.organId})
+            (#{item.homeId},#{item.oldmanId},#{item.timeIn},#{item.timeOut},#{item.isService},#{item.organId},#{item.noExistName},#{item.noExistPid})
         </foreach>
     </insert>
 
@@ -136,5 +136,8 @@
 
     </delete>
 
+    <delete id="delAll">
+        DELETE from home_oldman where 1=1
+    </delete>
 
 </mapper>

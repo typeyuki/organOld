@@ -50,4 +50,6 @@ public interface OldmanDao extends BaseDao<Oldman,Integer>{
     Map<String,Oldman> getAllOldman();
 
     List<Oldman> getBySearch(String search);
+
+    void delHomeOldStatus();
 }
