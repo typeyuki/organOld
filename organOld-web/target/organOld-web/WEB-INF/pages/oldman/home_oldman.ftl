@@ -85,6 +85,15 @@
     </div>
 
 </div>
+<<<<<<< HEAD
+=======
+<script>
+    <#if result??>
+     alert("录入数据：${result.data.total}\n其中成功导入数据：${result.data.numSuccess}\n包括添加：${result.data.successAdd}\n更新：${result.data.successUpdate}\n失败：${result.data.numFail}");
+    </#if>
+</script>
+<#include "home_oldman_import_type.ftl"/>
+>>>>>>> b275ee843d4708cb9702414c99a0c1bac61af158
 <script src="/js/content.min.js?v=1.0.0"></script>
 <script src="/static/js/common.js"></script>
 <script src="/static/js/oldman/home_man.js" ></script>

@@ -53,6 +53,7 @@ public interface OldmanDao extends BaseDao<Oldman,Integer>{
 
     void delHomeOldStatus();
 
+
     void updateHomeOldStatusById(Integer id);
 
 
@@ -63,4 +64,5 @@ public interface OldmanDao extends BaseDao<Oldman,Integer>{
     void updateCommunityOldmanStatusById(Integer id);
 
     void delCommunityOldmanStatusByIds(String[] delOldmanId);
+
 }

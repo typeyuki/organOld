@@ -197,9 +197,11 @@
     </delete>
 
 
+
     <select id="getById" resultType="com.organOld.dao.entity.home.HomeOldman">
         SELECT id,home_id,time_in,time_out,organ_id,is_service from home_oldman where id=#{id}
     </select>
+
 
 
     <delete id="delByIds">

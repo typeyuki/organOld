@@ -70,6 +70,7 @@ public class HomeServiceImpl implements HomeService{
     OrganService organService;
 
 
+
     @Override
     public String getManAllByPage(HomeOldmanRequest homeOldmanRequest, BTableRequest bTableRequest) {
         Page<HomeOldman> page=commonService.getPage(bTableRequest,"oldman_homeOldman");
@@ -152,6 +153,7 @@ public class HomeServiceImpl implements HomeService{
                                 case 4:
                                     oldStatus=OldStatusEnum.SJ.getIndex();
                             }
+
                             Oldman oldman=new Oldman();
                             oldman.setId(oldmanId);
                             oldman.setIsHandle(2);
@@ -326,6 +328,7 @@ public class HomeServiceImpl implements HomeService{
                         homeOldman.setHomeId(getIdBySecType(r.getCell(20).getStringCellValue(),HomeEnum.JTYS.getIndex()));
                         if(homeOldman.getHomeId()!=null && homeOldman.getHomeId()!=0)
                             homeOldmanList.add(homeOldman);
+
                     }
 
                     /**
@@ -345,6 +348,7 @@ public class HomeServiceImpl implements HomeService{
                         homeOldman.setHomeId(getIdBySecType(r.getCell(23).getStringCellValue(),HomeEnum.JTBC.getIndex()));
                         if(homeOldman.getHomeId()!=null && homeOldman.getHomeId()!=0)
                             homeOldmanList.add(homeOldman);
+
                     }
 
                     numSuccess++;

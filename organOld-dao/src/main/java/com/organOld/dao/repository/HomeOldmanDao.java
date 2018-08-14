@@ -18,9 +18,11 @@ public interface HomeOldmanDao extends BaseDao<HomeOldman,Integer>{
 
     void delAll();
 
+
     List<HomeOldman> getManAllByPage(Page<HomeOldman> page);
 
     Long getManAllSizeByPage(Page<HomeOldman> page);
 
     List<Integer> getDelOldmanIdsByHomeOldmanIds(Integer[] id);
+
 }

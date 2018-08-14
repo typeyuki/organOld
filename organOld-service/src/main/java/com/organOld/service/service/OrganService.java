@@ -71,5 +71,6 @@ public interface OrganService {
 
     Integer getIdByName(String name);
 
+
     List<Organ> getALLNotInFirType(int firType);
 }
