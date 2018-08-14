@@ -788,5 +788,5 @@ public class OrganServiceImpl implements OrganService{
         return organDao.getALLNotInFirType(firType);
     }
 
-    
+
 }
