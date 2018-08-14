@@ -3,13 +3,14 @@
  */
 $(document).ready(function(){
     var columns=[];
-    var order=[];
     var columnDefs=[];
     if(single=="single"){
         columns=[{},{
             data:"oldmanId"
         },{
             data:"oldmanName"
+        },{
+            data: "oldmanStatus"
         },{
             data:"num"
         },{
@@ -22,7 +23,6 @@ $(document).ready(function(){
             data:"time"
         }
         ];
-        order=[[1,"asc"]];
         columnDefs=[
             // 列样式
             {
@@ -33,7 +33,7 @@ $(document).ready(function(){
                 }
             },
             {
-                "targets": [3], // 目标列位置，下标从0开始
+                "targets": [4], // 目标列位置，下标从0开始
                 "data": "num", // 数据列名
                 "render": function(data, type, full) { // 返回自定义内容
                     if(data=="0"){
@@ -45,14 +45,12 @@ $(document).ready(function(){
             },
             // 增加一列，包括删除和修改，同时将我们需要传递的数据传递到链接中
             {
-                "targets": [8], // 目标列位id置，下标从0开始
+                "targets": [9], // 目标列位id置，下标从0开始
                 "data": "id", // 数据列名
                 "render": function(data, type, full) { // 返回自定义内容
                     return "<span class='btn btn-primary' onclick='edit("+data+")'>修改</span>";
                 }
-            },
-            //不进行排序的列
-            { "bSortable": false, "aTargets": [ 0,2 ,3, 4,5,6,7,8] }
+            }
         ];
     }else{
         columns=[{
@@ -71,7 +69,6 @@ $(document).ready(function(){
             data:"time"
         }
         ];
-        order=[[0,"asc"]];
         columnDefs=[
             // 列样式
             {
@@ -92,9 +89,7 @@ $(document).ready(function(){
                 "render": function(data, type, full) { // 返回自定义内容
                     return "<button class='btn btn-primary'  onclick=newPage("+data+",$(this).parent().prev().prev().prev().prev().prev().prev().text(),'/oldman/"+data+"/info')>查看</button>";
                 }
-            },
-            //不进行排序的列
-            { "bSortable": false, "aTargets": [ 1,2 ,3, 4,5,6,7] }
+            }
         ];
     }
 
@@ -109,7 +104,6 @@ $(document).ready(function(){
             "bProcessing": true, //加载数据时显示正在加载信息
             "bServerSide": true, //指定从服务器端获取数据
             "columns":columns,
-            "order":order,
             "columnDefs": columnDefs,
             "sAjaxSource": dataUrl,//这个是请求的地址
             "fnServerData": retrieveData
@@ -155,7 +149,6 @@ $(document).ready(function(){
 function add() {
     $(".lr").show();
     $(".searchable-select").attr("name","oldmanId");
-    $(".oldmanId").attr("name","");
     $(".id").attr("name","");
     $('#addModal').modal();
     $('#addModal form').attr("action","/organ/oldman/add");
@@ -165,7 +158,6 @@ function edit(id) {
     $(".lr").hide();
     $(".searchable-select").attr("name","");
     $(".id").attr("name","id");
-    $(".oldmanId").attr("name","oldmanId");
     $('#addModal form').attr("action","/organ/oldman/update");
     $.ajax({
         url: "/organ/oldman/"+id+"/getById",

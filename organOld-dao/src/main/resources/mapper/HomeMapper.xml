@@ -139,4 +139,16 @@
             #{item}
         </foreach>
     </delete>
+
+
+    <select id="getAll" resultType="com.organOld.dao.entity.home.Home">
+        SELECT h.id,h.fir_type,
+        case h.fir_type
+        when 2 then c.level
+        when 4 then hd.name
+        when 5 then org.name
+        else h.sec_type
+        end sec_type
+        FROM home h left join chx c on c.id=h.sec_type left join organ org on org.id=h.sec_type left join home_doctor hd on hd.id=h.sec_type
+    </select>
 </mapper>

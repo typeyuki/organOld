@@ -2,7 +2,9 @@
  * Created by netlab606 on 2018/4/2.
  */
 $(document).ready(function(){
-    var columns=[{
+    var columns=[];
+    var columnDefs=[];
+    columns=[{
         data:"oldmanId"
     },{
         data:"oldmanName"
@@ -21,8 +23,7 @@ $(document).ready(function(){
         data:"time"
     }
     ];
-    var order=[[0,"asc"]];
-    var columnDefs=[
+    columnDefs=[
         // 列样式
         {
             "targets": [4], // 目标列位置，下标从0开始
@@ -62,9 +63,7 @@ $(document).ready(function(){
             "render": function(data, type, full) { // 返回自定义内容
                 return "<button class='btn btn-primary' id='"+data+"' onclick=newPage("+data+",$(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().text(),'/oldman/"+data+"/info')>查看</button>";
             }
-        },
-        //不进行排序的列
-        { "bSortable": false, "aTargets": [ 1,2 ,3, 4,5,6,7,9,8] }
+        }
     ];
 
     var table =$(".dataTables-example").dataTable(
@@ -72,13 +71,12 @@ $(document).ready(function(){
             "sPaginationType": "full_numbers",
             "bPaginite": true,
             "bInfo": true,
-            "bSort": true,
+            "bSort": false,
             "bFilter": false, //搜索栏
             "bStateSave": true,
             "bProcessing": true, //加载数据时显示正在加载信息
             "bServerSide": true, //指定从服务器端获取数据
             "columns":columns,
-            "order":order,
             "columnDefs": columnDefs,
             "sAjaxSource": "/oldman/homeOldmanData",//这个是请求的地址
             "fnServerData": retrieveData
@@ -119,40 +117,10 @@ $(document).ready(function(){
 
 });
 
-function look(organId,obj,url) {
-    alert(1);
-    var t="oldman/base",
-        a="1"+organId,
-        i=$(obj).parent().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().text(),
-        n=!0;
 
-    var jq=top.jQuery;
-    if(void 0==t||0==$.trim(t).length)
-        return!1;
-    if(
-        jq(".J_menuTab").each(
-            function(){
-                return $(this).data("id")==t?(
-                        $(this).hasClass("active")||
-                        (
-                            $(this).addClass("active").siblings(".J_menuTab").removeClass("active"),
-                                jq(".J_mainContent .J_iframe").each(function(){
-                                    return $(this).data("id")==t?
-                                        ($(this).show().siblings(".J_iframe").hide(),!1)
-                                        :
-                                        void 0}))
-                            ,n=!1,!1)
-                    : void 0
-            })
-            ,n
-    ) {
-        var s='<a href="javascript:;" class="active J_menuTab" data-id="'+t+'">'+i+' <i class="fa fa-times-circle"></i></a>';
-        jq(".J_menuTab").removeClass("active");
-        var r='<iframe class="J_iframe" name="iframe'+a+'" width="100%" height="100%" src="'+t+'" frameborder="0" data-id="'+t+'" seamless></iframe>';
-        jq(".J_mainContent").find("iframe.J_iframe").hide().parents(".J_mainContent").append(r);
-        jq(".J_mainContent iframe:visible").load(function(){layer.close(o)});
-        jq(".J_menuTabs .page-tabs-content").append(s);
-        e(jq(".J_menuTab.active"));
-    }
-    return!1
+function sub() {
+    $("#importForm input[name='type']").val($("#editModal input[name=type]").val());
+    $('.wrapper').hide();
+    $('#process').show();
+    $('#importForm').submit()
 }

@@ -197,8 +197,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public SysUser getBySession() {
-        Integer organId=commonService.getIdBySession();
-        SysUser user=userDao.getByOrganId(organId);
+        SysUser user=null;
+            Integer organId=commonService.getIdBySession();
+        if(organId==null || organId==0){
+            user=userDao.getByUsername(commonService.getUserNameBySession());
+        }else {
+            user = userDao.getByOrganId(organId);
+        }
         return user;
     }
 

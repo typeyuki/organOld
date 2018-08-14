@@ -35,8 +35,9 @@
                     <div>
                         <a  href="javascript:void(0);" id="search" class="btn btn-primary ">搜索</a>
                         <form action="/home/man/importExcel" method="post" enctype="multipart/form-data" id="importForm" style="display: inline">
-                            <input type="button" style="display:inline" class="btn btn-primary" onclick="$('.wrapper').hide();$('#process').show();$('#importForm').submit()" value="导入">
+                            <input type="button" style="display:inline" class="btn btn-primary" onclick="$('#editModal').modal()" value="导入">
                             <input type="file" name="file" style="display:inline">
+                            <input type="hidden" name="type">
                         </form>
                     </div>
                     <div class="row">
@@ -84,11 +85,6 @@
     </div>
 
 </div>
-<script>
-    <#if result??>
-    alert("录入数据：${result.data.total}\n其中成功导入数据：${result.data.numSuccess}\n包括添加：${result.data.successAdd}\n更新：${result.data.successUpdate}\n失败：${result.data.numFail}");
-    </#if>
-</script>
 <script src="/js/content.min.js?v=1.0.0"></script>
 <script src="/static/js/common.js"></script>
 <script src="/static/js/oldman/home_man.js" ></script>

@@ -1,6 +1,7 @@
 package com.organOld.web.controller;
 
 import com.organOld.dao.entity.home.Home;
+import com.organOld.dao.entity.home.HomeOldman;
 import com.organOld.service.contract.*;
 import com.organOld.service.enumModel.HomeEnum;
 import com.organOld.service.contract.Result;
@@ -32,6 +33,53 @@ public class HomeController {
      * 居家养老
      *
      */
+
+    /**
+     * 居家养老录入人员的页面
+     * @return
+     */
+    @RequestMapping(value = "/man/all",method = RequestMethod.GET)
+    public ModelAndView manAll(){
+        ModelAndView mv=new ModelAndView("home/home_oldman_all");
+        mv.addObject("info",homeService.getAddInfo());
+        return mv;
+    }
+    @ResponseBody
+    @RequestMapping(value = "/man/all/data",method = RequestMethod.POST)
+    public String home_data_all(HomeOldmanRequest homeOldmanRequest, BTableRequest bTableRequest,
+                                @RequestParam(value = "type_array[]",required = false) String type[]){
+        homeOldmanRequest.setType(type);
+        return homeService.getManAllByPage(homeOldmanRequest,bTableRequest);
+    }
+
+
+    @RequestMapping(value = "/oldman/add",method = RequestMethod.POST)
+    public ModelAndView oldman_add(HomeOldman homeOldman){
+        ModelAndView mv=new ModelAndView("redirect:/home/man/all");
+        homeService.addOldman(homeOldman);
+        return mv;
+    }
+
+    @RequestMapping(value = "/oldman/update",method = RequestMethod.POST)
+    public ModelAndView oldman_update(HomeOldman homeOldman){
+        ModelAndView mv=new ModelAndView("redirect:/home/man/all");
+        homeService.updateOldman(homeOldman);
+        return mv;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/oldman/del",method = RequestMethod.POST)
+    public Result oldman_del(@RequestParam("ids[]") String ids[]){
+        homeService.delByOldmanIds(ids);
+        return new Result(true);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/oldman/{id}/getById",method = RequestMethod.GET)
+    public Result getOldmanById(@PathVariable Integer id){
+        return new Result(true, homeService.getOldmanById(id));
+    }
+
 
     /**
      * 页面
@@ -82,15 +130,15 @@ public class HomeController {
 
 
     /**
-     * 居家养老人员的导入 更新：先删除之前的再添加  先根据 身份证号码 检测该老人是否在系统中 不在的话不添加
+     * 居家养老人员的导入 更新：先删除之前的再添加  先根据 身份证号码 检测该老人是否在系统中 不在的话  设为不在系统的老人
      * @param file
      * @return
      * @throws IOException
      */
     @RequestMapping(value = "/man/importExcel",method = RequestMethod.POST)
-    public ModelAndView importManExcel(@RequestParam MultipartFile file) throws IOException {
+    public ModelAndView importManExcel(@RequestParam MultipartFile file,@RequestParam String type) throws IOException {
         ModelAndView mv=new ModelAndView("oldman/home_oldman");
-        Result result=homeService.importManExcel(file);
+        Result result=homeService.importManExcel(file,type);
         mv.addObject("result",result);
         return mv;
     }

@@ -25,10 +25,16 @@ public class OrganOldmanWrapper implements Wrapper<OrganOldman,OrganOldmanModel,
         if(!StringUtils.isEmpty(organOldman.getOldman())){
             organOldmanModel.setOldmanId(organOldman.getOldman().getId());
             organOldmanModel.setOldmanName(organOldman.getOldman().getName());
+            if(organOldman.getOldman().getDisable()==0){
+                organOldmanModel.setOldmanStatus("正常");
+            }else{
+                organOldmanModel.setOldmanStatus("被删除");
+            }
         }
         if(!StringUtils.isEmpty(organOldman.getNoExistName())){
             organOldmanModel.setOldmanId(null);
             organOldmanModel.setOldmanName(organOldman.getNoExistName());
+            organOldmanModel.setOldmanStatus("不在当前老人集中");
         }
         organOldmanModel.setNum(organOldman.getNum());
         organOldmanModel.setTimeIn(Tool.dateToString(organOldman.getTimeIn(),"yyyy-MM-dd"));

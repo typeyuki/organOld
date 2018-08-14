@@ -14,6 +14,7 @@
         <association property="oldman" javaType="com.organOld.dao.entity.oldman.Oldman">
             <id property="id" column="oid" />
             <result property="name" column="name"/>
+            <result property="disable" column="disable" />
         </association>
         <association property="organ" javaType="com.organOld.dao.entity.organ.Organ">
             <id property="id" column="orgid" />
@@ -21,9 +22,9 @@
         </association>
     </resultMap>
 
-
+<!--某个机构的 全部老人-->
     <select id="getManByPage" parameterType="com.organOld.dao.util.Page" resultMap="organOldman">
-        SELECT oo.id,o.id oid,o.name,oo.time_in,oo.time_out,oo.num,oo.time,oo.noexist_name,oo.apply_time
+        SELECT oo.id,o.id oid,o.name,o.disable,oo.time_in,oo.time_out,oo.num,oo.time,oo.noexist_name,oo.apply_time
         FROM organ_oldman oo LEFT join oldman_base o on oo.oldman_id=o.id
         WHERE oo.organ_id=#{entity.organ.id}
         <if test="entity.isPd!=null and entity.isPd==1">
@@ -78,6 +79,7 @@
     </select>
 
 
+    <!--养老状态中的全部老人-->
     <select id="getByPage" parameterType="com.organOld.dao.util.Page" resultMap="organOldman">
         SELECT oo.id,org.id orgid,o.id oid,oo.time_in,oo.time_out,oo.num,oo.time,o.name,org.name orgname,oo.apply_time
         FROM organ_oldman oo, oldman_base o,organ org,organ_type ot,organ jw,auto_value x
@@ -167,7 +169,7 @@
     </insert>
 
 
-    <insert id="save" parameterType="java.util.List">
+    <insert id="save" parameterType="com.organOld.dao.entity.organ.OrganOldman">
         INSERT into organ_oldman(organ_id,oldman_id,time_in,time_out,num,apply_time,noexist_name,noexist_pid)
         VALUES
             (#{organId},#{oldmanId},#{timeIn},#{timeOut},#{num},#{applyTime},#{noExistName},#{noExistPid})
@@ -199,4 +201,13 @@
             #{item}
         </foreach>
     </delete>
+
+
+    <select id="getDelOldmanIdsByOrganOldmanIds" resultType="com.organOld.dao.entity.organ.OrganOldman">
+        SELECT DISTINCT oldman_id,num from organ_oldman
+        WHERE id in
+        <foreach collection="array" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
 </mapper>

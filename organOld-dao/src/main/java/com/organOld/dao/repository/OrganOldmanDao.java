@@ -22,4 +22,7 @@ public interface OrganOldmanDao extends BaseDao<OrganOldman,Integer>{
     List<OrganOldman> getManByPage(Page<OrganOldman> page);
 
     Long getManSizeByPage(Page<OrganOldman> page);
+
+
+    List<OrganOldman> getDelOldmanIdsByOrganOldmanIds(Integer[] id);
 }

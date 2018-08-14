@@ -65,7 +65,7 @@
         <collection property="healthSelect" ofType="com.organOld.dao.entity.oldman.HealthSelect">
             <id property="id" column="hsid" />
             <result property="firType" column="fir_type"/>
-            <result property="secTypeName" column="sec_type_name" />
+            <result property="secTypeName" column="sec_type_zname" />
         </collection>
     </resultMap>
 
@@ -797,4 +797,94 @@
             </foreach>
         </if>
     </delete>
+
+    <update id="delHomeOldStatus">
+        UPDATE oldman_base SET
+        is_handle= CASE old_status
+        WHEN 3 THEN 0
+        WHEN 4 THEN 2
+        ELSE is_handle
+        END,
+        old_status= CASE old_status
+        WHEN 3 THEN 0
+        WHEN 4 THEN 2
+        ELSE old_status
+        END
+        WHERE old_status=3 OR old_status=4
+    </update>
+
+
+    <update id="updateHomeOldStatusById">
+        UPDATE oldman_base SET
+        old_status= CASE old_status
+        WHEN 2 THEN 4
+        WHEN 0 THEN 3
+        ELSE old_status
+        END,
+        is_handle= CASE is_handle
+        WHEN 0 THEN 2
+        ELSE is_handle
+        END
+        WHERE id=#{id}
+    </update>
+
+
+    <update id="delHomeOldStatusByIds">
+        UPDATE oldman_base SET
+        is_handle= CASE old_status
+        WHEN 3 THEN 0
+        WHEN 4 THEN 2
+        ELSE is_handle
+        END,
+        old_status= CASE old_status
+        WHEN 3 THEN 0
+        WHEN 4 THEN 2
+        ELSE old_status
+        END
+        WHERE id in
+        <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+    </update>
+
+    <update id="delCommunityOldmanStatusByIds">
+        UPDATE oldman_base SET
+        is_handle= CASE old_status
+        WHEN 2 THEN 0
+        WHEN 4 THEN 2
+        ELSE is_handle
+        END,
+        old_status= CASE old_status
+        WHEN 2 THEN 0
+        WHEN 4 THEN 3
+        ELSE old_status
+        END
+        WHERE id in
+        <foreach collection="array" index="index" item="item" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+    </update>
+
+    <select id="updateCommunityOldmanStatusById">
+        UPDATE oldman_base SET
+        old_status= CASE old_status
+        WHEN 3 THEN 4
+        WHEN 0 THEN 2
+        ELSE old_status
+        END,
+        is_handle= CASE is_handle
+        WHEN 0 THEN 2
+        ELSE is_handle
+        END
+        WHERE id=#{id}
+    </select>
+
+    <select id="getByDelOldmanIds" resultType="com.organOld.dao.entity.oldman.Oldman">
+        SELECT DISTINCT o.id,o.is_handle,o.old_status from oldman_base o,home_oldman ho
+        WHERE o.id=ho.oldman_id and ho.oldman_id in
+        <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+    </select>
+
 </mapper>

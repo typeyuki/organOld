@@ -3,6 +3,7 @@ package com.organOld.dao.repository;
 
 import com.organOld.dao.entity.home.HomeOldman;
 import com.organOld.dao.entity.oldman.Oldman;
+import com.organOld.dao.util.Page;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -15,4 +16,11 @@ public interface HomeOldmanDao extends BaseDao<HomeOldman,Integer>{
 
     void delByJwId(Integer jwId);
 
+    void delAll();
+
+    List<HomeOldman> getManAllByPage(Page<HomeOldman> page);
+
+    Long getManAllSizeByPage(Page<HomeOldman> page);
+
+    List<Integer> getDelOldmanIdsByHomeOldmanIds(Integer[] id);
 }

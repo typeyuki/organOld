@@ -11,10 +11,18 @@ public class OrganOldmanModel extends Model {
     private String timeOut;
     private String num;
     private String applyTime;
-
+    private String oldmanStatus;
 
     private Organ organ;
 
+
+    public String getOldmanStatus() {
+        return oldmanStatus;
+    }
+
+    public void setOldmanStatus(String oldmanStatus) {
+        this.oldmanStatus = oldmanStatus;
+    }
 
     public Organ getOrgan() {
         return organ;

@@ -53,7 +53,9 @@
                             <a class="J_menuItem" href="${menu.url}">
                                 <i class="fa ${menu.icon}"></i>
                                 <span class="nav-label">${menu.name}</span>
+                                <#if menu.url?contains("message")>
                                 <span class="label label-warning pull-right">${messageNum!0}</span>
+                                </#if>
                             </a>
                             </#if>
                         <#if (menu.children)??  && (menu.children)?size gt 0>

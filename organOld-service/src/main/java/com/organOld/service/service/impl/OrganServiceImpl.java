@@ -716,10 +716,23 @@ public class OrganServiceImpl implements OrganService{
     }
 
     @Override
+    @Transactional
     public void addOldman(OrganOldman organOldman) {
         Integer organId=commonService.getIdBySession();
         organOldman.setOrganId(organId);
         organOldmanDao.save(organOldman);
+        //不是排队
+        if(!organOldman.getNum().equals("0")) {
+            oldmanDao.updateProp("is_handle", "2", organOldman.getOldmanId());
+            Integer firType = organTypeDao.getFirTypeByOrganId(organId);
+            if (firType == 21) {
+//            机构养老
+                oldmanDao.updateProp("old_status", "1", organOldman.getOldmanId());
+            } else {
+                //社区养老
+                oldmanDao.updateCommunityOldmanStatusById(organOldman.getOldmanId());
+            }
+        }
     }
 
     @Override
@@ -729,7 +742,7 @@ public class OrganServiceImpl implements OrganService{
 
     @Override
     public void updateOldman(OrganOldman organOldman) {
-        Integer organId=commonService.getIdBySession();
+//        Integer organId=commonService.getIdBySession();
         organOldmanDao.updateById(organOldman);
     }
 
@@ -739,6 +752,39 @@ public class OrganServiceImpl implements OrganService{
         for(int i=0;i<ids.length;i++){
             id[i]=Integer.parseInt(ids[i]);
         }
+        List<OrganOldman> delOldman=organOldmanDao.getDelOldmanIdsByOrganOldmanIds(id);
+
+        String[] delOldmanIdsNoPd=new String[delOldman.size()];//非排队的
+        int i=0;
+        for(OrganOldman organOldman:delOldman){
+            if(!organOldman.getNum().equals("0"))
+                delOldmanIdsNoPd[i++]=organOldman.getOldmanId()+"";
+        }
         organOldmanDao.delByIds(id);
+
+        if(delOldmanIdsNoPd[0]!=null && !delOldmanIdsNoPd[0].equals("")) {
+            Integer organId = commonService.getIdBySession();
+            Integer firType = organTypeDao.getFirTypeByOrganId(organId);
+
+            if (firType == 21) {
+//            机构养老
+                oldmanDao.updateProps("old_status", "0", delOldmanIdsNoPd);
+                oldmanDao.updateProps("is_handle", "0", delOldmanIdsNoPd);
+            } else {
+                //社区养老
+                oldmanDao.delCommunityOldmanStatusByIds(delOldmanIdsNoPd);
+            }
+        }
+
+    }
+
+    @Override
+    public Integer getIdByName(String name) {
+        return organDao.getIdByName(name);
+    }
+
+    @Override
+    public List<Organ> getALLNotInFirType(int firType) {
+        return organDao.getALLNotInFirType(firType);
     }
 }

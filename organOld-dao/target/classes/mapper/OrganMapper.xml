@@ -291,4 +291,9 @@
         SET auth_consume=#{consume},auth_product=#{product},auth_sign=#{sign},auth_query_info=#{info},auth_query_integral=#{integral}
         WHERE id=#{id}
     </update>
+
+    <select id="getALLNotInFirType" resultType="com.organOld.dao.entity.organ.Organ">
+        SELECT o.id,o.name from organ o,organ_type ot WHERE ot.id=o.organ_type_id
+        and ot.fir_type!=#{firType}
+    </select>
 </mapper>

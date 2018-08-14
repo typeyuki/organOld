@@ -24,10 +24,22 @@ public class HomeOldmanWrapper implements Wrapper<HomeOldman,HomeOldmanModel,Hom
         homeOldmanModel.setHomeName(homeOldman.getHome().getSecType());
         homeOldmanModel.setHomeType(HomeEnum.getValue(homeOldman.getHome().getFirType()));
         homeOldmanModel.setId(homeOldman.getId());
-        homeOldmanModel.setOldmanId(homeOldman.getOldman().getId());
-        homeOldmanModel.setOldmanName(homeOldman.getOldman().getName());
+        if(!StringUtils.isEmpty(homeOldman.getOldman())){
+            homeOldmanModel.setOldmanId(homeOldman.getOldman().getId());
+            homeOldmanModel.setOldmanName(homeOldman.getOldman().getName());
+            if(homeOldman.getOldman().getDisable()==0){
+                homeOldmanModel.setOldmanStatus("正常");
+            }else{
+                homeOldmanModel.setOldmanStatus("被删除");
+            }
+        }
+        if(!StringUtils.isEmpty(homeOldman.getNoExistName())){
+            homeOldmanModel.setOldmanId(null);
+            homeOldmanModel.setOldmanName(homeOldman.getNoExistName());
+            homeOldmanModel.setOldmanStatus("不在当前老人集中");
+        }
         if(homeOldman.getHome().getFirType()==HomeEnum.CHX.getIndex()){
-            homeOldmanModel.setIsService(homeOldman.getIsService()==0?"未获得":"已获得");
+            homeOldmanModel.setIsService((homeOldman.getIsService()==null || homeOldman.getIsService()==0)?"未获得":"已获得");
         }else{
             homeOldmanModel.setTimeIn(Tool.dateToString(homeOldman.getTimeIn(),"yyyy-MM-dd"));
             homeOldmanModel.setTimeOut(Tool.dateToString(homeOldman.getTimeOut(),"yyyy-MM-dd"));

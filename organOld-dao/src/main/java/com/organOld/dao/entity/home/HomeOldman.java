@@ -4,14 +4,17 @@ import com.organOld.dao.entity.DBEntity;
 import com.organOld.dao.entity.DBInterface;
 import com.organOld.dao.entity.oldman.Oldman;
 import com.organOld.dao.entity.organ.Organ;
+import org.springframework.format.annotation.DateTimeFormat;
 import sun.dc.pr.PRError;
 
 import java.util.Date;
 
 public class HomeOldman extends DBEntity implements DBInterface{
-    private int homeId;
+    private Integer homeId;
     private Oldman oldman;
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date timeIn;
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date timeOut;
     private Integer isService;
     private Organ organ;
@@ -19,8 +22,27 @@ public class HomeOldman extends DBEntity implements DBInterface{
     private String[] type;
     private Home home;
 
+    private String noExistName;
+    private String noExistPid;
+
     private Integer organId;//居委ID
     private String search;
+
+    public String getNoExistName() {
+        return noExistName;
+    }
+
+    public void setNoExistName(String noExistName) {
+        this.noExistName = noExistName;
+    }
+
+    public String getNoExistPid() {
+        return noExistPid;
+    }
+
+    public void setNoExistPid(String noExistPid) {
+        this.noExistPid = noExistPid;
+    }
 
     public String getSearch() {
         return search;
@@ -79,11 +101,11 @@ public class HomeOldman extends DBEntity implements DBInterface{
         this.organId = organId;
     }
 
-    public int getHomeId() {
+    public Integer getHomeId() {
         return homeId;
     }
 
-    public void setHomeId(int homeId) {
+    public void setHomeId(Integer homeId) {
         this.homeId = homeId;
     }
 

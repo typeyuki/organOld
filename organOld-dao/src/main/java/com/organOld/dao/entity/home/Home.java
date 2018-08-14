@@ -5,6 +5,7 @@ import com.organOld.dao.entity.organ.Organ;
 
 public class Home extends DBEntity{
     private int firType;
+    private String firTypeDesc;
     private String secType;
 
 
@@ -13,6 +14,14 @@ public class Home extends DBEntity{
     private Doctor doctor;//家庭医生
 
     private String search;
+
+    public String getFirTypeDesc() {
+        return firTypeDesc;
+    }
+
+    public void setFirTypeDesc(String firTypeDesc) {
+        this.firTypeDesc = firTypeDesc;
+    }
 
     public String getSearch() {
         return search;

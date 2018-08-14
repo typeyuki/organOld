@@ -4,7 +4,7 @@ import com.organOld.dao.entity.organ.Organ;
 
 public class HomeOldmanModel {
     private int id;
-    private int oldmanId;
+    private Integer oldmanId;
     private String oldmanName;
     private String timeIn;
     private String timeOut;
@@ -13,6 +13,15 @@ public class HomeOldmanModel {
     private String homeName;
     private String isService;
     private Organ organ;
+    private String oldmanStatus;
+
+    public String getOldmanStatus() {
+        return oldmanStatus;
+    }
+
+    public void setOldmanStatus(String oldmanStatus) {
+        this.oldmanStatus = oldmanStatus;
+    }
 
     public Organ getOrgan() {
         return organ;
@@ -62,11 +71,11 @@ public class HomeOldmanModel {
         this.id = id;
     }
 
-    public int getOldmanId() {
+    public Integer getOldmanId() {
         return oldmanId;
     }
 
-    public void setOldmanId(int oldmanId) {
+    public void setOldmanId(Integer oldmanId) {
         this.oldmanId = oldmanId;
     }
 

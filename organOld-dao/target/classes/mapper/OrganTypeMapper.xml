@@ -12,4 +12,8 @@
         SELECT * from organ_type WHERE fir_type=21 or fir_type=22
     </select>
 
+
+    <select id="getFirTypeByOrganId" resultType="java.lang.Integer">
+        SELECT ot.fir_type from organ_type ot,organ o where o.organ_type_id=ot.id and o.id=#{organId}
+    </select>
 </mapper>

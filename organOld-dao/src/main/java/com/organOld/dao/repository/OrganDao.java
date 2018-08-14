@@ -30,4 +30,6 @@ public interface OrganDao extends BaseDao<Organ,Integer>{
     List<Organ> getAll();
 
     void updateAuth(@Param("id") Integer organId,@Param("consume") Integer authConsume, @Param("product") Integer authProduct,@Param("sign") Integer authSign, @Param("info") Integer authQueryInfo,@Param("integral") Integer authQueryIntegral);
+
+    List<Organ> getALLNotInFirType(int firType);
 }

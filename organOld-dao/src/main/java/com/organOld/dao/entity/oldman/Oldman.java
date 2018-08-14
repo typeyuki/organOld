@@ -47,7 +47,7 @@ public class Oldman extends Man implements DBInterface,XqInterface {
     private Integer goalStart;
     private Integer goalEnd;
     private Integer isActivity;
-
+    private Integer disable;
 
     private String censusArray[];//户籍 1非 2户籍 3人户分离
     private String search;//模糊全文 匹配搜索  姓名、身份证、地址、电话
@@ -105,7 +105,13 @@ public class Oldman extends Man implements DBInterface,XqInterface {
     }
 
 
+    public Integer getDisable() {
+        return disable;
+    }
 
+    public void setDisable(Integer disable) {
+        this.disable = disable;
+    }
 
     public Long getOrganOldNum() {
         return organOldNum;
